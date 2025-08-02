@@ -84,14 +84,15 @@
 1.  **Fork 仓库**：在原作者的 GitHub 仓库页面，点击右上角的 **"Fork"** 按钮，将其复制到你的账户下。
 
 2.  **Clone 你的 Fork**：**注意**！是 Clone 你自己账户下的那个仓库，而不是原作者的。
-    ```bash
+
+  ```bash
     # 将 your-username 替换为你自己的 GitHub 用户名
     git clone [https://github.com/](https://github.com/)<your-username>/<repo-name>.git
     ```
 
-3.  **打开为 Obsidian Vault**：在 Obsidian 中，选择 "打开另一个库"，然后选择你刚刚 Clone 下来的文件夹。
+4.  **打开为 Obsidian Vault**：在 Obsidian 中，选择 "打开另一个库"，然后选择你刚刚 Clone 下来的文件夹。
 
-4.  **配置 Git Remote**：为了能同步原作者的更新，你需要添加一个指向原仓库的远程地址，我们通常称之为 `upstream`。
+5.  **配置 Git Remote**：为了能同步原作者的更新，你需要添加一个指向原仓库的远程地址，我们通常称之为 `upstream`。
     ```bash
     # 进入仓库文件夹
     cd <repo-name>
