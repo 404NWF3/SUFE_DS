@@ -4,6 +4,7 @@
 * **协作与分享**：允许他人查看你的部分公开笔记，并通过规范的流程贡献内容。
 
 ## 目录
+
 - [环境准备](#-环境准备)
 - [角色一：仓库拥有者的操作指南](#-角色一仓库拥有者的操作指南)
   - [首次配置 (Set Up)](#首次配置-set-up)
@@ -77,65 +78,30 @@
 > **场景**：你想为他人的公开知识库贡献内容，比如修正一个错字、补充一些笔记。
 
 ### 核心理念：Fork & Pull Request
+
 你不能直接修改别人的仓库。标准流程是：先 **Fork** (复制) 一份仓库到你自己的名下，在你的副本上修改，然后发起一个 **Pull Request** (PR) 请求原作者合并你的修改。
 
 ### 首次配置
 
 1.  **Fork 仓库**：在原作者的 GitHub 仓库页面，点击右上角的 **"Fork"** 按钮，将其复制到你的账户下。
 
-2.  **Clone 你的 Fork**：**注意**！是 Clone 你自己账户下的那个仓库，而不是原作者的。
+2.  使用 `Git` 插件，找到并运行 `Git: Clone an existing remote repo`，注意clone你自己fork的仓库，而不是原仓库！
 
-  ```bash
-    # 将 your-username 替换为你自己的 GitHub 用户名
-    git clone [https://github.com/](https://github.com/)<your-username>/<repo-name>.git
-    ```
+3.  **配置 Git Remote**：为了能同步原作者的更新，你需要添加一个指向原仓库的远程地址，我们通常称之为 `upstream`。
 
-4.  **打开为 Obsidian Vault**：在 Obsidian 中，选择 "打开另一个库"，然后选择你刚刚 Clone 下来的文件夹。
-
-5.  **配置 Git Remote**：为了能同步原作者的更新，你需要添加一个指向原仓库的远程地址，我们通常称之为 `upstream`。
     ```bash
     # 进入仓库文件夹
     cd <repo-name>
 
     # 添加 upstream 指向原作者的仓库
     # 将 original-owner 替换为原作者的用户名
-    git remote add upstream [https://github.com/](https://github.com/)<original-owner>/<repo-name>.git
+    git remote add upstream 
 
     # 验证是否成功
     git remote -v
     # 你应该能看到 origin (指向你的 Fork) 和 upstream (指向原仓库)
     ```
 
-### 贡献流程
-
-1.  **同步最新内容**：在做任何修改前，先从原仓库拉取最新的内容，确保你的版本是最新的。
-    * **Obsidian 插件方式**: 暂不支持直接从 `upstream` 拉取，建议使用命令行。
-    * **命令行方式**:
-        ```bash
-        git pull upstream main
-        ```
-
-2.  **创建新分支**：为你的修改创建一个独立的分支，这是一个好习惯。
-    ```bash
-    git checkout -b <your-branch-name>
-    # 例如: git checkout -b fix-readme-typo
-    ```
-
-3.  **在 Obsidian 中修改**：正常地编辑或添加笔记。
-
-4.  **提交并推送到你的 Fork**：
-    * 使用 Obsidian Git 插件的 `Commit` 和 `Push` 功能。
-    * 或者使用命令行：
-        ```bash
-        git add .
-        git commit -m "docs: Fix a typo in the README file"
-        # 注意！这里是 push 到 origin (你的 Fork)，而不是 upstream
-        git push origin <your-branch-name>
-        ```
-
-5.  **创建 Pull Request (PR)**：
-    * 回到你 GitHub 上的 Fork 仓库页面。
-    * GitHub 会自动提示你创建 Pull Request。点击按钮。
-    * 写清楚你的 PR 标题和描述，说明你做了什么修改，然后提交。
-
-之后，就等待原仓库主人审核并合并你的贡献了！
+4. 在 `obsidian` 中，使用 `Git` 插件，commit，push到你自己的仓库。
+5. 到 `github` 上 Pull Request 你的变化。
+6. 等待原作者merge。
