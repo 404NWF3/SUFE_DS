@@ -1,6 +1,7 @@
 # 上财学生资料共享计划
 
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](./CONTRIBUTING.md)
+
 本项目旨在为本校学生提供一个开放、共享的学习资料平台，内容涵盖课程笔记、电子书、往年试卷等。
 
 ## 项目缘起
