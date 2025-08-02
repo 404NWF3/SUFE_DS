@@ -105,3 +105,11 @@
 4. 在 `obsidian` 中，使用 `Git` 插件，commit，push到你自己的仓库。
 5. 到 `github` 上 Pull Request 你的变化。
 6. 等待原作者merge。
+
+最后重申，协作者要依次做：
+1. 更新自己fork的仓库
+2. pull自己的本地仓库
+3. 做修改
+4. commit、push到自己的fork仓库
+5. PR（Pull Request）
+6. 等待原作者merge
