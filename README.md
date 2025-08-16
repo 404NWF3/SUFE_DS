@@ -2,11 +2,11 @@
 
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](./CONTRIBUTING.md)
 
-本项目旨在为广大学生提供一个开放、共享的学习资料平台，内容涵盖课程笔记、电子书、往年试卷等。
+本项目旨在收纳整理上财数据科学与大数据技术专业学习所需要的部分资料。
 
 ## 项目缘起
 
-大一期间，我从浙江大学的 [zju-icicles](https://github.com/QSCTech/zju-icicles) 仓库中获得了巨大的帮助，深刻认识到一份高质量的学习资料对于学生的重要性。为了将这份互助精神发扬光大，我创建了此项目，希望能为同学们的学习提供便利。
+大一期间，我从浙江大学的 [zju-icicles](https://github.com/QSCTech/zju-icicles) 仓库中获得了巨大的帮助，深刻认识到一份高质量的学习资料仓库对于学生的重要性。为了将这份互助精神发扬光大，也为了方便我自己管理我的资源，我创建了这个公开的资料仓库。
 
 ---
 ## 主要内容
@@ -18,8 +18,6 @@
 * **考试相关**: 往年试卷、开卷资料、复习大纲等。
 ---
 ## 欢迎贡献！
-
-这是一个需要众人拾柴的项目。热切期盼你的参与！
 
 ---
 ## 版权声明 (Disclaimer)
