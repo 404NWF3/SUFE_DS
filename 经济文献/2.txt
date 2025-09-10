@@ -1,0 +1,45 @@
+1、城市化进程与产业结构之间关系
+学科范围：economics 、social science
+检索工具：ProQuest
+检索功能：高级检索
+检索词：urbanization、industrial structure、industry structure
+检索字段：abstract
+检索式：abstract(urbanization) AND abstract("industrial structure"  OR "industry structure")
+检索结果：共399个检索结果，列出其中十条
+ [1] Wang Z, Bai J, Feng R. A Multi-Feature Fusion Method for Urban Functional Regions Identification: A Case Study of Xi’an, China[J]. ISPRS International Journal of Geo-Information, 2024,13(5):156.
+ [2] Chen Y, Mu H. Analysis of influencing factors of CO2 emissions based on different coal dependence zones in China: Znanstveno-Strucni Casopis[J]. Ekonomska Istrazivanja, 2023,36(2).
+ [3] James R D, Campbell H S J, Graves W. Bottom–Up Convergence? Explaining Uneven Income Growth in the New South[J]. Southeastern Geographer, 2023,63(3):229-251.
+ [4] Dong G, Sun Z, Li W, et al. Identification of Potential Land Use Conflicts in Shandong Province: A New Framework[J]. Land, 2024,13(8):1203.
+ [5] Pagano M, Fernetti M, Busetti M, et al. Multicriteria GIS-based analysis for the evaluation of the vulnerability of the marine environment in the Gulf of Trieste (north-eastern Adriatic Sea) for sustainable blue economy and maritime spatial planning[J]. People and Nature, 2023,5(6):2006-2025.
+ [6] Zhang W, Shi P, Huang W. Research on Spatial and Temporal Pattern Evolution and Driving Factors of County Carbon Emissions in Underdeveloped Regions: Gansu Province of Western China as an Example[J]. Sustainability, 2023,15(1):291.
+ [7] Wei L, Yang Y, Zhang J, et al. Rural–urban migration, family arrangement, and children's welfare: Evidence from China's rural areas[J]. Family Relations, 2023,72(4):1586-1606.
+ [8] Schaan A P, Vidal A, An-Ni Z, et al. Temporal dynamics of gut microbiomes in non-industrialized urban Amazonia[J]. MSystems, 2024,9(3).
+ [9] Huang W, Long G, Zhang T, et al. The Impact of Territorial Spatial Transformation on Carbon Storage: A Case Study of Suqian, East China[J]. Land, 2024,13(3):348.
+[10] Zhang W, Zhang R, Zou Y. Urbanization and Cultural Industry Correlation: An Empirical Analysis from China[J]. Sustainability, 2024,16(16):6807.
+
+2、两种西文核心期刊
+（1）（The）ecnomist 收录全文
+全文文献收录时间范围	Jan 4, 1992 (Vol. 322, no. 7740) - present
+引文/摘要收录时间范围	Jan 4, 1986 (Vol. 298, no. 7427) - present
+出版信息	Coverage may exclude certain items for which the publisher lacks redistribution rights, such as Letters.
+全文文献格式	全文文献：
+Jan 4, 1992 (Vol. 322, no. 7740) - present
+全文 - PDF 格式：
+Jan 6, 2018 (Vol. 426, no. 9073) - present
+引文格式	引文
+Jan 4, 1986 (Vol. 298, no. 7427) - present
+摘要：
+Jan 4, 1986 (Vol. 298, no. 7427) - present
+出版地	London‎
+出版商	The Economist Intelligence Unit N.A., Incorporated查找此出版商的更多内容
+ISSN	0013-0613‎
+
+（2） Harvard business review 仅收录摘要
+引文/摘要收录时间范围	SEPT-OCT, 1971 (Vol. 49, no. 5) - present
+引文格式	引文
+SEPT-OCT, 1971 (Vol. 49, no. 5) - present
+摘要：
+SEPT-OCT, 1971 (Vol. 49, no. 5) - present
+出版地	Boston‎
+出版商	Harvard Business Review查找此出版商的更多内容
+ISSN	0017-8012‎

@@ -1,0 +1,136 @@
+一、
+Springer Link：
+期刊种数：83
+最近出版前10个：
+1、Journal
+Computational and Mathematical Organization Theory
+2、Journal
+Eurasian Business Review
+3、Journal
+Journal of Organization Design
+4、Journal
+Annals of Data Science
+5、Journal
+4OR
+6、Journal
+Central European Journal of Operations Research
+7、Journal
+Corporate Reputation Review
+8、Journal  Full access
+Discover Analytics
+Open access
+9、Journal
+Electronic Markets
+10、Journal
+Journal of Brand Management
+
+Wiley online library:
+期刊种数：193
+字母顺序前10个：
+1、Journal
+Open Access
+Advances in Operations Research
+Volume 2009, 2009 - Volume 2024, 2024
+Cover image of Agribusiness
+2、Journal
+Agribusiness
+Volume 1, 1985 - Volume 40, 2024
+Cover image of Alternatives to the High Cost of Litigation
+3、Journal
+Alternatives to the High Cost of Litigation
+Volume 1, 1983 - Volume 42, 2024
+Cover image of American Documentation
+4、Journal
+American Documentation
+Currently known as:
+Journal of the Association for Information Science and Technology
+Volume 1, 1950 - Volume 75, 2024
+Cover image of Annual Review of Information Science and Technology
+5、Journal
+Annual Review of Information Science and Technology
+Volume 36, 2002 - Volume 45, 2011
+Cover image of Anthropology of Work Review
+6、Journal
+Anthropology of Work Review
+Volume 1, 1980 - Volume 45, 2024
+Cover image of Applied Psychology
+7、Journal
+Applied Psychology
+Volume 1, 1952 - Volume 74, 2025
+Cover image of Applied Psychology: Health and Well-Being
+8、Journal
+Full Access
+Applied Psychology: Health and Well-Being
+Volume 1, 2009 - Volume 16, 2024
+Cover image of Applied Stochastic Models and Data Analysis
+9、Journal
+Applied Stochastic Models and Data Analysis
+Currently known as:
+Applied Stochastic Models in Business and Industry
+Volume 1, 1985 - Volume 40, 2024
+Cover image of Applied Stochastic Models in Business and Industry
+10、Journal
+Applied Stochastic Models in Business and Industry
+Volume 1, 1985 - Volume 40, 2024
+Cover image of Asia Pacific Journal of Human Resources
+
+二、ScienceDirect
+可以查看785种期刊全文
+按英文字顺排列前10个：
+1、Academic Pediatrics
+Journal  •  Contains open access
+2、Accident Analysis & Prevention
+Journal  •  Contains open access
+3、Accounting Forum
+Journal  •  Contains open access
+4、Accounting, Organizations and Society
+Journal  •  Contains open access
+5、Acta Ecologica Sinica
+Journal  •  Contains open access
+6、Acta Haematologica Polonica
+Journal
+7、Acta Mathematica Scientia
+Journal
+8、Acta Psychologica
+Journal  •  Open access
+9、Acute Pain
+Journal
+10、Ad Hoc Networks
+Journal  •  Contains open access
+
+三、全球变暖减缓 
+学科范围：地理学、气候学、环境科学、生态学
+检索工具：ScienceDirect
+检索功能：Advanced search
+检索词：global warming；mitigation,mitigating,mitigated,slowing
+检索字段：Title
+检索式： "global warming" AND (mitigate OR slow)
+检索结果：总数124
+前十条： [1] Alagoz B B, Keles C, Ates A, et al. A mathematical modelling for solar irradiance reduction of sunshades and some near-future albedo modification approaches for mitigation of global warming[J]. Journal of Atmospheric and Solar-Terrestrial Physics, 2024,263:106337.
+ [2] Zhang J, Chen H, Wang M, et al. An optimized water table depth detected for mitigating global warming potential of greenhouse gas emissions in wetland of Qinghai-Tibetan Plateau[J]. iScience, 2024,27(2):108856.
+ [3] Woo T H. Artificial intelligence (AI) based analysis for global warming mitigations of non-carbon emitted nuclear energy productions[J]. Nuclear Engineering and Technology, 2023,55(11):4282-4286.
+ [4] Ming Y, Ningxi G, Jiatong Z, et al. Enhanced-efficiency nitrogen fertilizer provides a reliable option for mitigating global warming potential in agroecosystems worldwide[J]. Science of The Total Environment, 2024,907:168080.
+ [5] Wu J, Ye H, Li S, et al. Life cycle assessment of transparent wood in building industry: a sustainable solution for global warming mitigation[J]. Construction and Building Materials, 2024,438:137303.
+ [6] Lakshmanan S, Maurya V K, Kumar A, et al. Mitigation potential of banned hydrofluorocarbons (HFCs) towards global warming – An assessment of Kigali Amendment in the Indian scenario[J]. Journal of Cleaner Production, 2023,428:139315.
+ [7] Karaiskakis A N, Hernández B, Ierapetritou M. Multi-scale assessment of global warming mitigation potential of anaerobic digestion for food waste management in the United States: A comparison of Life Cycle Assessment approaches[J]. Resources, Conservation and Recycling, 2024,203:107442.
+ [8] Chakraborty R, Purakayastha T J, Pendall E, et al. Nitrification and urease inhibitors mitigate global warming potential and ammonia volatilization from urea in rice-wheat system in India: A field to lab experiment[J]. Science of The Total Environment, 2023,898:165479.
+ [9] Gyimah J, Hayford I S, Nyantakyi G, et al. The era of global warming mitigation: The role of financial inclusion, globalization and governance institutions[J]. Heliyon, 2024,10(1):e23471.
+[10] Sunling Y, Shahzad A, Wang M, et al. Urease and nitrification inhibitors with drip fertigation strategies to mitigate global warming potential and improve water-nitrogen efficiency of maize under semi-arid regions[J]. Agricultural Water Management, 2024,295:108750.
+
+学科范围：地理学、气候学、环境科学、生态学
+检索工具：Wiley online library
+检索功能：Advanced search
+检索词：global warming；mitigation,mitigating,mitigated,slowing
+检索字段：Abstract
+检索式： "global warming" AND (mitigat* OR slow*)
+检索结果：总数1041
+前十条： [1] Pontius F. Another View on Global Warming[J]. Journal AWWA, 2008,100(8):28-36.
+ [2] Kanada S, Aiki H. Buffering Effect of Atmosphere–Ocean Coupling on Intensity Changes of Tropical Cyclones Under a Changing Climate[J]. Geophysical Research Letters, 2024,51(1):e2023G-e105659G.
+ [3] Johnson J M F, Archer D W, Weyers S L, et al. Do Mitigation Strategies Reduce Global Warming Potential in the Northern U.S. Corn Belt?[J]. Journal of Environmental Quality, 2011,40(5):1551-1559.
+ [4] Gao Z, Li L, Hao Y. Financial risk under the shock of global warming: Evidence from China[J]. Business Strategy and the Environment, 2024,33(2):335-351.
+ [5] Galizia L F, Barbero R, Rodrigues M, et al. Global Warming Reshapes European Pyroregions[J]. Earth's Future, 2023,11(5):e2022E-e3182E.
+ [6] Al-Ghussain L. Global warming: review on driving forces and mitigation[J]. Environmental Progress & Sustainable Energy, 2019,38(1):13-21.
+ [7] Dos Santos M A O. Investigating consumer knowledge of global warming based on Rogers' knowledge stage of the innovation decision process[J]. International Journal of Consumer Studies, 2012,36(4):385-393.
+ [8] Kim J, Bae D. The Impacts of Global Warming on Climate Zone Changes Over Asia Based on CMIP6 Projections[J]. Earth and Space Science, 2021,8(8):e1701E-e2021E.
+ [9] Feldman L, Myers T A, Hmielowski J D, et al. The Mutual Reinforcement of Media Selectivity and Effects: Testing the Reinforcing Spirals Framework in the Context of Global Warming[J]. Journal of Communication, 2014,64(4):590-611.
+[10] Giesse C, Notz D, Baehr J. The Shifting Distribution of Arctic Daily Temperatures Under Global Warming[J]. Earth's Future, 2024,12(11):e2024E-e4961E.

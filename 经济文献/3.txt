@@ -1,0 +1,55 @@
+1、
+学科范围：经济学、人文社科、社会学
+检索工具：Ebsco
+检索功能：高级检索
+检索词：urbanization  industr* structure
+检索字段：AB摘要
+检索式：urbanization AND industr* structure
+检索结果：共160个检索结果，列出其中十条
+ [1] Meixia Z, Fang L, Ying L, et al. Analysis of Spatial-Temporal Evolution and Its Influencing Factors of Cities' Green Economic Efficiency: A Case Study of Shandong Province, China.[J]. Polish Journal of Environmental Studies, 2024,33(5):5473-5483.
+ [2] Yang C, Xia Y, Lam J F I, et al. Analyzing the tourism efficiency and its influencing factors of China's coastal provinces.[J]. PLoS ONE, 2024,19(5):1-24.
+ [3] Ren S. Impact of urban land use tax on carbon emission efficiency of urban construction land——Analysis based on panel data of 30 provinces in China.[J]. PLoS ONE, 2024,19(5):1-14.
+ [4] Lin X, Zheng Q, Su K, et al. Mechanisms influencing spatiotemporal differentiation of tourist towns based on geographic detector: A case study of Fujian Province.[J]. PLoS ONE, 2024,19(4):1-18.
+ [5] Liu Y, Guo Y, Xie D, et al. Research on the impact and mechanism of financial development on new urbanization: A case study of the Yangtze River Economic Belt.[J]. PLoS ONE, 2023,18(9):1-15.
+ [6] Liang Q, Yueting S, Pengzhen L. Research on the Impact of Digital Economy on Environmental Pollution Management – A Quasi-Natural Experiment from the “Broadband China” Pilot Policy.[J]. Polish Journal of Environmental Studies, 2024,33(4):4311-4323.
+ [7] Ma M, Wang Y, Ke S. Spatial spillover effect and driving factors of urban carbon emissions in the Yellow River Basin using nighttime light data.[J]. Scientific Reports, 2024,14(1):1-16.
+ [8] Lu F, Liu Q, Wang P. Spatiotemporal characteristics of ecological resilience and its influencing factors in the Yellow River Basin of China.[J]. Scientific Reports, 2024,14(1):1-21.
+ [9] Xu J. Study on spatiotemporal distribution characteristics and driving factors of carbon emission in Anhui Province.[J]. Scientific Reports, 2023,13(1):1-12.
+[10] Xin L, Liping W, Lijing W. The Coupling Coordination Evaluation and Influencing Factors Analysis of the Development of China’s Digital Economy and the Construction of an Ecological Civilization.[J]. Polish Journal of Environmental Studies, 2024,33(4):3747-3758.
+
+2、Economist  只收录书目，未收录全文
+ISSN:0013-0613
+出版者信息:Economist Newspaper Limited
+The Economist Group
+750 Third Ave 5th Floor
+New York NY 10017
+United States of America
+Bibliographic Records:06/30/1990 to present
+出版物类型:Periodical
+主题:News; Political Commentary & Opinion; Social Commentary & Opinion
+出版者 URL:http://www.economist.com/
+频率:51
+ 
+Harvard Business Review  收录全文
+ISSN:0017-8012
+出版者信息:Harvard Business School Publication Corp.
+60 Harvard Way
+Boston MA 02163
+United States of America
+Bibliographic Records:10/01/1922 to present
+Full Text:	10/01/1922 to present
+出版物类型:Periodical
+主题:Management; Strategic Planning
+说明:Written for upper level management. Presents analysis of management problems and helpful commentary on advanced thinking and practice in all fields of management and administration.
+出版者 URL:https://hbsp.harvard.edu/home/
+频率:6
+
+3、学科范围：管理学、人力资源、人文社科
+检索工具：ProQuest
+检索功能：高级检索
+检索词：human resource*  "corporate culture"
+检索字段：主题词
+检索式：JN "MIT Sloan Management Review" AND "human resource*" AND "corporate culture"
+检索结果：共2个检索结果
+[1] Anthony S D, Johnson M W, Sinfield J V. Institutionalizing Innovation. (cover story)[J]. MIT Sloan Management Review, 2008,49(2):45-53.
+[2] Wagner D. Managing an Age-Diverse Work Force.[J]. MIT Sloan Management Review, 2007,48(4):9.

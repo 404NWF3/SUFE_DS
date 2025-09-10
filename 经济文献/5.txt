@@ -1,0 +1,54 @@
+1、2003年以来“金融危机对中国的影响”国内外博士论文
+国外
+学科范围：金融学、金融工程、经济学、投资学
+数据库：ProQuest Dissertations & Theses Global
+检索功能：高级检索
+检索字段：摘要ABSTRACT
+检索式：（chin* OR hongkong OR taiwan OR macao）AND （"financial crisis"）
+检索结果：211
+ [1]	LIU Y. Determinants of Non-Performing Loans: Evidence from China[Z]. United States -- Pennsylvania: Temple University, 202466.
+ [2]	ZHANG Y. Essays in International Economics[Z]. United States -- California: University of California, Los Angeles, 2024187.
+ [3]	LIN J. Essays on Banks' Geographic Expansion, Transmission of Trade Shocks, and Survival with Bailouts[Z]. United States -- New Jersey: Princeton University, 2024120.
+ [4]	DUAN Y. Essays on Major Choice, Employment, and Housing Price[Z]. United States -- Delaware: University of Delaware, 2024115.
+ [5]	YANG Y. Essays on Price and Volatility Dynamics in Agricultural Commodity Markets[Z]. United States -- Georgia: University of Georgia, 2023172.
+ [6]	LI N. Essays on the Spatial Economy[Z]. United States -- California: University of California, Davis, 2023148.
+ [7]	LIU K. Forestry, Farms, Family, and Small Towns in the Hill Country of Central China[Z]. United States -- California: University of California, Berkeley, 2023118.
+ [8]	CHENG Z. Research on Financial Crisis Management of Photovoltaic Enterprises[Z]. United States -- Arizona: Arizona State University, 2024115.
+ [9]	GANG Y. The Impact of Financial Leasing on Manufacturers’ Performance Does Leasing Enhance Manufacturers’ Performance?[Z]. United States -- Pennsylvania: Temple University, 2024119.
+[10]	ROMIH D. Vpliv Sistemskega Finančnega Stresa v Evrskem Območju na Dvostranski Izvoz Blaga[Z]. Slovenia: Univerza v Mariboru (Slovenia), 2023234.
+
+国内
+学科范围：金融学、金融工程、经济学、投资学
+数据库：ProQuest Dissertations & Theses Global
+检索功能：高级检索
+检索字段：摘要
+检索式：金融危机 AND (中国 + 我国 + 国内 + 香港 + 台湾 + 澳门)
+检索结果：3750
+ [1]	董支晓. FDI对企业创新质量影响研究[D]. 中央财经大学, 2022.
+ [2]	江振龙. 多重约束下货币政策传导机制研究[D]. 上海财经大学, 2022.
+ [3]	郭蒙. 国际大宗商品价格波动对中国宏观经济的影响研究[D]. 四川大学, 2023.
+ [4]	张彩云. 利用外资在国内大循环中的作用机制研究[D]. 对外经济贸易大学, 2022.
+ [5]	闫涵. 贸易政策不确定性与国际原油价格波动[D]. 中央财经大学, 2022.
+ [6]	罗雨柯. 美国货币政策对中国系统性金融风险的影响研究[D]. 四川大学, 2022.
+ [7]	李佐智. 全球价值链视角下中美生产性服务贸易比较研究[D]. 吉林大学, 2021.
+ [8]	李玉文. 中国参与全球价值链的就业效应研究[D]. 湘潭大学, 2021.
+ [9]	严灏. 中国的输入型通货膨胀研究[D]. 对外经济贸易大学, 2022.
+[10]	冯子璇. 中国与RCEP国家农产品贸易潜力及贸易政策研究[D]. 吉林大学, 2023.
+
+2、“网络环境下知识产权的保护问题”国外博士论文
+学科范围：法学、计算机科学、经济学
+数据库：ProQuest Dissertations & Theses Global
+检索功能：高级检索
+检索字段：摘要ABSTRACT
+检索式：(net* OR internet OR online OR web*) AND abstract("intellectual property")
+检索结果：451
+ [1]	NAFE C M. An Electronic Waste Ecology of Knowledge: How Stakeholder Interactions Shape the Sociotechnical System of Used Electronics Management in the United States[Z]. United States -- Arizona: Arizona State University, 2024282.
+ [2]	DORSKY W F. An Improved Predictive Model for Early Detection of Advanced Persistent Threat Attacks on High Value Networks[Z]. United States -- District of Columbia: The George Washington University, 2024112.
+ [3]	FU H. Enhancing the Safety of Machine Learning Systems and Cyber-Physical Systems Against Cyber Attacks[Z]. United States -- New York: New York University Tandon School of Engineering, 2024220.
+ [4]	DUTTA CHOWDHURY S. Graph Machine Learning for Hardware Security and Security of Graph Machine Learning: Attacks and Defenses[Z]. United States -- California: University of Southern California, 2024188.
+ [5]	NAUMAN H. Hardware Trojan Detection Utilizing Graph Neural Networks and Structural Checking[Z]. United States -- Arkansas: University of Arkansas, 202484.
+ [6]	CHENG Z. Interpretable and Generative AI for Actionable Insights from Textual Data[Z]. United States -- Massachusetts: Boston University, 2024161.
+ [7]	MOURIS D. Private and Verifiable Computation[Z]. United States -- Delaware: University of Delaware, 2024240.
+ [8]	ANDERSON C S. Procedural Pre-Training for Visual Recognition[Z]. United States -- Utah: Brigham Young University, 202476.
+ [9]	STOKES N. Strategies to Reduce the Impact of Digital Piracy in the Media Industry[Z]. United States -- Minnesota: Walden University, 2024100.
+[10]	BROWN D. The Influence of Human Capital on the Direction and Organization of Firm Growth[Z]. United States -- Massachusetts: Harvard University, 2024131.

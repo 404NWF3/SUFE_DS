@@ -1,0 +1,86 @@
+第一题 2003年以来上海财经大学尤进红的论文被SCI、SSCI的收录情况
+检索式：AU=(you jh) AND OG=(Shanghai University of Finance & Economics)
+总数：53条
+日期降序前10条：
+ [1]	LIU H, YOU J H, CAO J G. A Dynamic Interaction Semiparametric Function-on-Scalar Model[J]. JOURNAL OF THE AMERICAN STATISTICAL ASSOCIATION, 2023,118(541): 360-373.
+ [2]	HUANG Q, YOU J H, ZHANG L W. Efficient inference of longitudinal/functional data models with time-varying additive structure[J]. SCANDINAVIAN JOURNAL OF STATISTICS, 2022,49(2): 744-771.
+ [3]	GUAN X, LIU H, YOU J H, et al. ESTIMATION AND INFERENCE FOR DYNAMIC SINGLE-INDEX VARYING-COEFFICIENT MODELS[J]. STATISTICA SINICA, 2023,33(1): 85-105.
+ [4]	GUAN X, XU Q F, YOU J H, et al. Functional index coefficient models for locally stationary time series[J]. JOURNAL OF NONPARAMETRIC STATISTICS, 2024.
+ [5]	LIU H, YOU J H, CAO J G. Functional L-Optimality Subsampling for Functional Generalized Linear Models with Massive Data[J]. JOURNAL OF MACHINE LEARNING RESEARCH, 2023,24.
+ [6]	HU L X, CHEN B L, YOU J H. Locally sparse estimator for functional linear panel models with fixed effects[J]. STATISTICAL PAPERS, 2024.
+ [7]	WANG S X, HUANG T, YOU J H, et al. Robust Inference for Nonstationary Time Series with Possibly Multiple Changing Periodic Structures[J]. JOURNAL OF BUSINESS & ECONOMIC STATISTICS, 2022,40(4): 1718-1731.
+ [8]	HU L X, HUANG T, YOU J H. ROBUST INFERENCE IN VARYING-COEFFICIENT ADDITIVE MODELS FOR LONGITUDINAL/FUNCTIONAL DATA[J]. STATISTICA SINICA, 2021,31(2): 773-796.
+ [9]	HU B Y, HU X X, LIU H, et al. SIMULTANEOUS FUNCTIONAL QUANTILE REGRESSION[J]. STATISTICA SINICA, 2024,34(2): 867-888.
+[10]	ZHU N H, YOU J H, HUANG T. Two-stage local rank estimation for generalised partially linear varying-coefficient models[J]. JOURNAL OF NONPARAMETRIC STATISTICS, 2022,34(4): 707-733.
+
+
+第二题 数字经济对产业结构升级的影响研究
+检索式：“digital economy”(主题） and "industr* structure"（主题）
+最核心论文：Digital Economy Development, Industrial Structure Upgrading and Green Total Factor Productivity: Empirical Evidence from China's Cities
+作者：Liu, Y (Liu, Yang) [1] ; Yang, YL (Yang, Yanlin) [2] , [3] ; Li, HH (Li, Huihui) [4] ; Zhong, KY (Zhong, Kaiyang) [5]
+来源出版物：INTERNATIONAL JOURNAL OF ENVIRONMENTAL RESEARCH AND PUBLIC HEALTH卷19期4 DOI10.3390/ijerph19042414
+
+参考文献82篇
+前2篇参考文献：
+[1]	QIU Z, ZHANG S A L S. From Digital Divide to Dividend Diference-From the Perspective of Internet Capital[J]. Social Sciences in China Issue, 2016.
+[2]	COELLI T A R D. Total factor productivity growth in agriculture: a Malmquist index analysis of 93 countries, 1980-2000[J]. AGRICULTURAL ECONOMICS, 2005.
+
+施引文献210篇
+前2篇施引文献：
+[1]	LIU J, FANG Y, MA Y, et al. Digital economy, industrial agglomeration, and green innovation efficiency: empirical analysis based on Chinese data[J]. JOURNAL OF APPLIED ECONOMICS, 2024,27(1).
+[2]	JIA W, WU S, YANG Y, et al. Growth of Green Total Factor Productivity in China: "Structural Dividend" or "Reform Dividend"?[J]. GROWTH AND CHANGE, 2024,55(4).
+
+学科带头人：LIU Y
+权威机构：BEIJING INSTITUTE OF TECHNOLOGY
+
+第三题 《中文社会科学引文索引》上海财经大学陈信元教授论文的收录和被引用情况
+来源文献：共7篇
+[1]	陈良银, 黄俊, 陈信元. 混合所有制改革提高了国有企业内部薪酬差距吗[J]. 南开管理评论, 2021,24(5): 150-160.
+[2]	陈良银, 黄俊, 陈信元. 混合所有制改革与会计师事务所选择——来自国有上市公司的经验证据[J]. 会计研究, 2021(7): 153-165.
+[3]	陈信元, 何贤杰, 邹汝康, 等. 基于大数据的企业“第四张报表”:理论分析、数据实现与研究机会[J]. 管理科学学报, 2023,26(5): 23-52.
+[4]	黄俊, 陈良银, 陈信元. 科创板注册制改革与公司盈余管理[J]. 会计研究, 2023(2): 42-51.
+[5]	颜恩点, 单子真, 钱川阳, 等. 去杠杆策略、公司治理与审计定价[J]. 审计研究, 2023(1): 85-98.
+[6]	黄俊, 赵宇, 胡丹奇, 等. 司法改善与企业投资——基于我国巡回法庭设立的经验研究[J]. 经济学(季刊), 2021,21(5): 1521-1544.
+[7]	郭照蕊, 黄俊, 陈信元, 等. 新冠疫情、政府背景大客户与公司价值[J]. 会计研究, 2022(9): 94-111.
+
+2021被引文献前3条
+【被引文献作者】陈信元
+【被引文献篇名】政府干预、多元化经营与公司业绩
+【文 献 类 型 】期刊论文
+【被引文献期刊】管理世界
+【被引期刊年代】2007
+【被引文献出处】(1)
+【来 源 文 献 】
+1.徐立/吴文锋.地区差异会影响金融与实体之间的相互转化程度吗？——基于我国制造业上市公司的微观视角.管理评论.2021,33(12):3-14
+2.巫岑/罗婷/饶品贵.政府引导、财政分权与企业并购.经济科学.2021,(5):20-36
+3.刘亚伟/翟华云/张兆国.纵向行政管理结构与企业全要素生产率.会计研究.2021,(10):108-125
+4.肖土盛/孙瑞琦.国有资本投资运营公司改革试点效果评估——基于企业绩效的视角.经济管理.2021,43(8):5-22
+5.徐霞/蔡熙乾.电子政务能提高企业投资效率吗？——基于电子政务县级试点的准自然实验.经济管理.2021,43(11):176-192
+6.连增/李超/胡慧杰.国际友好城市与中资企业跨国并购——基于Zephyr全球并购分析交易库的实证研究.财贸经济.2021,42(10):147-164
+7.贾君怡/黄家明.晋升激励对地方国企发债成本的影响.中国软科学.2021,(8):110-119
+8.余明桂/石沛宁/钟慧洁/张庆.垄断与企业创新——来自《反垄断法》实施的证据.南开管理评论.2021,24(1):159-168,180
+9.万佳宇/刘志强/饶品贵.行政审批改革与企业并购行为.会计与经济研究.2021,35(2):38-61
+---------------------------------------------------------------
+【被引文献作者】陈信元
+【被引文献篇名】地区差异、薪酬管制与高管腐败
+【文 献 类 型 】期刊论文
+【被引文献期刊】管理世界
+【被引期刊年代】2009
+【被引文献出处】(11)
+【来 源 文 献 】
+1.刘玉斌/王晔.高层管理团队的融洽关系能影响研发投入吗？——基于薪酬管制的视角.科学决策.2021,(8):100-115
+2.陈诗婷/洪剑峭.我国民企高管薪酬存在业绩参照吗——基于经理人市场解释的实证分析.经济理论与经济管理.2021,41(4):68-82
+3.许晨曦/金宇超.放权改革、金字塔结构与地方国有企业安全生产.世界经济.2021,44(7):156-180
+4.郝健/张明玉/王继承.国有企业党委书记和董事长“二职合一”能否实现“双责并履”？——基于倾向得分匹配的双重差分模型.管理世界.2021,37(12):195-207
+5.陈良银/黄俊/陈信元.混合所有制改革提高了国有企业内部薪酬差距吗.南开管理评论.2021,24(5):150-160
+6.钟熙/宋铁波/陈伟宏/朱子君.高管从军经历与企业道德行为——基于企业商业腐败行为的实证研究.南开经济研究.2021,(2):201-224
+7.张人方.董事高管责任险、薪酬替代与企业绩效——基于国有企业“限薪令”的准自然实验.上海财经大学学报.2021,23(3):107-121
+8.刘瑾/谢丽娜/林斌.管理层权力与国企高管腐败——基于政府审计调节效应的研究.审计与经济研究.2021,36(2):1-10
+9.李彬/凌润泽.民营企业参与对口支援的微观效应分析:企业税负的视角.山东大学学报(哲学社会科学版).2021,(2):23-34
+10.马骏/黄志霖/梁浚朝.党组织参与公司治理与民营企业高管腐败.南方经济.2021,(7):105-127
+---------------------------------------------------------------
+【被引文献作者】陈信元
+【被引文献篇名】行业竞争、管理层投资决策与公司增长/清算期权价值
+【文 献 类 型 】期刊论文
+【被引文献期刊】经济学(季刊)
+【被引期刊年代】2014
