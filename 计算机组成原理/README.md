@@ -1,1 +1,3 @@
 电子教材见网盘：https://pan.baidu.com/s/1TzaS96Xpk5wAEU8OSLi68g?pwd=hc55
+
+notion笔记： `https://aureliano37.notion.site/computer-system`
