@@ -20,6 +20,7 @@
 > 部分内容上传至百度网盘，可访问链接：`https://pan.baidu.com/s/10kGrBMz4QOpumUfRbLF8Xw?pwd=t5dr`
 >
 > 课程笔记：部分课程笔记现在在notion上记录，网址见`https://aureliano37.notion.site/`
+> 另一位牢学长的手搓笔记，网址见 `https://github.com/jayjiaowhy/JAYJIAOlearning`
 
 ---
 ## 欢迎贡献！
