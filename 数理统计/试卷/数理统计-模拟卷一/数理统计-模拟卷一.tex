@@ -1,0 +1,158 @@
+﻿% !TeX program = xelatex
+% 《数理统计》模拟卷一（含参考答案）
+% 依据 source/数理统计 三份期末样卷的题型与考点命制；题目均为新编，与三份样卷及作业习题均不重复。
+% 考点：充分性、完备性、正则指数分布类、MVUE（Rao-Blackwell / Lehmann-Scheffé）、
+%       Fisher 信息量 / Rao-Cramér 下界 / 有效性、MLE、假设检验（LRT / Wald / Score、Neyman-Pearson / UMP）。
+% 编译：xelatex 数理统计-模拟卷一.tex
+\documentclass[12pt,a4paper]{ctexart}
+\usepackage[a4paper,margin=1.5cm]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{enumitem}
+
+\newcommand{\question}[2]{\bigskip\noindent\textbf{#1}\quad（本题 #2 分）\par\nobreak\medskip}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\dd}{\,\mathrm{d}}
+
+\begin{document}
+
+% ======================= 卷头 =======================
+\begin{center}
+  {\LARGE\bfseries 上海财经大学《数理统计》模拟卷一}\\[2mm]
+  {\small（闭卷 \quad 考试时间 120 分钟 \quad 满分 100 分）}\\[1mm]
+  {\small 诚实考试吾心不虚，公平竞争方显实力；考试失败尚有机会，考试舞弊前功尽弃。}
+\end{center}
+
+\vspace{2mm}
+\noindent
+姓名：\underline{\hspace{3.0cm}}\hfill
+学号：\underline{\hspace{3.0cm}}\hfill
+班级：\underline{\hspace{3.0cm}}
+
+\vspace{1mm}
+
+
+\vspace{1mm}
+\noindent\textbf{注意事项：}本卷共三大题。第一题判断题（10 分），第二题单选题（15 分），第三题计算题（75 分）。计算题须写出关键步骤（似然函数、求导、分布、临界值等），只写结论不给满分。
+
+% ======================= 一、判断题 =======================
+\question{一、判断题（每小题 2 分，共 10 分，正确填 T，错误填 F）}{10}
+\begin{enumerate}[label=\arabic*.,leftmargin=2.0em]
+  \item 当 $X_1,\dots,X_n$ 独立同分布时，样本的 Fisher 信息量等于单个观测信息量的 $n$ 倍，即 $I_n(\theta)=nI(\theta)$。\hfill(\underline{\hspace{1.2cm}})
+  \item 若一个无偏估计量的方差达到了 Rao--Cramér 下界，则它必为 MVUE；但 MVUE 不一定能达到该下界。\hfill(\underline{\hspace{1.2cm}})
+  \item 设 $T$ 为参数 $\theta$ 的完备充分统计量，则对任意（可积）函数 $\varphi$，$\varphi(T)$ 都是 $\E_\theta[\varphi(T)]$ 的 MVUE。\hfill(\underline{\hspace{1.2cm}})
+  \item 对简单原假设与简单备择假设，Neyman--Pearson 引理给出的似然比检验在同等显著性水平下功效最大。\hfill(\underline{\hspace{1.2cm}})
+  \item 设 $X_1,\dots,X_n\sim U[0,\theta]$，则 $\max_{1\le i\le n}X_i$ 是 $\theta$ 的无偏估计量。\hfill(\underline{\hspace{1.2cm}})
+\end{enumerate}
+
+% ======================= 二、单选题 =======================
+\question{二、单选题（每小题 3 分，共 15 分）}{15}
+\begin{enumerate}[label=\arabic*.,leftmargin=2.0em]
+  \item 下列分布中\textbf{不}属于正则指数分布类的是 \hfill(\underline{\hspace{1.2cm}})\\
+  A. 泊松分布 $Po(\theta)$ \quad B. 二项分布 $Bin(m,\theta)$（$m$ 已知）\quad C. 均匀分布 $U[0,\theta]$ \quad D. 正态分布 $N(\theta,1)$
+  \item 设 $X_1,\dots,X_n\sim N(\theta,1)$，下列统计量中\textbf{不是} $\theta$ 的充分统计量的是 \hfill(\underline{\hspace{1.2cm}})\\
+  A. $\sum_i X_i$ \quad B. $\bar X$ \quad C. $\sum_i X_i^2$ \quad D. $\big(X_1,\ X_2+\cdots+X_n\big)$
+  \item 关于充分性与完备性，下列说法\textbf{正确}的是 \hfill(\underline{\hspace{1.2cm}})\\
+  A. 充分统计量一定完备 \quad B. 完备充分统计量一定是最小充分统计量\\
+  C. 最小充分统计量一定完备 \quad D. 完备统计量一定充分
+  \item 设 $\hat\theta$ 为 $\theta$ 的无偏估计且为某完备充分统计量的函数，则 \hfill(\underline{\hspace{1.2cm}})\\
+  A. $\hat\theta$ 的方差一定达到 RCB \quad B. $\hat\theta$ 是（几乎处处唯一的）MVUE\\
+  C. $g(\hat\theta)$ 一定是 $g(\theta)$ 的 MVUE \quad D. $\hat\theta$ 一定是 MLE
+  \item 设 $X_1,\dots,X_n\sim N(0,\theta)$（$\theta$ 为方差），检验 $H_0:\theta=\theta_0$ vs $H_1:\theta>\theta_0$，其 UMP 拒绝域形如 \hfill(\underline{\hspace{1.2cm}})\\
+  A. $\{\sum_i X_i^2\ge c\}$ \quad B. $\{\sum_i X_i^2\le c\}$ \quad C. $\{|\bar X|\ge c\}$ \quad D. $\{\sum_i X_i^2\le c_1\text{ 或 }\ge c_2\}$
+\end{enumerate}
+
+% ======================= 三、计算题 =======================
+\bigskip
+\begin{center}\textbf{三、计算题（共 75 分）}\end{center}
+
+\question{1. 均匀分布与次序统计量}{15}
+设 $X_1,\dots,X_n$ 为取自均匀分布 $U[0,\theta]$ 的样本，$\theta>0$ 未知。
+\begin{enumerate}[label=(\arabic*),leftmargin=2.2em]
+  \item （4 分）求 $\theta$ 的极大似然估计 $\hat\theta_{\text{MLE}}$。
+  \item （5 分）记 $T=\max_i X_i$。写出 $T$ 的概率密度函数，并计算 $\E(T)$。
+  \item （6 分）利用 $T$（它是 $\theta$ 的完备充分统计量）构造 $\theta$ 的 MVUE，并说明 $2\bar X$ 虽为 $\theta$ 的无偏估计却不是 MVUE 的原因。
+\end{enumerate}
+
+\question{2. Beta$(1,\theta)$ 分布的估计}{15}
+设 $X_1,\dots,X_n$ 为取自分布 $f(x;\theta)=\theta(1-x)^{\theta-1},\ 0<x<1$（即 $\mathrm{Beta}(1,\theta)$）的样本，$\theta>0$。
+\begin{enumerate}[label=(\arabic*),leftmargin=2.2em]
+  \item （4 分）判断该分布是否属于正则指数分布类，并给出一个完备充分统计量。
+  \item （5 分）求 $\theta$ 的极大似然估计与 Fisher 信息量 $I(\theta)$。
+  \item （6 分）求 $1/\theta$ 的 MVUE，并计算其有效性。（提示：令 $Y_i=-\ln(1-X_i)$，判断其分布。）
+\end{enumerate}
+
+\question{3. 二项总体的 MVUE}{15}
+设 $X_1,\dots,X_n$ 为取自 $Bin(m,\theta)$ 分布的样本，其中试验次数 $m$ 已知，$0<\theta<1$ 未知。记 $T=\sum_{i=1}^n X_i$。
+\begin{enumerate}[label=(\arabic*),leftmargin=2.2em]
+  \item （4 分）证明 $T$ 为 $\theta$ 的完备充分统计量，并写出 $T$ 的分布。
+  \item （5 分）求 $\theta$ 的 MVUE。
+  \item （6 分）求 $\theta^2$ 的 MVUE。（提示：考虑 $\E[T(T-1)]$。）
+\end{enumerate}
+
+\question{4. 指数总体的三种检验统计量}{15}
+设 $X_1,\dots,X_n$ 为取自指数分布（均值为 $\theta$）的样本，p.d.f.\ 为 $f(x;\theta)=\frac1\theta e^{-x/\theta},\ x>0$。考虑检验
+\[ H_0:\theta=\theta_0 \quad vs \quad H_1:\theta\neq\theta_0. \]
+分别求出似然比检验统计量 $\chi_L^2=-2\log\Lambda$、Wald 型检验统计量 $\chi_W^2=nI(\hat\theta)(\hat\theta-\theta_0)^2$、以及得分型检验统计量 $\chi_R^2=\{l'(\theta_0)/\sqrt{nI(\theta_0)}\}^2$，并写出各自显著性水平为 $\alpha$ 的（渐近）拒绝域。
+
+\question{5. 平移指数分布（位置参数）}{15}
+设 $X_1,\dots,X_n$ 为取自平移指数分布的样本，p.d.f.\ 为 $f(x;\theta)=e^{-(x-\theta)},\ x>\theta$，其中 $\theta\in\mathbb R$ 未知。
+\begin{enumerate}[label=(\arabic*),leftmargin=2.2em]
+  \item （5 分）找出 $\theta$ 的一个充分统计量，并说明该分布是否属于正则指数分布类。
+  \item （4 分）求 $\theta$ 的极大似然估计。
+  \item （6 分）求 $\theta$ 的 MVUE。（提示：$\min_i X_i$ 是完备充分统计量，先求其期望。）
+\end{enumerate}
+
+\vfill
+\begin{center}\small —— 试卷结束，请检查是否有漏答 ——\end{center}
+
+% =================================================================
+\newpage
+\begin{center}{\Large\bfseries 模拟卷一 \quad 参考答案与评分要点}\end{center}
+
+\noindent\textbf{一、判断题}\quad 1. T \quad 2. T \quad 3. T \quad 4. T \quad 5. F\par
+\smallskip
+\noindent 要点：(1) 独立同分布信息可加；(2) MVUE 是方差最小，未必恰好等于 RCB；(3) Lehmann--Scheffé：完备充分统计量的任一函数都是其期望的 MVUE；(4) Neyman--Pearson 引理；(5) $\E(\max X_i)=\frac{n}{n+1}\theta\neq\theta$，有偏。
+
+\medskip
+\noindent\textbf{二、单选题}\quad 1. C \quad 2. C \quad 3. B \quad 4. B \quad 5. A\par
+\smallskip
+\noindent 要点：(1) $U[0,\theta]$ 支撑依赖参数，非指数族；(2) $N(\theta,1)$ 只需 $\sum X_i$，单独 $\sum X_i^2$ 不充分；(3) 完备充分 $\Rightarrow$ 最小充分（Bahadur）；(4) 由 Lehmann--Scheffé 知为唯一 MVUE，但不必达 RCB、不必是 MLE，且 $g(\hat\theta)$ 一般有偏；(5) 单调似然比的单侧 UMP。
+
+\medskip
+\noindent\textbf{三、计算题}
+
+\smallskip
+\noindent\textbf{第 1 题.}\;
+(1) 似然 $L=\theta^{-n}\mathbf 1\{0\le X_{(1)},\,X_{(n)}\le\theta\}$ 关于 $\theta$ 在 $\theta\ge X_{(n)}$ 时单调递减，故 $\hat\theta_{\text{MLE}}=X_{(n)}=\max_i X_i$。\\
+(2) $F_T(t)=(t/\theta)^n$，$f_T(t)=\dfrac{n t^{n-1}}{\theta^n},\ 0<t<\theta$；$\E(T)=\displaystyle\int_0^\theta t\frac{nt^{n-1}}{\theta^n}\dd t=\frac{n}{n+1}\theta$。\\
+(3) 由 (2) 知 $\dfrac{n+1}{n}T$ 无偏，故 $\boxed{\hat\theta_{\text{MVUE}}=\frac{n+1}{n}\max_i X_i}$。$T$ 为完备充分统计量，其无偏函数唯一为 MVUE；$2\bar X$ 虽无偏（$\E(2\bar X)=2\cdot\theta/2=\theta$）但不是充分统计量 $T$ 的函数，方差更大，故非 MVUE。
+
+\smallskip
+\noindent\textbf{第 2 题.}\;
+(1) $f=\exp\{\theta\ln(1-x)-\ln(1-x)+\ln\theta\}$，$K(x)=\ln(1-x)$，属正则指数分布类，完备充分统计量 $T=\sum_i\ln(1-X_i)$（或 $-T$）。\\
+(2) $\ln f=\ln\theta+(\theta-1)\ln(1-x)$，$\partial_\theta\ln f=\tfrac1\theta+\ln(1-x)$，$\partial^2_\theta\ln f=-\tfrac1{\theta^2}$，故 $I(\theta)=1/\theta^2$；令 $\sum[\tfrac1\theta+\ln(1-X_i)]=0$ 得 $\hat\theta=\dfrac{n}{-\sum_i\ln(1-X_i)}$。\\
+(3) 令 $Y_i=-\ln(1-X_i)$，则 $P(Y_i\le y)=1-e^{-\theta y}$，即 $Y_i\sim Exp(\text{率 }\theta)$，$\E(Y_i)=1/\theta,\ \Var(Y_i)=1/\theta^2$。$W=\sum Y_i\sim\Gamma(n,\text{率}\theta)$，$\E(W)=n/\theta$。故 $1/\theta$ 的 MVUE 为 $\boxed{\dfrac{1}{n}\sum_i\big(-\ln(1-X_i)\big)}$，方差 $=\dfrac{1}{n\theta^2}$。$1/\theta$ 的 RCB $=\dfrac{[(1/\theta)']^2}{nI(\theta)}=\dfrac{1/\theta^4}{n/\theta^2}=\dfrac{1}{n\theta^2}$，故有效性 $=1$（达到下界）。
+
+\smallskip
+\noindent\textbf{第 3 题.}\;
+(1) $f(\mathbf x;\theta)=\prod\binom{m}{x_i}\theta^{T}(1-\theta)^{mn-T}$，由因子分解定理 $T=\sum X_i$ 充分；属正则指数分布类故完备。$T\sim Bin(mn,\theta)$。\\
+(2) $\E(T)=mn\theta\Rightarrow$ $\theta$ 的 MVUE $=\dfrac{T}{mn}=\dfrac{\bar X}{m}$。\\
+(3) $\E[T(T-1)]=\Var(T)+\E(T)^2-\E(T)=mn\theta(1-\theta)+m^2n^2\theta^2-mn\theta=mn(mn-1)\theta^2$，故 $\theta^2$ 的 MVUE $=\boxed{\dfrac{T(T-1)}{mn(mn-1)}}$。
+
+\smallskip
+\noindent\textbf{第 4 题.}\;
+$l(\theta)=-n\ln\theta-\sum X_i/\theta$，$\hat\theta=\bar X$；$I(\theta)=1/\theta^2$。
+\[
+\chi_L^2=2\Big[l(\bar X)-l(\theta_0)\Big]=2n\Big[\tfrac{\bar X}{\theta_0}-\ln\tfrac{\bar X}{\theta_0}-1\Big],\qquad
+\chi_W^2=\frac{n}{\bar X^2}(\bar X-\theta_0)^2,
+\]
+$l'(\theta_0)=\dfrac{n(\bar X-\theta_0)}{\theta_0^2}$，$nI(\theta_0)=n/\theta_0^2$，故 $\chi_R^2=\dfrac{n(\bar X-\theta_0)^2}{\theta_0^2}$。三者在 $H_0$ 下均渐近 $\chi^2(1)$，拒绝域 $\{\chi^2_\bullet\ge\chi^2_\alpha(1)\}$。
+
+\smallskip
+\noindent\textbf{第 5 题.}\;
+(1) $L=e^{n\theta}e^{-\sum X_i}\mathbf 1\{X_{(1)}>\theta\}$，由因子分解 $X_{(1)}=\min_i X_i$ 充分；因支撑 $\{x>\theta\}$ 依赖 $\theta$，\textbf{不}属于正则指数分布类。\\
+(2) $L$ 关于 $\theta$ 在 $\theta\le X_{(1)}$ 时随 $\theta$ 增大（$e^{n\theta}$）而增大，故 $\hat\theta_{\text{MLE}}=X_{(1)}$。\\
+(3) $\min_i X_i\sim\theta+Exp(\text{率 }n)$，$\E(X_{(1)})=\theta+\tfrac1n$，故 $\theta$ 的 MVUE $=\boxed{\min_i X_i-\dfrac1n}$。
+
+\end{document}

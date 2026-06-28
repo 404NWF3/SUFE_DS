@@ -1,0 +1,128 @@
+% !TeX program = xelatex
+% 《数理统计》期末样卷 ——无答案重排版
+% 题目内容忠实于 source/数理统计/数理统计_期末样卷.pdf，仅去除参考答案。
+% 编译：xelatex 数理统计-期末样卷.tex
+\documentclass[12pt,a4paper]{ctexart}
+\usepackage[a4paper,margin=1.8cm]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{enumitem}
+\usepackage{array}
+
+\newcommand{\question}[1]{\bigskip\noindent\textbf{#1}\par\nobreak\medskip}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\mathrm{Var}}
+
+\begin{document}
+
+% ======================= 卷头 =======================
+\begin{center}
+  {\small 诚实考试吾心不虚，公平竞争方显实力；考试失败尚有机会，考试舞弊前功尽弃。}\\[2mm]
+  {\LARGE\bfseries 上海财经大学《数理统计》课程\ 期末样卷}
+\end{center}
+
+\vspace{2mm}
+\noindent
+姓名：\underline{\hspace{2.6cm}}\hfill
+学号：\underline{\hspace{2.6cm}}\hfill
+班级：\underline{\hspace{2.6cm}}
+
+\vspace{3mm}
+
+% ======================= 一、判断题 =======================
+\question{一、判断题（每小题 2 分，共计 10 分）}
+\begin{enumerate}[label=\arabic*.,leftmargin=2.2em]
+  \item 一个参数的极大似然估计总是存在且唯一。\hfill(\underline{\hspace{1.2cm}})
+  \item 有效估计量一定是 MVUE，反之则不一定。\hfill(\underline{\hspace{1.2cm}})
+  \item 一个参数的充分统计量必然唯一存在。\hfill(\underline{\hspace{1.2cm}})
+  \item 假设样本 $X_{1},\ldots,X_{n}$ 取自正态分布 $N(\theta,\sigma_{0}^{2})$，其中 $\sigma_{0}$ 已知。考虑假设 $H_{0}:\theta=\theta_{0}$\ \ vs\ \ $H_{1}:\theta\neq\theta_{0}$ 的似然比检验，则得到的拒绝域是一个依赖于统计量 $\overline{X}$ 的拒绝域。\hfill(\underline{\hspace{1.2cm}})
+  \item 假设样本 $X_{1},\ldots,X_{n}$ 取自正态分布 $N(0,\theta)$，则 $Y=\sum_{i=1}^{n}X_{i}^{2}$ 为 $\theta$ 的一个完备充分统计量。\hfill(\underline{\hspace{1.2cm}})
+\end{enumerate}
+
+% ======================= 二、单选题 =======================
+\question{二、单选题（每小题 3 分，共计 15 分）}
+\begin{enumerate}[label=\arabic*.,leftmargin=2.2em]
+  \item 假设 $X_{1},\ldots,X_{n}$ 为取自正态分布 $N(\theta,\sigma_{0}^{2})$ 的样本，其中 $\sigma_{0}$ 已知。下列统计量中，不是 $\theta$ 的（联合）充分统计量的是\hfill(\underline{\hspace{1.2cm}})
+  \begin{enumerate}[label=\Alph*.,leftmargin=2.0em]
+    \item $\overline{X}$
+    \item $\left(X_{1}+\cdots+X_{m},\ X_{m+1}+\cdots+X_{n}\right)^{T}$
+    \item $\sum_{i=1}^{n}X_{i}^{2}$
+    \item $\sum_{i=1}^{n}X_{i}/\sigma_{0}$
+  \end{enumerate}
+
+  \item 下列分布中，属于正则指数分布类的是\hfill(\underline{\hspace{1.2cm}})
+  \begin{enumerate}[label=\Alph*.,leftmargin=2.0em]
+    \item 均匀分布 $U[0,\theta]$
+    \item 拉普拉斯分布，其 p.d.f.\ 为 $f(x;\theta)=\dfrac{1}{2\theta}\exp\!\left(-\dfrac{|x|}{\theta}\right),\ -\infty<x<\infty$
+    \item “平移的指数分布”，其 p.d.f.\ 为 $f(x;\theta)=e^{-(x-\theta)},\ x>\theta$
+    \item 正态分布 $N(\theta,\theta^{2})$
+  \end{enumerate}
+
+  \item 下面 $\theta$ 的估计量中，不为 $\theta$ 的 MVUE 的是\hfill(\underline{\hspace{1.2cm}})
+  \begin{enumerate}[label=\Alph*.,leftmargin=2.0em]
+    \item 取自 $U[0,\theta]$ 的样本，估计量 $\widehat{\theta}=\max\limits_{1\le i\le n}X_{i}$
+    \item 取自 $N(\theta,\sigma_{0}^{2})$ 的样本（$\sigma_{0}^{2}$ 已知），估计量 $\widehat{\theta}=\overline{X}$
+    \item 取自 $Po(\theta)$ 的样本，估计量 $\widehat{\theta}=\overline{X}$
+    \item 取自 $Exp(1/\theta)$ 的样本，估计量 $\widehat{\theta}=\overline{X}$
+  \end{enumerate}
+
+  \item 假设 $\widehat{\theta}$ 为 $\theta$ 的无偏估计量，下列说法正确的是\hfill(\underline{\hspace{1.2cm}})
+  \begin{enumerate}[label=\Alph*.,leftmargin=2.0em]
+    \item $g(\widehat{\theta})$ 一定为 $g(\theta)$ 的无偏估计量
+    \item $\widehat{\theta}$ 的有效性一定不超过 1
+    \item 若有一个充分统计量 $Y$，并且 $\widehat{\theta}$ 为 $Y$ 的函数，则 $\widehat{\theta}$ 必为 MVUE
+    \item 若 $\widehat{\theta}'$ 为另一个无偏估计量，则 $\widehat{\theta}-\widehat{\theta}'$ 也是无偏估计量
+  \end{enumerate}
+
+  \item 假设 $X_{1},\ldots,X_{n}$ 为取自 $Exp(\theta)$ 的样本。对于检验问题 $H_{0}:\theta=1\ vs\ H_{1}:\theta=2$，最优拒绝域应该形如\hfill(\underline{\hspace{1.2cm}})
+  \begin{enumerate}[label=\Alph*.,leftmargin=2.0em]
+    \item $\left\{\sum_{i=1}^{n}X_{i}\le c\right\}$（其中 $c>0$）
+    \item $\left\{\sum_{i=1}^{n}X_{i}\ge c\right\}$（其中 $c>0$）
+    \item $\left\{\sum_{i=1}^{n}X_{i}\le c_{1}\ 或\ \sum_{i=1}^{n}X_{i}\ge c_{2}\right\}$（其中 $c_{2}>c_{1}>0$）
+    \item $\left\{c_{1}\le\sum_{i=1}^{n}X_{i}\le c_{2}\right\}$（其中 $c_{2}>c_{1}>0$）
+  \end{enumerate}
+\end{enumerate}
+
+% ======================= 三、计算题 =======================
+\bigskip
+\begin{center}\textbf{三、计算题（共计 75 分）}\end{center}
+
+\question{1.（12 分）}
+假设 $X_{1},\ldots,X_{n}$ 为来自 $Bernoulli(\theta)$ 分布的样本。
+\begin{enumerate}[label=(\arabic*),leftmargin=2.4em]
+  \item （6 分）请计算 Fisher 信息量 $I(\theta)$。（采用一种方法即可）
+  \item （6 分）对于检验问题
+  \[ H_{0}:\theta=\tfrac{1}{2}\quad vs\quad H_{1}:\theta\neq\tfrac{1}{2} \]
+  分别计算出似然比检验统计量 $\chi_{L}^{2}=-2\log\Lambda$、Wald-型检验统计量 $\chi_{W}^{2}=nI(\widehat{\theta})(\widehat{\theta}-\theta_{0})^{2}$、以及得分型检验统计量 $\chi_{R}^{2}=\left\{\dfrac{l'(\theta_{0})}{\sqrt{nI(\theta_{0})}}\right\}^{2}$。（其中 $\widehat{\theta}$ 为 $\theta$ 的极大似然估计，$\theta_{0}=1/2$）
+\end{enumerate}
+
+\question{2.（18 分）}
+假设 $X_{1},\ldots,X_{n}$ 是来自 $Exp\!\left(\dfrac{1}{\theta^{2}}\right)$ 分布的样本，其中 $\theta>0$。目标是估计 $\theta$。
+\begin{enumerate}[label=(\arabic*),leftmargin=2.4em]
+  \item （6 分）找出 $\theta$ 的极大似然估计。
+  \item （6 分）计算 $\theta$ 的无偏估计的 RCB（即 Rao-Cramer 下界）。
+  \item （6 分）已知 $E\!\left(\sqrt{\overline{X}}\right)=c\theta$，其中 $0<c<\sqrt{\dfrac{4n}{4n+1}}$ 为某一已知常数。由此找出 $\theta$ 的一个无偏估计，并计算其有效性。
+\end{enumerate}
+
+\question{3.（12 分）}
+假设 $X_{1},\ldots,X_{n}$ 为来自 Pareto 分布的样本，其 p.d.f.\ 为
+\[ f(x;\alpha,c)=\begin{cases} \dfrac{\alpha c^{\alpha}}{x^{\alpha+1}}, & x>c \\[2mm] 0, & x\le c \end{cases} \]
+\begin{enumerate}[label=(\arabic*),leftmargin=2.4em]
+  \item （6 分）如果 $c=c_{0}$ 已知，$\alpha$ 未知，请判断其是否属于指数分布类，并找出一个 $\alpha$ 的充分统计量。
+  \item （6 分）如果 $\alpha=\alpha_{0}$ 已知，$c$ 未知，请判断其是否属于指数分布类，并找出一个 $c$ 的充分统计量。
+\end{enumerate}
+
+\question{4.（13 分）}
+假设 $X_{1},\ldots,X_{n}$ 是来自 Poisson 分布 $Po(\theta)$ 的样本。请找到 $g(\theta)=a\theta^{2}+b\theta+c$ 的 MVUE，其中 $a,b,c$ 均为给定常数。
+
+\question{5.（20 分）}
+假设 $X_{1},\ldots,X_{n}$ 是来自 $Bin(2,\theta)$ 分布（即试验次数为 2，每次成功概率为 $\theta$ 的二项分布）的样本。希望找到 $g(\theta)=\theta(1-\theta)$ 的 MVUE。
+\begin{enumerate}[label=(\arabic*),leftmargin=2.4em]
+  \item （5 分）找出 $g(\theta)$ 的一个只依赖于 $X_{1}$ 的无偏估计量 $Y_{2}$。
+  \item （10 分）根据 Rao-Blackwell 定理，找出 $g(\theta)=\theta(1-\theta)$ 的 MVUE。（即找到完备充分统计量 $Y_{1}$，再计算 $E(Y_{2}\mid Y_{1}=y_{1})$，随后可以得到 MVUE）
+  \item （5 分）通过计算 $E(Y_{1})$ 与 $E(Y_{1}^{2})$，试直接构造一个 $Y_{1}$ 的函数，使其为 $g(\theta)$ 的 MVUE。
+\end{enumerate}
+
+\vfill
+\begin{center}\small —— 试卷结束 ——\end{center}
+
+\end{document}

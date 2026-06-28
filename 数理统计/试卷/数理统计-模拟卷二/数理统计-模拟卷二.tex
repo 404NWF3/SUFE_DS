@@ -1,0 +1,150 @@
+﻿% !TeX program = xelatex
+% 《数理统计》模拟卷二（含参考答案）
+% 依据 source/数理统计 三份期末样卷的题型与考点命制；题目均为新编，与三份样卷及作业习题均不重复。
+% 编译：xelatex 数理统计-模拟卷二.tex
+\documentclass[12pt,a4paper]{ctexart}
+\usepackage[a4paper,margin=1.5cm]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{enumitem}
+
+\newcommand{\question}[2]{\bigskip\noindent\textbf{#1}\quad（本题 #2 分）\par\nobreak\medskip}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\dd}{\,\mathrm{d}}
+
+\begin{document}
+
+\begin{center}
+  {\LARGE\bfseries 上海财经大学《数理统计》模拟卷二}\\[2mm]
+  {\small（闭卷 \quad 考试时间 120 分钟 \quad 满分 100 分）}\\[1mm]
+  {\small 诚实考试吾心不虚，公平竞争方显实力；考试失败尚有机会，考试舞弊前功尽弃。}
+\end{center}
+
+\vspace{2mm}
+\noindent
+姓名：\underline{\hspace{3.0cm}}\hfill
+学号：\underline{\hspace{3.0cm}}\hfill
+班级：\underline{\hspace{3.0cm}}
+
+
+
+\vspace{1mm}
+\noindent\textbf{注意事项：}本卷共三大题。第一题判断题（10 分），第二题单选题（15 分），第三题计算题（75 分）。计算题须写出关键步骤，只写结论不给满分。
+
+% ======================= 一、判断题 =======================
+\question{一、判断题（每小题 2 分，共 10 分，正确填 T，错误填 F）}{10}
+\begin{enumerate}[label=\arabic*.,leftmargin=2.0em]
+  \item 极大似然估计具有不变性：若 $\hat\theta$ 为 $\theta$ 的 MLE，则对任意函数 $g$，$g(\hat\theta)$ 为 $g(\theta)$ 的 MLE。\hfill(\underline{\hspace{1.2cm}})
+  \item 任何参数都存在无偏估计量。\hfill(\underline{\hspace{1.2cm}})
+  \item 若总体属于正则指数分布类，则其自然充分统计量 $\sum_i K(X_i)$ 既充分又完备。\hfill(\underline{\hspace{1.2cm}})
+  \item 得分函数（score）在真值处的期望为零，即 $\E_\theta\big[\partial_\theta\log f(X;\theta)\big]=0$。\hfill(\underline{\hspace{1.2cm}})
+  \item 对具有单调似然比的分布族，单侧检验问题存在一致最优功效（UMP）检验。\hfill(\underline{\hspace{1.2cm}})
+\end{enumerate}
+
+% ======================= 二、单选题 =======================
+\question{二、单选题（每小题 3 分，共 15 分）}{15}
+\begin{enumerate}[label=\arabic*.,leftmargin=2.0em]
+  \item 设 $X_1,\dots,X_n\sim Po(\theta)$，下列统计量中\textbf{不是} $\theta$ 的充分统计量的是 \hfill(\underline{\hspace{1.2cm}})\\
+  A. $\sum_i X_i$ \quad B. $\bar X$ \quad C. $\big(\sum_i X_i,\ \sum_i X_i^2\big)$ \quad D. $\sum_i X_i^2$
+  \item 下列分布\textbf{属于}正则指数分布类的是 \hfill(\underline{\hspace{1.2cm}})\\
+  A. $U[0,\theta]$ \quad B. 平移指数 $f=e^{-(x-\theta)},\,x>\theta$ \quad C. 几何分布 $f=\theta(1-\theta)^{x},\,x=0,1,\dots$ \quad D. $U[\theta,\theta+1]$
+  \item 设 $\hat\theta$ 为 $\theta$ 的 MVUE，下列说法\textbf{正确}的是 \hfill(\underline{\hspace{1.2cm}})\\
+  A. $\hat\theta$ 的方差必达 RCB \quad B. 对常数 $a\neq 0,b$，$a\hat\theta+b$ 是 $a\theta+b$ 的 MVUE\\
+  C. $\hat\theta^2$ 一定是 $\theta^2$ 的 MVUE \quad D. $\hat\theta$ 必为 MLE
+  \item 在 Rao--Cramér 不等式中，$g(\theta)$ 的任一无偏估计量的方差下界为 \hfill(\underline{\hspace{1.2cm}})\\
+  A. $\dfrac{1}{nI(\theta)}$ \quad B. $\dfrac{[g'(\theta)]^2}{nI(\theta)}$ \quad C. $\dfrac{g'(\theta)}{nI(\theta)}$ \quad D. $\dfrac{[g'(\theta)]^2}{I(\theta)}$
+  \item 设 $X_1,\dots,X_n\sim Exp(\text{均值 }\theta)$，检验 $H_0:\theta=\theta_0$ vs $H_1:\theta<\theta_0$，其 UMP 拒绝域形如 \hfill(\underline{\hspace{1.2cm}})\\
+  A. $\{\sum_i X_i\le c\}$ \quad B. $\{\sum_i X_i\ge c\}$ \quad C. $\{|\bar X-\theta_0|\ge c\}$ \quad D. $\{\sum_i X_i\le c_1\text{ 或 }\ge c_2\}$
+\end{enumerate}
+
+% ======================= 三、计算题 =======================
+\bigskip
+\begin{center}\textbf{三、计算题（共 75 分）}\end{center}
+
+\question{1. 幂函数分布的最优检验}{12}
+设 $X_1,\dots,X_n$ 为取自分布 $f(x;\theta)=\theta x^{\theta-1},\ 0<x<1$（$\theta>0$）的样本。
+\begin{enumerate}[label=(\arabic*),leftmargin=2.2em]
+  \item （5 分）证明该分布属于正则指数分布类，并给出一个完备充分统计量。
+  \item （7 分）对给定常数 $\theta_0<\theta_1$，考虑 $H_0:\theta=\theta_0$ vs $H_1:\theta=\theta_1$。利用 Neyman--Pearson 引理，证明其最优拒绝域可取为 $\{\prod_i X_i\ge c\}$（等价地 $\{\sum_i\ln X_i\ge c'\}$）。
+\end{enumerate}
+
+\question{2. 泊松总体的单侧 UMP 检验}{15}
+设 $X_1,\dots,X_n$ 为取自泊松分布 $Po(\theta)$ 的样本。考虑检验
+\[ H_0:\theta=\theta_0 \quad vs \quad H_1:\theta>\theta_0. \]
+\begin{enumerate}[label=(\arabic*),leftmargin=2.2em]
+  \item （8 分）利用 Neyman--Pearson 引理，证明对任意 $\theta_1>\theta_0$，最优拒绝域均形如 $\{\sum_i X_i\ge c\}$，从而该检验为 UMP 检验。
+  \item （7 分）写出 $H_0$ 下 $\sum_i X_i$ 的分布，并给出确定临界值 $c$（显著性水平为 $\alpha$）所需满足的条件。
+\end{enumerate}
+
+\question{3. Gamma$(2,\theta)$ 总体的估计}{16}
+设 $X_1,\dots,X_n$ 为取自分布 $f(x;\theta)=\theta^2 x\,e^{-\theta x},\ x>0$（即形状参数为 $2$、率参数为 $\theta$ 的 Gamma 分布）的样本，$\theta>0$。
+\begin{enumerate}[label=(\arabic*),leftmargin=2.2em]
+  \item （5 分）证明该分布属于正则指数分布类，并给出一个完备充分统计量 $Y$。
+  \item （5 分）求 $\theta$ 的极大似然估计与 Fisher 信息量 $I(\theta)$。
+  \item （6 分）求 $1/\theta$ 的 MVUE。（提示：先求 $\E(Y)$。）
+\end{enumerate}
+
+\question{4. 伯努利总体方差的 MVUE}{16}
+设 $X_1,\dots,X_n$ 为取自 $Bernoulli(\theta)$ 分布的样本，记 $T=\sum_{i=1}^n X_i$。希望估计单次观测的方差 $g(\theta)=\theta(1-\theta)$。
+\begin{enumerate}[label=(\arabic*),leftmargin=2.2em]
+  \item （4 分）证明 $T$ 为 $\theta$ 的完备充分统计量。
+  \item （5 分）说明极大似然估计 $\bar X(1-\bar X)$ 是否为 $g(\theta)$ 的无偏估计。
+  \item （7 分）求 $g(\theta)=\theta(1-\theta)$ 的 MVUE。（提示：计算 $\E[T(n-T)]$。）
+\end{enumerate}
+
+\question{5. 拉普拉斯（双指数）分布}{16}
+设 $X_1,\dots,X_n$ 为取自拉普拉斯分布 $f(x;\theta)=\dfrac{1}{2\theta}e^{-|x|/\theta},\ x\in\mathbb R$ 的样本，$\theta>0$（位置参数已知为 $0$）。
+\begin{enumerate}[label=(\arabic*),leftmargin=2.2em]
+  \item （5 分）证明该分布属于正则指数分布类，并给出一个完备充分统计量。
+  \item （5 分）求 $\theta$ 的极大似然估计与 Fisher 信息量 $I(\theta)$。
+  \item （6 分）求 $\theta$ 的 MVUE，并计算其有效性。（提示：$\E|X|=\theta$，$\E X^2=2\theta^2$。）
+\end{enumerate}
+
+\vfill
+\begin{center}\small —— 试卷结束，请检查是否有漏答 ——\end{center}
+
+% =================================================================
+\newpage
+\begin{center}{\Large\bfseries 模拟卷二 \quad 参考答案与评分要点}\end{center}
+
+\noindent\textbf{一、判断题}\quad 1. T \quad 2. F \quad 3. T \quad 4. T \quad 5. T\par
+\smallskip
+\noindent 要点：(1) MLE 不变性；(2) 存在不可估参数（无任何无偏估计），如某些情形；(3) 正则指数族自然统计量完备充分；(4) 正则条件下 score 期望为零；(5) Karlin--Rubin 定理。
+
+\medskip
+\noindent\textbf{二、单选题}\quad 1. D \quad 2. C \quad 3. B \quad 4. B \quad 5. A\par
+\smallskip
+\noindent 要点：(1) 泊松只需 $\sum X_i$，单独 $\sum X_i^2$ 不充分（C 含 $\sum X_i$ 仍充分）；(2) 几何分布 $f=\exp\{x\ln(1-\theta)+\ln\theta\}$ 为指数族，其余支撑依赖参数；(3) 线性变换保持 MVUE，但非线性 $\hat\theta^2$ 一般有偏，且 MVUE 未必达 RCB 或为 MLE；(4) RCB 公式；(5) $\theta$ 越小则 $\sum X_i$ 越小，故对小值拒绝。
+
+\medskip
+\noindent\textbf{三、计算题}
+
+\smallskip
+\noindent\textbf{第 1 题.}\;
+(1) $f=\exp\{\theta\ln x-\ln x+\ln\theta\}$，$K(x)=\ln x$，属正则指数分布类，完备充分统计量 $\sum_i\ln X_i$（或 $\prod_i X_i$）。\\
+(2) 似然比 $\dfrac{L(\theta_1)}{L(\theta_0)}=\Big(\dfrac{\theta_1}{\theta_0}\Big)^n\exp\Big\{(\theta_1-\theta_0)\sum_i\ln X_i\Big\}$。因 $\theta_1>\theta_0$，它关于 $\sum_i\ln X_i$（亦即 $\prod_i X_i$）严格递增，故 NP 最优拒绝域 $\{L(\theta_1)/L(\theta_0)\ge k\}$ 等价于 $\{\sum_i\ln X_i\ge c'\}=\{\prod_i X_i\ge c\}$。
+
+\smallskip
+\noindent\textbf{第 2 题.}\;
+(1) $\dfrac{L(\theta_1)}{L(\theta_0)}=e^{-n(\theta_1-\theta_0)}\Big(\dfrac{\theta_1}{\theta_0}\Big)^{\sum X_i}$，因 $\theta_1>\theta_0$ 关于 $\sum X_i$ 严格递增，故对每个 $\theta_1>\theta_0$ 最优拒绝域均为 $\{\sum X_i\ge c\}$，与 $\theta_1$ 无关 $\Rightarrow$ UMP。\\
+(2) $H_0$ 下 $\sum_i X_i\sim Po(n\theta_0)$；取最小整数 $c$ 使 $P_{\theta_0}\big(\sum X_i\ge c\big)\le\alpha$（精确控制水平可加随机化）。
+
+\smallskip
+\noindent\textbf{第 3 题.}\;
+(1) $f=\exp\{-\theta x+\ln x+2\ln\theta\}$，$K(x)=x$，属正则指数分布类，完备充分统计量 $Y=\sum_i X_i$。\\
+(2) $l(\theta)=2n\ln\theta+\sum\ln X_i-\theta\sum X_i$，$l'=\tfrac{2n}\theta-\sum X_i=0\Rightarrow\hat\theta=\dfrac{2n}{\sum X_i}$；$\partial^2_\theta\ln f=-2/\theta^2\Rightarrow I(\theta)=2/\theta^2$。\\
+(3) $\E(X)=2/\theta$，$\E(Y)=2n/\theta$，故 $1/\theta$ 的 MVUE $=\boxed{\dfrac{1}{2n}\sum_i X_i}$（$Y$ 完备充分、$Y/2n$ 无偏，由 Lehmann--Scheffé 即 MVUE）。
+
+\smallskip
+\noindent\textbf{第 4 题.}\;
+(1) $f(\mathbf x;\theta)=\theta^{T}(1-\theta)^{n-T}$，因子分解 $\Rightarrow T$ 充分；属指数族故完备，$T\sim Bin(n,\theta)$。\\
+(2) $\E[\bar X(1-\bar X)]=\E\bar X-\E\bar X^2=\theta-\big(\tfrac{\theta(1-\theta)}{n}+\theta^2\big)=\theta(1-\theta)\cdot\tfrac{n-1}{n}\neq\theta(1-\theta)$，故 MLE 有偏（偏小）。\\
+(3) $\E[T(n-T)]=n\E T-\E[T^2]=n^2\theta-\big(n\theta(1-\theta)+n^2\theta^2\big)=n(n-1)\theta(1-\theta)$，故 MVUE $=\boxed{\dfrac{T(n-T)}{n(n-1)}}=\dfrac{n}{n-1}\bar X(1-\bar X)$。
+
+\smallskip
+\noindent\textbf{第 5 题.}\;
+(1) $f=\exp\{-\tfrac1\theta|x|-\ln(2\theta)\}$，$K(x)=|x|$，属正则指数分布类，完备充分统计量 $\sum_i|X_i|$。\\
+(2) $l=-n\ln(2\theta)-\tfrac1\theta\sum|X_i|$，$l'=-\tfrac n\theta+\tfrac1{\theta^2}\sum|X_i|=0\Rightarrow\hat\theta=\dfrac1n\sum_i|X_i|$；$\partial^2_\theta\ln f=\tfrac1{\theta^2}-\tfrac{2|x|}{\theta^3}\Rightarrow I(\theta)=-\E[\cdot]=1/\theta^2$。\\
+(3) $\E|X|=\theta\Rightarrow\dfrac1n\sum|X_i|$ 无偏，且为完备充分统计量的函数，故为 MVUE。$\Var\big(\tfrac1n\sum|X_i|\big)=\tfrac1n\Var(|X|)=\tfrac1n(2\theta^2-\theta^2)=\theta^2/n$；RCB $=\dfrac1{nI(\theta)}=\theta^2/n$，故有效性 $=1$。
+
+\end{document}

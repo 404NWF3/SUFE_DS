@@ -1,0 +1,157 @@
+﻿% !TeX program = xelatex
+% 《数理统计》模拟卷三（含参考答案）
+% 依据 source/数理统计 三份期末样卷的题型与考点命制；题目均为新编，与三份样卷及作业习题均不重复。
+% 编译：xelatex 数理统计-模拟卷三.tex
+\documentclass[12pt,a4paper]{ctexart}
+\usepackage[a4paper,margin=1.5cm]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{enumitem}
+
+\newcommand{\question}[2]{\bigskip\noindent\textbf{#1}\quad（本题 #2 分）\par\nobreak\medskip}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\dd}{\,\mathrm{d}}
+
+\begin{document}
+
+\begin{center}
+  {\LARGE\bfseries 上海财经大学《数理统计》模拟卷三}\\[2mm]
+  {\small（闭卷 \quad 考试时间 120 分钟 \quad 满分 100 分）}\\[1mm]
+  {\small 诚实考试吾心不虚，公平竞争方显实力；考试失败尚有机会，考试舞弊前功尽弃。}
+\end{center}
+
+\vspace{2mm}
+\noindent
+姓名：\underline{\hspace{3.0cm}}\hfill
+学号：\underline{\hspace{3.0cm}}\hfill
+班级：\underline{\hspace{3.0cm}}
+
+
+
+\vspace{1mm}
+\noindent\textbf{注意事项：}本卷共三大题。第一题判断题（10 分），第二题单选题（15 分），第三题计算题（75 分）。计算题须写出关键步骤，只写结论不给满分。
+
+% ======================= 一、判断题 =======================
+\question{一、判断题（每小题 2 分，共 10 分，正确填 T，错误填 F）}{10}
+\begin{enumerate}[label=\arabic*.,leftmargin=2.0em]
+  \item 充分统计量的可逆（一一对应）函数仍是充分统计量。\hfill(\underline{\hspace{1.2cm}})
+  \item 称统计量 $T$ 完备，是指：若 $\E_\theta[u(T)]=0$ 对一切 $\theta$ 成立，则 $u(T)=0$ 几乎处处成立。\hfill(\underline{\hspace{1.2cm}})
+  \item 对正态总体 $N(\theta,\sigma_0^2)$（$\sigma_0$ 已知）检验 $H_0:\theta=\theta_0$，似然比、Wald、得分三种检验的统计量完全相同。\hfill(\underline{\hspace{1.2cm}})
+  \item 样本均值 $\bar X$ 总是总体均值的 MVUE。\hfill(\underline{\hspace{1.2cm}})
+  \item 从属统计量（ancillary statistic）的分布不依赖于参数 $\theta$。\hfill(\underline{\hspace{1.2cm}})
+\end{enumerate}
+
+% ======================= 二、单选题 =======================
+\question{二、单选题（每小题 3 分，共 15 分）}{15}
+\begin{enumerate}[label=\arabic*.,leftmargin=2.0em]
+  \item 设 $X_1,\dots,X_n\sim N(\mu,\sigma^2)$（$\mu,\sigma^2$ 均未知），$(\mu,\sigma^2)$ 的（联合）充分统计量是 \hfill(\underline{\hspace{1.2cm}})\\
+  A. $\bar X$ \quad B. $\big(\sum_i X_i,\ \sum_i X_i^2\big)$ \quad C. $\sum_i X_i^2$ \quad D. $S^2$
+  \item 下列估计量中，\textbf{不是}相应参数 MVUE 的是 \hfill(\underline{\hspace{1.2cm}})\\
+  A. $U[0,\theta]$ 样本，$\frac{n+1}{n}\max_i X_i$ 估 $\theta$ \quad B. $Po(\theta)$ 样本，$\bar X$ 估 $\theta$\\
+  C. $N(\theta,1)$ 样本，$\bar X$ 估 $\theta$ \quad D. $U[0,\theta]$ 样本，$2\bar X$ 估 $\theta$
+  \item 关于极大似然估计，下列说法\textbf{正确}的是 \hfill(\underline{\hspace{1.2cm}})\\
+  A. MLE 一定无偏 \quad B. MLE 一定存在且唯一 \quad C. MLE 具有不变性 \quad D. MLE 一定是充分统计量
+  \item 设总体属正则指数分布类，写成 $f(x;\theta)=\exp\{p(\theta)K(x)+H(x)+q(\theta)\}$，则其完备充分统计量为 \hfill(\underline{\hspace{1.2cm}})\\
+  A. $\sum_i X_i$（恒成立）\quad B. $\sum_i K(X_i)$ \quad C. $\bar X$ \quad D. $\max_i X_i$
+  \item Neyman--Pearson 引理直接适用于 \hfill(\underline{\hspace{1.2cm}})\\
+  A. 简单原假设 vs 简单备择假设 \quad B. 任意复合假设 \quad C. 仅正态总体 \quad D. 仅大样本渐近情形
+\end{enumerate}
+
+% ======================= 三、计算题 =======================
+\bigskip
+\begin{center}\textbf{三、计算题（共 75 分）}\end{center}
+
+\question{1. 正态方差平方的 MVUE}{15}
+设 $X_1,\dots,X_n$ 为取自正态分布 $N(\mu_0,\theta)$ 的样本，其中均值 $\mu_0$ 已知，$\theta>0$（为方差）未知。记 $Y=\sum_{i=1}^n(X_i-\mu_0)^2$。
+\begin{enumerate}[label=(\arabic*),leftmargin=2.2em]
+  \item （5 分）证明 $Y$ 为 $\theta$ 的完备充分统计量，并写出 $Y/\theta$ 的分布。
+  \item （4 分）求 $\theta$ 的 MVUE。
+  \item （6 分）求 $\theta^2$ 的 MVUE。（提示：利用 $\E(Y)$、$\E(Y^2)$。）
+\end{enumerate}
+
+\question{2. 指数总体的单侧 UMP 检验}{15}
+设 $X_1,\dots,X_n$ 为取自指数分布（均值为 $\theta$）的样本，p.d.f.\ 为 $f(x;\theta)=\frac1\theta e^{-x/\theta},\ x>0$。考虑检验
+\[ H_0:\theta=\theta_0 \quad vs \quad H_1:\theta>\theta_0. \]
+\begin{enumerate}[label=(\arabic*),leftmargin=2.2em]
+  \item （8 分）利用 Neyman--Pearson 引理证明：对任意 $\theta_1>\theta_0$，最优拒绝域均形如 $\{\sum_i X_i\ge c\}$，故该检验为 UMP。
+  \item （7 分）利用 $2\sum_i X_i/\theta_0$ 在 $H_0$ 下的分布，写出显著性水平为 $\alpha$ 的拒绝域（用 $\chi^2$ 分位数表示）。
+\end{enumerate}
+
+\question{3. 正态均值的三种检验统计量}{15}
+设 $X_1,\dots,X_n$ 为取自 $N(\theta,\sigma_0^2)$ 的样本，$\sigma_0$ 已知。考虑检验 $H_0:\theta=\theta_0$ vs $H_1:\theta\neq\theta_0$。
+分别求出似然比检验统计量 $\chi_L^2=-2\log\Lambda$、Wald 型 $\chi_W^2=nI(\hat\theta)(\hat\theta-\theta_0)^2$、得分型 $\chi_R^2=\{l'(\theta_0)/\sqrt{nI(\theta_0)}\}^2$，并由此说明三者完全相等。写出显著性水平为 $\alpha$ 的拒绝域。
+
+\question{4. Maxwell 分布的估计}{15}
+设 $X_1,\dots,X_n$ 为取自 Maxwell 分布的样本，p.d.f.\ 为
+\[ f(x;\theta)=\sqrt{\tfrac{2}{\pi}}\,\frac{x^2}{\theta^3}\,e^{-x^2/(2\theta^2)},\quad x>0,\ \theta>0. \]
+已知 $\E(X^2)=3\theta^2$，$\E(X^4)=15\theta^4$。
+\begin{enumerate}[label=(\arabic*),leftmargin=2.2em]
+  \item （5 分）证明该分布属于正则指数分布类，并给出一个完备充分统计量。
+  \item （5 分）求 $\theta^2$ 的 MVUE。
+  \item （5 分）求 Fisher 信息量 $I(\theta)$，并计算 (2) 中 MVUE 的有效性。
+\end{enumerate}
+
+\question{5. 双参数正态的 Rao--Cramér 下界}{15}
+设 $X_1,\dots,X_n$ 为取自 $N(\mu,\sigma^2)$ 的样本，$\mu,\sigma^2$ 均未知。
+\begin{enumerate}[label=(\arabic*),leftmargin=2.2em]
+  \item （6 分）写出 $(\mu,\sigma^2)$ 的 Fisher 信息矩阵，并求 $\mu$ 与 $\sigma^2$ 的无偏估计的 Rao--Cramér 下界。
+  \item （4 分）说明 $\bar X$ 是 $\mu$ 的有效估计量。
+  \item （5 分）已知样本方差 $S^2=\frac{1}{n-1}\sum_i(X_i-\bar X)^2$ 是 $\sigma^2$ 的无偏估计，且 $\Var(S^2)=\dfrac{2\sigma^4}{n-1}$。求 $S^2$ 的有效性。
+\end{enumerate}
+
+\vfill
+\begin{center}\small —— 试卷结束，请检查是否有漏答 ——\end{center}
+
+% =================================================================
+\newpage
+\begin{center}{\Large\bfseries 模拟卷三 \quad 参考答案与评分要点}\end{center}
+
+\noindent\textbf{一、判断题}\quad 1. T \quad 2. T \quad 3. T \quad 4. F \quad 5. T\par
+\smallskip
+\noindent 要点：(1) 一一对应函数保持充分性；(2) 完备性定义；(3) 正态已知方差时三种检验均化为 $n(\bar X-\theta_0)^2/\sigma_0^2$；(4) 反例：$U[0,\theta]$ 中总体均值为 $\theta/2$，$\bar X$ 无偏但非 MVUE（基于 $\max X_i$ 者方差更小）；(5) ancillary 定义。
+
+\medskip
+\noindent\textbf{二、单选题}\quad 1. B \quad 2. D \quad 3. C \quad 4. B \quad 5. A\par
+\smallskip
+\noindent 要点：(1) 正态两参数充分统计量 $(\sum X_i,\sum X_i^2)$；(2) $U[0,\theta]$ 中 $2\bar X$ 无偏但非充分统计量函数，非 MVUE；(3) MLE 不变性；(4) 指数族完备充分统计量为 $\sum K(X_i)$；(5) NP 引理针对简单 vs 简单。
+
+\medskip
+\noindent\textbf{三、计算题}
+
+\smallskip
+\noindent\textbf{第 1 题.}\;
+(1) $f=\exp\{-\tfrac1{2\theta}(x-\mu_0)^2-\tfrac12\ln(2\pi\theta)\}$，$K(x)=(x-\mu_0)^2$，属正则指数分布类，$Y=\sum(X_i-\mu_0)^2$ 完备充分；$Y/\theta\sim\chi^2(n)$。\\
+(2) $\E(Y)=n\theta\Rightarrow$ $\theta$ 的 MVUE $=\dfrac{Y}{n}=\dfrac1n\sum(X_i-\mu_0)^2$。\\
+(3) $\E(Y^2)=\Var(Y)+\E(Y)^2=2n\theta^2+n^2\theta^2=n(n+2)\theta^2$，故 $\theta^2$ 的 MVUE $=\boxed{\dfrac{Y^2}{n(n+2)}}$。
+
+\smallskip
+\noindent\textbf{第 2 题.}\;
+(1) $\dfrac{L(\theta_1)}{L(\theta_0)}=\Big(\dfrac{\theta_0}{\theta_1}\Big)^n\exp\Big\{\big(\tfrac1{\theta_0}-\tfrac1{\theta_1}\big)\sum X_i\Big\}$，因 $\theta_1>\theta_0$ 则 $\tfrac1{\theta_0}-\tfrac1{\theta_1}>0$，关于 $\sum X_i$ 严格递增，故对每个 $\theta_1>\theta_0$ 最优拒绝域均为 $\{\sum X_i\ge c\}\Rightarrow$ UMP。\\
+(2) $H_0$ 下 $2\sum_i X_i/\theta_0\sim\chi^2(2n)$，故水平 $\alpha$ 拒绝域为 $\Big\{\dfrac{2\sum_i X_i}{\theta_0}\ge\chi^2_\alpha(2n)\Big\}$。
+
+\smallskip
+\noindent\textbf{第 3 题.}\;
+$l(\theta)=-\tfrac n2\ln(2\pi\sigma_0^2)-\tfrac1{2\sigma_0^2}\sum(X_i-\theta)^2$，$\hat\theta=\bar X$，$I(\theta)=1/\sigma_0^2$。
+\[
+\chi_L^2=\frac{\sum(X_i-\theta_0)^2-\sum(X_i-\bar X)^2}{\sigma_0^2}=\frac{n(\bar X-\theta_0)^2}{\sigma_0^2},\qquad
+\chi_W^2=nI(\hat\theta)(\bar X-\theta_0)^2=\frac{n(\bar X-\theta_0)^2}{\sigma_0^2},
+\]
+$l'(\theta_0)=\dfrac{n(\bar X-\theta_0)}{\sigma_0^2}$，$\chi_R^2=\dfrac{[l'(\theta_0)]^2}{nI(\theta_0)}=\dfrac{n(\bar X-\theta_0)^2}{\sigma_0^2}$。三者完全相等。拒绝域 $\Big\{\dfrac{n(\bar X-\theta_0)^2}{\sigma_0^2}\ge\chi^2_\alpha(1)\Big\}$（等价 $\{|\bar X-\theta_0|\ge z_{\alpha/2}\sigma_0/\sqrt n\}$）。
+
+\smallskip
+\noindent\textbf{第 4 题.}\;
+(1) $f=\exp\{-\tfrac1{2\theta^2}x^2+2\ln x-3\ln\theta+\tfrac12\ln\tfrac2\pi\}$，$K(x)=x^2$，属正则指数分布类，完备充分统计量 $\sum_i X_i^2$。\\
+(2) $\E(X^2)=3\theta^2\Rightarrow\E(\sum X_i^2)=3n\theta^2$，故 $\theta^2$ 的 MVUE $=\boxed{\dfrac1{3n}\sum_i X_i^2}$。\\
+(3) $\ln f$ 对 $\theta$：$\partial_\theta=-3/\theta+x^2/\theta^3$，$\partial^2_\theta=3/\theta^2-3x^2/\theta^4$，$I(\theta)=-\E[\cdot]=-\big(3/\theta^2-3\cdot3\theta^2/\theta^4\big)=6/\theta^2$。$\theta^2$ 的 RCB $=\dfrac{[(\theta^2)']^2}{nI(\theta)}=\dfrac{4\theta^2}{n\cdot 6/\theta^2}=\dfrac{2\theta^4}{3n}$；MVUE 方差 $=\dfrac{\Var(X^2)}{9n}=\dfrac{15\theta^4-9\theta^4}{9n}=\dfrac{2\theta^4}{3n}$，故有效性 $=1$。
+
+\smallskip
+\noindent\textbf{第 5 题.}\;
+(1) $\ln f=-\tfrac12\ln(2\pi)-\tfrac12\ln\sigma^2-\tfrac{(x-\mu)^2}{2\sigma^2}$。$I_{\mu\mu}=1/\sigma^2$，$I_{\sigma^2\sigma^2}=1/(2\sigma^4)$，交叉项 $I_{\mu\sigma^2}=0$，故
+\[
+I(\mu,\sigma^2)=\begin{pmatrix}1/\sigma^2 & 0\\ 0 & 1/(2\sigma^4)\end{pmatrix},\quad
+\text{RCB}(\mu)=\frac{\sigma^2}{n},\quad \text{RCB}(\sigma^2)=\frac{2\sigma^4}{n}.
+\]
+(2) $\Var(\bar X)=\sigma^2/n=$ RCB$(\mu)$，故 $\bar X$ 有效。\\
+(3) 有效性 $=\dfrac{\text{RCB}(\sigma^2)}{\Var(S^2)}=\dfrac{2\sigma^4/n}{2\sigma^4/(n-1)}=\dfrac{n-1}{n}$。
+
+\end{document}

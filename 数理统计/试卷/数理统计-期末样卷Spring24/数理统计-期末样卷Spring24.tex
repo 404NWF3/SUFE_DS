@@ -1,0 +1,140 @@
+% !TeX program = xelatex
+% 《数理统计》期末样卷（Spring 2024）——无答案重排版
+% 题目内容忠实于 source/数理统计/数理统计_Spring24_期末样卷(1).docx，仅去除参考答案。
+% 编译：xelatex 数理统计-期末样卷Spring24.tex
+\documentclass[12pt,a4paper]{ctexart}
+\usepackage[a4paper,margin=1.8cm]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{enumitem}
+\usepackage{array}
+
+\newcommand{\question}[1]{\bigskip\noindent\textbf{#1}\par\nobreak\medskip}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\mathrm{Var}}
+
+\begin{document}
+
+% ======================= 卷头 =======================
+\begin{center}
+  {\small 诚实考试吾心不虚，公平竞争方显实力；考试失败尚有机会，考试舞弊前功尽弃。}\\[2mm]
+  {\LARGE\bfseries 上海财经大学《数理统计》课程\ 期末样卷}
+\end{center}
+
+\vspace{2mm}
+\noindent
+姓名：\underline{\hspace{2.6cm}}\hfill
+学号：\underline{\hspace{2.6cm}}\hfill
+班级：\underline{\hspace{2.6cm}}
+
+\vspace{3mm}
+
+% ======================= 一、判断题 =======================
+\question{一、判断题（每小题 2 分，共计 10 分）}
+\begin{enumerate}[label=\arabic*.,leftmargin=2.2em]
+  \item 无偏估计量的有效性一定在区间 $[0,1]$ 之中。\hfill(\underline{\hspace{1.2cm}})
+  \item 假设随机变量 $Y$ 的分布中含有参数 $\theta$，且属于一个完备族。如果 $E\{u(Y)\}=0$ 对于某个 $\theta$ 成立，则 $u(Y)=0$ 几乎必然成立。\hfill(\underline{\hspace{1.2cm}})
+  \item 若总体分布中只含有一个参数 $\theta$，则可以找到一个 1 维的充分统计量（即一个统计量就能代表 $\theta$ 的全部信息）。\hfill(\underline{\hspace{1.2cm}})
+  \item 假设总体分布中有未知参数 $\theta$，对数似然函数为 $l(\theta)$，$\theta$ 的 MLE 为 $\widehat{\theta}$。对于双侧检验问题 $H_{0}:\theta=\theta_{0}$\ \ vs\ \ $H_{1}:\theta\neq\theta_{0}$ 使用似然比检验，拒绝域可以取为 $\left\{l\left(\widehat{\theta}\right)-l\left(\theta_{0}\right)\le c\right\}$。\hfill(\underline{\hspace{1.2cm}})
+  \item 假设样本 $X_{1},\ldots,X_{n}$ 取自正态分布 $N(0,\theta)$。对于给定的 $\theta'<\theta''$ 考虑检验问题 $H_{0}:\theta=\theta'\ vs\ H_{1}:\theta=\theta''$，则最优拒绝域形如 $\left\{\sum_{i=1}^{n}X_{i}^{2}\ge c\right\}$。\hfill(\underline{\hspace{1.2cm}})
+\end{enumerate}
+
+% ======================= 二、单选题 =======================
+\question{二、单选题（每小题 3 分，共计 15 分）}
+\begin{enumerate}[label=\arabic*.,leftmargin=2.2em]
+  \item 下列说法正确的是\hfill(\underline{\hspace{1.2cm}})
+  \begin{enumerate}[label=\Alph*.,leftmargin=2.0em]
+    \item Fisher 信息量 $I(\theta)$ 总是非负的
+    \item 参数 $\theta$ 的函数 $g(\theta)$ 的无偏估计量的 Rao-Cramer 下界为 $1/\{nI(\theta)\}$
+    \item 任何 $\theta$ 的估计量的方差都不会低于 Rao-Cramer 下界
+    \item $\theta$ 的有效估计量一定存在
+  \end{enumerate}
+
+  \item 关于参数 $\theta$ 的充分统计量，下列说法正确的是\hfill(\underline{\hspace{1.2cm}})
+  \begin{enumerate}[label=\Alph*.,leftmargin=2.0em]
+    \item 充分统计量唯一存在
+    \item 最小充分统计量唯一存在
+    \item 若 $Y$ 为充分统计量，则 $e^{Y}$ 也是充分统计量
+    \item 若 $Y_{1},Y_{2}$ 均为充分统计量，则 $Y_{1}+Y_{2}$ 也是充分统计量
+  \end{enumerate}
+
+  \item 下面哪种情况中，统计量 $Y$ 不是 $\theta$ 的充分统计量？\hfill(\underline{\hspace{1.2cm}})
+  \begin{enumerate}[label=\Alph*.,leftmargin=2.0em]
+    \item $X_{1},\ldots,X_{n}\sim N(\theta,1)$，$Y=\sum_{i=1}^{n}X_{i}$
+    \item $X_{1},\ldots,X_{n}\sim N(1,\theta)$，$Y=\sum_{i=1}^{n}X_{i}^{2}$
+    \item $X_{1},\ldots,X_{n}\sim U[0,\theta]$，$Y=1/\max(X_{i})$
+    \item $X_{1}\sim Bin(5,\theta)$，$Y=X_{1}$
+  \end{enumerate}
+
+  \item 下列说法\textbf{正确}的是\hfill(\underline{\hspace{1.2cm}})
+  \begin{enumerate}[label=\Alph*.,leftmargin=2.0em]
+    \item $\theta$ 的无偏估计量一定是充分统计量的函数
+    \item 若一个 $\theta$ 的无偏估计量是充分统计量的函数，则它必然是 MVUE
+    \item 若 $\widehat{\theta}$ 为 $\theta$ 的 MVUE，则 $g(\widehat{\theta})$ 一定是函数 $g(\theta)$ 的 MVUE
+    \item 若两个不同的统计量 $\widehat{\theta}$ 与 $\widetilde{\theta}$ 均为 $\theta$ 的无偏估计量，则它们不可能都是 MVUE，即使它们方差相等。
+  \end{enumerate}
+
+  \item 下面 $\theta$ 的估计量中，\textbf{不为} $\theta$ 的 MVUE 的是\hfill(\underline{\hspace{1.2cm}})
+  \begin{enumerate}[label=\Alph*.,leftmargin=2.0em]
+    \item 取自 $Bernoulli(\theta)$ 的样本，估计量 $\widehat{\theta}=\overline{X}$
+    \item 取自 $N(\theta,\sigma_{0}^{2})$ 的样本（$\sigma_{0}^{2}$ 已知），估计量 $\widehat{\theta}=\overline{X}$
+    \item 取自 $Po(\theta)$ 的样本，估计量 $\widehat{\theta}=\overline{X}$
+    \item 取自 $Exp(\theta)$ 的样本，估计量 $\widehat{\theta}=\overline{X}$
+  \end{enumerate}
+\end{enumerate}
+
+% ======================= 三、计算题 =======================
+\bigskip
+\begin{center}\textbf{三、计算题（共计 75 分）}\end{center}
+
+\question{1.（15 分）}
+假设总体 $X$ 是几何分布，它是一个离散型分布，其 p.m.f.\ 为
+\[ f(x;\theta)=\frac{1}{\theta}\left(1-\frac{1}{\theta}\right)^{x-1},\quad x=1,2,3,\ldots \]
+其中 $\theta>1$。已知总体均值与方差分别为 $E(X)=\theta$，$Var(X)=\theta(\theta-1)$。样本为 $X_{1},\ldots,X_{n}$。我们的目标是估计 $\theta$。
+\begin{enumerate}[label=(\arabic*),leftmargin=2.4em]
+  \item （5 分）计算 $\theta$ 的极大似然估计量。
+  \item （5 分）计算 Fisher 信息量 $I(\theta)$。（采用一种方法即可）
+  \item （5 分）计算 (1) 中极大似然估计量的有效性。
+\end{enumerate}
+
+\question{2.（14 分）}
+假设总体是 gamma 分布 $\Gamma(c,\theta)$，其 p.d.f.\ 为
+\[ f(x;\theta)=\frac{1}{\Gamma(c)\theta^{c}}x^{c-1}e^{-x/\theta},\quad x>0 \]
+其中 $c$ \textbf{已知}，$\theta$ \textbf{未知}。样本为 $X_{1},\ldots,X_{n}$。考虑检验问题
+\[ H_{0}:\theta=\theta_{0}\quad vs\quad H_{1}:\theta\neq\theta_{0} \]
+我们用似然比检验来得到一个\textbf{精确（非渐近）}的拒绝域。
+\begin{enumerate}[label=(\arabic*),leftmargin=2.4em]
+  \item （7 分）请写出似然比检验统计量。
+  \item （7 分）令 $Y=\sum_{i=1}^{n}X_{i}$。我们知道 $Y\sim\Gamma(nc,\theta)$，我们把 $\Gamma(nc,\theta)$ 分布的上-$\alpha/2$ 分位数与上-$(1-\alpha/2)$ 分位数分别记为 $\Gamma_{\alpha/2}(nc,\theta)$ 与 $\Gamma_{1-\alpha/2}(nc,\theta)$。请将 (1) 中的拒绝域转化为关于统计量 $Y$ 的区域，并由此写出一个显著水平为 $\alpha$ 的拒绝域。
+\end{enumerate}
+
+\question{3.（12 分）}
+已知总体具有 p.d.f.
+\[ f(x)=\frac{1}{\theta}\exp\left(x-\frac{e^{x}}{\theta}\right),\quad x\in\mathbb{R} \]
+其中 $\theta>0$ 为未知参数。样本为 $X_{1},\ldots,X_{n}$。
+\begin{enumerate}[label=(\arabic*),leftmargin=2.4em]
+  \item （5 分）判断总体分布是否属于指数分布类，并由此得到一个完备充分统计量 $Y$。
+  \item （7 分）对于给定的两个常数 $\theta_{0}<\theta_{1}$，考虑检验问题
+  \[ H_{0}:\theta=\theta_{0}\ vs\ H_{1}:\theta=\theta_{1} \]
+  请给出以 $Y$ 为检验统计量的拒绝域，使它是此检验问题的最优拒绝域。（只需写出拒绝域的形式，不需要确定其临界值。）
+\end{enumerate}
+
+\question{4.（14 分）}
+假设样本 $X_{1},\ldots,X_{n}$ 的概率密度函数为
+\[ f(x;\theta)=\begin{cases} c\theta^{-c}x^{c-1}\exp\left\{-\left(\dfrac{x}{\theta}\right)^{c}\right\}, & x>0 \\[2mm] 0, & \text{其它情况} \end{cases} \]
+其中 $c>0$ \textbf{已知}，$\theta$ 为未知参数。
+\begin{enumerate}[label=(\arabic*),leftmargin=2.4em]
+  \item （7 分）找出 $\theta^{c}$ 的极大似然估计量。
+  \item （7 分）找出 $\theta^{c}$ 的 MVUE。
+\end{enumerate}
+
+\question{5.（20 分）}
+假设 $X_{1},\ldots,X_{n}$ 是来自 $Bin(2,\theta)$ 分布（即试验次数为 2，每次成功概率为 $\theta$ 的二项分布）的样本。希望找到 $g(\theta)=\theta(1+\theta)$ 的 MVUE。
+\begin{enumerate}[label=(\arabic*),leftmargin=2.4em]
+  \item （10 分）找出 $g(\theta)$ 的一个只依赖于 $X_{1}$ 的无偏估计量 $Y_{2}$，再根据 Rao-Blackwell 定理，找出 $g(\theta)=\theta(1+\theta)$ 的 MVUE。（即找到完备充分统计量 $Y_{1}$，再计算 $E\left(Y_{2}\mid Y_{1}=y_{1}\right)$，随后可以得到 MVUE）
+  \item （10 分）通过计算 $E(Y_{1})$ 与 $E(Y_{1}^{2})$，试直接构造一个 $Y_{1}$ 的函数，使其为 $g(\theta)$ 的 MVUE。
+\end{enumerate}
+
+\vfill
+\begin{center}\small —— 试卷结束 ——\end{center}
+
+\end{document}

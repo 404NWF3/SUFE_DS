@@ -1,0 +1,136 @@
+% !TeX program = xelatex
+% 《数理统计》期末样卷（Spring 2026）——无答案重排版
+% 题目内容忠实于 source/数理统计/数理统计_Spring26_期末样卷.docx，仅去除参考答案。
+% 编译：xelatex 数理统计-期末样卷Spring26.tex
+\documentclass[12pt,a4paper]{ctexart}
+\usepackage[a4paper,margin=1.8cm]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{enumitem}
+\usepackage{array}
+
+\newcommand{\question}[2]{\bigskip\noindent\textbf{#1}\par\nobreak\medskip}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\mathrm{Var}}
+
+\begin{document}
+
+% ======================= 卷头 =======================
+\begin{center}
+  {\small 诚实考试吾心不虚，公平竞争方显实力；考试失败尚有机会，考试舞弊前功尽弃。}\\[2mm]
+  {\LARGE\bfseries 上海财经大学《数理统计》课程\ 期末样卷}\\[2mm]
+  {\small 2025 —— 2026 学年第 2 学期}
+\end{center}
+
+\vspace{2mm}
+\noindent
+姓名：\underline{\hspace{2.6cm}}\hfill
+学号：\underline{\hspace{2.6cm}}\hfill
+班级：\underline{\hspace{2.6cm}}
+
+\vspace{3mm}
+\begin{center}
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+题号 & 一 & 二 & 三1 & 三2 & 三3 & 三4 & 三5 & 总分 \\ \hline
+得分 & & & & & & & & \\ \hline
+\end{tabular}
+\end{center}
+
+% ======================= 一、判断题 =======================
+\question{一、判断题（每小题 2 分，共计 10 分）}{10}
+\begin{enumerate}[label=\arabic*.,leftmargin=2.2em]
+  \item 一个参数的充分统计量必然唯一存在。\hfill(\underline{\hspace{1.2cm}})
+  \item 估计量的有效性一定在区间 $[0,1]$ 之内。\hfill(\underline{\hspace{1.2cm}})
+  \item 假设样本 $X_{1},\ldots,X_{n}$ 取自正态分布 $N(\mu_{0},\theta)$，其中 $\mu_{0}$ 已知。考虑假设 $H_{0}:\theta=\theta_{0}$\ \ vs\ \ $H_{1}:\theta\neq\theta_{0}$ 的似然比检验，则得到的拒绝域是一个依赖于统计量 $\overline{X}$ 的拒绝域。\hfill(\underline{\hspace{1.2cm}})
+  \item 对于单参数的正则指数分布类，完备充分统计量一定存在。\hfill(\underline{\hspace{1.2cm}})
+  \item 若有 $\theta$ 的完备充分统计量 $Y$ 的函数 $\varphi(Y)$，它是参数的函数 $g(\theta)$ 的无偏估计量，则 $\varphi(Y)$ 为 $g(\theta)$ 的 MVUE。\hfill(\underline{\hspace{1.2cm}})
+\end{enumerate}
+
+% ======================= 二、单选题 =======================
+\question{二、单选题（每小题 3 分，共计 15 分）}{15}
+\begin{enumerate}[label=\arabic*.,leftmargin=2.2em]
+  \item 下面哪种情况中，统计量 $Y$ 不是 $\theta$ 的充分统计量？\hfill(\underline{\hspace{1.2cm}})
+  \begin{enumerate}[label=\Alph*.,leftmargin=2.0em]
+    \item $X_{1},\ldots,X_{n}\sim N(\theta,1)$，$Y=\sum_{i=1}^{n}X_{i}$
+    \item $X_{1},\ldots,X_{n}\sim N(0,\theta)$，$Y=\left(\sum_{i=1}^{n}X_{i}\right)^{2}$
+    \item $X_{1},\ldots,X_{n}\sim(0,\theta)$ 之间的均匀分布，$Y=1/\max(X_{i})$
+    \item $X_{1}\sim Bin(5,\theta)$，$Y=X_{1}$
+  \end{enumerate}
+
+  \item 假设 $X_{1},\ldots,X_{n}$ 为取自总体的样本。下列哪种情况中，给出的统计量 $Y$ \textbf{不是}未知参数 $\theta$ 的充分统计量\hfill(\underline{\hspace{1.2cm}})
+  \begin{enumerate}[label=\Alph*.,leftmargin=2.0em]
+    \item 总体为正态分布 $N(\mu_{0},\theta)$，其中 $\mu_{0}$ 已知，$Y=\sum_{i=1}^{n}\left(X_{i}-\mu_{0}\right)^{2}$
+    \item 总体为正态分布 $N(\theta,\sigma_{0}^{2})$，其中 $\sigma_{0}$ 已知，$Y=\sum_{i=1}^{n}X_{i}^{2}$
+    \item 总体为二项分布 $Bin(m,\theta)$，其中 $m$ 已知，$Y=\sum_{i=1}^{n}X_{i}$
+    \item 总体为“平移的指数分布”，其 p.d.f.\ 为 $f(x;\theta)=e^{-(x-\theta)},\ x>\theta$，$Y=\min_{1\le i\le n}X_{i}$
+  \end{enumerate}
+
+  \item 下列分布中，\textbf{属于}正则指数分布类的是\hfill(\underline{\hspace{1.2cm}})
+  \begin{enumerate}[label=\Alph*.,leftmargin=2.0em]
+    \item 均匀分布 $U[0,\theta]$
+    \item 拉普拉斯分布，其 p.d.f.\ 为 $f(x;\theta)=\dfrac{1}{2\theta}\exp\!\left(-\dfrac{|x|}{\theta}\right),\ -\infty<x<\infty$
+    \item “平移的指数分布”，其 p.d.f.\ 为 $f(x;\theta)=e^{-(x-\theta)},\ x>\theta$
+    \item 正态分布 $N(\theta,\theta^{2})$
+  \end{enumerate}
+
+  \item 下面 $\theta$ 的估计量中，\textbf{不为} $\theta$ 的 MVUE 的是\hfill(\underline{\hspace{1.2cm}})
+  \begin{enumerate}[label=\Alph*.,leftmargin=2.0em]
+    \item 取自 $U[0,\theta]$ 的样本，估计量 $\widehat{\theta}=\max_{1\le i\le n}X_{i}$
+    \item 取自 $N(\theta,\sigma_{0}^{2})$ 的样本（$\sigma_{0}^{2}$ 已知），估计量 $\widehat{\theta}=\overline{X}$
+    \item 取自 $Po(\theta)$ 的样本，估计量 $\widehat{\theta}=\overline{X}$
+    \item 取自 $Exp(1/\theta)$ 的样本，估计量 $\widehat{\theta}=\overline{X}$
+  \end{enumerate}
+
+  \item 若 $\widehat{\theta}$ 为 $\theta$ 的 MVUE，下列说法\textbf{正确}的是\hfill(\underline{\hspace{1.2cm}})
+  \begin{enumerate}[label=\Alph*.,leftmargin=2.0em]
+    \item $\widehat{\theta}$ 的方差一定能达到 Rao-Cramer 下界
+    \item 若 $\widehat{\theta}$ 为 $\theta$ 的 MVUE，且 $g(\theta)=a+b\theta$，其中 $a,b$ 为已知常数且 $b\neq0$，则 $g(\widehat{\theta})$ 一定为 $g(\theta)$ 的 MVUE
+    \item 若 $\widetilde{\theta}$ 为 $\theta$ 的另一个估计量，则必有 $\Var\left(\widehat{\theta}\right)\le\Var\left(\widetilde{\theta}\right)$
+    \item $\widehat{\theta}$ 一定为 $\theta$ 的 MLE
+  \end{enumerate}
+\end{enumerate}
+
+% ======================= 三、计算题 =======================
+\bigskip
+\begin{center}\textbf{三、计算题（共计 75 分）}\end{center}
+
+\question{1.（15 分）}{15}
+假设总体服从正态分布 $N(\mu,\sigma_{0}^{2})$，其中 $\sigma_{0}^{2}$ 已知，样本为 $X_{1},\ldots,X_{n}$。对于检验问题
+\[ H_{0}:\mu=\mu_{0}\quad v.s.\quad H_{1}:\mu\neq\mu_{0}, \]
+证明：似然比检验等价于 $z$-检验。
+
+\question{2.（15 分）}{15}
+假设 $X_{1},\ldots,X_{n}$ 是来自 $Exp\!\left(\dfrac{1}{\theta^{2}}\right)$ 分布的样本，其中 $\theta>0$。目标是估计 $\theta$。
+\begin{enumerate}[label=(\arabic*),leftmargin=2.4em]
+  \item （5 分）找出 $\theta$ 的极大似然估计。
+  \item （5 分）计算 $\theta$ 的无偏估计的 RCB（即 Rao-Cramer 下界）。
+  \item （5 分）已知 $E\!\left(\sqrt{\overline{X}}\right)=c\theta$，其中 $0<c<\sqrt{\dfrac{4n}{4n+1}}$ 为某一已知常数。由此找出 $\theta$ 的一个无偏估计，并计算其有效性。
+\end{enumerate}
+
+\question{3.（15 分）}{15}
+假设总体具有 p.d.f.
+\[ f(x,\theta)=\theta x^{\theta-1},\quad 0<x<1. \]
+样本为 $X_{1},\ldots,X_{n}$。
+\begin{enumerate}[label=(\arabic*),leftmargin=2.4em]
+  \item （5 分）判断此分布是否属于正则指数分布类。
+  \item （5 分）找出 $\theta$ 的一个完备充分统计量。
+  \item （5 分）对于检验问题 $H_{0}:\theta=1\ v.s.\ H_{1}:\theta=2$，证明最优拒绝域形如 $\left\{\prod_{i=1}^{n}X_{i}\ge c\right\}$。
+\end{enumerate}
+
+\question{4.（15 分）}{15}
+假设 $X_{1},\ldots,X_{n}$ 是来自 Bernoulli 分布 $Bernoulli(\theta)$ 的样本。请找到 $g(\theta)=a\theta^{2}+b\theta+c$ 的 MVUE，其中 $a,b,c$ 均为给定常数。
+
+\question{5.（15 分）}{15}
+假设 $X_{1},\ldots,X_{n}$ 是取自泊松分布 $Po(\theta)$ 的一个样本。其 p.m.f.\ 如下
+\[ P(X=k)=\frac{\theta^{k}}{k!}e^{-\theta},\quad k=0,1,\ldots \]
+希望估计 $g(\theta)=e^{-\theta}+\theta^{2}e^{-\theta}$。
+\begin{enumerate}[label=(\arabic*),leftmargin=2.4em]
+  \item （5 分）找到 $g(\theta)$ 的 MLE。
+  \item （10 分）找到 $g(\theta)$ 的 MVUE。
+\end{enumerate}
+
+\vfill
+\begin{center}\small —— 试卷结束 ——\end{center}
+
+\end{document}
