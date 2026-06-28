@@ -1,0 +1,82 @@
+\documentclass[12pt,a4paper]{article}
+
+% 导言区：导入常用宏包
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+
+% 页面设置
+\geometry{margin=2.5cm}
+\setlength{\parskip}{0.5em}
+\setlength{\parindent}{0pt}
+
+% 定理环境定义（用于证明部分）
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{problem}{Problem}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+% 页眉设置
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Problem Set 5}
+\lhead{\today}
+\cfoot{\thepage}
+
+% 标题信息
+\title{\textbf{Problem Set 5}}
+\author{Algorithms Course}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{problem}[Shortest Path with Wall Removal]
+You have maps of parts of the space station, each starting at a prison exit and ending at the door to an escape pod. The map is represented as a matrix of $0$s and $1$s, where $0$s are passable space and $1$s are impassable walls. The door out of the prison is at the top left $(0,0)$ and the door into an escape pod is at the bottom right $(w-1,h-1)$.
+
+Write an algorithm that generates the length of a shortest path from the prison door to the escape pod, where you are allowed to remove one wall as part of your remodeling plans.
+\end{problem}
+
+\paragraph{Notes on Problem 1:}
+\begin{itemize}
+    \item The map is a $w \times h$ binary matrix $M$ where $M[i][j] \in \{0, 1\}$
+    \item $M[0][0]$ (prison exit) and $M[w-1][h-1]$ (escape pod) are guaranteed to be $0$ (passable)
+    \item You may move in 4 directions: up, down, left, right (assuming standard grid movement)
+    \item The path length is measured by the number of cells traversed
+    \item You are permitted to remove exactly \textbf{one} wall (change one $1$ to $0$) to potentially shorten the path
+\end{itemize}
+
+\vspace{1em}
+
+\begin{problem}[Bottleneck Shortest Path via Modified Dijkstra]
+Consider a directed graph $G = (V, E)$ with nonnegative edge lengths and a starting vertex $s$. Define the \emph{bottleneck} of a path to be the maximum length of one of its edges (as opposed to the sum of the lengths of its edges).
+
+Show how to modify Dijkstra's algorithm to compute, for each vertex $v \in V$, the smallest bottleneck of any $s$-$v$ path. Your algorithm should run in $O(m \cdot n)$ time, where $m$ and $n$ denote the number of edges and vertices, respectively. You must also prove the correctness of your algorithm.
+\end{problem}
+
+\paragraph{Formal Problem Statement:}
+\begin{itemize}
+    \item Input: Directed graph $G = (V, E)$ with edge weights $\ell: E \to \mathbb{R}_{\geq 0}$, source vertex $s \in V$
+    \item Define: For path $P = (e_1, e_2, \ldots, e_k)$, $\text{bottleneck}(P) = \max_{i=1}^{k} \ell(e_i)$
+    \item Goal: Compute $\min\{\text{bottleneck}(P) \mid P \text{ is an } s\text{-}v \text{ path}\}$ for all $v \in V$
+    \item Time Complexity Requirement: $O(m \cdot n)$ where $m = |E|$ and $n = |V|$
+    \item Must provide: Algorithm description + correctness proof
+\end{itemize}
+
+\paragraph{Hint:}
+Consider how to modify the relaxation step in Dijkstra's algorithm. Instead of maintaining distances as sums of edge weights, maintain the minimum bottleneck value found so far. The key operation is:
+\[
+\text{bottleneck}(s \leadsto u \to v) = \max(\text{bottleneck}(s \leadsto u), \ell(u,v))
+\]
+
+\end{document}

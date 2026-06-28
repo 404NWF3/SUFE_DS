@@ -1,0 +1,329 @@
+﻿\documentclass[12pt,a4paper]{article}
+
+\usepackage[UTF8]{ctex}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{fancyvrb}
+\usepackage{lastpage}
+\usepackage{hyperref}
+\usepackage[most]{tcolorbox}
+\usepackage{titlesec}
+\usepackage{tabularx}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{amsthm}
+
+\newtheorem{lemma}{引理}
+
+\hypersetup{
+  hidelinks
+}
+
+\definecolor{mainblue}{RGB}{34,72,112}
+\definecolor{lightblue}{RGB}{241,246,252}
+\definecolor{linegray}{RGB}{210,218,228}
+\definecolor{textgray}{RGB}{90,98,108}
+
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0.35em}
+\setlength{\headheight}{25pt}
+\linespread{1.2}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\textcolor{textgray}{\small 课程作业}}
+\rhead{\textcolor{textgray}{\small \thepage/\pageref*{LastPage}}}
+\cfoot{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{linegray}\leaders\hrule height \headrulewidth\hfill}}
+
+\titleformat{\section}
+  {\Large\bfseries\color{mainblue}}
+  {\thesection}
+  {0.6em}
+  {}
+
+\titleformat{\subsection}
+  {\large\bfseries\color{mainblue}}
+  {\thesubsection}
+  {0.6em}
+  {}
+
+\titlespacing*{\section}{0pt}{1.2em}{0.6em}
+\titlespacing*{\subsection}{0pt}{0.8em}{0.4em}
+
+\newtcolorbox{infobox}{
+  colback=lightblue,
+  colframe=mainblue,
+  boxrule=0.6pt,
+  arc=2mm,
+  left=1.2em,
+  right=1.2em,
+  top=0.8em,
+  bottom=0.8em
+}
+
+\newtcolorbox{answerbox}{
+  breakable,
+  colback=white,
+  colframe=linegray,
+  boxrule=0.5pt,
+  arc=2mm,
+  left=1em,
+  right=1em,
+  top=0.8em,
+  bottom=0.8em
+}
+
+\newcommand{\course}{算法设计与分析}
+\newcommand{\homeworktitle}{第 5 次作业}
+\newcommand{\studentname}{倪伟丰}
+\newcommand{\studentid}{2024110089}
+\newcommand{\classname}{24 大数据 2 班}
+\newcommand{\teacher}{韩恺}
+\newcommand{\duedate}{2026 年 4 月 4 日}
+
+\begin{document}
+
+\begin{center}
+  {\Huge\bfseries\color{mainblue}\homeworktitle}\\[0.6em]
+  {\Large\course}\\[1.2em]
+  {\color{linegray}\rule{0.9\textwidth}{0.8pt}}
+\end{center}
+
+\begin{infobox}
+\begin{tabularx}{\textwidth}{>{\bfseries}p{2.2cm} X >{\bfseries}p{2.2cm} X}
+姓名 & \studentname & 学号 & \studentid \\
+班级 & \classname & 教师 & \teacher \\
+提交日期 & \duedate &  &  \\
+\end{tabularx}
+\end{infobox}
+
+\section{Question 1}
+
+You have maps of parts of the space station, each starting at a prison exit and ending at the door to an escape pod. The map is represented as a matrix of $0$s and $1$s, where $0$s are passable space and $1$s are impassable walls. The door out of the prison is at the top left $(0,0)$ and the door into an escape pod is at the bottom right $(w-1,h-1)$.
+Write an algorithm that generates the length of a shortest path from the prison door to the escape pod, where you are allowed to remove one wall as part of your remodeling plans.
+
+\begin{answerbox}
+\textbf{解答：}
+
+以下统一把状态写成“行、列”坐标 $(x,y)$，其中 $0 \le x < h$，$0 \le y < w$，因此终点记为 $(h-1,w-1)$。为处理“最多移除一堵墙”的限制，可以在普通 BFS 的基础上加入一维状态，记录是否已经使用过拆墙机会。
+
+\begin{enumerate}
+    \item 维护数组 $D[0 \dots h-1][0 \dots w-1][0,1]$，记录从起点到每个状态的最短距离，初始值均为 $+\infty$。
+    \item 定义状态 $(x,y,k)$：当前位置为 $(x,y)$，其中 $k=0$ 表示尚未拆墙，$k=1$ 表示已经拆过一堵墙。
+    \item 维护队列 $Q$ 做 BFS。初始时把 $(0,0,0)$ 入队，并令 $D[0][0][0]=0$。
+    \item 每次从队首取出状态 $(x,y,k)$。若 $(x,y)=(h-1,w-1)$，则直接返回 $D[x][y][k]$。
+    \item 枚举四个相邻位置 $(nx,ny)$。若它在网格内、且 $G[nx][ny]=0$，并且状态 $(nx,ny,k)$ 尚未访问，则将其入队，并令
+    \[
+    D[nx][ny][k] = D[x][y][k] + 1.
+    \]
+    \item 若 $(nx,ny)$ 是墙，即 $G[nx][ny]=1$，并且当前 $k=0$，那么可以把这堵墙作为唯一一次拆墙操作，转移到状态 $(nx,ny,1)$；若该状态尚未访问，则入队并令
+    \[
+    D[nx][ny][1] = D[x][y][0] + 1.
+    \]
+    \item 若队列最终为空仍未到达终点，则返回 $-1$。
+\end{enumerate}
+
+\textbf{时间复杂度：} 状态总数为 $2wh$，因为每个格子对应“未拆墙/已拆墙”两种状态。每个状态至多出队一次，每次只检查 $4$ 个方向，因此总时间复杂度为 $O(wh)$，空间复杂度也为 $O(wh)$。
+
+\begin{algorithm}[H]
+\caption{允许破墙一次的 BFS 算法}
+\label{alg:3d-bfs-chinese}
+\begin{algorithmic}[1]
+\REQUIRE 网格地图 $G$，大小为 $h \times w$，其中 $G[i][j] \in \{0,1\}$
+\STATE 初始化队列 $Q \gets \emptyset$
+\STATE 初始化访问数组 $V[0 \dots h-1][0 \dots w-1][0,1] \gets \textbf{false}$
+\STATE 初始化距离数组 $D[0 \dots h-1][0 \dots w-1][0,1] \gets \infty$
+\STATE $Q.\text{enqueue}((0,0,0))$
+\STATE $V[0][0][0] \gets \textbf{true}$
+\STATE $D[0][0][0] \gets 0$
+\STATE 定义方向数组 $\Delta \gets \{(0,1),(0,-1),(1,0),(-1,0)\}$
+
+\WHILE{$Q \neq \emptyset$}
+    \STATE $(x,y,k) \gets Q.\text{dequeue}()$
+    \IF{$(x,y) = (h-1,w-1)$}
+        \RETURN $D[x][y][k]$
+    \ENDIF
+    \FOR{每个方向 $(dx,dy) \in \Delta$}
+        \STATE $nx \gets x + dx,\quad ny \gets y + dy$
+        \IF{$0 \le nx < h$ \AND $0 \le ny < w$}
+            \IF{$G[nx][ny] = 0$ \AND $\neg V[nx][ny][k]$}
+                \STATE $V[nx][ny][k] \gets \textbf{true}$
+                \STATE $D[nx][ny][k] \gets D[x][y][k] + 1$
+                \STATE $Q.\text{enqueue}((nx,ny,k))$
+            \ELSIF{$G[nx][ny] = 1$ \AND $k = 0$ \AND $\neg V[nx][ny][1]$}
+                \STATE $V[nx][ny][1] \gets \textbf{true}$
+                \STATE $D[nx][ny][1] \gets D[x][y][0] + 1$
+                \STATE $Q.\text{enqueue}((nx,ny,1))$
+            \ENDIF
+        \ENDIF
+    \ENDFOR
+\ENDWHILE
+
+\RETURN $-1$
+\end{algorithmic}
+\end{algorithm}
+
+\textbf{正确性证明概要}
+
+先构造一个状态图 $H$：图中的每个顶点都是一个状态 $(x,y,k)$，其中 $k \in \{0,1\}$ 表示是否已经使用过拆墙机会。若从状态 $(x,y,k)$ 可以一步移动到相邻格 $(nx,ny)$，则在 $H$ 中连一条单位长度的边：若 $G[nx][ny]=0$，则连到 $(nx,ny,k)$；若 $G[nx][ny]=1$ 且 $k=0$，则连到 $(nx,ny,1)$。
+
+\begin{lemma}[状态图与原问题等价]
+原迷宫中任意一条从起点到终点、且至多拆除一堵墙的合法路径，都与状态图 $H$ 中一条从 $(0,0,0)$ 到某个终点状态 $(h-1,w-1,k)$ 的路径一一对应，且两者长度相同。
+\end{lemma}
+
+\begin{proof}
+原问题中每走一步，在状态图中都对应一次状态转移；走到空地时 $k$ 不变，第一次穿过墙时 $k$ 从 $0$ 变为 $1$。反过来，状态图中的每条合法路径也都精确记录了在原网格中的移动过程以及是否使用过拆墙机会。由于每次状态转移都对应原问题中的一步移动，所以两者路径长度完全相同。
+\end{proof}
+
+\begin{lemma}[BFS 最优性]
+对于状态图 $H$ 中的任意状态 $(x,y,k)$，BFS 首次将其出队时，记录的距离 $D[x][y][k]$ 就是从 $(0,0,0)$ 到该状态的最短路径长度。
+\end{lemma}
+
+\begin{proof}
+状态图 $H$ 的每条边长度都为 $1$，因此 BFS 会按距离从小到大逐层扩展。又因为数组 $V$ 保证每个状态至多入队一次，所以某状态第一次出队时的距离就是到该状态的最短距离，这是 BFS 在单位权图上的标准性质。
+\end{proof}
+
+由上面两个引理可知，原问题的答案等于状态图中从 $(0,0,0)$ 到两个终点状态 $(h-1,w-1,0)$、$(h-1,w-1,1)$ 的最短距离中的较小者。算法在首次出队某个终点状态时立刻返回 $D[x][y][k]$；这是正确的，因为 BFS 的出队顺序按距离非减排列，若另一个终点状态有更短距离，它必然会更早出队。若队列为空仍未出队任何终点状态，则两个终点状态都不可达，故原问题无解，返回 $-1$ 正确。
+\end{answerbox}
+
+\section{Question 2}
+
+Consider a directed graph $G = (V, E)$ with nonnegative edge lengths and a starting vertex $s$. Define the \emph{bottleneck} of a path to be the maximum length of one of its edges (as opposed to the sum of the lengths of its edges).
+
+Show how to modify Dijkstra's algorithm to compute, for each vertex $v \in V$, the smallest bottleneck of any $s$-$v$ path. Your algorithm should run in $O(m \cdot n)$ time, where $m$ and $n$ denote the number of edges and vertices, respectively. You must also prove the correctness of your algorithm.
+
+\begin{answerbox}
+\textbf{解答：}
+
+仍然保留 Dijkstra 的贪心思想：维护一个“已确定最优瓶颈值”的顶点集合 $S$，每一轮都把当前瓶颈估计最小的未确定顶点加入 $S$。为了严格满足题目要求的 $O(mn)$ 时间，这里每轮直接扫描全部边来更新跨越割 $(S, V \setminus S)$ 的候选值，而不再额外扫描所有顶点寻找最小值。
+
+\begin{enumerate}
+    \item 维护数组 $B[1 \dots n]$，其中 $B[v]$ 表示当前已知的从 $s$ 到 $v$ 的最小瓶颈估计值；初始时 $B[s]=0$，其余顶点均为 $+\infty$。
+    \item 维护布尔数组 $V[1 \dots n]$，其中 $V[v]=\textbf{true}$ 表示顶点 $v$ 已经被加入集合 $S$，其瓶颈值已经确定。初始时仅令 $V[s]=\textbf{true}$。
+    \item 重复至多 $n-1$ 轮。在每一轮中，扫描所有边 $(x,y)\in E$：
+    \begin{itemize}
+        \item 若 $x \in S$ 且 $y \notin S$，则经过这条边到达 $y$ 的候选瓶颈值为
+        \[
+        \max(B[x], w(x,y)).
+        \]
+        \item 用该值更新 $B[y]$。
+        \item 在本轮扫描过程中，同时记录所有未确定顶点中当前 $B$ 值最小的那个顶点 $u$。
+    \end{itemize}
+    \item 若本轮结束后不存在这样的顶点 $u$，则说明其余顶点都不可达，算法终止。
+    \item 否则将 $u$ 加入 $S$，即令 $V[u]=\textbf{true}$，继续下一轮。
+    \item 算法结束后返回数组 $B$；其中 $B[v]$ 即为从 $s$ 到 $v$ 的最小瓶颈值，不可达时为 $+\infty$。
+\end{enumerate}
+
+\begin{algorithm}[H]
+\caption{最小瓶颈路径算法}
+\label{alg:minimax-dijkstra}
+\begin{algorithmic}[1]
+\REQUIRE 有向图 $G=(V,E)$，非负边权函数 $w$，起点 $s \in V$，其中 $n=|V|, m=|E|$
+\ENSURE 数组 $B[1 \dots n]$，$B[v]$ 表示从 $s$ 到 $v$ 的最小瓶颈值
+
+\STATE 初始化 $B[1 \dots n] \gets +\infty$
+\STATE 初始化 $V[1 \dots n] \gets \textbf{false}$
+\STATE $B[s] \gets 0$
+\STATE $V[s] \gets \textbf{true}$
+
+\FOR{$i = 1$ \TO $n-1$}
+    \STATE $u \gets -1$, $best \gets +\infty$
+    \FOR{每条边 $(x,y) \in E$}
+        \IF{$V[x] = \textbf{true}$ \AND $V[y] = \textbf{false}$}
+            \STATE $cand \gets \max(B[x], w(x,y))$
+            \IF{$cand < B[y]$}
+                \STATE $B[y] \gets cand$
+            \ENDIF
+            \IF{$B[y] < best$}
+                \STATE $best \gets B[y]$, $u \gets y$
+            \ENDIF
+        \ENDIF
+    \ENDFOR
+    \IF{$u = -1$}
+        \STATE \textbf{break}
+    \ENDIF
+    \STATE $V[u] \gets \textbf{true}$
+\ENDFOR
+
+\RETURN $B$
+\end{algorithmic}
+\end{algorithm}
+
+\textbf{算法适用性说明：}
+
+虽然目标函数从“路径边权和最小”变成了“路径最大边权最小”，但贪心定点思想仍然成立：一旦某个未确定顶点在当前所有候选中具有最小的瓶颈估计值，它的值就已经是全局最优的，不会被后续路径继续改进。因此仍可沿用 Dijkstra 的“逐步扩大已确定集合”的框架，只需把松弛公式改为
+\[
+B[y] \gets \min\bigl(B[y], \max(B[x], w(x,y))\bigr).
+\]
+
+\textbf{时间复杂度分析：}
+
+主循环至多执行 $n-1$ 轮；每一轮只扫描全部 $m$ 条边一次，因此主过程耗时为 $O(mn)$。初始化需要 $O(n)$ 时间；当 $m>0$ 时，$O(n)$ 被 $O(mn)$ 吸收，因此总时间复杂度记为 $O(mn)$。若 $m=0$，则算法显然在线性时间 $O(n)$ 内结束。
+
+\textbf{正确性证明：}
+
+记 $\beta(v)$ 为从 $s$ 到 $v$ 的最小瓶颈值。设
+\[
+S = \{v \in V \mid V[v] = \textbf{true}\}.
+\]
+
+\begin{lemma}[循环不变量]
+在每一轮扫描所有边结束后，始终有：
+\begin{enumerate}
+    \item 对任意 $u \in S$，都有 $B[u] = \beta(u)$；
+    \item 对任意 $v \notin S$，$B[v]$ 等于所有满足“除终点 $v$ 外，其余顶点都在 $S$ 中，且最后一条边从 $S$ 进入 $v$”的 $s \to v$ 路径的最小瓶颈值；若不存在这类路径，则 $B[v]=+\infty$。
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+初始化时，$S=\{s\}$，显然 $B[s]=0=\beta(s)$，故第 1 条成立。对任意 $v \neq s$，此时只允许使用形如 $s \to v$ 的单边路径，因此扫描所有边后得到的 $B[v]$ 恰好是所有“最后一条边从 $S$ 进入 $v$”的路径中的最小瓶颈值，第 2 条也成立。
+
+设某轮开始前不变量成立，且本轮选出的顶点为 $u$。把 $u$ 加入 $S$ 后，任何通往未确定顶点 $v$ 的新允许路径，要么原先就只经过旧的 $S$，要么最后一步经过新加入的顶点 $u$ 进入 $v$。算法本轮重新扫描全部边，并用
+\[
+\max(B[x], w(x,y))
+\]
+更新所有从 $S$ 指向 $V \setminus S$ 的边，因此新的 $B[v]$ 仍恰好等于上述那一类路径的最小瓶颈值。不变量得证。
+\end{proof}
+
+\begin{lemma}[贪心选择性质]
+若某一轮选出的顶点 $u \notin S$ 满足 $B[u] = \min_{v \notin S} B[v]$，则有 $B[u] = \beta(u)$。
+\end{lemma}
+
+\begin{proof}
+由循环不变量第 2 条，若 $B[u] < +\infty$，则必定存在一条从 $s$ 到 $u$ 的实际路径，其瓶颈值恰为 $B[u]$，因此
+\[
+\beta(u) \leq B[u].
+\]
+
+另一方面，任取任意一条从 $s$ 到 $u$ 的路径 $P$。设 $x$ 是 $P$ 上第一个不在 $S$ 中的顶点，$y$ 是它在 $P$ 上的前驱，则 $y \in S$。由于 $P$ 的瓶颈值至少为经过边 $(y,x)$ 时的瓶颈值，有
+\[
+\text{bottleneck}(P) \geq \max(\beta(y), w(y,x)).
+\]
+由循环不变量第 1 条，$\beta(y)=B[y]$；再由第 2 条可知
+\[
+B[x] \leq \max(B[y], w(y,x)) = \max(\beta(y), w(y,x)).
+\]
+由于算法在本轮选择的是未确定顶点中 $B$ 值最小者，所以 $B[u] \leq B[x]$。于是
+\[
+B[u] \leq B[x] \leq \max(\beta(y), w(y,x)) \leq \text{bottleneck}(P).
+\]
+这对任意路径 $P$ 都成立，因此 $B[u] \leq \beta(u)$。结合上式 $\beta(u) \leq B[u]$，得到 $B[u] = \beta(u)$。
+\end{proof}
+
+\textbf{算法正确性：}
+
+对加入集合 $S$ 的轮数作归纳。初始时只有 $s$ 在 $S$ 中，且 $B[s]=0=\beta(s)$。若归纳假设当前 $S$ 中所有顶点都已满足 $B[v]=\beta(v)$，则下一轮选出的顶点 $u$ 由上一个引理可知也满足 $B[u]=\beta(u)$。因此，每次加入 $S$ 的顶点都会被正确地定值。算法终止时，所有可达顶点都已经被加入过 $S$ 并正确赋值；未被加入的顶点始终保持 $+\infty$，恰好表示不可达。故最终返回的数组 $B$ 正是题目要求的最小瓶颈值数组，即
+\[
+B[v] = \min_{P:s\leadsto v}\max_{e\in P} w(e).
+\]
+\end{answerbox}
+
+\end{document}

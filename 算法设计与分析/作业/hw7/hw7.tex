@@ -1,0 +1,1656 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[UTF8]{ctex}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{fancyvrb}
+\usepackage{lastpage}
+\usepackage{hyperref}
+\usepackage[most]{tcolorbox}
+\usepackage{titlesec}
+\usepackage{tabularx}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{amsthm}
+
+\newtheorem{lemma}{引理}
+
+\hypersetup{
+  hidelinks
+}
+
+\definecolor{mainblue}{RGB}{34,72,112}
+\definecolor{lightblue}{RGB}{241,246,252}
+\definecolor{linegray}{RGB}{210,218,228}
+\definecolor{textgray}{RGB}{90,98,108}
+
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0.35em}
+\setlength{\headheight}{25pt}
+\linespread{1.2}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\textcolor{textgray}{\small 课程作业}}
+\rhead{\textcolor{textgray}{\small \thepage/\pageref*{LastPage}}}
+\cfoot{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{linegray}\leaders\hrule height \headrulewidth\hfill}}
+
+\titleformat{\section}
+  {\Large\bfseries\color{mainblue}}
+  {\thesection}
+  {0.6em}
+  {}
+
+\titleformat{\subsection}
+  {\large\bfseries\color{mainblue}}
+  {\thesubsection}
+  {0.6em}
+  {}
+
+\titlespacing*{\section}{0pt}{1.2em}{0.6em}
+\titlespacing*{\subsection}{0pt}{0.8em}{0.4em}
+
+\newtcolorbox{infobox}{
+  colback=lightblue,
+  colframe=mainblue,
+  boxrule=0.6pt,
+  arc=2mm,
+  left=1.2em,
+  right=1.2em,
+  top=0.8em,
+  bottom=0.8em
+}
+
+\newtcolorbox{answerbox}{
+  breakable,
+  colback=white,
+  colframe=linegray,
+  boxrule=0.5pt,
+  arc=2mm,
+  left=1em,
+  right=1em,
+  top=0.8em,
+  bottom=0.8em
+}
+
+\newtcolorbox{textbox}{
+  breakable,
+  colback=lightblue,
+  colframe=linegray,
+  boxrule=0.5pt,
+  arc=1mm,
+  left=1em,
+  right=1em,
+  top=0.6em,
+  bottom=0.6em,
+  before skip=0.8em,
+  after skip=0.8em,
+  fontupper=\small\ttfamily,
+  before upper={\setlength{\parindent}{0pt}\raggedright}
+}
+
+\newenvironment{breakablealgorithm}[1]{%
+  \par\addvspace{1em}
+  \refstepcounter{algorithm}%
+  \noindent\textbf{Algorithm~\thealgorithm. #1}\par\nobreak
+  \noindent\rule{\linewidth}{0.4pt}\par\nobreak
+  \vspace{0.4em}
+}{%
+  \par\vspace{0.2em}
+  \noindent\rule{\linewidth}{0.4pt}
+  \par\addvspace{1em}
+}
+
+
+\newcommand{\course}{算法设计与分析}
+\newcommand{\homeworktitle}{第 7 次作业}
+\newcommand{\studentname}{倪伟丰}
+\newcommand{\studentid}{2024110089}
+\newcommand{\classname}{24 大数据 2 班}
+\newcommand{\teacher}{韩恺}
+\newcommand{\duedate}{2026 年 5 月 20 日}
+
+\begin{document}
+
+\begin{center}
+  {\Huge\bfseries\color{mainblue}\homeworktitle}\\[0.6em]
+  {\Large\course}\\[1.2em]
+  {\color{linegray}\rule{0.9\textwidth}{0.8pt}}
+\end{center}
+
+\begin{infobox}
+\begin{tabularx}{\textwidth}{>{\bfseries}p{2.2cm} X >{\bfseries}p{2.2cm} X}
+姓名 & \studentname & 学号 & \studentid \\
+班级 & \classname & 教师 & \teacher \\
+提交日期 & \duedate &  &  \\
+\end{tabularx}
+\end{infobox}
+
+\section{Problem 1}
+
+Consider an $n$-node complete binary tree $T$, where $n=2^d-1$ for some $d$. Each node $v$ of $T$ is labeled with a real number $x_v$. You may assume that the real numbers labeling the nodes are all distinct. A node $v$ of $T$ is a local minimum if the label $x_v$ is less than the label $x_w$ for all nodes $w$ that are joined to $v$ by an edge.
+
+You are given such a complete binary tree $T$, but the labeling is only specified in the following implicit way: for each node $v$, you can determine the value $x_v$ by probing the node $v$. Show how to find a local minimum of $T$ using only $O(\log n)$ probes to the nodes of $T$.
+
+
+\begin{answerbox}
+\textbf{解答：}
+
+给定一棵有
+\[
+n = 2^d - 1
+\]
+个结点的完全二叉树 $T$。因此，这棵树共有 $d$ 层，高度为
+\[
+d-1 = O(\log n).
+\]
+
+每个结点 $v$ 都有一个互不相同的实数标签 $x_v$。但是算法一开始并不知道所有结点的标签值，只能通过探测某个结点 $v$ 来获得 $x_v$。
+
+如果一个结点 $v$ 满足
+\[
+x_v < x_w
+\]
+对所有与 $v$ 相邻的结点 $w$ 都成立，则称 $v$ 是一个局部最小结点。
+
+
+我们发现：如果当前结点不是局部最小结点，那么一定存在一个相邻结点的标签值比它更小。我们可以沿着标签值严格下降的方向移动。由于树的高度只有 $O(\log n)$，如果每次都向下一层移动，那么最多只会移动 $O(\log n)$ 次。所以给出以下的算法：
+
+\textbf{算法描述}
+
+算法从根结点开始。
+
+设当前结点为 $v$。首先探测 $v$，得到 $x_v$。然后检查 $v$ 的孩子结点。
+
+如果 $v$ 是叶子结点，则直接返回 $v$。如果 $v$ 不是叶子结点，则探测它的左孩子 $L$ 和右孩子 $R$，得到 $x_L$ 和 $x_R$。
+
+若
+\[
+x_v < x_L
+\quad \text{且} \quad
+x_v < x_R,
+\]
+则 $v$ 小于它的所有孩子。又因为算法从父结点移动到当前结点时，一定是沿着标签值下降的方向移动，所以如果 $v$ 有父结点，其父结点的标签值也大于 $x_v$。因此此时 $v$ 是局部最小结点，可以返回。
+
+否则，至少有一个孩子的标签值小于 $x_v$。算法选择标签值更小的那个孩子继续向下移动。
+
+也就是说，如果
+\[
+x_L < x_R,
+\]
+则令
+\[
+v \gets L;
+\]
+否则令
+\[
+v \gets R.
+\]
+
+不断重复这个过程，直到找到局部最小结点。
+
+\textbf{正确性证明}
+
+下面证明该算法一定能返回一个局部最小结点。
+
+在每次循环开始时，若当前结点为 $v$，并且 $v$ 不是根结点，则 $v$ 的父结点 $p$ 满足
+\[
+x_v < x_p.
+\]
+
+算法开始时，当前结点是根结点。根结点没有父结点，因此循环不变式显然成立。
+
+假设某次循环开始时循环不变式成立。
+
+若当前结点 $v$ 不是局部最小结点，并且存在孩子结点的标签值小于 $x_v$，算法会选择标签值更小的孩子继续向下移动。
+
+设算法移动到孩子结点 $u$。根据算法的选择方式，有
+\[
+x_u < x_v.
+\]
+移动之后，$v$ 成为 $u$ 的父结点，因此新的当前结点 $u$ 满足
+\[
+x_u < x_v.
+\]
+所以循环不变式仍然成立。
+
+算法在某个结点 $v$ 停止时，有两种情况。
+
+第一种情况是 $v$ 是叶子结点。由于叶子结点没有孩子，并且由循环不变式可知，如果 $v$ 有父结点 $p$，则
+\[
+x_v < x_p.
+\]
+因此 $v$ 小于它唯一可能存在的相邻结点，所以 $v$ 是局部最小结点。
+
+第二种情况是 $v$ 不是叶子结点，并且算法判断得到
+\[
+x_v < x_L
+\quad \text{且} \quad
+x_v < x_R,
+\]
+其中 $L$ 和 $R$ 分别是 $v$ 的左右孩子。
+
+同时，由循环不变式可知，如果 $v$ 有父结点 $p$，则
+\[
+x_v < x_p.
+\]
+因此，$v$ 的所有相邻结点的标签值都大于 $x_v$。所以 $v$ 是局部最小结点。
+
+综上，算法返回的结点一定是局部最小结点。
+
+\textbf{探测次数分析}
+
+这棵完全二叉树有
+\[
+n = 2^d - 1
+\]
+个结点，因此
+\[
+d = \log_2(n+1).
+\]
+
+树的高度为
+\[
+d-1 = O(\log n).
+\]
+
+算法从根结点开始，每次只向下一层移动。由于最多移动 $d-1$ 次，所以循环最多执行 $O(\log n)$ 次。
+
+在每一层中，算法最多探测当前结点的两个孩子。当前结点的标签值在上一轮中已经探测过，因此不需要重复探测。
+
+所以总探测次数至多为
+\[
+1 + 2(d-1) = O(d) = O(\log n).
+\]
+
+因此，该算法只需要 $O(\log n)$ 次探测即可找到一个局部最小结点。
+
+
+\begin{breakablealgorithm}{Find a Local Minimum in a Complete Binary Tree}
+\begin{algorithmic}[1]
+\Require A complete binary tree $T$ with distinct labels, accessible by probes
+\Ensure A local minimum node of $T$
+
+\State $v \gets \operatorname{root}(T)$
+\State Probe $v$ to obtain $x_v$
+
+\While{$v$ is not a leaf}
+    \State Let $L$ and $R$ be the left and right children of $v$
+    \State Probe $L$ and $R$ to obtain $x_L$ and $x_R$
+
+    \If{$x_v < x_L$ and $x_v < x_R$}
+        \State \Return $v$
+    \ElsIf{$x_L < x_R$}
+        \State $v \gets L$
+        \State $x_v \gets x_L$
+    \Else
+        \State $v \gets R$
+        \State $x_v \gets x_R$
+    \EndIf
+\EndWhile
+
+\State \Return $v$
+\end{algorithmic}
+\end{breakablealgorithm}
+
+通过从根结点出发，每次沿着标签值更小的孩子向下移动，我们可以在一条从根到叶的路径上寻找局部最小结点。由于完全二叉树的高度为 $O(\log n)$，并且每一层最多只需要常数次探测，因此算法的探测次数为
+\[
+O(\log n).
+\]
+\end{answerbox}
+
+\section{Problem 2}
+
+(Exercise 6.6 from the textbook) In a word processor, the goal of ``pretty-printing'' is to take text with a ragged right margin, like this,
+
+\begin{textbox}
+Call me Ishmael.\\
+Some years ago,\\
+never mind how long precisely,\\
+having little or no money in my purse,\\
+and nothing particular to interest me on shore,\\
+I thought I would sail about a little\\
+and see the watery part of the world.
+\end{textbox}
+
+and turn it into text whose right margin is as ``even'' as possible, like this.
+
+\begin{textbox}
+Call me Ishmael. Some years ago, never\\
+mind how long precisely, having little\\
+or no money in my purse, and nothing\\
+particular to interest me on shore, I\\
+thought I would sail about a little\\
+and see the watery part of the world.
+\end{textbox}
+
+To make this precise enough for us to start thinking about how to write a pretty-printer for text, we need to figure out what it means for the right margins to be ``even''. So suppose our text consists of a sequence of words, $W=\{w_1,w_2,\ldots,w_n\}$, where $w_i$ consists of $c_i$ characters. We have a maximum line length of $L$. We will assume we have a fixed-width font and ignore issues of punctuation or hyphenation.
+
+A formatting of $W$ consists of a partition of the words in $W$ into lines. In the words assigned to a single line, there should be a space after each word except the last; and so if $w_j,w_{j+1},\ldots,w_k$ are assigned to one line, then we should have
+\[
+\left[\sum_{i=j}^{k-1}(c_i+1)\right]+c_k\le L.
+\]
+We will call an assignment of words to a line valid if it satisfies this inequality. The difference between the left-hand side and the right-hand side will be called the slack of the line--that is, the number of spaces left at the right margin.
+
+Give an efficient algorithm to find a partition of a set of words $W$ into valid lines, so that the sum of the squares of the slacks of all lines (including the last line) is minimized.
+
+\begin{answerbox}
+\textbf{解答：}
+
+给定一段文本，其由按顺序排列的 $n$ 个单词组成：
+\[
+W = (w_1,w_2,\ldots,w_n),
+\]
+其中单词 $w_i$ 的字符数为 $c_i$。每一行的最大长度为 $L$。如果将连续的单词
+\[
+w_j,w_{j+1},\ldots,w_k
+\]
+放在同一行中，那么这些单词本身一共占用
+\[
+\sum_{i=j}^{k} c_i
+\]
+个字符；同时，相邻单词之间需要一个空格，因此还需要
+\[
+k-j
+\]
+个空格。
+
+所以这一行实际占用的长度为
+\[
+\sum_{i=j}^{k} c_i + (k-j).
+\]
+
+该行是合法的，当且仅当
+\[
+\sum_{i=j}^{k} c_i + (k-j) \le L.
+\]
+
+这一行的剩余空白，即 slack，定义为
+\[
+\operatorname{slack}(j,k)
+=
+L-\left(\sum_{i=j}^{k} c_i + (k-j)\right).
+\]
+
+题目要求将所有单词划分为若干行，每一行包含连续的一段单词，并且每一行都合法，使得所有行的 slack 的平方和最小，即最小化
+\[
+\sum_{\text{line }(j,k)} \operatorname{slack}(j,k)^2.
+\]
+
+由于每一行都必须由原文本中连续的一段单词构成，因此一次排版实际上是在单词序列
+\[
+w_1,w_2,\ldots,w_n
+\]
+中选择若干个断点。
+
+考虑最优排版中最后一行的形式。假设最后一行包含单词
+\[
+w_j,w_{j+1},\ldots,w_i.
+\]
+那么前面的单词
+\[
+w_1,w_2,\ldots,w_{j-1}
+\]
+也必须被最优地排版。否则，如果前 $j-1$ 个单词的排版不是最优的，我们就可以用更优的排版替换它，从而得到总代价更小的整体排版，这与整体最优性矛盾。
+
+因此，问题具有最优子结构，可以用动态规划求解。
+
+为了快速计算任意一段单词的长度，定义前缀和：
+\[
+S_0 = 0,
+\qquad
+S_i = \sum_{t=1}^{i} c_t,\quad 1\le i\le n.
+\]
+于是单词 $w_j,\ldots,w_k$ 的字符总数为
+\[
+S_k-S_{j-1}.
+\]
+因此这一行的长度为
+\[
+S_k-S_{j-1}+(k-j).
+\]
+
+\textbf{动态规划状态定义}
+
+令
+\[
+\operatorname{OPT}(i)
+\]
+表示将前 $i$ 个单词
+\[
+w_1,w_2,\ldots,w_i
+\]
+划分为合法行时，能够得到的最小 slack 平方和。
+
+边界条件为
+\[
+\operatorname{OPT}(0)=0.
+\]
+
+对任意 $1\le j\le i$，定义将单词 $w_j,\ldots,w_i$ 放在同一行时的行长度为
+\[
+\ell(j,i)=S_i-S_{j-1}+(i-j).
+\]
+
+如果
+\[
+\ell(j,i)\le L,
+\]
+则这一行合法，其代价为
+\[
+\operatorname{cost}(j,i)
+=
+\left(L-\ell(j,i)\right)^2.
+\]
+
+如果
+\[
+\ell(j,i)>L,
+\]
+则这一行不合法，令
+\[
+\operatorname{cost}(j,i)=+\infty.
+\]
+
+于是动态规划转移方程为
+\[
+\operatorname{OPT}(i)
+=
+\min_{1\le j\le i}
+\left\{
+\operatorname{OPT}(j-1)+\operatorname{cost}(j,i)
+\right\}.
+\]
+
+这里的含义是：枚举最后一行的起始单词 $w_j$。如果最后一行是
+\[
+w_j,w_{j+1},\ldots,w_i,
+\]
+那么前面的单词
+\[
+w_1,\ldots,w_{j-1}
+\]
+的最小排版代价为 $\operatorname{OPT}(j-1)$，最后一行的代价为 $\operatorname{cost}(j,i)$。取所有可能的 $j$ 中的最小值即可。
+
+为了恢复具体的断行方案，可以额外记录
+\[
+\operatorname{prev}(i)
+\]
+表示在计算 $\operatorname{OPT}(i)$ 时取得最小值的最后一行起点 $j$。
+
+\textbf{算法正确性证明}
+
+下面证明上述动态规划算法可以得到最优排版。
+
+\paragraph{引理 1：最优子结构}
+
+设前 $i$ 个单词的某个最优排版中，最后一行为
+\[
+w_j,w_{j+1},\ldots,w_i.
+\]
+那么前 $j-1$ 个单词的排版一定是前 $j-1$ 个单词的最优排版。
+
+\paragraph{证明}
+
+反设前 $j-1$ 个单词的排版不是最优排版。则存在另一种对
+\[
+w_1,\ldots,w_{j-1}
+\]
+的合法排版，其总代价更小。
+
+将这个更优的前缀排版与最后一行
+\[
+w_j,\ldots,w_i
+\]
+组合起来，就得到了一种对前 $i$ 个单词的合法排版，并且总代价比原来的最优排版更小。
+
+这与原排版是前 $i$ 个单词的最优排版矛盾。因此，前 $j-1$ 个单词的排版必须是最优的。
+
+\[
+\Box
+\]
+
+\paragraph{引理 2：动态规划转移覆盖了所有可能的最优排版}
+
+对前 $i$ 个单词的任意合法排版，其最后一行必然为某一段连续单词
+\[
+w_j,w_{j+1},\ldots,w_i
+\]
+其中 $1\le j\le i$，并且该行合法。
+
+动态规划转移
+\[
+\operatorname{OPT}(i)
+=
+\min_{1\le j\le i}
+\left\{
+\operatorname{OPT}(j-1)+\operatorname{cost}(j,i)
+\right\}
+\]
+正是枚举了所有可能的最后一行起点 $j$。
+
+因此，动态规划不会遗漏任何一种可能的最优排版。
+
+\paragraph{定理：算法返回的排版总代价最小}
+
+\paragraph{证明}
+
+对 $i$ 进行数学归纳。
+
+当 $i=0$ 时，没有单词需要排版，总代价为
+\[
+\operatorname{OPT}(0)=0,
+\]
+显然最优。
+
+假设对于所有 $t<i$，$\operatorname{OPT}(t)$ 都已经正确表示前 $t$ 个单词的最小排版代价。现在考虑前 $i$ 个单词。
+
+任意一个最优排版的最后一行必然是
+\[
+w_j,\ldots,w_i
+\]
+对于某个 $1\le j\le i$。根据引理 1，前 $j-1$ 个单词必须采用最优排版，其代价为
+\[
+\operatorname{OPT}(j-1).
+\]
+最后一行的代价为
+\[
+\operatorname{cost}(j,i).
+\]
+所以该排版总代价为
+\[
+\operatorname{OPT}(j-1)+\operatorname{cost}(j,i).
+\]
+
+动态规划对所有可能的 $j$ 取最小值，因此一定能得到前 $i$ 个单词的最小排版代价。
+
+由数学归纳法可知，$\operatorname{OPT}(n)$ 是整个文本的最小排版代价。
+
+\[
+\Box
+\]
+
+\textbf{时间复杂度分析}
+
+首先计算前缀和数组 $S$，需要
+\[
+O(n)
+\]
+时间。
+
+然后对每个 $i=1,2,\ldots,n$，算法枚举最后一行的起点
+\[
+j=1,2,\ldots,i.
+\]
+因此总枚举次数为
+\[
+\sum_{i=1}^{n} i = O(n^2).
+\]
+
+每次枚举中，借助前缀和可以在 $O(1)$ 时间内计算
+\[
+\ell(j,i)
+\]
+和
+\[
+\operatorname{cost}(j,i).
+\]
+
+因此总时间复杂度为
+\[
+O(n^2).
+\]
+
+动态规划数组 $\operatorname{OPT}$、前缀和数组 $S$ 和记录断点的数组 $\operatorname{prev}$ 都需要 $O(n)$ 空间，因此空间复杂度为
+\[
+O(n).
+\]
+
+\textbf{伪代码}
+
+\begin{breakablealgorithm}{Pretty-Print}
+\begin{algorithmic}[1]
+\Require Word lengths $c_1,c_2,\ldots,c_n$ and maximum line length $L$
+\Ensure A partition of the words into valid lines minimizing the sum of squared slacks
+
+\State $S[0]\gets 0$
+\For{$i=1$ to $n$}
+    \State $S[i]\gets S[i-1]+c_i$
+\EndFor
+
+\State $\operatorname{OPT}[0]\gets 0$
+
+\For{$i=1$ to $n$}
+    \State $\operatorname{OPT}[i]\gets +\infty$
+    \State $\operatorname{prev}[i]\gets -1$
+
+    \For{$j=1$ to $i$}
+        \State $\ell \gets S[i]-S[j-1]+(i-j)$
+
+        \If{$\ell \le L$}
+            \State $\operatorname{slack}\gets L-\ell$
+            \State $q\gets \operatorname{OPT}[j-1]+\operatorname{slack}^2$
+
+            \If{$q<\operatorname{OPT}[i]$}
+                \State $\operatorname{OPT}[i]\gets q$
+                \State $\operatorname{prev}[i]\gets j$
+            \EndIf
+        \EndIf
+    \EndFor
+\EndFor
+\State $\textsc{Lines}\gets$ empty list
+\State $i\gets n$
+
+\While{$i>0$}
+    \State $j\gets \operatorname{prev}[i]$
+    \State Add line $(j,i)$ to $\textsc{Lines}$
+    \State $i\gets j-1$
+\EndWhile
+
+\State Reverse $\textsc{Lines}$
+\State \Return $\textsc{Lines}$
+
+\end{algorithmic}
+\end{breakablealgorithm}
+
+
+该问题的关键在于观察到最优排版的最后一行一定是某个连续单词区间
+\[
+w_j,\ldots,w_i.
+\]
+一旦最后一行确定，前面的单词必须被最优排版。因此可以定义
+\[
+\operatorname{OPT}(i)
+\]
+表示前 $i$ 个单词的最优排版代价，并通过枚举最后一行的起点得到转移方程：
+\[
+\operatorname{OPT}(i)
+=
+\min_{1\le j\le i}
+\left\{
+\operatorname{OPT}(j-1)
++
+\left(
+L-\left(S_i-S_{j-1}+i-j\right)
+\right)^2
+\right\},
+\]
+其中只考虑满足
+\[
+S_i-S_{j-1}+i-j\le L
+\]
+的 $j$。
+
+该算法的时间复杂度为
+\[
+O(n^2),
+\]
+空间复杂度为
+\[
+O(n).
+\]
+
+\end{answerbox}
+
+\section{Problem 3}
+
+A large collection of mobile wireless devices can naturally form a network in which the devices are the nodes, and two devices $x$ and $y$ are connected by an edge if they are able to directly communicate with each other (e.g., by a short-range radio link). Such a network of wireless devices is a highly dynamic object, in which edges can appear and disappear over time as the devices move around. For instance, an edge $(x,y)$ might disappear as $x$ and $y$ move far apart from each other and lose the ability to communicate directly.
+
+In a network that changes over time, it is natural to look for efficient ways of maintaining a path between certain designated nodes. There are two opposing concerns in maintaining such a path: we want paths that are short, but we also do not want to have to change the path frequently as the network structure changes. (That is, we'd like a single path to continue working, if possible, even as the network gains and loses edges.) Here is a way we might model this problem.
+
+Suppose we have a set of mobile nodes $V$, and at a particular point in time there is a set $E_0$ of edges among these nodes. As the nodes move, the set of edges changes from $E_0$ to $E_1$, then to $E_2$, then to $E_3$, and so on, to an edge set $E_b$. For $i=0,1,2,\ldots,b$, let $G_i$ denote the graph $(V,E_i)$. So if we were to watch the structure of the network on the nodes $V$ as a ``time lapse,'' it would look precisely like the sequence of graphs $G_0,G_1,G_2,\ldots,G_{b-1},G_b$. We will assume that each of these graphs $G_i$ is connected. Now consider two particular nodes $s,t\in V$. For an $s$-$t$ path $P$ in one of the graphs $G_i$, we define the length of $P$ to be simply the number of edges in $P$, and we denote this $\ell(P)$. Our goal is to produce a sequence of paths $P_0,P_1,\ldots,P_b$ so that for each $i$, $P_i$ is an $s$-$t$ path in $G_i$. We want the paths to be relatively short. We also do not want there to be too many changes---points at which the identity of the path switches. Formally, we define $\operatorname{changes}(P_0,P_1,\ldots,P_b)$ to be the number of indices $i$ $(0\le i\le b-1)$ for which $P_i\ne P_{i+1}$.
+
+Fix a constant $K>0$. We define the cost of the sequence of paths $P_0,P_1,\ldots,P_b$ to be
+\[
+\operatorname{cost}(P_0,P_1,\ldots,P_b)
+=\sum_{i=0}^{b}\ell(P_i)+K\cdot \operatorname{changes}(P_0,P_1,\ldots,P_b).
+\]
+
+\begin{enumerate}[label=(\alph*), leftmargin=2em]
+\item Suppose it is possible to choose a single path $P$ that is an $s$-$t$ path in each of the graphs $G_0,G_1,\ldots,G_b$. Give a polynomial-time algorithm to find the shortest such path.
+
+\item Give a polynomial-time algorithm to find a sequence of paths $P_0,P_1,\ldots,P_b$ of minimum cost, where $P_i$ is an $s$-$t$ path in $G_i$ for $i=0,1,\ldots,b$.
+\end{enumerate}
+
+\begin{answerbox}
+\textbf{解答：}
+
+我们有同一个结点集合 $V$，但边集随时间变化：
+\[
+G_i=(V,E_i),\qquad i=0,1,\ldots,b.
+\]
+每个 $G_i$ 都是连通图。给定两个固定结点 $s,t\in V$，我们需要在每个时刻 $i$ 选择一条 $s$-$t$ 路径 $P_i$，其中
+\[
+P_i \subseteq G_i.
+\]
+
+路径 $P_i$ 的长度记为 $\ell(P_i)$，即路径中边的条数。整条路径序列的代价为
+\[
+\operatorname{cost}(P_0,P_1,\ldots,P_b)
+=
+\sum_{i=0}^{b}\ell(P_i)
++
+K\cdot \operatorname{changes}(P_0,P_1,\ldots,P_b),
+\]
+其中 $\operatorname{changes}$ 表示相邻两个时刻路径发生变化的次数：
+\[
+\operatorname{changes}(P_0,P_1,\ldots,P_b)
+=
+\left|\{i:0\le i\le b-1,\ P_i\neq P_{i+1}\}\right|.
+\]
+
+
+也就是说，路径要短而且不要频繁变化。
+
+\textbf{Part (a)：寻找所有时刻都可用的最短路径}
+
+
+如果存在一条路径 $P$，它在所有图
+\[
+G_0,G_1,\ldots,G_b
+\]
+中都是 $s$-$t$ 路径，那么这条路径中的每一条边都必须同时出现在所有边集中。
+
+因此，我们构造交图
+\[
+H=\left(V,\bigcap_{i=0}^{b}E_i\right),
+\]
+
+于是，一条路径 $P$ 同时存在于所有 $G_i$ 中，当且仅当 $P$ 是 $H$ 中的一条 $s$-$t$ 路径。
+
+所以问题转化为：在无权图 $H$ 中寻找一条最短 $s$-$t$ 路径。这个问题可以用 BFS 在多项式时间内解决。
+
+\textbf{正确性证明}
+
+设 $P$ 是一条在所有 $G_i$ 中都存在的 $s$-$t$ 路径。由于 $P$ 的每条边都属于每个 $E_i$，所以
+\[
+P\subseteq \bigcap_{i=0}^{b}E_i=E^*.
+\]
+因此 $P$ 是 $H$ 中的一条 $s$-$t$ 路径。
+
+反过来，如果 $P$ 是 $H$ 中的一条 $s$-$t$ 路径，那么 $P$ 的每条边都属于
+\[
+E^*=\bigcap_{i=0}^{b}E_i,
+\]
+所以 $P$ 的每条边都出现在每个 $E_i$ 中。因此 $P$ 在每个 $G_i$ 中都是一条 $s$-$t$ 路径。
+
+所以，所有在每个 $G_i$ 中都可用的 $s$-$t$ 路径，恰好就是交图 $H$ 中的 $s$-$t$ 路径。BFS 能在无权图中找到最短路径，因此该算法返回的路径就是所有时刻都可用的最短路径。
+
+\textbf{伪代码}
+
+\begin{breakablealgorithm}{Shortest Common Path}
+\begin{algorithmic}[1]
+\Require Graphs $G_i=(V,E_i)$ for $i=0,1,\ldots,b$, nodes $s,t$
+\Ensure The shortest $s$-$t$ path that appears in every $G_i$
+
+\State $E^*\gets E_0$
+\For{$i=1$ to $b$}
+    \State $E^*\gets E^*\cap E_i$
+\EndFor
+
+\State Construct $H=(V,E^*)$
+\State Run BFS from $s$ in $H$
+\State Return the shortest path from $s$ to $t$ found by BFS
+\end{algorithmic}
+\end{breakablealgorithm}
+
+\textbf{Part (b)：寻找总代价最小的路径序列}
+
+对于一个最优路径序列
+\[
+P_0,P_1,\ldots,P_b,
+\]
+可以把时间轴划分为若干个连续区间，使得在每个区间内使用同一条路径。
+
+例如：
+\[
+P_0=P_1=P_2,\qquad
+P_3=P_4,\qquad
+P_5=P_6=P_7.
+\]
+这就对应时间区间
+\[
+[0,2],\quad [3,4],\quad [5,7].
+\]
+
+如果在时间区间 $[i,j]$ 内一直使用同一条路径 $P$，那么 $P$ 必须同时存在于
+\[
+G_i,G_{i+1},\ldots,G_j
+\]
+中。也就是说，$P$ 必须是交图
+\[
+H_{i,j}=\left(V,\bigcap_{r=i}^{j}E_r\right)
+\]
+中的一条 $s$-$t$ 路径。
+
+因此，对每一个时间区间 $[i,j]$，我们可以先计算出在整个区间内都可用的最短 $s$-$t$ 路径长度。
+
+定义
+\[
+L(i,j)
+\]
+为交图
+\[
+H_{i,j}=\left(V,\bigcap_{r=i}^{j}E_r\right)
+\]
+中最短 $s$-$t$ 路径的长度。如果不存在这样的路径，则令
+\[
+L(i,j)=+\infty.
+\]
+
+如果在区间 $[i,j]$ 中一直使用同一条最短可用路径，则路径长度代价为
+\[
+(j-i+1)L(i,j).
+\]
+
+如果时间轴被划分为多个区间，那么每两个相邻区间之间会发生一次路径变化，因此每个分界点还要支付一次 $K$ 的切换代价。
+
+\textbf{动态规划状态与转移方程}
+
+定义
+\[
+\operatorname{OPT}(j)
+\]
+表示对于时间
+\[
+0,1,\ldots,j
+\]
+选择路径序列所能得到的最小总代价。
+
+% 为了统一写法，令
+% \[
+% \operatorname{OPT}(-1)=-K.
+% \]
+
+考虑最优解中最后一个连续使用同一路径的时间区间。假设这个区间是
+\[
+[i,j].
+\]
+那么在时间 $i,i+1,\ldots,j$ 中使用同一条路径，其最小长度代价为
+\[
+(j-i+1)L(i,j).
+\]
+
+在时间 $0,1,\ldots,i-1$ 上的最优代价为
+\[
+\operatorname{OPT}(i-1).
+\]
+
+如果 $i>0$，则在时间 $i-1$ 和 $i$ 之间发生一次路径变化，需要额外支付 $K$。为了统一处理 $i=0$ 的情况，我们使用
+\[
+\operatorname{OPT}(-1)=-K.
+\]
+
+于是状态转移为
+\[
+\operatorname{OPT}(j)
+=
+\min_{0\le i\le j}
+\left\{
+\operatorname{OPT}(i-1)
++
+K
++
+(j-i+1)L(i,j)
+\right\}.
+\]
+
+其中只考虑满足
+\[
+L(i,j)<+\infty
+\]
+的区间。
+
+最终答案为
+\[
+\operatorname{OPT}(b).
+\]
+
+为了恢复具体路径序列，可以记录
+\[
+\operatorname{prev}(j)
+\]
+表示使 $\operatorname{OPT}(j)$ 取得最小值的最后一个区间起点 $i$。
+
+\textbf{预先计算所有 $L(i,j)$}
+
+对于每个区间 $[i,j]$，构造交图
+\[
+H_{i,j}=\left(V,\bigcap_{r=i}^{j}E_r\right).
+\]
+然后在 $H_{i,j}$ 中用 BFS 求最短 $s$-$t$ 路径长度。
+
+具体做法是：
+
+\[
+\begin{aligned}
+&\text{for } i=0,1,\ldots,b: \\
+&\qquad E^{(i)}\gets E_i;\\
+&\qquad \text{for } j=i,i+1,\ldots,b: \\
+&\qquad\qquad E^{(i)}\gets E^{(i)}\cap E_j;\\
+&\qquad\qquad \text{在 } (V,E^{(i)}) \text{ 中用 BFS 求最短 } s\text{-}t \text{ 路径}.
+\end{aligned}
+\]
+
+这样可以得到所有
+\[
+L(i,j),\qquad 0\le i\le j\le b.
+\]
+
+\textbf{正确性证明}
+
+\subsubsection*{引理 1：固定一个时间区间时，最优路径是交图中的最短路径}
+
+考虑任意时间区间 $[i,j]$。如果在整个区间中都使用同一条路径 $P$，那么 $P$ 必须在所有图
+\[
+G_i,G_{i+1},\ldots,G_j
+\]
+中都存在。
+
+这等价于 $P$ 是交图
+\[
+H_{i,j}=\left(V,\bigcap_{r=i}^{j}E_r\right)
+\]
+中的一条 $s$-$t$ 路径。
+
+因此，在区间 $[i,j]$ 中使用同一条路径时，为了使长度代价最小，应该选择 $H_{i,j}$ 中最短的 $s$-$t$ 路径，其长度为 $L(i,j)$。
+
+所以该区间的最小长度代价为
+\[
+(j-i+1)L(i,j).
+\]
+
+\subsubsection*{引理 2：最优解可以表示为若干个连续时间区间的划分}
+
+任意路径序列
+\[
+P_0,P_1,\ldots,P_b
+\]
+都可以按照路径是否发生变化，划分为若干个最大连续区间，使得每个区间内路径相同。
+
+例如，如果
+\[
+P_i=P_{i+1}=\cdots=P_j,
+\]
+并且在区间两侧路径发生变化，那么 $[i,j]$ 就是一个这样的最大区间。
+
+设这些区间为
+\[
+[i_1,j_1],[i_2,j_2],\ldots,[i_r,j_r],
+\]
+其中
+\[
+i_1=0,\qquad j_r=b,\qquad i_{q+1}=j_q+1.
+\]
+
+在每个区间中使用同一路径。根据引理 1，该区间的长度代价至少为
+\[
+(j_q-i_q+1)L(i_q,j_q).
+\]
+
+此外，相邻区间之间路径发生变化，因此总变化次数为
+\[
+r-1.
+\]
+
+所以任意路径序列的代价至少为
+\[
+\sum_{q=1}^{r}
+(j_q-i_q+1)L(i_q,j_q)
++
+K(r-1).
+\]
+
+动态规划正是在所有这样的区间划分中选择总代价最小者。
+
+\subsubsection*{引理 3：动态规划转移覆盖所有可能的最优解}
+
+考虑时间 $0,1,\ldots,j$ 的一个最优解。设它最后一次路径保持不变的区间为
+\[
+[i,j].
+\]
+那么时间
+\[
+0,1,\ldots,i-1
+\]
+上的路径选择必须是其自身的最优解。
+
+否则，如果时间 $0,1,\ldots,i-1$ 上存在一个更低代价的路径序列，那么把它和区间 $[i,j]$ 上使用的路径拼接起来，就可以得到一个比原解更优的路径序列，矛盾。
+
+因此，最后一个区间为 $[i,j]$ 时，总代价应为
+\[
+\operatorname{OPT}(i-1)
++
+K
++
+(j-i+1)L(i,j).
+\]
+
+对所有可能的最后区间起点 $i$ 取最小值，就得到转移方程
+\[
+\operatorname{OPT}(j)
+=
+\min_{0\le i\le j}
+\left\{
+\operatorname{OPT}(i-1)
++
+K
++
+(j-i+1)L(i,j)
+\right\}.
+\]
+
+\subsubsection*{定理：动态规划算法返回最小总代价}
+
+我们对 $j$ 进行归纳，证明 $\operatorname{OPT}(j)$ 等于时间 $0,1,\ldots,j$ 上的最小总代价。
+
+当 $j=0$ 时，只有一个时刻，不存在路径变化。根据转移方程，
+\[
+\operatorname{OPT}(0)
+=
+\operatorname{OPT}(-1)+K+L(0,0)
+=
+-K+K+L(0,0)
+=
+L(0,0),
+\]
+这正是 $G_0$ 中最短 $s$-$t$ 路径的长度，因此正确。
+
+假设对于所有小于 $j$ 的下标，$\operatorname{OPT}$ 都已经正确。考虑时间 $0,1,\ldots,j$ 的最优解。设其最后一个不变路径区间为 $[i,j]$。根据归纳假设，前缀 $0,1,\ldots,i-1$ 的最优代价是
+\[
+\operatorname{OPT}(i-1).
+\]
+根据引理 1，区间 $[i,j]$ 上使用同一路径的最小长度代价是
+\[
+(j-i+1)L(i,j).
+\]
+如果 $i>0$，还需要支付一次切换代价 $K$；如果 $i=0$，通过设定 $\operatorname{OPT}(-1)=-K$，转移式也正确处理了没有切换代价的情况。
+
+因此，最优解一定被转移方程中的某个 $i$ 捕捉到。动态规划对所有可能的 $i$ 取最小值，所以得到的就是最优代价。
+
+由数学归纳法可知，$\operatorname{OPT}(b)$ 是整个时间序列上的最小总代价。
+
+\textbf{时间复杂度分析}
+
+设
+\[
+m=\left|\bigcup_{i=0}^{b}E_i\right|
+\]
+表示所有可能出现过的边的总数。
+
+预处理所有区间 $[i,j]$ 时，一共有
+\[
+O(b^2)
+\]
+个区间。对每个区间构造交图并运行 BFS，需要多项式时间。若用适当的数据结构维护边集交，则总预处理时间可以写为
+\[
+O(b^2(m+|V|)).
+\]
+
+动态规划部分需要对每个 $j$ 枚举所有
+\[
+i=0,1,\ldots,j,
+\]
+因此时间复杂度为
+\[
+O(b^2).
+\]
+
+所以总时间复杂度为
+\[
+O(b^2(m+|V|)),
+\]
+这是输入规模的多项式。
+
+空间上需要存储所有 $L(i,j)$ 和断点信息，因此空间复杂度为
+\[
+O(b^2)
+\]
+加上存储图所需空间。
+
+\textbf{伪代码}
+
+\begin{breakablealgorithm}{Minimum-Cost Dynamic Path Sequence}
+\begin{algorithmic}[1]
+\Require Graphs $G_i=(V,E_i)$ for $i=0,1,\ldots,b$, nodes $s,t$, switching cost $K$
+\Ensure A minimum-cost path sequence $P_0,P_1,\ldots,P_b$
+
+\For{$i=0$ to $b$}
+    \State $F\gets E_i$
+    \For{$j=i$ to $b$}
+        \If{$j>i$}
+            \State $F\gets F\cap E_j$
+        \EndIf
+
+        \State Construct $H_{i,j}=(V,F)$
+        \State Run BFS from $s$ in $H_{i,j}$
+
+        \If{$t$ is reachable from $s$ in $H_{i,j}$}
+            \State $L[i,j]\gets$ length of the shortest $s$-$t$ path
+            \State $Q[i,j]\gets$ that shortest $s$-$t$ path
+        \Else
+            \State $L[i,j]\gets +\infty$
+            \State $Q[i,j]\gets \textsc{null}$
+        \EndIf
+    \EndFor
+\EndFor
+\State $\operatorname{OPT}[-1]\gets -K$
+
+\For{$j=0$ to $b$}
+    \State $\operatorname{OPT}[j]\gets +\infty$
+    \State $\operatorname{prev}[j]\gets -1$
+
+    \For{$i=0$ to $j$}
+        \If{$L[i,j]<+\infty$}
+            \State $q\gets \operatorname{OPT}[i-1]+K+(j-i+1)L[i,j]$
+
+            \If{$q<\operatorname{OPT}[j]$}
+                \State $\operatorname{OPT}[j]\gets q$
+                \State $\operatorname{prev}[j]\gets i$
+            \EndIf
+        \EndIf
+    \EndFor
+\EndFor
+
+\State $\mathcal{I}\gets$ empty list
+\State $j\gets b$
+
+\While{$j\ge 0$}
+    \State $i\gets \operatorname{prev}[j]$
+    \State Add interval $(i,j)$ to $\mathcal{I}$
+    \State $j\gets i-1$
+\EndWhile
+
+\State Reverse $\mathcal{I}$
+
+\For{each interval $(i,j)$ in $\mathcal{I}$}
+    \For{$r=i$ to $j$}
+        \State $P_r\gets Q[i,j]$
+    \EndFor
+\EndFor
+
+\State \Return $P_0,P_1,\ldots,P_b$
+
+\end{algorithmic}
+\end{breakablealgorithm}
+
+\end{answerbox}
+
+\section{Problem 4}
+
+On most clear days, a group of your friends in the Astronomy Department gets together to plan out the astronomical events they're going to try observing that night. We'll make the following assumptions about the events.
+
+\begin{itemize}[leftmargin=2em]
+\item There are $n$ events, which for simplicity we'll assume occur in sequence separated by exactly one minute each. Thus event $j$ occurs at minute $j$; if they don't observe this event at exactly minute $j$, then they miss out on it.
+
+\item The sky is mapped according to a one-dimensional coordinate system (measured in degrees from some central baseline); event $j$ will be taking place at coordinate $d_j$, for some integer value $d_j$. The telescope starts at coordinate 0 at minute 0.
+
+\item The last event, $n$, is much more important than the others; so it is required that they observe event $n$.
+\end{itemize}
+
+The Astronomy Department operates a large telescope that can be used for viewing these events. Because it is such a complex instrument, it can only move at a rate of one degree per minute. Thus they do not expect to be able to observe all $n$ events; they just want to observe as many as possible, limited by the operation of the telescope and the requirement that event $n$ must be observed.
+
+We say that a subset $S$ of the events is viewable if it is possible to observe each event $j\in S$ at its appointed time $j$, and the telescope has adequate time (moving at its maximum of one degree per minute) to move between consecutive events in $S$.
+
+\textbf{The problem.} Given the coordinates of each of the $n$ events, find a viewable subset of maximum size, subject to the requirement that it should contain event $n$. Such a solution will be called optimal.
+
+\textbf{Example.} Suppose the one-dimensional coordinates of the events are as shown here.
+
+\begin{center}
+\begin{tabular}{c|rrrrrrrrr}
+Event      & 1 & 2  & 3  & 4 & 5 & 6  & 7 & 8 & 9 \\
+\hline
+Coordinate & 1 & -4 & -1 & 4 & 5 & -4 & 6 & 7 & -2
+\end{tabular}
+\end{center}
+
+Then the optimal solution is to observe events 1, 3, 6, 9. Note that the telescope has time to move from one event in this set to the next, even moving at one degree per minute.
+
+\begin{enumerate}[label=(\alph*), leftmargin=2em]
+\item Show that the following algorithm does not correctly solve this problem, by giving an instance on which it does not return the correct answer.
+
+\begin{Verbatim}[fontsize=\small]
+Mark all events j with |d_n - d_j| > n - j as illegal
+  (as observing them would prevent you from observing event n)
+Mark all other events as legal
+Initialize current position to coordinate 0 at minute 0
+while not at end of event sequence do
+    Find the earliest legal event j that can be reached without exceeding
+      the maximum movement rate of the telescope
+    Add j to the set S
+    Update current position to be coord. d_j at minute j
+end while
+Output the set S
+\end{Verbatim}
+
+
+\ldots{} In your example, say what the correct answer is and also what the algorithm above finds.
+
+\item Give an efficient algorithm that takes values for the coordinates $d_1,d_2,\ldots,d_n$ of the events and returns the size of an optimal solution.
+\end{enumerate}
+
+\begin{answerbox}
+\textbf{解答：}
+
+共有 $n$ 个事件，事件 $j$ 必须在第 $j$ 分钟观测，事件 $j$ 的坐标为 $d_j$。望远镜在第 $0$ 分钟位于坐标 $0$，并且每分钟最多移动 $1$ 度。
+
+因此，如果望远镜在第 $i$ 分钟观测了事件 $i$，并且下一次要在第 $j$ 分钟观测事件 $j$，其中 $i<j$，那么必须满足
+\[
+|d_j-d_i|\le j-i.
+\]
+
+为了统一处理初始状态，定义一个虚拟事件 $0$：
+\[
+d_0=0.
+\]
+它表示望远镜在第 $0$ 分钟位于坐标 $0$。于是，从初始位置到事件 $j$ 可达，当且仅当
+\[
+|d_j-d_0|\le j-0,
+\]
+即
+\[
+|d_j|\le j.
+\]
+
+题目要求找到一个最大规模的可观测事件子集，并且该子集必须包含事件 $n$。
+
+\textbf{Part (a) 贪心算法的反例}
+
+题目给出的贪心算法先将所有满足
+\[
+|d_n-d_j|\le n-j
+\]
+的事件标记为合法，然后从前往后，每次选择当前能够到达的最早合法事件。
+
+这个算法并不总是正确。问题在于：一个事件虽然本身不会妨碍最终赶到事件 $n$，但选择它之后，望远镜可能被带到一个不利的位置，从而错过更多中间事件。
+
+考虑如下例子：
+\[
+n=6.
+\]
+
+事件坐标如下：
+\[
+\begin{array}{c|rrrrrr}
+\toprule
+\text{Event}      & 1 & 2 & 3 & 4 & 5 & 6\\
+\midrule
+\text{Coordinate} & 1 & -2 & -3 & -2 & -1 & 0\\
+\bottomrule
+\end{array}
+\]
+
+最后一个事件为事件 $6$，并且
+\[
+d_6=0.
+\]
+
+对每个事件 $j$，检查它是否会妨碍最终赶到事件 $6$：
+\[
+|d_6-d_j|\le 6-j.
+\]
+
+逐一验证可得：
+\[
+|0-1|=1\le 5,
+\]
+\[
+|0-(-2)|=2\le 4,
+\]
+\[
+|0-(-3)|=3\le 3,
+\]
+\[
+|0-(-2)|=2\le 2,
+\]
+\[
+|0-(-1)|=1\le 1,
+\]
+\[
+|0-0|=0\le 0.
+\]
+因此所有事件都会被该算法标记为合法。
+
+接下来贪心算法从初始坐标 $0$ 出发。事件 $1$ 的坐标为 $1$，并且
+\[
+|1-0|=1\le 1,
+\]
+所以贪心算法首先选择事件 $1$。
+
+此时望远镜在第 $1$ 分钟位于坐标 $1$。之后：
+
+\[
+|1-(-2)|=3>1,
+\]
+所以不能在第 $2$ 分钟赶到事件 $2$；
+
+\[
+|1-(-3)|=4>2,
+\]
+所以不能在第 $3$ 分钟赶到事件 $3$；
+
+\[
+|1-(-2)|=3\le 3,
+\]
+所以可以在第 $4$ 分钟赶到事件 $4$。
+
+于是贪心算法会选择
+\[
+S_{\text{greedy}}=\{1,4,5,6\}.
+\]
+其大小为
+\[
+|S_{\text{greedy}}|=4.
+\]
+
+但是存在更优解：
+\[
+S^*=\{2,3,4,5,6\}.
+\]
+
+验证如下。从初始坐标 $0$ 到事件 $2$：
+\[
+|-2-0|=2\le 2.
+\]
+从事件 $2$ 到事件 $3$：
+\[
+|-3-(-2)|=1\le 1.
+\]
+从事件 $3$ 到事件 $4$：
+\[
+|-2-(-3)|=1\le 1.
+\]
+从事件 $4$ 到事件 $5$：
+\[
+|-1-(-2)|=1\le 1.
+\]
+从事件 $5$ 到事件 $6$：
+\[
+|0-(-1)|=1\le 1.
+\]
+
+因此 $S^*$ 是可观测的，并且
+\[
+|S^*|=5.
+\]
+
+所以该贪心算法返回大小为 $4$ 的解，而最优解大小为 $5$。这说明该贪心算法不能正确解决本问题。
+
+\textbf{Part (b) 动态规划算法}
+
+由于事件只能按照时间顺序观测，如果选择了事件序列
+\[
+i_1<i_2<\cdots<i_k,
+\]
+那么必须满足
+\[
+|d_{i_{r+1}}-d_{i_r}|\le i_{r+1}-i_r,
+\qquad r=1,2,\ldots,k-1.
+\]
+
+再加上初始状态，可以把问题看成：从虚拟事件 $0$ 出发，寻找一条以事件 $n$ 结尾的最长可达事件序列。
+
+定义可达关系如下：对于 $0\le i<j\le n$，如果
+\[
+|d_j-d_i|\le j-i,
+\]
+则称事件 $j$ 可以从事件 $i$ 到达。
+
+由于只能从较小编号的事件转移到较大编号的事件，这个问题可以看成一个有向无环图上的最长路径问题。我们可以直接用动态规划求解，而不必显式建图。
+
+令
+\[
+\operatorname{OPT}(j)
+\]
+表示在必须观测事件 $j$ 的前提下，从初始状态出发，到达事件 $j$ 时最多可以观测多少个真实事件。
+
+其中事件 $0$ 是虚拟事件，不计入答案，因此
+\[
+\operatorname{OPT}(0)=0.
+\]
+
+对于 $j\ge 1$，如果事件 $i$ 是事件 $j$ 之前最后一个被观测的事件，那么必须满足
+\[
+0\le i<j
+\]
+以及
+\[
+|d_j-d_i|\le j-i.
+\]
+
+因此，状态转移方程为
+\[
+\operatorname{OPT}(j)
+=
+1+
+\max_{\substack{0\le i<j\\ |d_j-d_i|\le j-i}}
+\operatorname{OPT}(i).
+\]
+
+最终答案为
+\[
+\operatorname{OPT}(n),
+\]
+因为题目要求事件 $n$ 必须被观测。
+
+如果需要恢复具体的最优观测集合，可以额外记录
+\[
+\operatorname{prev}(j),
+\]
+表示使 $\operatorname{OPT}(j)$ 取得最大值的前一个事件。
+
+\textbf{正确性证明}
+
+\textbf{引理 1：动态规划转移覆盖所有可能的最优解}
+
+考虑任意一个以事件 $j$ 结尾的合法观测序列。设事件 $j$ 之前最后一个被观测的事件为 $i$。
+
+由于观测必须按时间顺序进行，所以
+\[
+0\le i<j.
+\]
+并且望远镜必须能从事件 $i$ 的位置移动到事件 $j$ 的位置，所以必须满足
+\[
+|d_j-d_i|\le j-i.
+\]
+
+因此，任何以事件 $j$ 结尾的合法观测序列，其倒数第二个事件 $i$ 都一定出现在转移方程枚举的候选集合中。
+
+所以转移方程不会遗漏任何可能的最优解。
+
+\textbf{引理 2：最优子结构}
+
+设某个以事件 $j$ 结尾的最优观测序列中，事件 $j$ 前面的最后一个事件是 $i$。
+
+那么，该序列在到达事件 $i$ 之前的部分，必须是一个以事件 $i$ 结尾的最优观测序列。
+
+反设不是。则存在另一个以事件 $i$ 结尾的合法观测序列，它能观测更多真实事件。将这个更优的前缀序列与从事件 $i$ 到事件 $j$ 的移动拼接起来，仍然是合法的，因为从 $i$ 到 $j$ 的可达性只取决于
+\[
+|d_j-d_i|\le j-i.
+\]
+这样就得到一个以事件 $j$ 结尾、观测事件数更多的合法序列，与原序列最优矛盾。
+
+因此，最优解具有最优子结构。
+
+\textbf{定理：动态规划算法返回最优解大小}
+
+我们对 $j$ 进行数学归纳，证明 $\operatorname{OPT}(j)$ 正确表示以事件 $j$ 结尾时最多可以观测的真实事件数量。
+
+当 $j=0$ 时，事件 $0$ 是虚拟起点，不是真实事件，因此
+\[
+\operatorname{OPT}(0)=0
+\]
+显然正确。
+
+假设对于所有 $i<j$，$\operatorname{OPT}(i)$ 都已经正确。现在考虑事件 $j$。
+
+任意一个以事件 $j$ 结尾的合法观测序列，其前一个事件一定是某个满足
+\[
+0\le i<j,
+\qquad
+|d_j-d_i|\le j-i
+\]
+的事件 $i$。
+
+根据归纳假设，到达事件 $i$ 时最多可以观测
+\[
+\operatorname{OPT}(i)
+\]
+个真实事件。再观测事件 $j$ 后，总数为
+\[
+\operatorname{OPT}(i)+1.
+\]
+
+因此，对所有可行前驱 $i$ 取最大值，就得到
+\[
+\operatorname{OPT}(j)
+=
+1+
+\max_{\substack{0\le i<j\\ |d_j-d_i|\le j-i}}
+\operatorname{OPT}(i).
+\]
+
+所以 $\operatorname{OPT}(j)$ 正确。
+
+由数学归纳法可知，所有状态都正确。特别地，题目要求必须观测事件 $n$，因此最优解大小为
+\[
+\operatorname{OPT}(n).
+\]
+
+\textbf{复杂度分析}
+
+对于每个事件 $j$，算法枚举所有可能的前驱事件
+\[
+i=0,1,\ldots,j-1.
+\]
+因此总枚举次数为
+\[
+\sum_{j=1}^{n} j = O(n^2).
+\]
+
+每次判断可达性
+\[
+|d_j-d_i|\le j-i
+\]
+只需要 $O(1)$ 时间。
+
+所以总时间复杂度为
+\[
+O(n^2).
+\]
+
+动态规划数组 $\operatorname{OPT}$ 需要 $O(n)$ 空间。如果需要恢复具体方案，还需要数组 $\operatorname{prev}$，也需要 $O(n)$ 空间。
+
+因此空间复杂度为
+\[
+O(n).
+\]
+
+\textbf{伪代码}
+
+\begin{algorithm}[H]
+\caption{Optimal Astronomy Schedule}
+\begin{algorithmic}[1]
+\Require Coordinates $d_1,d_2,\ldots,d_n$
+\Ensure The size of an optimal viewable subset containing event $n$
+
+\State $d_0\gets 0$
+\State $\operatorname{OPT}[0]\gets 0$
+
+\For{$j=1$ to $n$}
+    \State $\operatorname{OPT}[j]\gets -\infty$
+    \State $\operatorname{prev}[j]\gets -1$
+
+    \For{$i=0$ to $j-1$}
+        \If{$|d_j-d_i|\le j-i$}
+            \If{$\operatorname{OPT}[i]+1>\operatorname{OPT}[j]$}
+                \State $\operatorname{OPT}[j]\gets \operatorname{OPT}[i]+1$
+                \State $\operatorname{prev}[j]\gets i$
+            \EndIf
+        \EndIf
+    \EndFor
+\EndFor
+
+\State \Return $\operatorname{OPT}[n]$
+
+\end{algorithmic}
+\end{algorithm}
+
+\textbf{恢复最优观测集合}
+
+如果需要恢复一个具体的最优观测集合，可以从事件 $n$ 开始沿着 $\operatorname{prev}$ 数组向前回溯。
+
+\begin{algorithm}[H]
+\caption{Recover Optimal Schedule}
+\begin{algorithmic}[1]
+\Require Array $\operatorname{prev}$ and final event $n$
+\Ensure An optimal viewable subset containing event $n$
+
+\State $S\gets$ empty list
+\State $j\gets n$
+
+\While{$j\neq 0$}
+    \State Add $j$ to $S$
+    \State $j\gets \operatorname{prev}[j]$
+\EndWhile
+
+\State Reverse $S$
+\State \Return $S$
+
+\end{algorithmic}
+\end{algorithm}
+
+
+本题的核心是把初始状态看成虚拟事件 $0$，其中
+\[
+d_0=0.
+\]
+如果事件 $j$ 可以在事件 $i$ 之后被观测，则必须满足
+\[
+|d_j-d_i|\le j-i.
+\]
+
+因此，问题等价于在按时间编号形成的有向无环结构中，寻找一条从虚拟事件 $0$ 到事件 $n$ 的最长可达事件序列。
+
+动态规划状态为
+\[
+\operatorname{OPT}(j)
+=
+\text{以事件 }j\text{ 结尾时最多能观测的真实事件数}.
+\]
+
+状态转移方程为
+\[
+\operatorname{OPT}(j)
+=
+1+
+\max_{\substack{0\le i<j\\ |d_j-d_i|\le j-i}}
+\operatorname{OPT}(i).
+\]
+
+最终答案为
+\[
+\operatorname{OPT}(n).
+\]
+
+算法时间复杂度为
+\[
+O(n^2),
+\]
+空间复杂度为
+\[
+O(n).
+\]
+
+
+\end{answerbox}
+
+\end{document}

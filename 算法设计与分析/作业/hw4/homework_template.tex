@@ -1,0 +1,358 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[UTF8]{ctex}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{fancyvrb}
+\usepackage{lastpage}
+\usepackage{hyperref}
+\usepackage[most]{tcolorbox}
+\usepackage{titlesec}
+\usepackage{tabularx}
+
+\hypersetup{
+  hidelinks
+}
+
+\definecolor{mainblue}{RGB}{34,72,112}
+\definecolor{lightblue}{RGB}{241,246,252}
+\definecolor{linegray}{RGB}{210,218,228}
+\definecolor{textgray}{RGB}{90,98,108}
+
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0.35em}
+\setlength{\headheight}{25pt}
+\linespread{1.2}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\textcolor{textgray}{\small 课程作业}}
+\rhead{\textcolor{textgray}{\small \thepage/\pageref*{LastPage}}}
+\cfoot{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{linegray}\leaders\hrule height \headrulewidth\hfill}}
+
+\titleformat{\section}
+  {\Large\bfseries\color{mainblue}}
+  {\thesection}
+  {0.6em}
+  {}
+
+\titleformat{\subsection}
+  {\large\bfseries\color{mainblue}}
+  {\thesubsection}
+  {0.6em}
+  {}
+
+\titlespacing*{\section}{0pt}{1.2em}{0.6em}
+\titlespacing*{\subsection}{0pt}{0.8em}{0.4em}
+
+\newtcolorbox{infobox}{
+  colback=lightblue,
+  colframe=mainblue,
+  boxrule=0.6pt,
+  arc=2mm,
+  left=1.2em,
+  right=1.2em,
+  top=0.8em,
+  bottom=0.8em
+}
+
+\newtcolorbox{answerbox}{
+  breakable,
+  colback=white,
+  colframe=linegray,
+  boxrule=0.5pt,
+  arc=2mm,
+  left=1em,
+  right=1em,
+  top=0.8em,
+  bottom=0.8em
+}
+
+\newcommand{\course}{算法设计与分析}
+\newcommand{\homeworktitle}{第 4 次作业}
+\newcommand{\studentname}{倪伟丰}
+\newcommand{\studentid}{2024110089}
+\newcommand{\classname}{24 大数据 2 班}
+\newcommand{\teacher}{韩恺}
+\newcommand{\duedate}{2026 年 3 月 9 日}
+
+\begin{document}
+
+\begin{center}
+  {\Huge\bfseries\color{mainblue}\homeworktitle}\\[0.6em]
+  {\Large\course}\\[1.2em]
+  {\color{linegray}\rule{0.9\textwidth}{0.8pt}}
+\end{center}
+
+\begin{infobox}
+\begin{tabularx}{\textwidth}{>{\bfseries}p{2.2cm} X >{\bfseries}p{2.2cm} X}
+姓名 & \studentname & 学号 & \studentid \\
+班级 & \classname & 教师 & \teacher \\
+提交日期 & \duedate &  &  \\
+\end{tabularx}
+\end{infobox}
+
+\section{Question 1}
+
+Quantum antimatter fuel comes in small pellets, which is convenient since the many moving parts of the LAMBCHOP each need to be fed fuel one pellet at a time. However, minions dump pellets in bulk into the fuel intake. You need to figure out the most efficient way to sort and shift the pellets down to a single pellet at a time. The fuel control mechanisms have three operations:
+\begin{itemize}
+    \item Add 1 fuel pellet
+    \item Remove 1 fuel pellet
+    \item Divide the entire group of fuel pellets by 2 (due to the destructive energy released when a quantum antimatter pellet is cut in half, the safety controls will only allow this to happen if there is an even number of pellets)
+\end{itemize}
+
+Write a function called $\texttt{answer}(n)$ which takes a positive integer $n$ as a string and returns the minimum number of operations needed to transform the number of pellets to 1. Prove the correctness of your algorithm. (E.g. $29 \to 28 \to 14 \to 7 \to 8 \to 4 \to 2 \to 1$)
+
+\begin{answerbox}
+\textbf{解答过程：}
+
+\paragraph{一、贪心策略}
+记 $T(n)$ 为把正整数 $n$ 变成 $1$ 所需的最少操作数。采用如下贪心规则：
+\begin{itemize}[leftmargin=2em]
+    \item 若 $n$ 为偶数，则执行 $n \gets n/2$；
+    \item 若 $n$ 为奇数且 $n=3$ 或 $n \equiv 1 \pmod 4$，则执行 $n \gets n-1$；
+    \item 若 $n$ 为奇数且 $n \equiv 3 \pmod 4,\ n\neq 3$，则执行 $n \gets n+1$。
+\end{itemize}
+
+\paragraph{二、函数实现}
+由于题目把 $n$ 作为字符串输入，实现时应使用任意精度整数。伪代码如下：
+\begin{Verbatim}[fontsize=\small]
+answer(n):
+    x <- arbitrary-precision integer represented by n
+    steps <- 0
+    while x != 1:
+        if x is even:
+            x <- x / 2
+        else if x == 3 or x mod 4 == 1:
+            x <- x - 1
+        else:
+            x <- x + 1
+        steps <- steps + 1
+    return steps
+\end{Verbatim}
+
+\paragraph{三、基本事实}
+若 $a$ 与 $b$ 可以通过一次 $\pm 1$ 操作互相到达，则
+\[
+T(a) \le T(b)+1,\qquad T(b) \le T(a)+1.
+\]
+因此当 $|a-b|=1$ 时，有
+\[
+|T(a)-T(b)| \le 1.
+\]
+
+\paragraph{四、关键引理}
+\textbf{引理：} 对任意 $k\ge 1$，都有 $T(2k)\le T(2k+1)$。
+
+\textbf{证明：} 对 $k$ 作强归纳。
+
+\textbf{基础情形：} 当 $k=1$ 时，
+\[
+T(2)=1,\qquad T(3)=2,
+\]
+故 $T(2)\le T(3)$。
+
+\textbf{归纳步骤：} 假设对所有 $j<k$ 都有 $T(2j)\le T(2j+1)$，现证明对 $k$ 也成立。
+
+\begin{enumerate}[leftmargin=2.5em]
+    \item 若 $k=2m$ 为偶数，则 $2k+1=4m+1$。从 $4m+1$ 出发，两种选择分别在两步后到达
+    \[
+    2m \quad \text{或} \quad 2m+1.
+    \]
+    因而
+    \[
+    T(4m+1)=2+\min\{T(2m),T(2m+1)\}.
+    \]
+    由归纳假设，$T(2m)\le T(2m+1)$，故
+    \[
+    T(4m+1)=2+T(2m).
+    \]
+    又因为
+    \[
+    T(4m)=1+T(2m),
+    \]
+    所以 $T(4m)\le T(4m+1)$。
+
+    \item 若 $k=2m+1$ 为奇数，其中 $m\ge 1$，则 $2k+1=4m+3$。同理
+    \[
+    T(4m+3)=2+\min\{T(2m+1),T(2m+2)\}.
+    \]
+    由基本事实，$|T(2m+1)-T(2m+2)|\le 1$，故
+    \[
+    T(2m+2)\ge T(2m+1)-1.
+    \]
+    于是
+    \[
+    T(4m+3)\ge 2+(T(2m+1)-1)=1+T(2m+1)=T(4m+2).
+    \]
+    因此 $T(4m+2)\le T(4m+3)$。
+\end{enumerate}
+
+综上，对任意 $k\ge 1$，都有 $T(2k)\le T(2k+1)$，引理得证。
+
+\paragraph{五、证明贪心选择正确}
+\textbf{1. 当 $n=2k$ 为偶数时}
+
+若第一步直接除以 $2$，总代价为
+\[
+1+T(k).
+\]
+
+若第一步选择 $+1$，总代价为
+\[
+1+T(2k+1).
+\]
+而
+\[
+T(2k+1)=2+\min\{T(k),T(k+1)\}\ge 2+T(k)-1=1+T(k),
+\]
+故这种选择至少需要 $2+T(k)$ 步。
+
+若第一步选择 $-1$，总代价为
+\[
+1+T(2k-1).
+\]
+同理
+\[
+T(2k-1)=2+\min\{T(k-1),T(k)\}\ge 2+T(k)-1=1+T(k),
+\]
+因此也至少需要 $2+T(k)$ 步。
+
+所以当 $n$ 为偶数时，第一步直接除以 $2$ 最优。
+
+\textbf{2. 当 $n=4k+1$ 时}
+
+若第一步选 $-1$，则两步后到达 $2k$，总代价为
+\[
+2+T(2k).
+\]
+若第一步选 $+1$，则两步后到达 $2k+1$，总代价为
+\[
+2+T(2k+1).
+\]
+由引理 $T(2k)\le T(2k+1)$，故选择 $-1$ 不劣于选择 $+1$，因此
+\[
+T(4k+1)=1+T(4k).
+\]
+
+\textbf{3. 当 $n=4k+3,\ n\neq 3$ 时}
+
+若第一步选 $-1$，则两步后到达 $2k+1$，总代价为
+\[
+2+T(2k+1).
+\]
+若第一步选 $+1$，则两步后到达 $2k+2$，总代价为
+\[
+2+T(2k+2).
+\]
+对引理应用于 $k+1$，得到
+\[
+T(2k+2)\le T(2k+1),
+\]
+因此此时选择 $+1$ 最优。
+
+\textbf{4. 特殊情形 $n=3$}
+
+\[
+3\to 2\to 1
+\]
+只需 $2$ 步，而
+\[
+3\to 4\to 2\to 1
+\]
+需要 $3$ 步，所以 $n=3$ 时应选择 $-1$。
+
+\paragraph{六、结论}
+以上已经证明：在每一种情况下，算法所做的选择都可以作为某个最优解的第一步。之后问题规模严格减小，因此递归地重复同样的论证，便得到整个贪心算法的正确性。
+
+算法的循环次数为 $O(\log n)$。若按题目要求处理超大整数，则实现时应使用任意精度整数。
+\end{answerbox}
+
+\section{Question 2}
+
+(Exercise 4.3 from the textbook) You are consulting for a trucking company that does a large amount of business shipping packages between New York and Boston. The volume is high enough that they have to send a number of trucks each day between the two locations. Trucks have a fixed limit $W$ on the maximum amount of weight they are allowed to carry. Boxes arrive at the New York station one by one, and each package $i$ has a weight $w_i$. The trucking station is quite small, so at most one truck can be at the station at any time. Company policy requires that boxes are shipped in the order they arrive; otherwise, a customer might get upset upon seeing a box that arrived after his make it to Boston faster. At the moment, the company is using a simple greedy algorithm for packing; they pack boxes in the order they arrive, and whenever the next box does not fit, they send the truck on its way.
+
+But they wonder if they might be using too many trucks, and they want your opinion on whether the situation can be improved. Here is how they are thinking. Maybe one could decrease the number of trucks needed by sometimes sending off a truck that was less full, and in this way allow the next few trucks to be better packed.
+
+Prove that, for a given set of boxes with specified weights, the greedy algorithm currently in use actually minimizes the number of trucks that are needed. Your proof should follow the type of analysis we used for the Interval Scheduling Problem: it should establish the optimality of this greedy packing algorithm by identifying a measure under which it ``stays ahead'' of all other solutions.
+
+\begin{answerbox}
+\textbf{解答过程：}
+
+记一共有 $n$ 个箱子。对于贪心算法，记第 $k$ 辆车装完后运走的最后一个箱子的编号为 $g_k$；对于任意可行解，记第 $k$ 辆车装完后运走的最后一个箱子的编号为 $o_k$。约定
+\[
+g_0=o_0=0.
+\]
+
+贪心算法的规则是：每辆车都尽可能装入当前能够装下的最长前缀。也就是说，对每个 $k$ 都有
+\[
+\sum_{i=g_{k-1}+1}^{g_k} w_i \le W,
+\]
+并且如果 $g_k<n$，则
+\[
+\sum_{i=g_{k-1}+1}^{g_k+1} w_i > W.
+\]
+
+\paragraph{Stay-ahead 引理}
+对任意 $k\ge 1$，都有 $g_k \ge o_k$。
+
+\paragraph{证明}
+对 $k$ 作数学归纳。
+
+\begin{enumerate}[leftmargin=2.5em]
+    \item \textbf{基础情形 $k=1$：}
+
+    第 $1$ 辆车上，贪心算法选择的是能够装入第 $1$ 辆车的最长前缀。因此任何其他可行方案的第 $1$ 辆车都不可能装到比 $g_1$ 更靠后的箱子，即
+    \[
+    g_1 \ge o_1.
+    \]
+
+    \item \textbf{归纳步骤：}
+
+    假设对于某个 $k-1\ge 1$ 已有
+    \[
+    g_{k-1} \ge o_{k-1}.
+    \]
+    现考虑第 $k$ 辆车。在任意可行解中，第 $k$ 辆车运送的是箱子
+    \[
+    o_{k-1}+1,o_{k-1}+2,\dots,o_k,
+    \]
+    因而
+    \[
+    \sum_{i=o_{k-1}+1}^{o_k} w_i \le W.
+    \]
+    由于所有重量 $w_i$ 都是正数，且 $g_{k-1}\ge o_{k-1}$，从更靠后的箱子开始装，只会使总重量不增，因此
+    \[
+    \sum_{i=g_{k-1}+1}^{o_k} w_i \le \sum_{i=o_{k-1}+1}^{o_k} w_i \le W.
+    \]
+    这说明：从箱子 $g_{k-1}+1$ 开始装，至少可以一直装到箱子 $o_k$。而贪心算法第 $k$ 辆车会装到尽可能靠后的位置，所以
+    \[
+    g_k \ge o_k.
+    \]
+\end{enumerate}
+
+由归纳法可知，对任意 $k\ge 1$，都有 $g_k \ge o_k$。这就说明贪心算法在“装完前 $k$ 辆车后已经运走的箱子数”这个指标上始终领先于任意其他可行解。
+
+\paragraph{证明最优性}
+设贪心算法共使用了 $m$ 辆车。反证：若存在某个可行解只使用 $m-1$ 辆车，则该方案在第 $m-1$ 辆车后已经运走了全部 $n$ 个箱子，即
+\[
+o_{m-1}=n.
+\]
+由 stay-ahead 引理得到
+\[
+g_{m-1}\ge o_{m-1}=n.
+\]
+这意味着贪心算法在前 $m-1$ 辆车后也已经运走了全部箱子，这与“贪心算法需要 $m$ 辆车”矛盾。
+
+因此，不存在比贪心算法使用更少车辆的可行解，故该贪心算法最小化了所需卡车数量。
+\end{answerbox}
+
+\end{document}
