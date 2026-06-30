@@ -1,0 +1,784 @@
+\documentclass[12pt,a4paper]{article}
+
+% ==================== 基础宏包 ====================
+\usepackage[UTF8]{ctex}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{hyperref}
+\usepackage[most]{tcolorbox}
+\usepackage{titlesec}
+ \usepackage{tabularx}
+
+\hypersetup{
+  hidelinks
+}
+
+% ==================== 颜色定义 ====================
+\definecolor{mainblue}{RGB}{34,72,112}
+\definecolor{lightblue}{RGB}{241,246,252}
+\definecolor{linegray}{RGB}{210,218,228}
+\definecolor{textgray}{RGB}{90,98,108}
+
+% ==================== 页面设置 ====================
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0.35em}
+\setlength{\headheight}{25pt}
+\linespread{1.2}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\textcolor{textgray}{\small 课程作业}}
+\rhead{\textcolor{textgray}{\small \thepage/\pageref*{LastPage}}}
+\cfoot{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{linegray}\leaders\hrule height \headrulewidth\hfill}}
+
+% ==================== 标题样式 ====================
+\titleformat{\section}
+  {\Large\bfseries\color{mainblue}}
+  {\thesection}
+  {0.6em}
+  {}
+
+\titleformat{\subsection}
+  {\large\bfseries\color{mainblue}}
+  {\thesubsection}
+  {0.6em}
+  {}
+
+\titlespacing*{\section}{0pt}{1.2em}{0.6em}
+\titlespacing*{\subsection}{0pt}{0.8em}{0.4em}
+
+% ==================== 自定义环境 ====================
+\newtcolorbox{infobox}{
+  colback=lightblue,
+  colframe=mainblue,
+  boxrule=0.6pt,
+  arc=2mm,
+  left=1.2em,
+  right=1.2em,
+  top=0.8em,
+  bottom=0.8em
+}
+
+\newtcolorbox{answerbox}{
+  colback=white,
+  colframe=linegray,
+  boxrule=0.5pt,
+  arc=2mm,
+  left=1em,
+  right=1em,
+  top=0.8em,
+  bottom=0.8em,
+  breakable
+}
+
+\newcommand{\course}{数理统计}
+\newcommand{\homeworktitle}{第2次作业}
+\newcommand{\studentname}{倪伟丰}
+\newcommand{\studentid}{2024110089}
+\newcommand{\classname}{24 大数据 2 班}
+\newcommand{\teacher}{袁洪松}
+\newcommand{\duedate}{2026年3月19日}
+
+% ==================== 正文开始 ====================
+\begin{document}
+
+\begin{center}
+  {\Huge\bfseries\color{mainblue}\homeworktitle}\\[0.6em]
+  {\Large\course}\\[1.2em]
+  {\color{linegray}\rule{0.9\textwidth}{0.8pt}}
+\end{center}
+
+\begin{infobox}
+\begin{tabularx}{\textwidth}{>{\bfseries}p{2.2cm} X >{\bfseries}p{2.2cm} X}
+姓名 & \studentname & 学号 & \studentid \\
+班级 & \classname & 教师 & \teacher \\
+提交日期 & \duedate &  &  \\
+\end{tabularx}
+\end{infobox}
+
+
+
+\section{Question 1}
+
+已知总体 $X$ 满足 $\mathrm{E}(X)=\mu$, $\mathrm{Var}(X)=\sigma^2$（总体不一定为正态分布）。样本为 $X_1,\ldots,X_n$.
+
+\subsection{}
+
+证明：$A_2 = B_2 + \bar{X}^{2}$.
+
+\begin{answerbox}
+\textbf{解：}
+  记 $A_2=\frac{1}{n}\sum_{i=1}^n X_i^2$，$B_2=\frac{1}{n}\sum_{i=1}^n(X_i-\bar{X})^2$，$\bar{X}=\frac{1}{n}\sum_{i=1}^n X_i$。
+
+  \begin{align*}
+    B_2 + \bar{X}^2 &= \frac{1}{n}\sum_{i=1}^n(X_i-\bar{X})^2 + \bar{X}^2 \\
+    &= \frac{1}{n}\sum_{i=1}^n(X_i^2 - 2\bar{X} X_i + \bar{X}^2) + \bar{X}^2 \\
+    &= \frac{1}{n}\sum_{i=1}^n X_i^2 - 2\bar{X}^2 + \bar{X}^2 + \bar{X}^2 \\
+    &= \frac{1}{n}\sum_{i=1}^n X_i^2 \\
+    &= A_2
+  \end{align*}
+
+  故 $A_2 = B_2 + \bar{X}^{2}$。
+\end{answerbox}
+
+\subsection{}
+
+试计算 $\mathrm{E}(A_2)$ 与 $\mathrm{E}(B_2)$.
+\begin{answerbox}
+\textbf{解：}
+  $\mathrm{E}(X_i) = \mu$，$\mathrm{Var}(X_i) = \sigma^2$。
+  由于 $X_1,\ldots,X_n$ 是来自总体 $X$ 的样本，iid，
+  $\mathrm{E}(\bar{X}) = \mu$，$\mathrm{Var}(\bar{X}) = \frac{\sigma^2}{n}$。
+  首先计算 $\mathrm{E}(A_2)$：
+
+  \begin{align*}
+    \mathrm{E}(A_2) &= \mathrm{E}\left(\frac{1}{n}\sum_{i=1}^n X_i^2\right) \\
+    &= \frac{1}{n}\sum_{i=1}^n \mathrm{E}(X_i^2) \\
+    &= \mathrm{E}(X_i^2) \\
+    &= \mathrm{Var}(X_i) + [\mathrm{E}(X_i)]^2 \\
+    &= \sigma^2 + \mu^2
+  \end{align*}
+
+  接下来计算 $\mathrm{E}(B_2)$：
+
+  \begin{align*}
+    \mathrm{E}(B_2) &= \mathrm{E}(A_2) - \mathrm{E}(\bar{X}^2) \\
+    &= \sigma^2 + \mu^2 - \mathrm{E}(\bar{X}^2) \\
+    &= \sigma^2 + \mu^2 - (\mathrm{E}(\bar{X})^2+\mathrm{Var}(\bar{X})) \\
+    &= \sigma^2 + \mu^2 - (\mu^2 + \frac{\sigma^2}{n}) \\
+    &= (1-\frac{1}{n})\sigma^2
+  \end{align*}
+
+  因此，$\mathrm{E}(A_2) = \sigma^2 + \mu^2$，$\mathrm{E}(B_2) = (1-\frac{1}{n})\sigma^2$。
+\end{answerbox}
+
+
+\section{Question 2}
+
+假设 $X_1,\cdots,X_n$ 为取自正态分布 $N(\mu,\sigma^2)$ 的样本。请分析以下两个量的分布：
+
+\subsection{}
+$n(\bar{X}-\mu)^2/\sigma^2$
+
+\begin{answerbox}
+\textbf{解：}
+由于 $X_i \sim N(\mu, \sigma^2)$，$\bar{X} \sim N(\mu, \frac{\sigma^2}{n})$。
+
+$\bar{X} \sim N(\mu, \frac{\sigma^2}{n})$，所以 
+$$
+\frac{n(\bar{X}-\mu)^2}{\sigma^2} = (\frac{\bar{X}-\mu}{\sigma/\sqrt{n}})^2 \sim \chi^2(1)
+$$
+\end{answerbox}
+
+
+\subsection{}
+$n(\bar{X}-\mu)^2/S^2$
+\begin{answerbox}
+\textbf{解：}
+  由上题：
+  $$
+  \left(\frac{\bar{X}-\mu}{\sigma/\sqrt{n}}\right)^2  \sim \chi^2(1)
+  $$
+
+  $$
+  \frac{(n-1)S^2}{\sigma^2} \sim \chi^2(n-1)
+  $$
+
+  根据学生定理，在正态总体下 $\bar{X}$ 与 $S^2$ 独立，于是：
+  $$
+  \frac{n(\bar{X}-\mu)^2}{S^2} = \frac{\left(\frac{\bar{X}-\mu}{\sigma/\sqrt{n}}\right)^2}{\frac{(n-1)S^2}{\sigma^2}/(n-1)} \sim F(1, n-1)
+  $$
+
+\end{answerbox}
+
+\section{Question 3}
+
+假设 $X_1,\cdots,X_{n_1}$ 为取自正态分布 $N(\mu_1,\sigma^2)$ 的样本，$Y_1,\cdots,Y_{n_2}$ 为取自正态分布 $N(\mu_2,\sigma^2)$ 的样本，且两个总体相互独立。试确定以下随机变量的分布：
+
+\subsection{}
+    \[
+        \frac{\sqrt{n_1}(\bar{X}-\mu_1)}{S_1}
+    \]
+
+\begin{answerbox}
+  \textbf{解：}
+  根据学生定理，在正态总体下 $\bar{X}$ 与 $S_1^2$ 独立，
+  且 $\frac{\bar{X}-\mu_1}{\sigma/\sqrt{n_1}} \sim N(0,1)$，$\frac{(n_1-1)S_1^2}{\sigma^2} \sim \chi^2(n_1-1)$。
+
+  $$
+  \begin{aligned}
+    \frac{\sqrt{n_1}(\bar{X}-\mu_1)}{S_1} &= \frac{\left(\frac{\bar{X}-\mu_1}{\sigma/\sqrt{n_1}}\right)}{\frac{S_1}{\sigma}} \\
+    &= \frac{\left(\frac{\bar{X}-\mu_1}{\sigma/\sqrt{n_1}}\right)}{\sqrt{\frac{(n_1-1)S_1^2}{\sigma^2}/(n_1-1)}}
+    &\sim t(n_1-1)
+  \end{aligned}
+  $$
+\end{answerbox}
+
+\subsection{}
+    \[
+        \frac{(n_1+n_2-2)S_w^2}{\sigma^2}
+    \]
+
+\begin{answerbox}
+  \textbf{解：}
+  $$
+  \frac{(n_1+n_2-2)S_w^2}{\sigma^2} = \frac{(n_1-1)S_1^2+(n_2-1)S_2^2}{\sigma^2}
+  $$
+
+  其中 $\frac{(n_1-1)S_1^2}{\sigma^2} \sim \chi^2(n_1-1)$，$\frac{(n_2-1)S_2^2}{\sigma^2} \sim \chi^2(n_2-1)$，且两者相互独立。
+
+  故
+
+  $$
+  \frac{(n_1+n_2-2)S_w^2}{\sigma^2}  \sim \chi^2(n_1+n_2-2)
+  $$
+\end{answerbox}
+
+\subsection{}
+    \[
+        \frac{\sqrt{n_1}(\bar{X}-\mu_1)}{S_w}
+    \]
+
+\begin{answerbox}
+  \textbf{解：}
+    根据学生定理，$\bar{X}$ 与 $S_1^2$ 独立。又样本 $X$ 与 样本 $Y$ 独立，因此 $\bar{X}$ 与 $S_2^2$ 独立。
+    因而 $\bar{X}$ 与 $(S_1^2,S_2^2)$ 独立。由于
+    $$
+    S_w^2=\frac{(n_1-1)S_1^2+(n_2-1)S_2^2}{n_1+n_2-2}
+    $$
+    是 $(S_1^2,S_2^2)$ 的函数，所以 $\bar{X}$ 与 $S_w^2$ 也独立。
+
+    又因为：$\frac{\bar{X}-\mu_1}{\sigma/\sqrt{n_1}} \sim N(0,1)$，$\frac{(n_1+n_2-2)S_w^2}{\sigma^2} \sim \chi^2(n_1+n_2-2)$。
+  $$
+  \frac{\sqrt{n_1}(\bar{X}-\mu_1)}{S_w} = \frac{\left(\frac{\bar{X}-\mu_1}{\sigma/\sqrt{n_1}}\right)}{\frac{S_w}{\sigma}} = \frac{\left(\frac{\bar{X}-\mu_1}{\sigma/\sqrt{n_1}}\right)}{\sqrt{\frac{(n_1+n_2-2)S_w^2}{\sigma^2}/(n_1+n_2-2)}} \sim t(n_1+n_2-2)
+  $$
+\end{answerbox}
+
+\section{Question 4}
+
+设 $X_1,X_2,\ldots,X_n$ 为取自正态分布 $N(\mu,\sigma^2)$ 的样本。记 $\bar{X}$ 为样本均值，$S^2$ 为样本方差。假设 $k>0$，$b>a>0$ 为已知常数，并记 $N(0,1)$、$t(n-1)$ 和 $\chi^2(n-1)$ 分布的累积分布函数（c.d.f）分别为 $\Phi(\cdot)$、$G_{n-1}(\cdot)$ 以及 $H_{n-1}(\cdot)$。试计算下列概率：
+
+\subsection{}
+  \[
+      P\!\left(\bar{X}-\mu \ge k\frac{S}{\sqrt{n}}\right)
+  \]
+
+\begin{answerbox}
+\textbf{解}  
+
+令 $T = \frac{\sqrt{n}(\bar{X}-\mu)}{S} = \frac{\left(\frac{\bar{X}-\mu}{\sigma/\sqrt{n}}\right)}{\sqrt{\frac{(n-1)S^2/\sigma^2}{n-1}}}$
+  则 $T \sim t(n-1)$
+
+  因此，$$
+  P\!\left(\bar{X}-\mu \ge k\frac{S}{\sqrt{n}}\right) = P\!\left(T \ge k\right) = 1 - G_{n-1}(k)
+  $$
+  
+\end{answerbox}
+
+\subsection{}
+    \[
+        P\!\left(\left|\frac{\bar{X}-\mu}{\sigma/\sqrt{n}}\right| \le k\right)
+    \]
+
+\begin{answerbox}
+\textbf{解}  
+
+令 $Z = \frac{\bar{X}-\mu}{\sigma/\sqrt{n}}$，则 $Z \sim N(0,1)$。
+
+  因此，
+  \begin{align*}
+    P\!\left(\left|\frac{\bar{X}-\mu}{\sigma/\sqrt{n}}\right| \le k\right) &= P(-k \le Z \le k) \\
+    &= 2\Phi(k) - 1
+  \end{align*}
+\end{answerbox}
+
+\subsection{}
+    \[
+        P\!\left(a < \frac{(n-1)S^2}{\sigma^2} \le b\right)
+    \]
+
+\begin{answerbox}
+\textbf{解}  
+
+令 $W = \frac{(n-1)S^2}{\sigma^2}$，则 $W \sim \chi^2(n-1)$。
+
+  因此，
+  \begin{align*}
+    P\!\left(a < \frac{(n-1)S^2}{\sigma^2} \le b\right) &= P(a < W \le b) \\
+    &= H_{n-1}(b) - H_{n-1}(a)
+  \end{align*}
+\end{answerbox}
+
+\section{Question 5}
+
+\subsection{}
+
+假设 $X_1,\ldots,X_n$ 为取自指数分布 $\mathrm{Exp}(\theta)$ 的样本，求 $\theta$ 的矩估计量。
+
+\begin{answerbox}
+\textbf{解}  
+  $\mathrm{E}X = \frac{1}{\theta}$
+  用样本一阶原点矩 $A_1 = \bar{X}$ 来估计总体一阶原点矩 $\mathrm{E}X$，得到：
+  $$\hat{\theta} = \frac{1}{\bar{X}}$$
+\end{answerbox}
+
+\subsection{}
+
+假设把 $\mathrm{Exp}(\theta)$ 分布的密度向右“平移”$\mu$ 个单位作为总体。此时总体的密度将变为
+    \[
+        f(x;\theta,\mu)=
+        \begin{cases}
+            \theta e^{-\theta(x-\mu)}, & x>\mu,\\
+            0, & \text{否则},
+        \end{cases}
+    \]
+    其中 $\theta$ 与 $\mu$ 均未知。相对于 $\mathrm{Exp}(\theta)$ 分布，平移后的总体均值会增加 $\mu$，而总体方差保持不变。假设样本为 $X_1,\ldots,X_n$，试用矩估计法来估计 $\theta$ 和 $\mu$ 的值。
+
+\begin{answerbox}
+\textbf{解}  
+
+  令 $Y = X - \mu$，则 $Y \sim \mathrm{Exp}(\theta)$。
+  因此，$X = Y + \mu$。
+  于是，可以得到总体的第一阶原点矩和第二阶中心矩分别为：
+  $$
+  \mu_1 = \frac{1}{\theta} + \mu, \quad \nu_2 = \frac{1}{\theta^2}
+  $$
+  于是：
+  $$
+  \left\{
+  \begin{aligned}
+    A_1 &= \bar{X} = \frac{1}{\theta} + \mu \\
+    B_2 &= \frac{1}{n}\sum_{i=1}^n (X_i-\bar{X})^2 = \frac{1}{\theta^2}
+  \end{aligned}\right.
+  $$
+
+  得到：
+
+  $$
+  \left\{
+  \begin{aligned}
+    \hat{\theta} &= \frac{1}{\sqrt{B_2}} \\
+    \hat{\mu} &= A_1 - \frac{1}{\hat{\theta}} = \bar{X} - \sqrt{B_2}
+  \end{aligned}
+  \right.
+  $$
+\end{answerbox}
+
+\section{Question 6}
+
+某连锁餐厅对顾客的满意度进行调查，将满意度分为 5 个等级：1（非常不满意）、2（不满意）、3（一般）、4（满意）、5（非常满意）。令总体 $X$ 为随机抽取一位顾客给出的满意度等级，它在集合 $\{1,2,3,4,5\}$ 中取值。根据餐厅的不同运营模式，顾客满意度的概率分布只能是下列三种情况之一：
+
+\begin{enumerate}[label=(\arabic*), leftmargin=3em]
+    \item 满意度等级 1--5 的概率均为 $\dfrac{1}{5}$（均衡型）。
+    \item 满意度等级 1--2 的概率均为 $\dfrac{1}{8}$，等级 3--5 的概率均为 $\dfrac{1}{4}$（积极型）。
+    \item 满意度等级 1--3 的概率均为 $\dfrac{1}{6}$，等级 4--5 的概率均为 $\dfrac{1}{4}$（保守型）。
+\end{enumerate}
+
+现随机调查了 20 位顾客，得到的满意度等级数据如下为：4 个 1 级，5 个 2 级，5 个 3 级，4 个 4 级，2 个 5 级。
+
+请根据极大似然估计法确定该餐厅的顾客满意度分布应该是上述三种情况中的哪一种。
+
+\begin{answerbox}
+\textbf{解}
+
+由题意，样本中 1--5 级的频数分别为
+\[
+    (n_1,n_2,n_3,n_4,n_5)=(4,5,5,4,2).
+\]
+
+若第 $j$ 种情形对应的概率向量为 $(p_{j1},p_{j2},p_{j3},p_{j4},p_{j5})$，则该样本的似然函数为
+\[
+    L_j=\frac{20!}{4!\,5!\,5!\,4!\,2!}\prod_{k=1}^5 p_{jk}^{\,n_k}.
+\]
+由于前面的组合系数与三种情形无关，只需比较
+\[
+    \prod_{k=1}^5 p_{jk}^{\,n_k}
+\]
+的大小即可。
+
+对于第一种情况，
+\[
+    (p_{11},p_{12},p_{13},p_{14},p_{15})
+    =\left(\frac15,\frac15,\frac15,\frac15,\frac15\right),
+\]
+故
+\[
+    L_1 \propto \left(\frac{1}{5}\right)^{20}.
+\]
+
+对于第二种情况，
+\[
+    (p_{21},p_{22},p_{23},p_{24},p_{25})
+    =\left(\frac18,\frac18,\frac14,\frac14,\frac14\right),
+\]
+故
+\[
+    L_2 \propto \left(\frac{1}{8}\right)^9\left(\frac{1}{4}\right)^{11}.
+\]
+
+对于第三种情况，
+\[
+    (p_{31},p_{32},p_{33},p_{34},p_{35})
+    =\left(\frac16,\frac16,\frac16,\frac14,\frac14\right),
+\]
+故
+\[
+    L_3 \propto \left(\frac{1}{6}\right)^{14}\left(\frac{1}{4}\right)^6.
+\]
+
+比较对数似然：
+\[
+    \ell_1 = 20\ln\frac15,\qquad
+    \ell_2 = 9\ln\frac18 + 11\ln\frac14,\qquad
+    \ell_3 = 14\ln\frac16 + 6\ln\frac14.
+\]
+计算可得
+\[
+    \ell_1 > \ell_3 > \ell_2,
+\]
+因此
+\[
+    L_1 > L_3 > L_2.
+\]
+
+所以极大似然对应第一种情况，即该餐厅的顾客满意度分布应判为第一种情况（均衡型）。
+
+\end{answerbox}
+
+\section{Question 7}
+
+设 $X_1,X_2,\ldots,X_n$ 为取自泊松分布 $\mathrm{Po}(\lambda)$ 的样本。
+
+\subsection{}
+
+求 $\lambda$ 的极大似然估计量（MLE）.
+
+\begin{answerbox}
+\textbf{解}  
+
+  泊松分布的概率质量函数为 $P(X=k) = \frac{\lambda^k e^{-\lambda}}{k!}$，因此样本的似然函数为：
+
+  $$
+  L(\lambda) = \prod_{i=1}^n \frac{\lambda^{X_i} e^{-\lambda}}{X_i!} = \frac{\lambda^{\sum_{i=1}^n X_i} e^{-n\lambda}}{\prod_{i=1}^n X_i!}
+  $$
+
+  对数似然函数为：
+
+  $$
+  \ell(\lambda) = \sum_{i=1}^n X_i \ln \lambda - n\lambda - \sum_{i=1}^n \ln(X_i!)
+  $$
+
+  对 $\ell(\lambda)$ 关于 $\lambda$ 求导并令其等于零：
+
+  $$
+  \frac{d\ell}{d\lambda} = \frac{\sum_{i=1}^n X_i}{\lambda} - n = 0
+  $$
+
+  解得：
+  $$\hat{\lambda} = \frac{1}{n}\sum_{i=1}^n X_i = \bar{X}$$
+
+  又：
+  $$
+  \frac{d^2\ell}{d\lambda^2} = -\frac{\sum_{i=1}^n X_i}{\lambda^2} < 0
+  $$
+  因此，$\hat{\lambda} = \bar{X}$ 是 $\lambda$ 的极大似然估计量。
+
+\end{answerbox}
+
+\subsection{}
+
+利用第 1 小问的结论，求 $P(X\le 2)$ 的极大似然估计量.（提示：将 $P(X\le 2)$ 写为 $\lambda$ 的函数）
+
+\begin{answerbox}
+\textbf{解}  
+  $$
+  \begin{aligned}
+  P(X \le 2) &= P(X=0) + P(X=1) + P(X=2) \\
+  &= e^{-\lambda} + \lambda e^{-\lambda} + \frac{\lambda^2}{2} e^{-\lambda} \\
+  &= e^{-\lambda}\left(1 + \lambda + \frac{\lambda^2}{2}\right)
+  \end{aligned}
+  $$
+
+  因此，$P(X\le 2)$ 的极大似然估计量为：
+
+  $$
+  \hat{P}(X\le 2) = e^{-\hat{\lambda}}\left(1 + \hat{\lambda} + \frac{\hat{\lambda}^2}{2}\right) = e^{-\bar{X}}\left(1 + \bar{X} + \frac{\bar{X}^2}{2}\right)
+  $$
+\end{answerbox}
+
+\section{Question 8}
+
+设总体 $X$ 的密度函数为
+\[
+    f(x;\theta)=\frac{1}{2\theta}e^{-\lvert x\rvert/\theta},\quad x\in\mathbb{R},
+\]
+其中 $\theta>0$ 未知。样本为 $X_1,\ldots,X_n$. 求 $\theta$ 的极大似然估计量 $\hat{\theta}$.
+
+\begin{answerbox}
+\textbf{解}  
+  
+样本的似然函数为：
+
+  $$
+  L(\theta) = \prod_{i=1}^n \frac{1}{2\theta} e^{-|X_i|/\theta} = \left(\frac{1}{2\theta}\right)^n e^{-\sum_{i=1}^n |X_i|/\theta}
+  $$
+
+  对数似然函数为：
+
+  $$
+  \ell(\theta) = -n \ln(2\theta) - \frac{1}{\theta} \sum_{i=1}^n |X_i|
+  $$
+
+  对 $\ell(\theta)$ 关于 $\theta$ 求导并令其等于零：
+
+  $$
+  \frac{d\ell}{d\theta} = -\frac{n}{\theta} + \frac{1}{\theta^2} \sum_{i=1}^n |X_i| = 0
+  $$
+
+  解得：
+  $$\hat{\theta} = \frac{1}{n}\sum_{i=1}^n |X_i|$$
+
+  由
+  \[
+    \frac{d\ell}{d\theta}
+    = \frac{\sum_{i=1}^n |X_i| - n\theta}{\theta^2}
+  \]
+  可知：当 $0 < \theta < \frac{1}{n}\sum_{i=1}^n |X_i|$ 时，$\frac{d\ell}{d\theta} > 0$；当 $\theta > \frac{1}{n}\sum_{i=1}^n |X_i|$ 时，$\frac{d\ell}{d\theta} < 0$。
+  
+  因此，$\hat{\theta} = \frac{1}{n}\sum_{i=1}^n |X_i|$ 是 $\theta$ 的极大似然估计量。
+
+
+\end{answerbox}
+
+\section{Question 9}
+
+假设总体 $X$ 的 p.d.f. 为
+\[
+    f(x;\lambda)=
+    \begin{cases}
+        \dfrac{4x^3}{\lambda^4}, & 0<x\le \lambda,\\
+        0, & \text{其他}.
+    \end{cases}
+\]
+样本为 $X_1,X_2,\ldots,X_n$.
+
+（提示：这个问题中，总体的取值范围依赖于 $\lambda$. 请借鉴均匀分布中的方法来计算 MLE.）
+
+
+\subsection{}
+试求 $\lambda$ 的极大似然估计量 $\hat{\lambda}$.
+
+\begin{answerbox}
+\textbf{解}  
+
+  样本的似然函数为：
+
+  $$
+  L(\lambda) = \prod_{i=1}^n \frac{4X_i^3}{\lambda^4}\mathbf{1}_{\{0<X_i\le \lambda\}}
+  = \frac{4^n \prod_{i=1}^n X_i^3}{\lambda^{4n}} \mathbf{1}_{\{\lambda \ge \max(X_1,\ldots,X_n)\}}
+  $$
+
+  因此当 $\lambda < \max(X_i)$ 时，$L(\lambda)=0$；当 $\lambda \ge \max(X_i)$ 时，
+  $$
+  L(\lambda)=\frac{4^n \prod_{i=1}^n X_i^3}{\lambda^{4n}},
+  $$
+  它关于 $\lambda$ 单调递减。
+  
+  因此，$\hat{\lambda}$ 的极大似然估计量为样本中的最大值，即 
+  $$\hat{\lambda} = \max(X_1, X_2, \ldots, X_n)$$
+
+\end{answerbox}
+
+\subsection{}
+求常数 $c$，使得 $c\hat{\lambda}$ 为 $\lambda$ 的无偏估计量.
+
+\begin{answerbox}
+\textbf{解}  
+
+  由于，$\hat{\lambda} = \max(X_1, X_2, \ldots, X_n)$，
+  当 $0 < x \leq \lambda$ 时，
+  $$F_{\hat{\lambda}}(x) = P\{\hat{\lambda} \leq x\} = P\{\max(X_1, X_2, \ldots, X_n) \leq x\} = \prod_{i=1}^n P(X_i \leq x) = \left(\frac{x^4}{\lambda^4}\right)^n$$
+  
+  当 $x > \lambda$ 时，$F_{\hat{\lambda}}(x) = 1$，当 $x \leq 0$ 时，$F_{\hat{\lambda}}(x) = 0$。
+  
+  于是：
+
+  $$
+  f_{\hat{\lambda}}(x) = \frac{d}{dx} F_{\hat{\lambda}}(x) = n \left(\frac{4x^3}{\lambda^4}\right) \left(\frac{x^4}{\lambda^4}\right)^{n-1}, \quad 0 < x \leq \lambda
+  $$
+
+  $$
+  \begin{aligned}
+  \mathrm{E}(\hat{\lambda}) &= \int_0^\lambda x f_{\hat{\lambda}}(x) dx \\
+  &= \int_0^{\lambda} 4n \left(\frac{x}{\lambda}\right)^{4n} dx \\
+  &= \frac{4n}{4n+1} \lambda \\
+  \end{aligned}
+  $$
+
+  因此：
+  $$\mathrm{E}(c\hat{\lambda}) = c\mathrm{E}(\hat{\lambda}) = c\frac{4n}{4n+1}\lambda$$
+
+  解得：
+  $$c = \frac{4n+1}{4n}$$
+\end{answerbox}
+
+\subsection{}
+一个分布的中位数定义为使得 $P(X>m)=P(X\le m)=\dfrac{1}{2}$ 的 $m$ 值。试求总体中位数 $m$ 的极大似然估计量和一个无偏估计量。
+
+\begin{answerbox}
+\textbf{解}  
+
+  $$
+  P\{X \leq m\} = \int_0^m \frac{4x^3}{\lambda^4} dx = \frac{m^4}{\lambda^4} = \frac{1}{2}
+  $$
+
+  于是：
+
+  $$
+  m = \frac{\lambda}{\sqrt[4]{2}} 
+  $$
+
+  所以，由第1小问的结论，$m$ 的极大似然估计量为：
+  $$\hat{m} = \frac{\hat{\lambda}}{\sqrt[4]{2}} = \frac{\max(X_1, X_2, \ldots, X_n)}{\sqrt[4]{2}}$$
+
+  由第2小问的结论，$m$ 的无偏估计量为：
+  $$
+  \tilde{m} = \frac{4n+1}{4n} \cdot \frac{\max(X_1, X_2, \ldots, X_n)}{\sqrt[4]{2}}
+  $$
+\end{answerbox}
+
+\section{Question 10}
+
+设总体 $X\sim N(\mu,\sigma^2)$，$X_1,X_2,\cdots,X_n$ 是来自该总体的样本。试确定常数 $c$ 使得
+\[
+    c\sum_{i=1}^{n-1}(X_{i+1}-X_i)^2
+\]
+为 $\sigma^2$ 的无偏估计。
+
+\begin{answerbox}
+\textbf{解}  
+  $X_1, X_2, \ldots, X_n$ 是来自 $N(\mu, \sigma^2)$ 的样本，它们相互独立且同分布。
+  $$
+  \mathrm{E}(X_{i+1}-X_i) = 0
+  $$
+  $$
+  \begin{aligned}
+  \mathrm{E}[(X_{i+1}-X_i)^2] &= \mathrm{Var}(X_{i+1}-X_i) + [\mathrm{E}(X_{i+1}-X_i)]^2 \\
+  &= \mathrm{Var}(X_{i+1}) + \mathrm{Var}(X_i) - 2\mathrm{Cov}(X_{i+1}, X_i) \\
+  &= 2\sigma^2
+  \end{aligned}
+  $$
+
+  所以：
+
+  $$
+  \mathrm{E}\left[\sum_{i=1}^{n-1}(X_{i+1}-X_i)^2\right] = (n-1) \cdot 2\sigma^2 = 2(n-1)\sigma^2
+  $$
+  因此，要使 $c\sum_{i=1}^{n-1}(X_{i+1}-X_i)^2$ 为 $\sigma^2$ 的无偏估计，需要：
+  $$
+  c \cdot 2(n-1) = 1 \quad \Rightarrow \quad c = \frac{1}{2(n-1)}
+  $$
+\end{answerbox}
+
+\section{Question 11}
+
+设总体 $X\sim N(\mu,\sigma^2)$，其中 $\mu$ 已知。$X_1,X_2,\cdots,X_n$ 是来自该总体的样本。此时，$S^2$ 与
+\[
+    \sum_{i=1}^{n}(X_i-\mu)^2/n
+\]
+都是 $\sigma^2$ 的无偏估计量。试比较它们的有效性。
+
+\begin{answerbox}
+\textbf{解}  
+
+  由于，$\frac{(n-1)S^2}{\sigma^2} \sim \chi^2(n-1)$，
+  所以，$\textrm{Var}\left[\frac{(n-1)S^2}{\sigma^2}\right] = 2(n-1)$，
+  因此，
+  $$
+  \mathrm{Var}(S^2) = \mathrm{Var}\left[\frac{\sigma^2}{n-1} \frac{n-1}{\sigma^2} S^2\right] = \frac{2\sigma^4}{n-1}
+  $$
+  $$
+  \mathrm{Var}\left(\frac{1}{n}\sum_{i=1}^n (X_i-\mu)^2\right) = \mathrm{Var}\left(\frac{\sigma^2}{n}\sum_{i=1}^n \left(\frac{X_i-\mu}{\sigma}\right)^2\right)
+  $$
+  
+  由于，$\sum_{i=1}^n \left(\frac{X_i-\mu}{\sigma}\right)^2 \sim \chi^2(n)$，
+
+  所以：
+  $$
+  \mathrm{Var}\left(\frac{1}{n}\sum_{i=1}^n (X_i-\mu)^2\right) = \frac{2\sigma^4}{n}
+  $$
+
+  $\frac{1}{n}\sum_{i=1}^n (X_i-\mu)^2$ 的方差更小，所以它比 $S^2$ 更有效。
+\end{answerbox}
+
+\section{Question 12}
+
+设总体中有未知参数 $\theta$，$\hat{\theta}_1$ 和 $\hat{\theta}_2$ 都是 $\theta$ 的估计量，且互相独立。设 $\mathrm{Var}(\hat{\theta}_1)=v_1$，$\mathrm{Var}(\hat{\theta}_2)=v_2$. 现考虑 $\theta$ 的如下估计量：
+\[
+    \hat{\theta}=a\hat{\theta}_1+b\hat{\theta}_2,
+\]
+其中 $a,b$ 为常数，且满足 $a+b=1$.
+
+\subsection{}
+
+假设 $\hat{\theta_1}$ 和 $\hat{\theta_2}$ 都是 $\theta$ 的无偏估计量，证明 $\hat{\theta}$ 是 $\theta$ 的无偏估计量。
+
+\begin{answerbox}
+  \textbf{解：}
+  $$
+  \mathrm{E}(\hat{\theta}) = \mathrm{E}(a\hat{\theta}_1+b\hat{\theta}_2) = a\mathrm{E}(\hat{\theta}_1)+b\mathrm{E}(\hat{\theta}_2) = a\theta+b\theta = \theta
+  $$
+  因此，$\hat{\theta}$ 是 $\theta$ 的无偏估计量。
+\end{answerbox}
+
+\subsection{}
+
+若 $\hat{\theta}_1$ 和 $\hat{\theta}_2$ 都可能存在偏差，设
+    \[
+        \mathrm{E}(\hat{\theta}_1)=\theta+\delta_1,\qquad \mathrm{E}(\hat{\theta}_2)=\theta+\delta_2,
+    \]
+    其中 $\delta_1,\delta_2$ 为常数。求 $\hat{\theta}$ 的均方误差 $\mathrm{MSE}(\hat{\theta})$.
+
+\begin{answerbox}
+\textbf{解：}
+
+$$
+\begin{aligned}
+\mathrm{MSE}(\hat{\theta}) &= \mathrm{Var}(\hat{\theta}) + [\mathrm{E}(\hat{\theta}) - \theta]^2 \\ 
+  &= \mathrm{Var}{[a\hat{\theta_1} + b\hat{\theta}_2]} + [a\mathrm{E}(\hat{\theta}_1) + b\mathrm{E}(\hat{\theta}_2) - \theta]^2 (\hat{\theta}_1 与 \hat{\theta}_2 \text{相互独立})\\
+  &= a^2 \mathrm{Var}(\hat{\theta}_1) + b^2 \mathrm{Var}(\hat{\theta}_2) + [a(\theta+\delta_1) + b(\theta+\delta_2) - \theta]^2 \\
+  &= a^2 v_1 + b^2 v_2 + [a\delta_1 + b\delta_2]^2 \\
+  &= a^2 v_1 + (1-a)^2 v_2 + [a\delta_1 + (1-a)\delta_2]^2
+\end{aligned}
+$$
+\end{answerbox}
+
+\subsection{}
+在 $v_1,v_2,\delta_1$ 和 $\delta_2$ 已知的条件下，求使 $\mathrm{MSE}(\hat{\theta})$ 达到最小的常数 $a$（用 $v_1,v_2,\delta_1,\delta_2$ 表示）。
+
+\begin{answerbox}
+  \textbf{解：}
+  $$
+  \left\{
+    \begin{array}{l}
+      \frac{d}{da} \mathrm{MSE}(\hat{\theta}) = 2a v_1 - 2(1-a) v_2 + 2[a\delta_1 + (1-a)\delta_2](\delta_1 - \delta_2) = 0 \\
+      \frac{d^2}{da^2} \mathrm{MSE}(\hat{\theta}) = 2v_1 + 2v_2 + 2(\delta_1 - \delta_2)^2 > 0
+    \end{array}
+  \right.
+  $$
+  解得：
+  $$
+  a = \frac{v_2 - (\delta_1 - \delta_2)\delta_2}{(v_1 + v_2)+(\delta_1 - \delta_2)^2}
+  $$
+\end{answerbox}
+
+\end{document}

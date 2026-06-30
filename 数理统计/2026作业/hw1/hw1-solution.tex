@@ -1,0 +1,398 @@
+\documentclass[12pt,a4paper]{article}
+
+% ── 中文支持 ──
+\usepackage[UTF8]{ctex}
+
+% ── 页面布局 ──
+\usepackage[margin=2.5cm]{geometry}
+
+% ── 数学 ──
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+
+% ── 排版美化 ──
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, linkcolor=blue!60!black}
+
+% ── 页眉页脚 ──
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small 数理统计}
+\fancyhead[M]{2024110089 倪伟丰}
+\fancyhead[R]{\small Assignment 1}
+\fancyfoot[C]{\small \thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ── 标题样式 ──
+\titleformat{\section}{\Large\bfseries}{第\,\thesection\,题}{1em}{}
+\titleformat{\subsection}{\large\bfseries}{(\thesubsection)}{0.6em}{}
+
+% ── 自定义命令 ──
+\newcommand{\Cov}{\operatorname{Cov}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\E}{\operatorname{E}}
+\newcommand{\Exp}{\operatorname{Exp}}
+\newcommand{\Po}{\operatorname{Po}}
+\newcommand{\Ga}{\operatorname{Gamma}}
+\newcommand{\ii}{\mathrm{i.i.d.}}
+
+% ── 文档信息 ──
+\title{\textbf{数理统计 \quad 作业一}}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+\thispagestyle{fancy}
+
+%==========================================================
+\section{}
+%==========================================================
+
+\subsection{}
+
+设公司员工的年终绩效评分为随机变量 $X\sim N(75,\,8^{2})$，$x$ 为进入该名单的最小分数。则有
+\[
+  P(X<x)=0.05.
+\]
+于是
+\[
+  \Phi\!\biggl(\frac{x-75}{8}\biggr)=0.05,
+\]
+最终解得
+\[
+  \boxed{x=61.84}
+\]
+
+\subsection{}
+
+由题意得，综合成绩 $S$ 满足
+\[
+  S\sim N\!\bigl(0.6\times78+0.4\times72,\;0.36\times9^{2}+0.16\times6^{2}\bigr)
+  =N(75.6,\,34.92).
+\]
+前 15\% 的员工进入精英培养计划，设进入该计划的员工的最低综合成绩为 $s$，则
+\[
+  P(S>s)=0.15.
+\]
+最终解得
+\[
+  \boxed{s=81.72}
+\]
+
+%==========================================================
+\section{}
+%==========================================================
+
+\subsection{}
+
+由于
+\begin{align*}
+  P\{V>v\}
+  &=P\{(2W-1)X>v\}\\
+  &=P\{-X>v\mid W=0\}\,P\{W=0\}
+   +P\{X>v\mid W=1\}\,P\{W=1\}\\
+  &=P\{X>v\},
+\end{align*}
+所以
+\[
+  \boxed{V\sim N(0,1)}
+\]
+
+\subsection{}
+
+\[
+  \Cov(U,V)=\E[UV]-\E[U]\,\E[V].
+\]
+其中 $\E[U]=0$，$\E[V]=0$，而
+\begin{align*}
+  \E[UV]
+  &=\E\bigl[X(2W-1)X\bigr]
+   =\E\bigl[X^{2}(2W-1)\bigr]\\
+  &=\E[X^{2}]\,\E[2W-1]
+   =\E[X^{2}]\times0=0.
+\end{align*}
+综上，
+\[
+  \boxed{\Cov(U,V)=0}
+\]
+
+\subsection{}
+
+不能构成一个二元正态分布。由~(2.2) 可知 $U$ 与 $V$ 不相关，接下来只要证明 $U$ 与 $V$ \textbf{不独立}即可。
+
+举一个反例：
+\begin{align*}
+  P\{U>1,\,V>1\}
+  &=P\{X>1,\,(2W-1)X>1\}
+   =P\{X>1,\,W=1\}\\
+  &=P\{X>1\}\times P\{W=1\}
+   =\bigl(1-\Phi(1)\bigr)\times0.5.
+\end{align*}
+而
+\[
+  P\{U>1\}\times P\{V>1\}=\bigl(1-\Phi(1)\bigr)^{2}.
+\]
+因此 $P\{U>1,\,V>1\}\neq P\{U>1\}\cdot P\{V>1\}$，故 $U$ 与 $V$ 不独立。
+
+综上，$U$ 与 $V$ 不相关也不独立，因此 $(U,V)$ 不能构成二元正态分布。
+
+%==========================================================
+\section{}
+%==========================================================
+
+设 $Y_{1},Y_{2},\ldots,Y_{n}$ 为 $n$ 个独立同分布的随机变量，且 $Y_{i}\sim\Po(\lambda)$，则 $X_{n}$ 可表示为
+\[
+  X_{n}=\sum_{i=1}^{n}Y_{i}.
+\]
+根据中心极限定理，当 $n\to\infty$ 时，
+\[
+  \frac{X_{n}-n\,\E[Y_{i}]}{\sqrt{n\,\Var(Y_{i})}}\xrightarrow{d}N(0,1).
+\]
+其中 $\E[Y_{i}]=\lambda$，$\Var(Y_{i})=\lambda$，故当 $n\to\infty$ 时，
+\[
+  \boxed{\frac{X_{n}-n\lambda}{\sqrt{n\lambda}}\xrightarrow{d}N(0,1)}
+\]
+
+%==========================================================
+\section{}
+%==========================================================
+
+$X_{1},X_{2},\ldots,X_{n}$ 为 $n$ 个独立同分布的随机变量，且 $X_{i}\sim\Exp(\theta)$。令 $S=\sum_{i=1}^{n}X_{i}\sim\Ga\!\bigl(n,\tfrac{1}{\theta}\bigr)$。
+
+$S$ 的概率密度函数为
+\[
+  f_{S}(s)=\frac{\theta^{n}}{\Gamma(n)}\,s^{n-1}\,e^{-s\theta},\quad s>0.
+\]
+又因为 $\bar{X}=S/n$，利用变量替换，Jacobian 为 $J=\dfrac{dS}{d\bar{X}}=n$，所以
+\[
+  f_{\bar{X}}(x)
+  =f_{S}(nx)\cdot|J|
+  =\frac{\theta^{n}}{\Gamma(n)}(nx)^{n-1}e^{-nx\theta}\cdot n
+  =\frac{(\theta n)^{n}}{\Gamma(n)}\,x^{n-1}\,e^{-x\theta n},\quad x>0.
+\]
+因此
+\[
+  \boxed{\bar{X}\sim\Ga\!\Bigl(n,\,\frac{1}{\theta n}\Bigr)}
+\]
+
+%==========================================================
+\section{}
+%==========================================================
+
+\subsection{}
+
+一阶原点矩与期望：
+\[
+  \mu_{1}=\E[X]=\frac{-12-6-2+2+5+10}{6}=-0.5.
+\]
+二阶原点矩：
+\[
+  \mu_{2}=\frac{144+36+4+4+25+100}{6}=\frac{313}{6}.
+\]
+二阶中心矩：
+\[
+  \sigma_{2}=\mu_{2}-\mu_{1}^{2}=\frac{313}{6}-(-0.5)^{2}\approx51.9167.
+\]
+
+\subsection{}
+
+样本均值：
+\[
+  \bar{x}=\frac{1}{10}\sum x_{i}=\frac{-4}{10}=-0.4.
+\]
+样本二阶原点矩：
+\[
+  \frac{1}{10}\sum x_{i}^{2}=\frac{382}{10}=38.2.
+\]
+样本二阶中心矩：
+\[
+  \frac{1}{10}\sum(x_{i}-\bar{x})^{2}=38.04.
+\]
+样本方差：
+\[
+  s^{2}=\frac{1}{9}\sum(x_{i}-\bar{x})^{2}\approx42.2667.
+\]
+
+\subsection{}
+
+\textbf{是否可以计算非零的一阶中心矩？}\;不能。一阶中心矩恒为零：
+\[
+  \E[X-\mu]=0,\qquad \frac{1}{n}\sum(x_{i}-\bar{x})=0.
+\]
+
+%==========================================================
+\section{}
+%==========================================================
+
+\subsection{}
+
+\textbf{不是。}$\mu$ 未知，所以 $Y=X_{1}-\mu$ 不是统计量。
+
+\subsection{}
+
+\textbf{是。}$\sigma_{0}$ 已知，且 $\max\{X_{1},\ldots,X_{n}\}$ 仅依赖于样本，所以 $Y=\dfrac{\max\{X_{1},\ldots,X_{n}\}}{\sigma_{0}}$ 是统计量。
+
+\subsection{}
+
+\textbf{是。}$Y=X_{1}-X_{2}$ 仅依赖于样本，所以是统计量。
+
+%==========================================================
+\section{}
+%==========================================================
+
+$Y_{1},Y_{2},\ldots,Y_{m}\overset{\ii}{\sim}\Exp\!\bigl(\tfrac{1}{2}\bigr)$，而 $\Exp\!\bigl(\tfrac{1}{2}\bigr)$ 等价于 $\Ga(1,2)$。根据 Gamma 分布的可加性，
+\[
+  S=\sum_{i=1}^{m}Y_{i}\sim\Ga(m,2).
+\]
+其概率密度函数为
+\[
+  f_{S}(s)
+  =\frac{1}{2^{m}\,\Gamma(m)}\,s^{m-1}\,e^{-s/2}
+  =\frac{1}{2\,\Gamma(m)}\Bigl(\frac{s}{2}\Bigr)^{m-1}e^{-s/2},\quad s>0.
+\]
+这正是 $\chi^{2}(2m)$ 分布的概率密度函数，因此
+\[
+  \boxed{\sum_{i=1}^{m}Y_{i}\sim\chi^{2}(2m)}
+\]
+
+%==========================================================
+\section{}
+%==========================================================
+
+\subsection{}
+
+令 $\bar{A}=\dfrac{1}{n}\sum_{i=1}^{n}A_{i}$，则 $\bar{A}\sim N\!\bigl(\mu,\,\tfrac{\sigma^{2}}{n}\bigr)$。
+
+计算 $A_{1}$ 与 $\bar{A}$ 的协方差：
+\[
+  \Cov(A_{1},\bar{A})
+  =\Cov\!\Bigl(A_{1},\,\frac{1}{n}\sum_{i=1}^{n}A_{i}\Bigr)
+  =\frac{1}{n}\sum_{i=1}^{n}\Cov(A_{1},A_{i}).
+\]
+由于 $A_{1}$ 与 $A_{2},\ldots,A_{n}$ 相互独立，$\Cov(A_{1},A_{i})=0\;(i\neq1)$，而 $\Cov(A_{1},A_{1})=\sigma^{2}$，所以
+\[
+  \Cov(A_{1},\bar{A})=\frac{\sigma^{2}}{n}.
+\]
+于是 $(A_{1},\bar{A})$ 的协方差矩阵为
+\[
+  \Sigma=\begin{pmatrix}
+    \sigma^{2}            & \dfrac{\sigma^{2}}{n}\\[6pt]
+    \dfrac{\sigma^{2}}{n} & \dfrac{\sigma^{2}}{n}
+  \end{pmatrix},
+\]
+综上，$(A_{1},\bar{A})$ 的联合分布为
+\[
+  \boxed{(A_{1},\bar{A})\sim N\!\left(
+    \begin{pmatrix}\mu\\\mu\end{pmatrix},\;\Sigma
+  \right)}
+\]
+
+\subsection{}
+
+\begin{align}
+  \sum_{i=1}^{n}\frac{(A_{i}-\bar{A})^{2}}{\sigma^{2}}
+  &=\frac{1}{\sigma^{2}}\sum_{i=1}^{n}\bigl[(A_{i}-\mu)+(\mu-\bar{A})\bigr]^{2}\notag\\
+  &=\sum_{i=1}^{n}\frac{(A_{i}-\mu)^{2}}{\sigma^{2}}
+    +n\,\frac{(\bar{A}-\mu)^{2}}{\sigma^{2}}
+    -2(\bar{A}-\mu)\sum_{i=1}^{n}\frac{A_{i}-\mu}{\sigma^{2}}\notag\\
+  &=\sum_{i=1}^{n}\frac{(A_{i}-\mu)^{2}}{\sigma^{2}}
+    -n\,\frac{(\bar{A}-\mu)^{2}}{\sigma^{2}}.\label{eq:decomp}
+\end{align}
+其中 $\displaystyle\sum_{i=1}^{n}\frac{(A_{i}-\mu)^{2}}{\sigma^{2}}\sim\chi^{2}(n)$，$\displaystyle\biggl(\frac{\bar{A}-\mu}{\sigma/\sqrt{n}}\biggr)^{\!2}\sim\chi^{2}(1)$。故
+\[
+  \boxed{\sum_{i=1}^{n}\frac{(A_{i}-\bar{A})^{2}}{\sigma^{2}}\sim\chi^{2}(n-1)}
+\]
+
+\subsection{}
+
+\[
+  \frac{\bar{A}-\mu}{\dfrac{1}{n}\sqrt{\displaystyle\sum_{i=1}^{n}B_{i}^{2}}}
+  =\frac{\dfrac{(\bar{A}-\mu)\sqrt{n}}{\sigma}}
+       {\sqrt{\displaystyle\sum_{i=1}^{n}\!\Bigl(\dfrac{B_{i}}{\sigma}\Bigr)^{\!2}\Big/\,n}}.
+\]
+其中 $\dfrac{(\bar{A}-\mu)\sqrt{n}}{\sigma}\sim N(0,1)$，$\displaystyle\sum_{i=1}^{n}\!\Bigl(\frac{B_{i}}{\sigma}\Bigr)^{\!2}\sim\chi^{2}(n)$。
+
+根据 $t$ 分布的定义，
+\[
+  \boxed{\frac{\bar{A}-\mu}{\dfrac{1}{n}\sqrt{\displaystyle\sum_{i=1}^{n}B_{i}^{2}}}\sim t(n)}
+\]
+
+\subsection{}
+
+\[
+  \frac{\dfrac{1}{n-1}\displaystyle\sum_{i=1}^{n}(A_{i}-\bar{A})^{2}}
+       {\dfrac{1}{n}\displaystyle\sum_{i=1}^{n}B_{i}^{2}}
+  =\frac{\dfrac{1}{n-1}\displaystyle\sum_{i=1}^{n}\!\Bigl(\frac{A_{i}-\bar{A}}{\sigma}\Bigr)^{\!2}}
+       {\dfrac{1}{n}\displaystyle\sum_{i=1}^{n}\!\Bigl(\frac{B_{i}}{\sigma}\Bigr)^{\!2}}.
+\]
+由~(8.2) 可知分子 $\sim\chi^{2}(n-1)/(n-1)$，分母 $\sim\chi^{2}(n)/n$。根据 $F$ 分布的定义，
+\[
+  \boxed{\frac{\dfrac{1}{n-1}\displaystyle\sum_{i=1}^{n}(A_{i}-\bar{A})^{2}}
+       {\dfrac{1}{n}\displaystyle\sum_{i=1}^{n}B_{i}^{2}}\sim F(n-1,\,n)}
+\]
+
+%==========================================================
+\section{}
+%==========================================================
+
+\subsection{}
+
+令 $A=X_{1}-X_{2}$，$B=X_{3}+X_{4}$，$D=Y_{1}-Y_{2}$，易得
+\[
+  A\sim N(0,8),\quad B\sim N(2,8),\quad D\sim N(0,18).
+\]
+将 $U$ 分解为
+\[
+  U=\biggl(\frac{A}{2\sqrt{2}}\biggr)^{\!2}
+   +\biggl(\frac{B-2}{2\sqrt{2}}\biggr)^{\!2}
+   +\biggl(\frac{D}{3\sqrt{2}}\biggr)^{\!2},
+\]
+其中每一项均为 $\chi^{2}(1)$，三者相互独立，故
+\[
+  \boxed{U\sim\chi^{2}(3)}
+\]
+
+\subsection{}
+
+\[
+  V=\frac{\sqrt{m}\,(X_{5}-1)}{\sqrt{U}}
+  =\sqrt{m}\cdot\frac{2}{\sqrt{3}}\cdot
+   \frac{\dfrac{X_{5}-1}{2}}{\sqrt{U/3}}.
+\]
+要使 $V\sim t(3)$，需
+\[
+  \sqrt{m}\cdot\frac{2}{\sqrt{3}}=1
+  \implies m=\frac{3}{4}.
+\]
+因此
+\[
+  \boxed{m=\frac{3}{4},\quad V\sim t(3)}
+\]
+
+\subsection{}
+
+\[
+  V^{2}=\frac{\Bigl(\dfrac{X_{5}-1}{2}\Bigr)^{\!2}\Big/\,1}{U/3}.
+\]
+其中 $\Bigl(\dfrac{X_{5}-1}{2}\Bigr)^{\!2}\sim\chi^{2}(1)$，$U\sim\chi^{2}(3)$。根据 $F$ 分布的定义，
+\[
+  \boxed{V^{2}\sim F(1,3)}
+\]
+
+%==========================================================
+\section{}
+%==========================================================
+
+$X\sim F(3,5)$，$Y\sim F(5,3)$。根据 $F$ 分布的性质，若 $X\sim F(m,n)$ 则 $1/X\sim F(n,m)$，因此
+\begin{itemize}[itemsep=4pt]
+  \item $Y$ 的 $5\%$ 分位数等于 $X$ 的 $95\%$ 分位数的倒数：
+    $\dfrac{1}{5.409}\approx\boxed{0.1849}$；
+  \item $Y$ 的 $95\%$ 分位数等于 $X$ 的 $5\%$ 分位数的倒数：
+    $\dfrac{1}{0.111}\approx\boxed{9.009}$。
+\end{itemize}
+
+\end{document}

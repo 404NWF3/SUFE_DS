@@ -1,0 +1,1222 @@
+\documentclass[12pt,a4paper]{article}
+
+% ==================== 基础宏包 ====================
+\usepackage[UTF8]{ctex}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{hyperref}
+\usepackage[most]{tcolorbox}
+\usepackage{titlesec}
+ \usepackage{tabularx}
+
+\hypersetup{
+  hidelinks
+}
+
+% ==================== 颜色定义 ====================
+\definecolor{mainblue}{RGB}{34,72,112}
+\definecolor{lightblue}{RGB}{241,246,252}
+\definecolor{linegray}{RGB}{210,218,228}
+\definecolor{textgray}{RGB}{90,98,108}
+
+% ==================== 页面设置 ====================
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0.35em}
+\setlength{\headheight}{25pt}
+\linespread{1.2}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\textcolor{textgray}{\small 课程作业}}
+\rhead{\textcolor{textgray}{\small \thepage/\pageref*{LastPage}}}
+\cfoot{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{linegray}\leaders\hrule height \headrulewidth\hfill}}
+
+% ==================== 标题样式 ====================
+\titleformat{\section}
+  {\Large\bfseries\color{mainblue}}
+  {\thesection}
+  {0.6em}
+  {}
+
+\titleformat{\subsection}
+  {\large\bfseries\color{mainblue}}
+  {\thesubsection}
+  {0.6em}
+  {}
+
+\titlespacing*{\section}{0pt}{1.2em}{0.6em}
+\titlespacing*{\subsection}{0pt}{0.8em}{0.4em}
+
+% ==================== 自定义环境 ====================
+\newtcolorbox{infobox}{
+  colback=lightblue,
+  colframe=mainblue,
+  boxrule=0.6pt,
+  arc=2mm,
+  left=1.2em,
+  right=1.2em,
+  top=0.8em,
+  bottom=0.8em
+}
+
+\newtcolorbox{answerbox}{
+  colback=white,
+  colframe=linegray,
+  boxrule=0.5pt,
+  arc=2mm,
+  left=1em,
+  right=1em,
+  top=0.8em,
+  bottom=0.8em,
+  breakable
+}
+
+\newcommand{\course}{数理统计}
+\newcommand{\homeworktitle}{第3次作业}
+\newcommand{\studentname}{倪伟丰}
+\newcommand{\studentid}{2024110089}
+\newcommand{\classname}{24 大数据 2 班}
+\newcommand{\teacher}{袁洪松}
+\newcommand{\duedate}{2026年4月10日}
+
+% ==================== 正文开始 ====================
+\begin{document}
+
+\begin{center}
+  {\Huge\bfseries\color{mainblue}\homeworktitle}\\[0.6em]
+  {\Large\course}\\[1.2em]
+  {\color{linegray}\rule{0.9\textwidth}{0.8pt}}
+\end{center}
+
+\begin{infobox}
+\begin{tabularx}{\textwidth}{>{\bfseries}p{2.2cm} X >{\bfseries}p{2.2cm} X}
+姓名 & \studentname & 学号 & \studentid \\
+班级 & \classname & 教师 & \teacher \\
+提交日期 & \duedate &  &  \\
+\end{tabularx}
+\end{infobox}
+
+\section{Question 1}
+
+判断以下情况中随机变量 $G$ 属于统计量还是枢轴量，并指明原因。
+
+\subsection{}
+
+$X_1,\ldots,X_n \sim U[0,\theta]$，其中 $\theta$ 为待估参数，$\bar{X} = \frac{1}{n}\sum_{i=1}^{n}X_i$。随机变量 $G = \frac{\bar{X}}{\theta}$。
+    
+\begin{answerbox}
+\textbf{解答：}
+
+$G$ 不是统计量，因为其包含未知参数 $\theta$；
+
+$$
+X_i \sim U[0,\theta] \Rightarrow \frac{X_i}{\theta} \sim U[0,1] \Rightarrow G = \frac{\bar{X}}{\theta}  \sim U[0,1]
+$$
+
+由于 $G$ 的分布不依赖于 $\theta$，因此 $G$ 是枢轴量。
+
+\end{answerbox}
+
+\subsection{}
+
+$X_1,\ldots,X_n \sim \text{Bernoulli}(\theta)$，其中 $\theta$ 为待估参数。随机变量 $G = \sum_{i=1}^{n}X_i$。
+
+\begin{answerbox}
+\textbf{解答：}
+
+$G$ 是统计量，因为它是样本的函数，不包含未知参数；
+
+$$
+G = \sum_{i=1}^{n}X_i \sim \text{Binomial}(n,\theta)
+$$
+
+由于 $G$ 的分布依赖于 $\theta$，因此 $G$ 不是枢轴量。
+\end{answerbox}
+
+\subsection{}
+
+$X_1,\ldots,X_n \sim N(\mu_0,\sigma^2)$，其中 $\mu_0$ 已知，$\sigma$ 为待估参数，$\bar{X} = \frac{1}{n}\sum_{i=1}^{n}X_i$。随机变量 $G = \frac{\bar{X}-\mu_0}{\sigma/\sqrt{n}}$。
+
+\begin{answerbox}
+\textbf{解答：}
+
+由于 $G$ 包含未知参数 $\sigma$，因此 $G$ 不是统计量；
+
+$$
+\bar{X} \sim N(\mu_0, \frac{\sigma^2}{n}) \Rightarrow G = \frac{\bar{X}-\mu_0}{\sigma/\sqrt{n}} \sim N(0,1)
+$$
+
+$G$ 是 $\sigma$ 的函数，但是其分布不依赖于 $\sigma$，因此 $G$ 是枢轴量。
+
+\end{answerbox}
+
+\subsection{}
+
+$X_1,\ldots,X_n \sim N(\mu,\sigma^2)$，其中 $\mu,\sigma^2$ 未知，$\sigma^2$ 为待估参数。随机变量 $G = \frac{(n-1)S^2}{\sigma^2}$。
+
+\begin{answerbox}
+\textbf{解答：}
+
+$G$ 不是统计量，因为其包含未知参数 $\sigma^2$；
+
+根据学生定理，$G \sim \chi^2(n-1)$，其分布不依赖于 $\sigma^2$，因此 $G$ 是枢轴量。
+
+\end{answerbox}
+
+\section{Question 2}
+
+某卫星定位系统在水平方向上的定位误差 $X \sim N(\mu,\sigma^2)$，已知 $\sigma=2$，独立观测 $n=25$ 次。
+
+\subsection{}
+
+工程师采用区间 $(\bar{X} - 0.8, \bar{X} + 1.2)$ 作为 $\mu$ 的置信区间，试求该区间的置信水平。
+
+\begin{answerbox}
+\textbf{解答：}
+
+$\bar{X} \sim N(\mu, \frac{\sigma^2}{n})$，带入数值，我们计算得到：
+
+$$
+\bar{X} \sim N\left(\mu, \frac{4}{25}\right)
+$$
+
+其中，$\frac{\sigma}{\sqrt{n}} = \frac{2}{5}$
+
+$$
+P\{\bar{X}-0.8 < \mu < \bar{X}+1.2\} = P\left\{-3 < \frac{\bar{X}-\mu}{\sigma/\sqrt{n}} < 2 \right\} = \Phi(2) - \Phi(-3) = \Phi(2) + \Phi(3) - 1 
+$$
+
+$$
+P\{\bar{X}-0.8 < \mu < \bar{X}+1.2\} \approx 0.9759
+$$
+
+置信水平为 $0.9759$
+
+\end{answerbox}
+
+\subsection{}
+
+若要求置信水平不小于第1问中的置信水平，但区间长度缩短为原来的一半，这样的置信区间存在吗？请说明理由。
+
+\begin{answerbox}
+\textbf{解答：}
+
+第1问中，置信水平为 $0.9759$，区间长度为 $2.0$。
+
+若要求置信水平不小于 $0.9759$，且区间长度缩短为原来的一半，即 $1.0$，则需要找到新的置信区间。
+
+对于正态总体、方差已知的情形，在保持置信水平不变的基础上，使置信区间长度尽可能小的方法是取对称区间。因此我们设新的置信区间为 $(\bar{X} - c, \bar{X} + c)$，其中 $c = z_{\alpha/2} \cdot \frac{\sigma}{\sqrt{n}} $
+
+$$
+P\{\bar{X}-c < \mu < \bar{X}+c\} = P\left\{-\frac{c}{\sigma/\sqrt{n}} < \frac{\bar{X}-\mu}{\sigma/\sqrt{n}} < \frac{c}{\sigma/\sqrt{n}} \right\} = 2\Phi\left(\frac{c}{\sigma/\sqrt{n}}\right) - 1
+$$
+
+由于区间长度要缩短为问题一的一半，取 $c = 0.5$ 时，置信水平为 $2\Phi(1.25) - 1 \approx 0.7887 < 0.9759$，新的置信度小于第一问的置信度，不满足要求。所以不存在这样的置信区间。
+\end{answerbox}
+
+\section{Question 3}
+
+某工厂生产一批零件，该零件的关键尺寸指标 $X$ 服从正态分布 $N(\mu,\sigma^2)$，其中 $\mu,\sigma^2$ 均未知。为了解具体规格，工作人员随机抽取了 $100$ 个零件进行测量，结果分别为 $X_1,\ldots,X_{100}$，其中样本均值为 $\bar{X} = 15.5$，样本标准差为 $S = 3.6$。
+
+（提示：自由度为 $n$ 的 $t$ 分布的上 $2.5\%$ 分位数可以用 $t_{0.025}(n)$ 表示，上 $5\%$ 分位数可以用 $t_{0.05}(n)$ 表示；自由度为 $n$ 的 $\chi^2$ 分布的上 $1\%$ 分位数可以用 $\chi^2_{0.01}(n)$ 表示，上 $99\%$ 分位数可以用 $\chi^2_{0.99}(n)$ 表示。)
+
+\subsection{}
+
+计算 $\mu$ 的置信水平为 $95\%$ 的双侧置信区间。
+
+\begin{answerbox}
+\textbf{解答：}
+
+由于总体的方差未知，使用 $t$ 分布进行置信区间的计算。选择枢轴量：
+
+$$
+T = \frac{\bar{X}-\mu}{S/\sqrt{n}} \sim t(n-1)
+$$
+
+找到 $a$ 和 $b$ 使得：
+
+$$
+P\left(a<T<b\right) = 1 - \alpha = 0.95
+$$
+
+根据等尾原则：
+
+$$
+P\left(T \leq a\right) = P\left(T \geq b\right) = \frac{\alpha}{2} = 0.025
+$$
+
+所以：
+
+$$
+a = -t_{0.025}(99) = t_{0.975}(99), \quad b = t_{0.025}(99)
+$$
+
+带入 $T$ 的定义：
+
+$$
+-t_{0.025}(99) < \frac{\bar{X}-\mu}{S/\sqrt{n}} < t_{0.025}(99)
+$$
+
+找到$\mu$ 的置信水平为 $95\%$ 的双侧置信区间为：
+
+$$
+\left(\bar{X} - t_{0.025}(99) \cdot \frac{S}{\sqrt{100}}, \bar{X} + t_{0.025}(99) \cdot \frac{S}{\sqrt{100}}\right)
+$$
+代入数据得：
+$$
+\left(15.5 - t_{0.025}(99) \cdot 0.36, 15.5 + t_{0.025}(99) \cdot 0.36\right)
+$$
+\end{answerbox}
+
+\subsection{}
+
+计算 $\sigma^2$ 的置信水平为 $99\%$ 的单侧置信上界。
+
+\begin{answerbox}
+\textbf{解答：}
+
+因为总体服从正态分布，且总体均值 $\mu$ 未知，所以可选取关于 $\sigma^2$ 的枢轴量：
+
+$$
+G=\frac{(n-1)S^2}{\sigma^2}\sim \chi^2(n-1)
+$$
+
+这里 $n=100$，因此自由度为 $n-1=99$，即
+
+$$
+G=\frac{99S^2}{\sigma^2}\sim \chi^2(99)
+$$
+
+现在要求 $\sigma^2$ 的置信水平为 $99\%$ 的单侧置信上界。设这个上界为 $a$，则应满足：
+
+$$
+P(\sigma^2<a)=0.99
+$$
+
+由不等式变形可得：
+
+$$
+\sigma^2<a
+\iff
+\frac{(n-1)S^2}{\sigma^2}>\frac{(n-1)S^2}{a}
+$$
+
+于是
+
+$$
+P(\sigma^2<a)
+=
+P\left(\frac{(n-1)S^2}{\sigma^2}>\frac{(n-1)S^2}{a}\right)
+=
+P\left(G>\frac{(n-1)S^2}{a}\right)
+=0.99
+$$
+
+根据题目给出的记号，$\chi^2_{0.99}(99)$ 表示自由度为 $99$ 的 $\chi^2$ 分布的上 $99\%$ 分位数，因此：
+
+$$
+P\left(G>\chi^2_{0.99}(99)\right)=0.99
+$$
+
+故只需令
+
+$$
+\frac{(n-1)S^2}{a}=\chi^2_{0.99}(99)
+$$
+
+解得
+
+$$
+a = \frac{(n-1)S^2}{\chi^2_{0.99}(n-1)}
+$$
+
+再代入 $n=100,\ S=3.6$，得到
+
+$$
+\sigma^2 \text{ 的置信水平为 }99\%\text{ 的单侧置信上界为 }
+\frac{99\cdot 3.6^2}{\chi^2_{0.99}(99)}
+$$
+
+因此，$\sigma^2$ 的置信水平为 $99\%$ 的单侧置信上界为
+
+$$
+\left(-\infty, \frac{1283.04}{\chi^2_{0.99}(99)} \right)
+$$
+
+\end{answerbox}
+
+\section{Question 4}
+
+设 $X_1,\cdots,X_n$ 为取自正态分布 $N(\mu,16)$ 的样本。我们采用置信区间 $(\bar{X} - 0.8, \bar{X} + 1.6)$，为了使此置信区间的置信水平在 $0.81$ 到 $0.82$ 之间，$n$ 可以取哪些取值？
+
+\begin{answerbox}
+\textbf{解答：}
+
+由题意：
+
+$$
+\bar{X} \sim N(\mu, \frac{16}{n})
+$$
+
+带入置信水平的计算公式：$P\left(\bar{X}-0.8 < \mu < \bar{X}+1.6\right)$
+
+$$
+0.81 < P\{\bar{X}-0.8 < \mu < \bar{X}+1.6\} < 0.82
+$$
+
+$$
+P\{\bar{X}-0.8 < \mu < \bar{X}+1.6\} = P\{-0.4\sqrt{n} < \frac{\bar{X}-\mu}{4/\sqrt{n}} < 0.2\sqrt{n}\} = \Phi(0.2\sqrt{n}) + \Phi(0.4\sqrt{n}) - 1
+$$
+
+解不等式 $0.81 < \Phi(0.2\sqrt{n}) + \Phi(0.4\sqrt{n}) - 1 < 0.82$。
+
+注意到，$\Phi(0.2\sqrt{n}) + \Phi(0.4\sqrt{n}) - 1$ 是增函数，又由于 $n$ 表示样本容量，必须为正整数，因此我们进行相邻整数检验，
+
+计算得到：
+
+当 $n=23$ 时，$\Phi(0.2\sqrt{23}) + \Phi(0.4\sqrt{23}) - 1 \approx 0.8038 < 0.81$；
+
+当 $n=24$ 时，$\Phi(0.2\sqrt{24}) + \Phi(0.4\sqrt{24}) - 1 \approx 0.8114 > 0.81$；
+
+当 $n=25$ 时，$\Phi(0.2\sqrt{25}) + \Phi(0.4\sqrt{25}) - 1 \approx 0.8185 < 0.82$；
+
+当 $n=26$ 时，$\Phi(0.2\sqrt{26}) + \Phi(0.4\sqrt{26}) - 1 \approx 0.8254 > 0.82$；
+
+因此，$n$ 仅可以取 $24$ 或 $25$。
+
+\end{answerbox}
+
+\section{Question 5}
+
+假设总体 $X \sim \text{Exp}(\theta)$，样本为 $X_1,\cdots,X_n$，目标是得到 $\theta$ 的区间估计。
+
+\subsection{}
+
+令 $G = \min_{1\leq i\leq n}\{\theta X_i\}$，证明 $G$ 满足枢轴量的定义，并求出其分布。
+
+\begin{answerbox}
+
+\textbf{解答：}
+
+$G$ 是 $\theta$ 与 $X_i$ 的函数，且 $G$ 不涉及其他未知参数，接下来求出 $G$ 的分布：
+
+$$
+\theta X_i \sim \text{Exp}(1) \Rightarrow F_{\theta X_i}(x) = \left\{\begin{array}{ll}
+0, & x < 0 \\
+1 - e^{-x}, & x \geq 0
+\end{array}\right.
+$$
+
+由于 $X_1, \ldots, X_n$ 相互独立，所以 $\theta X_1, \ldots, \theta X_n$ 也相互独立。因此：
+
+$$
+P\{G \geq g\} = P\{\min_{1\leq i \leq n} \{\theta X_i\} \geq g\} = \Pi_{i=1}^{n} P\{\theta X_i \geq g\} 
+$$
+
+$$
+P\{G \geq g\} = (1 - P\{\theta X_1 \leq g\})^n = \left\{\begin{aligned}
+& 0, \quad g < 0 \\
+& e^{-ng}, \quad g \geq 0
+\end{aligned} \right.
+$$
+
+故：
+
+$$
+P\{G \leq g\} = 1 - P\{G \geq g\} = \left\{\begin{aligned}
+& 0, \quad g < 0 \\
+& 1 - e^{-ng}, \quad g \geq 0
+\end{aligned}\right.
+$$
+
+$$
+f_G(g) = \frac{d}{dg}F_G(g) = \left\{\begin{aligned}
+& 0, \quad g < 0 \\
+& ne^{-ng}, \quad g \geq 0
+\end{aligned}\right.
+$$
+
+所以 $G \sim \text{Exp}(n)$，其分布不依赖于 $\theta$，因此 $G$ 是枢轴量。
+
+\end{answerbox}
+
+\subsection{}
+
+以 $G$ 为枢轴量，求出 $\theta$ 的置信水平为 $1-\alpha$ 的双侧置信区间。
+
+\begin{answerbox}
+\textbf{解答：}
+
+由第 1 问可知，
+
+$$
+G=\min_{1\leq i\leq n}\{\theta X_i\}
+$$
+
+是枢轴量，且其分布函数为
+
+$$
+F_G(g)=
+\left\{
+\begin{array}{ll}
+0, & g<0,\\
+1-e^{-ng}, & g\ge 0.
+\end{array}
+\right.
+$$
+
+现在要求 $\theta$ 的置信水平为 $1-\alpha$ 的双侧置信区间。先找常数 $a,b$，使得：
+
+$$
+P\{a < G < b\} = 1 - \alpha
+$$
+
+根据等尾原则，
+
+$$
+P\{G\le a\}=\frac{\alpha}{2},\qquad P\{G\ge b\}=\frac{\alpha}{2}
+$$
+
+也就是
+
+$$
+F_G(a)=\frac{\alpha}{2},\qquad F_G(b)=1-\frac{\alpha}{2}
+$$
+
+将 $F_G(g)=1-e^{-ng}$ 代入，得到：
+
+$$
+1-e^{-na}=\frac{\alpha}{2}
+$$
+
+从而
+
+$$
+e^{-na}=1-\frac{\alpha}{2}
+$$
+
+$$
+a=-\frac{1}{n}\ln\left(1-\frac{\alpha}{2}\right)
+$$
+
+同理，
+
+$$
+1-e^{-nb}=1-\frac{\alpha}{2}
+$$
+
+从而
+
+$$
+e^{-nb}=\frac{\alpha}{2}
+$$
+
+$$
+b=-\frac{1}{n}\ln\left(\frac{\alpha}{2}\right)
+$$
+
+于是有
+
+$$
+-\frac{1}{n}\ln\left(1-\frac{\alpha}{2}\right) < \min_{1\leq i\leq n}\{\theta X_i\} < -\frac{1}{n}\ln\left(\frac{\alpha}{2}\right)
+$$
+
+又由于 $\theta>0$，且
+
+$$
+\min_{1\leq i\leq n}\{\theta X_i\} = \theta \min_{1\leq i\leq n}\{X_i\}
+$$
+
+所以
+
+$$
+-\frac{1}{n}\ln\left(1-\frac{\alpha}{2}\right)
+<
+\theta \min_{1\leq i\leq n}\{X_i\}
+<
+-\frac{1}{n}\ln\left(\frac{\alpha}{2}\right)
+$$
+
+两边同时除以 $\min_{1\leq i\leq n}\{X_i\}$，即可解得 $\theta$ 的区间：
+
+$$
+\left(\frac{-\frac{1}{n}\ln\left(1-\frac{\alpha}{2}\right)}{\min_{1\leq i\leq n}\{X_i\}}, \frac{-\frac{1}{n}\ln\left(\frac{\alpha}{2}\right)}{\min_{1\leq i\leq n}\{X_i\}}\right)
+$$
+
+因此，$\theta$ 的置信水平为 $1-\alpha$ 的双侧置信区间为
+
+$$
+\left(\frac{-\frac{1}{n}\ln\left(1-\frac{\alpha}{2}\right)}{\min_{1\leq i\leq n}\{X_i\}}, \frac{-\frac{1}{n}\ln\left(\frac{\alpha}{2}\right)}{\min_{1\leq i\leq n}\{X_i\}}\right)
+$$
+
+\end{answerbox}
+
+\section{Question 6}
+
+设 $X_1,\cdots,X_n$ 为取自正态分布 $N(\mu_0,\sigma^2)$ 的样本，其中 $\mu_0$ 已知。请以 $G = \sum_{i=1}^{n}(X_i-\mu_0)^2/\sigma^2$ 为枢轴量，求出 $\sigma^2$ 的置信水平为 $1-\alpha$ 的双侧置信区间。
+
+\begin{answerbox}
+\textbf{解答：}
+
+由于总体服从正态分布 $N(\mu_0,\sigma^2)$，并且总体均值 $\mu_0$ 已知，因此
+
+$$
+G = \sum_{i=1}^{n}\frac{(X_i-\mu_0)^2}{\sigma^2} \sim \chi^2(n)
+$$
+
+找到 $a$ 和 $b$ 使得：
+
+$$
+P\{a < G < b\} = 1- \alpha
+$$
+
+根据等尾原则：
+
+$$
+P\{G\le a\}=P\{G\ge b\}=\frac{\alpha}{2}
+$$
+
+所以：
+
+$$
+a = \chi^2_{1-\alpha/2}(n), \quad b = \chi^2_{\alpha/2}(n)
+$$
+
+带入 $G$ 的定义：
+
+$$
+a < \frac{\sum_{i=1}^{n}(X_i-\mu_0)^2}{\sigma^2} < b
+$$
+
+由于 $a,b,\sigma^2$ 都是正数，对上式作等价变形，得到：
+
+$$
+\frac{1}{b}
+<
+\frac{\sigma^2}{\sum_{i=1}^{n}(X_i-\mu_0)^2}
+<
+\frac{1}{a}
+$$
+
+再同时乘以 $\sum_{i=1}^{n}(X_i-\mu_0)^2$，可得：
+
+$$
+\frac{\sum_{i=1}^{n}(X_i-\mu_0)^2}{b}
+<
+\sigma^2
+<
+\frac{\sum_{i=1}^{n}(X_i-\mu_0)^2}{a}
+$$
+
+因此，$\sigma^2$ 的置信水平为 $1-\alpha$ 的双侧置信区间为：
+
+$$
+\left(\frac{\sum_{i=1}^{n}(X_i-\mu_0)^2}{\chi^2_{\alpha/2}(n)}, \frac{\sum_{i=1}^{n}(X_i-\mu_0)^2}{\chi^2_{1-\alpha/2}(n)}\right)
+$$
+\end{answerbox}
+
+\section{Question 7}
+
+设 $X_1,\cdots,X_n$ 为取自正态分布 $N(\mu_1,\sigma_1^2)$ 的样本，$Y_1,\cdots,Y_n$ 为取自正态分布 $N(\mu_2,\sigma_2^2)$ 的样本，其中 $\sigma_1,\sigma_2$ 已知，$\mu_1,\mu_2$ 未知，且两个总体相互独立。对 $k=1,\cdots,n$，可以令
+\[
+\bar{X}_k = \frac{1}{k}\sum_{i=1}^{k}X_i, \quad \bar{Y}_k = \frac{1}{k}\sum_{i=1}^{k}Y_i,
+\]
+以及
+\[
+G_k = \frac{\sqrt{k}\left[(\bar{X}_k-\bar{Y}_k)-(\mu_1-\mu_2)\right]}{\sqrt{\sigma_1^2+\sigma_2^2}}.
+\]
+
+\subsection{}
+
+请分别利用 $G_k, k=1,\cdots,n$ 作为枢轴量，找到 $\mu_1-\mu_2$ 的置信水平为 $(1-\alpha)$ 的双侧置信区间。
+
+\begin{answerbox}
+\textbf{解答：}
+  
+由于 $\sigma_1$ 与 $\sigma_2$ 已知，所以：
+
+$$
+G_k = \frac{\sqrt{k}\left[(\bar{X}_k-\bar{Y}_k)-(\mu_1-\mu_2)\right]}{\sqrt{\sigma_1^2+\sigma_2^2}} \sim N(0,1)
+$$
+
+$$
+P\{a < G_k < b\} = 1 - \alpha
+$$
+
+根据等尾原则：
+
+$$
+P\left(G_k \geq b\right) = P\left(G_k \leq b\right) = \frac{\alpha}{2}
+$$
+
+所以：
+
+$$
+a = z_{1-\frac{\alpha}{2}} = -z_{\frac{\alpha}{2}}, \quad b = z_{\frac{\alpha}{2}}
+$$
+
+带入 $G_k$ 的定义：
+
+$$
+P\left\{a < \frac{\sqrt{k}\left[(\bar{X}_k-\bar{Y}_k)-(\mu_1-\mu_2)\right]}{\sqrt{\sigma_1^2+\sigma_2^2}} < b\right\}  = 1-\alpha
+$$
+
+$\mu_1-\mu_2$ 的双侧置信区间是：
+
+$$
+\left((\bar{X}_k-\bar{Y}_k)-b\sqrt{\frac{\sigma_1^2+\sigma_2^2}{k}}, (\bar{X}_k-\bar{Y}_k)-a\sqrt{\frac{\sigma_1^2+\sigma_2^2}{k}}\right)
+$$
+
+带入 $a$ 与 $b$ 的值，因此，$\mu_1-\mu_2$ 的双侧置信区间是：
+
+$$
+\left((\bar{X}_k-\bar{Y}_k)-z_{\frac{\alpha}{2}}\sqrt{\frac{\sigma_1^2+\sigma_2^2}{k}}, (\bar{X}_k-\bar{Y}_k)+z_{\frac{\alpha}{2}}\sqrt{\frac{\sigma_1^2+\sigma_2^2}{k}}\right)
+$$
+\end{answerbox}
+
+
+\subsection{}
+
+比较第1问中各个 $G_k$ 对应置信区间的精确度，由此可以得出什么结论？
+
+\begin{answerbox}
+\textbf{解答：}
+
+由第 1 问可知，基于前 $k$ 个样本构造的 $\mu_1-\mu_2$ 的置信水平为 $1-\alpha$ 的双侧置信区间为
+\[
+\left((\bar{X}_k-\bar{Y}_k)-z_{\frac{\alpha}{2}}\sqrt{\frac{\sigma_1^2+\sigma_2^2}{k}},
+(\bar{X}_k-\bar{Y}_k)+z_{\frac{\alpha}{2}}\sqrt{\frac{\sigma_1^2+\sigma_2^2}{k}}\right).
+\]
+
+因此，该置信区间的长度为
+\[
+L_k
+=2z_{\frac{\alpha}{2}}\sqrt{\frac{\sigma_1^2+\sigma_2^2}{k}}.
+\]
+
+在置信水平 $1-\alpha$ 固定、且 $\sigma_1,\sigma_2$ 已知的条件下，$z_{\frac{\alpha}{2}}$ 与 $\sigma_1^2+\sigma_2^2$ 均为常数，所以区间长度 $L_k$ 随 $k$ 的增大而单调减小。区间越短，说明对 $\mu_1-\mu_2$ 的估计越精确。
+
+故在 $k=1,\ldots,n$ 中，$k=n$ 时置信区间长度最短，精确度最高。也就是说，在同一置信水平下，应尽可能使用全部样本信息来构造 $\mu_1-\mu_2$ 的置信区间。
+
+\end{answerbox}
+
+\section{Question 8}
+
+某制药公司研发了一款新型降压药物。为了测试其疗效，研究人员随机抽取了10名高血压患者，分别测量了他们在服药前后的收缩压（单位：mmHg）。观测数据如下表所示：
+
+\begin{center}
+\begin{tabular}{ccccccccccc}
+\toprule
+患者编号 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\
+\midrule
+服药前 ($X$) & 155 & 148 & 162 & 150 & 158 & 165 & 145 & 152 & 157 & 160 \\
+服药后 ($Y$) & 145 & 142 & 155 & 148 & 148 & 152 & 140 & 146 & 145 & 151 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+假设服药前后血压差值 $D = X-Y$ 服从正态分布 $N(\mu_D,\sigma_D^2)$，其中参数均未知。
+
+\subsection{}
+
+求该药物降低血压均值 $\mu_D$ 的置信水平为 $95\%$ 的双侧置信区间。
+
+\begin{answerbox}
+\textbf{解答：}
+
+计算差值 $D_i = X_i - Y_i$，得到：
+
+\begin{center}
+\begin{tabular}{ccccccccccc}
+\toprule
+患者编号 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\
+\midrule
+差值 $D$ & 10 & 6 & 7 & 2 & 10 & 13 & 5 & 6 & 12 & 9 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+$D_1, \ldots, D_{10}$ 可视为来自正态分布 $N(\mu_D, \sigma_D^2)$ 的样本，且 $\mu_D$ 和 $\sigma_D^2$ 均未知。
+
+定义 $\bar{D} = \sum_{i=1}^{10}D_i$。
+
+由于：
+
+$$
+\bar{D} \sim N\left(\mu_D, \frac{\sigma_D^2}{n}\right)
+$$
+
+又因为 $\sigma_D$ 未知，因此取枢轴量：
+
+$$
+T = \frac{\bar{D}-\mu_D}{S/\sqrt{n}} \sim t(n-1)
+$$
+
+于是：
+
+$$
+P\left(a < T < b\right) = 1 - \alpha
+$$
+
+根据等尾原则：
+
+$$
+P\left(T \geq b\right) = P\left(T \leq b\right) = \frac{\alpha}{2}
+$$
+
+所以：
+
+$$
+a = t_{1-\frac{\alpha}{2}}(n-1) = -t_{\frac{\alpha}{2}}(n-1), \quad b = t_{\frac{\alpha}{2}}(n-1)
+$$
+
+带入 $T$ 的定义与 $a,b$ 的值，得到 $(1-\alpha)\%$ 置信水平的双侧置信区间为：
+
+$$
+\left(\bar{D} - t_{\frac{\alpha}{2}}(n-1)\frac{S}{\sqrt{n}}, \bar{D} + t_{\frac{\alpha}{2}}(n-1)\frac{S}{\sqrt{n}}\right)
+$$
+
+置信水平为 $95\%$，因此 $\alpha = 0.05$， $n = 10$，又：
+
+$$
+\bar{D} = \frac{1}{10}\sum_{i=1}^{10}D_i = \frac{1}{10}(10+6+7+2+10+13+5+6+12+9) = 8
+$$
+
+$$
+S^2 = \frac{1}{9}\sum_{i=1}^{10}(D_i - \bar{D})^2 = \frac{104}{9}
+$$
+
+带入得到置信区间：
+
+$$
+\left(8 - t_{0.025}(9)\sqrt{\frac{104}{90}}, 8 + t_{0.025}(9)\sqrt{\frac{104}{90}}\right)
+$$
+
+
+\end{answerbox}
+
+\subsection{}
+
+能否在 $1\%$ 显著水平下得出“该药物具有降压效果”这一结论？请设计假设检验模型进行探讨。
+
+\begin{answerbox}
+\textbf{解答：}
+
+由于推翻药品没有降压效果这个假设对公司的影响更大，给出原假设与备择假设：
+
+$$
+H_0: \mu_D = 0, \text{vs} \quad H_1: \mu_D > 0
+$$
+
+$\mu_D = 0$ 表示药品没有降压效果，$\mu_D > 0$ 表示药品具有降压效果。
+
+选择 $\bar{D}$ 为检验统计量，且拒绝域形如：
+
+$$
+\left\{(D_1, \ldots, D_{10}) | \bar{D} \geq C\right\}
+$$
+
+$$
+P_{\mu_D} \left(\bar{D} \geq C\right) = P_{\mu_D}\left(\frac{\bar{D}-\mu_D}{S/\sqrt{n}} \geq \frac{C-\mu_D}{S/\sqrt{n}}\right) = 1-\alpha = 0.99
+$$
+
+计算得到 $C$：
+
+$$
+C = \frac{S}{\sqrt{n}}t_\alpha(n-1)+\mu_D = \sqrt{\frac{104}{90}}t_{0.01}(9) \approx 3.033
+$$
+
+根据临界值法：
+
+$$
+\bar{D} = 8 > C \approx 3.033
+$$
+
+因此，在 $1\%$ 显著水平下，可以拒绝原假设，得出“该药物具有降压效果”这一结论。
+
+如果使用p-值法，计算得到在 $\mu_D$ 取 $0$ 时，观察到的样本均值 $\bar{D} = 8$ 的 p-值：
+
+$$
+p = P_{\mu_D}\left(\frac{\bar{D}-\mu_D}{S/\sqrt{n}} \geq \frac{\bar{d}-\mu_D}{S/\sqrt{n}}\right) = P_{\mu_D}\left(\frac{\bar{D}-\mu_D}{S/\sqrt{n}} \geq 7.4421\right) = 1-T_9(7.4421) \approx 2 \times 10^{-5}
+$$
+
+根据p-值法:
+
+$$
+p \approx 2 \times 10^{-5} < 0.01
+$$
+
+因此，在 $1\%$ 显著水平下，可以拒绝原假设，得出“该药物具有降压效果”这一结论。
+
+\end{answerbox}
+
+\section{Question 9}
+
+在下面情形中，决定假设 A 与假设 B 哪一个应该设为原假设，并说明理由。
+
+\subsection{}
+
+某游戏公司准备发售一款新游戏，需要考虑这款游戏是否已经足够完善。考虑假设 A：该游戏目前已经十分完善；假设 B：该游戏目前不够完善。
+
+\begin{answerbox}
+\textbf{解答：}
+
+应取 B：该游戏目前不够完善为原假设，即
+\[
+H_0:\text{该游戏目前不够完善},\qquad
+H_1:\text{该游戏目前已经十分完善}.
+\]
+
+理由：在假设检验中，原假设通常代表需要被谨慎保留的状态，只有当样本证据足够强时才拒绝原假设。此处若错误地把尚不完善的游戏判断为已经完善并发售，会导致用户投诉，甚至造成更严重的后果，影响游戏的收益，因此应把“游戏不够完善”作为原假设；只有在证据充分时，才认为游戏已经足够完善。
+
+\end{answerbox}
+
+\subsection{}
+
+某社区拟引入 AI 影像医生进行肺癌早期筛查，AI 厂商宣称其漏诊率更低。考虑假设 A：AI 筛查的漏诊率并不低于人工筛查；假设 B：AI 筛查的漏诊率低于人工筛查。
+
+\begin{answerbox}
+\textbf{解答：}
+
+应取 A：AI 筛查的漏诊率并不低于人工筛查为原假设，即
+\[
+H_0:\text{AI 筛查的漏诊率不低于人工筛查},\qquad
+H_1:\text{AI 筛查的漏诊率低于人工筛查}.
+\]
+
+理由：AI 厂商宣称AI筛查的 “漏诊率不低于人工筛选”，是需要被谨慎保留的假设，因此作为原假设，而“漏诊率低于人工筛查”这是需要用数据证明的改进性结论，应放在备择假设中。若此处错误地接受原假设，即认为 AI 筛查的漏诊率不低于人工筛查，那么就可能错过 AI 在漏诊率方面的改进优势，或者导致错误的决策。只有拒绝原假设时，才能认为 AI 筛查的漏诊率显著低于人工筛查。
+
+\end{answerbox}
+
+\subsection{}
+
+央行数字货币升级了离线支付功能，声称单次交易平均延迟 $\mu$ 精确为 $200$ 毫秒。压力测试团队怀疑在大规模高并发下，延迟会偏离这个精准值。考虑假设 A：在大规模高并发下，平均延迟 $\mu = 200$；假设 B：在大规模高并发下，平均延迟 $\mu \neq 200$。
+
+\begin{answerbox}
+\textbf{解答：}
+
+
+应取 A：在大规模高并发下平均延迟 $\mu=200$ 为原假设，即
+\[
+H_0:\mu=200,\qquad H_1:\mu\neq 200.
+\]
+
+理由：压力测试团队怀疑延迟会偏离 $200$ 毫秒，因此“发生偏离”应作为备择假设。另一方面，$\mu=200$ 是一个简单假设，而 $\mu\neq 200$ 是双侧的复合假设；假设检验中通常将等号或简单假设放在原假设中，再根据样本证据判断是否拒绝它。因此应取 A 为原假设，B 为备择假设。
+
+\end{answerbox}
+
+\section{Question 10}
+
+设总体 $X \sim \text{Bernoulli}(p)$，样本为 $X_1,\ldots,X_{10}$。欲检验
+\[
+H_0: p = 0.1 \quad \text{vs} \quad H_1: p > 0.1.
+\]
+令 $Y = \sum_{i=1}^{10}X_i$。
+
+\subsection{}
+
+考虑两个拒绝域 $\{Y \geq 3\}$ 与 $\{Y \geq 4\}$，分别计算其显著水平。
+
+\begin{answerbox}
+\textbf{解答：}
+
+首先由题意：
+
+$$
+Y = \sum_{i=1}^{10}X_i \sim \text{Binomial}(10, p)
+$$
+
+$$
+P\left(Y \leq y\right) = \sum_{i = 0}^{y} C_{10}^{i} p^i (1-p)^{10-i}
+$$
+
+在原假设 $H_0$ 成立时，$p = 0.1$，因此：
+
+$$
+Y = \sum_{i=1}^{10}X_i \sim \text{Binomial}(10, 0.1)
+$$
+
+$$
+ P\left(Y \leq y\right) = \sum_{i = 0}^{y} C_{10}^{i} (0.1)^i (0.9)^{10-i}
+$$
+
+考虑第一个拒绝域：
+
+$$
+\alpha = P_{0.1}\left(Y\geq 3\right) = 1 - P_{0.1}\left(Y\leq 2\right) = 1 - \sum_{i = 0}^{2}C_{10}^{i} 0.1^i 0.9^{10-i} \approx 0.0702
+$$
+
+显著性水平是 $0.0702$。
+
+考虑第二个拒绝域：
+
+$$
+\alpha = P_{0.1}\left(Y\geq 4\right) = 1 - P_{0.1}\left(Y\leq 3\right) = 1 - \sum_{i = 0}^{3}C_{10}^{i} 0.1^i 0.9^{10-i} \approx 0.0128
+$$
+
+显著性水平是 $0.0128$。
+
+\end{answerbox}
+
+
+\subsection{}
+
+另外产生一个独立的随机变量 $W \sim \text{Bernoulli}(q)$，考虑拒绝域
+    \[
+    \{Y \geq 4\} \cup \{Y = 3 \text{且} W = 1\},
+\]
+    求 $q$ 使得该检验的显著水平恰好为 $0.05$。
+
+\begin{answerbox}
+\textbf{解答：}
+
+$$
+\alpha = P_{0.1}\left(\{Y \geq 4\} \cup \{Y = 3 \text{且} W = 1\}\right) = P_{0.1}\left(Y \geq 4\right) + P_{0.1}\left(Y = 3\right) \cdot q
+$$
+
+其中，
+$$
+P_{0.1}\left(Y \geq 4\right) = 1 - P_{0.1}\left(Y\leq 3\right) = 1 - \sum_{i = 0}^{3}C_{10}^{i} 0.1^i 0.9^{10-i} \approx 0.0128
+$$
+
+$$
+P_{0.1}\left(Y = 3\right) = C_{10}^{3} 0.1^3 0.9^7 \approx 0.0574
+$$
+
+因此得到:
+$$
+0.05 = 0.0128 + 0.0574q
+$$
+
+解得：
+$$
+q = \frac{0.05 - 0.0128}{0.0574} \approx 0.6482
+$$
+
+由于 $q$ 必须在 $[0,1]$ 范围内，所以 $q = 0.6482$。
+
+\end{answerbox}
+
+
+\subsection{}
+
+    对于拒绝域 $\{Y \geq c\}$，若观测到 $Y$ 的值为 $y=4$，计算检验的 $p$-值。
+
+\begin{answerbox}
+\textbf{解答：}
+
+根据 p-值的定义，拒绝域为 $\{Y \geq c\}$，观测到 $Y$ 的值为 $y=4$，则 p-值为在原假设 $H_0$ 成立时，观察到的样本统计量 $Y$ 的值至少为 $4$ 的概率，即：
+
+$$
+p = P_0\left(Y \geq y\right) = P_0\left(Y \geq 4\right)
+$$
+
+$$
+p = 1 - P_0\left(Y \leq 3\right) = 1 - \sum_{i=0}^{3} C_{10}^{i} (0.1)^i (0.9)^{10-i} \approx 0.0128
+$$
+
+因此，计算得到 $p\approx 0.0128$
+
+\end{answerbox}
+
+\section{Question 11}
+
+设总体 $X \sim N(\mu,\sigma^2)$，$X_1,\cdots,X_n$ 为取自该总体的样本。考虑以下假设检验问题：
+\[
+H_0: \mu = \frac{2}{5} \quad \text{v.s.} \quad H_1: \mu \neq \frac{2}{5}
+\]
+
+（提示：标准正态分布的上 $\alpha$ 分位数可以表示为 $z_\alpha$；自由度为 $n$ 的 $t$ 分布的上 $\alpha$ 分位数可以表示为 $t_\alpha(n)$。）
+
+\subsection{}
+
+若已知 $\sigma = 4$ \text{且} $n=25$，求其显著水平为 $5\%$ 的拒绝域。
+
+\begin{answerbox}
+\textbf{解答：}
+
+在原假设 $H_0$ 成立时，由于$\sigma = 4$ \text{且} $n=25$ 时，$\bar{X} = \sum_{i=1}^{25} X_i \sim N\left(\frac{2}{5}, \frac{16}{25}\right)$
+
+因此可取检验统计量:
+
+$$
+Z=\frac{\bar X-\mu}{4/\sqrt{25}}
+$$
+
+带入数值：
+
+$$
+Z=\frac{\bar X-\frac25}{4/\sqrt{25}}=\frac{\bar X-\frac25}{4/5} \sim N(0,1)
+$$
+
+由于这是双侧检验，给出拒绝域：
+
+$$
+\left\{(X_1, \ldots, X_{25}) \middle| Z \geq b \text{或} Z \leq a \right\}
+$$
+
+显著水平为 $5\%$ 的拒绝域满足：
+
+\[
+P_{0.4}(Z \geq b \text{或} Z \leq a)=0.05.
+\]
+
+根据等尾原则：
+
+$$
+P\left(Z \geq b\right) = P\left(Z \leq a\right) = \frac{0.05}{2} = 0.025
+$$
+
+于是解得：
+
+$$
+a = z_{0.975} = -z_{0.025}, \quad b = z_{0.025}
+$$
+
+故带入 $a$ 和 $b$ 得到拒绝域为
+\[
+\left\{
+(X_1,\dots,X_{25})\;\middle|\;
+Z \geq z_{0.025} \text{或} Z \leq -z_{0.025}
+\right\}.
+\]
+
+\end{answerbox}
+
+
+\subsection{}
+
+若 $\sigma$ 未知，且 $n=36$，样本方差 $s^2 = 14.4$，求其显著水平为 $1\%$ 的拒绝域。
+
+\begin{answerbox}
+\textbf{解答：}
+
+在原假设 $H_0$ 成立时，由于 $\sigma$ 未知，且 $s^2=14.4$，$n=36$，$\bar{X} = \sum_{i=1}^{36} X_i \sim N\left(\frac{2}{5}, \frac{\sigma^2}{36}\right)$
+
+因此可选择检验统计量：
+
+$$
+T = \frac{\bar{X}-\mu}{s/\sqrt{n}} = \frac{\bar{X}-\frac{2}{5}}{\sqrt{14.4}/6} \sim t(35)
+$$
+
+由于这是双侧检验，给出拒绝域：
+
+$$
+\left\{(X_1, \ldots, X_{36})| T \geq b \text{或} T \leq a\right\}
+$$
+
+显著水平为 $1\%$ 的拒绝域满足：
+
+$$
+\alpha = P_{0.4}\left(T \geq b \text{或} T \leq a\right) = 0.01
+$$
+
+根据等尾原则：
+
+$$
+P\left(T \geq b\right) = P\left(T \leq a\right) = \frac{0.01}{2} = 0.005
+$$
+
+于是解得：
+
+$$
+a = t_{0.995}(35) = -t_{0.005}(35), \quad b = t_{0.005}(35)
+$$
+
+
+所以显著水平为 $1\%$ 的拒绝域：
+
+$$
+\left\{(X_1, \ldots, X_{10})| T \geq t_{0.005}(35) \text{或} T \leq -t_{0.005}(35)\right\}
+$$
+
+带入 $T$ 的定义，如果以 $\bar{X}$ 为检验统计量，则得到拒绝域为：
+
+$$
+\left\{(X_1, \ldots, X_{10})| \bar{X} \geq t_{0.005}(35)\cdot \frac{\sqrt{14.4}}{6} + 0.4 \text{或} \bar{X} \leq -t_{0.005}(35)\cdot \frac{\sqrt{14.4}}{6} + 0.4\right\}
+$$
+
+\end{answerbox}
+
+\section{Question 12}
+
+Exercise 4.5.5 in Hogg.
+
+Let $X_1,X_2$ be a random sample of size $n=2$ from the distribution having pdf $f(x;\theta) = \frac{1}{\theta}e^{-x/\theta}, 0 < x < \infty$, zero elsewhere. We reject $H_0: \theta=2$ and accept $H_1: \theta=1$ if the observed values of $X_1,X_2$, say $x_1,x_2$, are such that
+\[
+\frac{f(x_1;2)f(x_2;2)}{f(x_1;1)f(x_2;1)} \leq \frac{1}{2}.
+\]
+Here $\Omega = \{\theta: \theta=1,2\}$. Find the significance level of the test and the power of the test when $H_0$ is false.
+
+\begin{answerbox}
+\textbf{解答：}
+
+由题意得，拒绝原假设并接受备择假设的条件是：
+
+\[
+\frac{f(x_1;2)f(x_2;2)}{f(x_1;1)f(x_2;1)} \leq \frac{1}{2}.
+\]
+
+$$
+\frac{f(x_1;2)f(x_2;2)}{f(x_1;1)f(x_2;1)} = \frac{1}{4} \cdot \frac{e^{-\frac{1}{2}}(x_1+x_2)}{e^{-{x_1+x_2}}} = \frac{1}{4} e^{x_1+x_2} \leq \frac{1}{2}
+$$
+
+于是：
+
+$$
+x_1+x_2 \leq 2\ln 2
+$$
+
+因此，拒绝域为：
+
+$$
+\left\{(X_1, X_2) | X_1 + X_2 \leq 2\ln 2\right\}
+$$
+
+由于 $X_1$ 与 $X_2$ 服从 $\text{Exp}(\frac{1}{\theta})$ 分布且独立，所以 $X_1 + X_2$ 服从 $\varGamma(2, \theta)$
+
+在原假设 $H_0$ 成立时，$\theta = 2$，因此 $X_1 + X_2 \sim \varGamma(2, 2)$，其 pdf 为：
+
+$$
+f(x) = \left\{\begin{aligned}
+ &\frac{1}{4}xe^{-x/2}, \quad& x \geq 0 \\
+ & 0, \quad& x < 0
+\end{aligned}\right.
+$$
+
+
+所以可以计算出显著性水平：
+
+$$
+\alpha = P\left(X_1 + X_2 \leq 2\ln 2 | H_0\right) = \int_{0}^{2\ln 2} \frac{1}{4} xe^{-x/2} dx = \frac{1}{2}(1-\ln 2)
+$$
+
+在原假设 $H_1$ 成立时，$\theta = 1$，因此 $X_1 + X_2 \sim \varGamma(2, 1)$，其 pdf 为：
+
+$$
+f(x) = \left\{\begin{aligned}
+ & xe^{-x}, \quad& x \geq 0 \\
+ & 0, \quad& x < 0
+\end{aligned}\right.
+$$
+
+所以可以计算出功效$1-\beta$，其中 $\beta$：
+
+$$
+\beta = P\left(X_1 + X_2 > 2\ln 2 | H_1\right) = \int_{2\ln 2}^{\infty} x e^{-x} dx = \frac{1}{4}+\frac{\ln 2}{2}
+$$
+
+其功效是：$$1 - \beta = \frac{3}{4} - \frac{\ln 2}{2}$$
+
+\end{answerbox}
+
+\end{document}

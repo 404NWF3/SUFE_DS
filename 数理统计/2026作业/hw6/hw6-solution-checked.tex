@@ -1,0 +1,953 @@
+\documentclass[12pt,a4paper]{article}
+% \documentclass{ctexart}
+
+% ==================== 基础宏包 ====================
+\usepackage[UTF8]{ctex}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{hyperref}
+\usepackage[most]{tcolorbox}
+\usepackage{titlesec}
+ \usepackage{tabularx}
+
+\hypersetup{
+  hidelinks
+}
+
+% ==================== 颜色定义 ====================
+\definecolor{mainblue}{RGB}{34,72,112}
+\definecolor{lightblue}{RGB}{241,246,252}
+\definecolor{linegray}{RGB}{210,218,228}
+\definecolor{textgray}{RGB}{90,98,108}
+
+% ==================== 页面设置 ====================
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0.35em}
+\setlength{\headheight}{25pt}
+\linespread{1.2}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\textcolor{textgray}{\small 课程作业}}
+\rhead{\textcolor{textgray}{\small \thepage/\pageref*{LastPage}}}
+\cfoot{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{linegray}\leaders\hrule height \headrulewidth\hfill}}
+
+% ==================== 标题样式 ====================
+\titleformat{\section}
+  {\Large\bfseries\color{mainblue}}
+  {\thesection}
+  {0.6em}
+  {}
+
+\titleformat{\subsection}
+  {\large\bfseries\color{mainblue}}
+  {\thesubsection}
+  {0.6em}
+  {}
+
+\titlespacing*{\section}{0pt}{1.2em}{0.6em}
+\titlespacing*{\subsection}{0pt}{0.8em}{0.4em}
+
+% ==================== 自定义环境 ====================
+\newtcolorbox{infobox}{
+  colback=lightblue,
+  colframe=mainblue,
+  boxrule=0.6pt,
+  arc=2mm,
+  left=1.2em,
+  right=1.2em,
+  top=0.8em,
+  bottom=0.8em
+}
+
+\newtcolorbox{answerbox}{
+  colback=white,
+  colframe=linegray,
+  boxrule=0.5pt,
+  arc=2mm,
+  left=1em,
+  right=1em,
+  top=0.8em,
+  bottom=0.8em,
+  breakable
+}
+
+\newcommand{\course}{数理统计}
+\newcommand{\homeworktitle}{第6次作业}
+\newcommand{\studentname}{倪伟丰}
+\newcommand{\studentid}{2024110089}
+\newcommand{\classname}{24 大数据 2 班}
+\newcommand{\teacher}{袁洪松}
+\newcommand{\duedate}{2026年5月29日}
+
+% ==================== 正文开始 ====================
+\begin{document}
+
+\begin{center}
+  {\Huge\bfseries\color{mainblue}\homeworktitle}\\[0.6em]
+  {\Large\course}\\[1.2em]
+  {\color{linegray}\rule{0.9\textwidth}{0.8pt}}
+\end{center}
+
+\begin{infobox}
+\begin{tabularx}{\textwidth}{>{\bfseries}p{2.2cm} X >{\bfseries}p{2.2cm} X}
+姓名 & \studentname & 学号 & \studentid \\
+班级 & \classname & 教师 & \teacher \\
+提交日期 & \duedate &  &  \\
+\end{tabularx}
+\end{infobox}
+
+\section{Problem 1}
+
+The Pareto distribution is a frequently used model in the study of incomes and has the distribution function
+\[
+F(x;\theta_1,\theta_2)=
+\begin{cases}
+1-(\theta_1/x)^{\theta_2}, & x\geq \theta_1,\\
+0, & \text{elsewhere},
+\end{cases}
+\]
+where $\theta_1>0$ and $\theta_2>0$. If $X_1,X_2,\ldots,X_n$ is a random sample from this distribution, find the maximum likelihood estimators of $\theta_1$ and $\theta_2$.
+
+\begin{answerbox}
+\textbf{解答：}
+
+由于 $X_1,\ldots,X_n$ 是来自该 Pareto 分布的随机样本，以下联合密度可写成各边际密度的乘积。由分布函数求导可得
+\[
+f(x;\boldsymbol\theta)=
+\begin{cases}
+\theta_2\theta_1^{\theta_2}x^{-(\theta_2+1)}, & x\geq \theta_1,\\
+0, & \text{其他}.
+\end{cases}
+\]
+因此似然函数为
+\[
+L(\theta_1,\theta_2)
+=\theta_2^n\theta_1^{n\theta_2}\prod_{i=1}^n x_i^{-(\theta_2+1)}
+ I_{\{\theta_1\leq x_{(1)}\}},
+\]
+其中 $x_{(1)}=\min\{x_1,\ldots,x_n\}$。当 $0<\theta_1\leq x_{(1)}$ 时，
+\[
+\ell(\theta_1,\theta_2)
+=n\ln\theta_2+n\theta_2\ln\theta_1-(\theta_2+1)\sum_{i=1}^n\ln x_i.
+\]
+在固定 $\theta_2>0$ 时，$\ell$ 关于 $\theta_1$ 单调递增，而 $\theta_1\leq x_{(1)}$，所以
+\[
+\hat\theta_1=X_{(1)}.
+\]
+再对 $\theta_2$ 求偏导，得到
+\[
+\frac{\partial \ell}{\partial \theta_2}
+=\frac{n}{\theta_2}+n\ln\theta_1-\sum_{i=1}^n\ln x_i.
+\]
+令其为 $0$，并代入 $\hat\theta_1=X_{(1)}$，得到
+\[
+\hat\theta_2
+=\frac{n}{\sum_{i=1}^n\ln x_i-n\ln X_{(1)}}
+\]
+\end{answerbox}
+
+\section{Problem 2}
+
+假设 $X_1,\cdots,X_n$ 为取自正态分布 $N(\mu,\sigma^2)$ 的样本，其中 $\mu,\sigma$ 均未知。试计算 $\sigma$ 的无偏估计的 RCB。
+
+\begin{answerbox}
+\textbf{解答:}
+
+正态分布的 pdf 为：
+
+$$
+f(x; \mu, \sigma) = \frac{1}{\sqrt{2\pi}\sigma} \exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right).
+$$
+
+于是：
+
+$$
+\ln f(x; \mu, \sigma) = -\frac{1}{2}\ln(2\pi) - \ln \sigma - \frac{(x-\mu)^2}{2\sigma^2}.
+$$
+
+计算 $\ln f$ 的梯度：
+
+$$
+\nabla \ln f(x; \mu, \sigma) = \left( \frac{x-\mu}{\sigma^2}, -\frac{1}{\sigma} + \frac{(x-\mu)^2}{\sigma^3} \right).
+$$
+
+于是可以计算 Fisher 信息矩阵：
+
+$$
+\mathbf{I}(\mathbf{\theta}) = \begin{pmatrix}
+E\left[\left(\frac{\partial \ln f}{\partial \mu}\right)^2\right] & E\left[\frac{\partial \ln f}{\partial \mu} \frac{\partial \ln f}{\partial \sigma}\right] \\
+E\left[\frac{\partial \ln f}{\partial \sigma} \frac{\partial \ln f}{\partial \mu}\right] & E\left[\left(\frac{\partial \ln f}{\partial \sigma}\right)^2\right]
+\end{pmatrix}
+$$
+
+其中：
+
+$$
+\mathbf{I}(\mathbf{\theta})_{\mu\mu} = Var\left(\frac{X-\mu}{\sigma^2}\right) = \frac{1}{\sigma^2},
+$$
+
+$$
+\mathbf{I}(\mathbf{\theta})_{\mu\sigma} = \mathbf{I}(\mathbf{\theta})_{\sigma\mu} = -E\left[\frac{\partial^2 \ln f}{\partial \mu \partial \sigma}\right] = -E\left[-\frac{2(X-\mu)}{\sigma^3}\right] = 0,
+$$
+
+$$
+\mathbf{I}(\mathbf{\theta})_{\sigma\sigma} = E\left[\left(\frac{\partial \ln f}{\partial \sigma}\right)^2\right] = E\left[\frac{1}{\sigma^2}\left(-1+\left(\frac{X-\mu}{\sigma}\right)^2\right)^2\right]
+$$
+
+其中，$\left(\frac{X-\mu}{\sigma}\right)^2 \sim \chi^2(1)$，所以 $E\left[\left(\frac{X-\mu}{\sigma}\right)^2\right] = 1$，$Var\left(\left(\frac{X-\mu}{\sigma}\right)^2\right) = 2$。因此：
+
+$$
+\begin{aligned}
+\mathbf{I}(\mathbf{\theta})_{\sigma\sigma} =& \frac{1}{\sigma^2}E\left[1-2\left(\frac{X-\mu}{\sigma}\right)^2+\left(\frac{X-\mu}{\sigma}\right)^4\right] \\
+=& \frac{1}{\sigma^2}\left(1 - 2 + (2 + 1)\right) = \frac{2}{\sigma^2}. 
+\end{aligned}
+$$
+
+因此，Fisher 信息矩阵为：
+
+$$
+\mathbf{I}(\mathbf{\theta}) = \begin{pmatrix}
+\frac{1}{\sigma^2} & 0 \\
+0 & \frac{2}{\sigma^2}
+\end{pmatrix}
+$$
+
+$\sigma$ 的无偏估计量 $Y$ 的 RCB 可以计算得到：
+
+$$
+\text{Var}(Y) \geq \frac{1}{n} \mathbf{I}^{-1}(\mathbf{\theta})_{\sigma\sigma} = \frac{\sigma^2}{2n}
+$$
+\end{answerbox}
+
+\section{Problem 3}
+
+假设 $X_1,\cdots,X_n$ 为取自正态分布 $N(\mu,v)$ 的样本，其中 $\mu,v$ 均未知。考虑检验问题
+\[
+H_0:v=v_0 \quad \mathrm{vs}\quad H_1:v\neq v_0.
+\]
+
+\subsection{}
+
+计算此问题的似然比 $\Lambda$。
+
+
+\begin{answerbox}
+\textbf{解答：}
+
+由于 $X_1,\ldots,X_n$ 为正态样本，默认独立同分布。写出似然函数：
+\[
+L(X_1, X_2, \ldots, X_n; \mu, v) = \prod_{i=1}^n \frac{1}{\sqrt{2\pi v}} e^{-\frac{(X_i-\mu)^2}{2v}} = (2\pi v)^{-\frac{n}{2}} e^{-\frac{1}{2v} \sum_{i=1}^n (X_i-\mu)^2}.
+\]
+对数似然函数为
+\[
+\ell(\mu,v)=-\frac n2\ln(2\pi)-\frac n2\ln v-
+\frac{1}{2v}\sum_{i=1}^n(X_i-\mu)^2.
+\]
+
+在 $\mu$ 与 $v$ 都未知的情况下，计算极大似然估计：
+
+分别对 $\mu$ 和 $v$ 求偏导数，并令其等于零：
+
+$$
+\frac{\partial \ell}{\partial \mu} = \frac{1}{v} \sum_{i=1}^n (X_i-\mu) = 0,
+$$
+
+$$
+\frac{\partial \ell}{\partial v} = -\frac{n}{2v} + \frac{1}{2v^2} \sum_{i=1}^n (X_i-\mu)^2 = 0.
+$$
+
+于是得到：
+
+\[
+\hat\mu=\bar X,
+\qquad
+\hat v=\frac{1}{n}\sum_{i=1}^n(X_i-\bar X)^2.
+\]
+记
+\[
+Q=\sum_{i=1}^n(X_i-\bar X)^2,
+\qquad B_2=\frac{Q}{n}.
+\]
+在原假设 $H_0:v=v_0$ 下，求 $\mu$ 的极大似然估计 $\hat{\mu}_0$：
+
+$$
+\frac{\partial \ell_0}{\partial \mu} = \frac{1}{v_0} \sum_{i=1}^n (X_i-\mu) = 0,
+$$
+
+\[
+\hat\mu_0=\bar X.
+\]
+于是
+\[
+L(\hat\mu_0,v_0)=(2\pi v_0)^{-n/2}\exp\left\{-\frac{Q}{2v_0}\right\},
+\]
+而
+\[
+L(\hat\mu,\hat v)=(2\pi B_2)^{-n/2}\exp\left\{-\frac{Q}{2B_2}\right\}
+=(2\pi B_2)^{-n/2}e^{-n/2}.
+\]
+所以似然比为
+\[
+\Lambda
+=\frac{L(\hat\mu_0,v_0)}{L(\hat\mu,\hat v)}
+=\left(\frac{B_2}{v_0}\right)^{n/2}
+e^{\frac n2-\frac{Q}{2v_0}}
+=\left(\frac{B_2}{v_0}\right)^{n/2}
+e^{\frac n2\left(1-\frac{B_2}{v_0}\right)}.
+\]
+\end{answerbox}
+\subsection{}
+
+将拒绝域 $\{\Lambda\leq c\}$ 转化为关于一个在 $H_0$ 下已知分布的检验统计量的区域（要求是精确分布而非渐进分布），并确定显著水平 $\alpha$ 下，转化后拒绝域的临界值。
+
+\begin{answerbox}
+\textbf{解答：}
+
+在 $H_0:v=v_0$ 成立时，
+\[
+T=\frac{1}{v_0}\sum_{i=1}^n(X_i-\bar X)^2\sim \chi^2(n-1).
+\]
+又因为
+\[
+B_2=\frac{1}{n}\sum_{i=1}^n(X_i-\bar X)^2=\frac{v_0}{n}T,
+\]
+所以似然比可以写成关于 $T$ 的函数：
+\[
+\Lambda(T)
+=\left(\frac{T}{n}\right)^{n/2}e^{\frac{n-T}{2}}.
+\]
+取对数得
+\[
+\ln\Lambda(T)=\frac n2\ln\frac{T}{n}+\frac{n-T}{2}.
+\]
+对 $T$ 求导：
+\[
+\frac{\text{d}}{\text{d}T}\ln\Lambda(T)=\frac{n}{2T}-\frac12=\frac{n-T}{2T}.
+\]
+
+令 $\frac{\text{d}}{\text{d}T}\ln\Lambda(T) > 0$，解得：
+
+$$
+\frac{n-T}{2T} > 0 \implies T < n.
+$$
+
+因此 $\Lambda(T)$ 在 $(0,n)$ 上递增，在 $(n,+\infty)$ 上递减。故拒绝域 $\{\Lambda\leq c\}$ 可转化为
+\[
+\{T\leq a \text{或} T\geq b\},
+\qquad 0<a<n<b.
+\]
+
+根据等尾原则：
+
+$$
+P(T \leq a) = \frac{\alpha}{2} , \quad P(T \geq b) = \frac{\alpha}{2}.
+$$
+
+于是：
+
+$$
+a = \chi^2_{1-\alpha/2}(n-1), \quad b = \chi^2_{\alpha/2}(n-1)
+$$
+
+所以，拒绝域为：
+
+$$
+\left\{T \leq \chi^2_{1-\alpha/2}(n-1) \text{或} T \geq \chi^2_{\alpha/2}(n-1)\right\}
+$$
+
+\end{answerbox}
+
+
+\section{Problem 4}
+
+假设总体分布中含有未知参数 $\theta$，样本为 $X_1,\ldots,X_n$。对下列每种情况，分别找出 $\theta$ 的一个充分统计量。
+
+\subsection{}
+
+$X_1,\ldots,X_n$ 具有 p.m.f.
+  \[
+  P(X=k)=\frac{1}{\theta},\qquad k=1,2,\ldots,\theta,
+  \]
+  其中 $\theta\in\mathbb{N}^+$ 为未知参数。
+
+\begin{answerbox}
+\textbf{解答：}
+
+由于 $X_1,\ldots,X_n$ 是样本，所以独立同分布。联合 p.m.f. 为
+\[
+f(x_1;\theta)\cdots f(x_n;\theta)
+=\prod_{i=1}^n\frac1\theta I_{\{1\leq x_i\leq \theta\}}
+=\frac{1}{\theta^n}I_{\{x_{(n)}\leq \theta\}}I_{\{x_{(1)}\geq 1\}},
+\]
+其中 $x_{(1)}=\min\{x_1,\ldots,x_n\}$，$x_{(n)}=\max\{x_1,\ldots,x_n\}$。
+
+根据 Neyman 分解定理，令
+\[
+k_1(x_{(n)};\theta)=\frac{1}{\theta^n}I_{\{x_{(n)}\leq\theta\}},
+\qquad
+k_2(x_1,\ldots,x_n)=I_{\{x_{(1)}\geq 1\}},
+\]
+则 $k_2$ 不依赖于 $\theta$。所以
+\[
+Y=X_{(n)}=\max\{X_1,\ldots,X_n\}
+\]
+是 $\theta$ 的一个充分统计量。
+\end{answerbox}
+
+\subsection{}
+
+  $X_1,\ldots,X_n$ 具有 p.m.f.
+  \[
+  P(X=x)=\binom{x+r-1}{r-1}\theta^r(1-\theta)^x,\qquad x=0,1,2,\ldots,
+  \]
+  其中 $r>0$ 为已知参数，$0<\theta<1$ 为未知参数。
+
+\begin{answerbox}
+\textbf{解答：}
+
+由于 $X_1,\ldots,X_n$ 是样本，独立同分布。联合 p.m.f. 为
+\[
+\begin{aligned}
+f(x_1;\theta)\cdots f(x_n;\theta)
+&=\prod_{i=1}^n\binom{x_i+r-1}{r-1}\theta^r(1-\theta)^{x_i}\\
+&=\left(\prod_{i=1}^n\binom{x_i+r-1}{r-1}\right)\theta^{nr}(1-\theta)^{\sum_{i=1}^n x_i}.
+\end{aligned}
+\]
+根据 Neyman 分解定理，令
+\[
+k_1\left(\sum_{i=1}^n x_i;\theta\right)
+=\theta^{nr}(1-\theta)^{\sum_{i=1}^n x_i},
+\qquad
+k_2(x_1,\ldots,x_n)=\prod_{i=1}^n\binom{x_i+r-1}{r-1},
+\]
+其中 $k_2$ 不依赖于 $\theta$。所以
+\[
+Y=\sum_{i=1}^n X_i
+\]
+是 $\theta$ 的一个充分统计量。
+\end{answerbox}
+
+\subsection{}
+
+   $X_1,\ldots,X_n$ 具有 p.d.f.
+  \[
+  f(x;\mu,\sigma^2)=\frac{1}{\sqrt{2\pi}\sigma x}
+  \exp\left\{-\frac{(\ln x-\mu)^2}{2\sigma^2}\right\},\qquad x>0,
+  \]
+  其中 $\mu$ 已知，$\sigma^2>0$ 为未知参数。
+
+\begin{answerbox}
+\textbf{解答：}
+
+由于 $X_1,\ldots,X_n$ 是样本，i.i.d。记未知参数 $v=\sigma^2>0$。联合密度为
+\[
+\begin{aligned}
+f(x_1;v)\cdots f(x_n;v)
+&=\prod_{i=1}^n\frac{1}{\sqrt{2\pi}\sqrt v\,x_i}
+\exp\left\{-\frac{(\ln x_i-\mu)^2}{2v}\right\}I_{\{x_i>0\}}\\
+&=(2\pi)^{-n/2}v^{-n/2}
+\exp\left\{-\frac{1}{2v}\sum_{i=1}^n(\ln x_i-\mu)^2\right\}
+\prod_{i=1}^n x_i^{-1}I_{\{x_i>0\}}.
+\end{aligned}
+\]
+根据 Neyman 分解定理，令
+\[
+k_1\left(\sum_{i=1}^n(\ln x_i-\mu)^2;v\right)
+=(2\pi)^{-n/2}v^{-n/2}
+\exp\left\{-\frac{1}{2v}\sum_{i=1}^n(\ln x_i-\mu)^2\right\},
+\]
+\[
+k_2(x_1,\ldots,x_n)=\prod_{i=1}^n x_i^{-1}I_{\{x_i>0\}},
+\]
+其中 $k_2$ 不依赖于 $v$。所以
+\[
+Y=\sum_{i=1}^n(\ln X_i-\mu)^2
+\]
+是 $\sigma^2$ 的一个充分统计量。
+\end{answerbox}
+
+\subsection{}
+
+  $X_1,\ldots,X_n$ 具有 p.d.f.
+  \[
+  f(x;\theta)=\frac{1}{2\theta}\exp\left\{-\frac{|x|}{\theta}\right\},\qquad x\in\mathbb{R},
+  \]
+  其中 $\theta>0$ 为未知参数。
+
+\begin{answerbox}
+\textbf{解答：}
+
+由于 $X_1,\ldots,X_n$ 是样本，i.i.d。联合密度为
+\[
+f(x_1;\theta)\cdots f(x_n;\theta)
+=\prod_{i=1}^n\frac{1}{2\theta}\exp\left\{-\frac{|x_i|}{\theta}\right\}
+=(2\theta)^{-n}\exp\left\{-\frac{1}{\theta}\sum_{i=1}^n|x_i|\right\}.
+\]
+根据 Neyman 分解定理，令
+\[
+k_1\left(\sum_{i=1}^n|x_i|;\theta\right)
+=(2\theta)^{-n}\exp\left\{-\frac{1}{\theta}\sum_{i=1}^n|x_i|\right\},
+\qquad
+k_2(x_1,\ldots,x_n)=1.
+\]
+所以
+\[
+Y=\sum_{i=1}^n|X_i|
+\]
+是 $\theta$ 的一个充分统计量。
+\end{answerbox}
+
+\subsection{}
+
+  $X_1,\ldots,X_n$ 具有 p.d.f.
+  \[
+  f(x;\theta)=\frac{\theta}{x^{\theta+1}},\qquad x>1,
+  \]
+  其中 $\theta>0$ 为未知参数。
+
+\begin{answerbox}
+\textbf{解答：}
+
+由于 $X_1,\ldots,X_n$ 是样本，i.i.d。联合密度为
+\[
+\begin{aligned}
+f(x_1;\theta)\cdots f(x_n;\theta)
+&=\prod_{i=1}^n\theta x_i^{-(\theta+1)}I_{\{x_i>1\}}\\
+&=\theta^n\left(\prod_{i=1}^n x_i\right)^{-\theta}
+\left(\prod_{i=1}^n x_i\right)^{-1}I_{\{x_{(1)}>1\}}.
+\end{aligned}
+\]
+根据 Neyman 分解定理，令
+\[
+k_1\left(\prod_{i=1}^n x_i;\theta\right)
+=\theta^n\left(\prod_{i=1}^n x_i\right)^{-\theta},
+\qquad
+k_2(x_1,\ldots,x_n)=\left(\prod_{i=1}^n x_i\right)^{-1}I_{\{x_{(1)}>1\}},
+\]
+其中 $k_2$ 不依赖于 $\theta$。所以
+\[
+Y=\prod_{i=1}^n X_i
+\]
+是 $\theta$ 的一个充分统计量。等价地，由于 $\log$ 为一对一变换，$\sum_{i=1}^n\log X_i$ 也是充分统计量。
+\end{answerbox}
+
+\subsection{}
+
+  $X_1,\ldots,X_n$ 具有 p.d.f.
+  \[
+  f(x;\theta)=\frac{x}{\theta^2}\exp\left(-\frac{x^2}{2\theta^2}\right),\qquad x>0,
+  \]
+  其中 $\theta>0$ 为未知参数。
+
+\begin{answerbox}
+\textbf{解答：}
+
+由于 $X_1,\ldots,X_n$ 是样本，i.i.d。联合密度为
+\[
+\begin{aligned}
+f(x_1;\theta)\cdots f(x_n;\theta)
+&=\prod_{i=1}^n\frac{x_i}{\theta^2}\exp\left\{-\frac{x_i^2}{2\theta^2}\right\}I_{\{x_i>0\}}\\
+&=\theta^{-2n}\exp\left\{-\frac{1}{2\theta^2}\sum_{i=1}^n x_i^2\right\}
+\prod_{i=1}^n x_i I_{\{x_i>0\}}.
+\end{aligned}
+\]
+根据 Neyman 分解定理，令
+\[
+k_1\left(\sum_{i=1}^n x_i^2;\theta\right)
+=\theta^{-2n}\exp\left\{-\frac{1}{2\theta^2}\sum_{i=1}^n x_i^2\right\},
+\]
+\[
+k_2(x_1,\ldots,x_n)=\prod_{i=1}^n x_i I_{\{x_i>0\}},
+\]
+其中 $k_2$ 不依赖于 $\theta$。所以
+\[
+Y=\sum_{i=1}^nX_i^2
+\]
+是 $\theta$ 的一个充分统计量。
+\end{answerbox}
+
+\section{Problem 5}
+
+假设 $X_1,\cdots,X_n$ 为来自某分布的样本，其 p.d.f. 为
+\[
+f(x;a,b)=
+\begin{cases}
+\dfrac{1}{b}e^{-(x-a)/b}, & x>a,\\
+0, & x\leq a.
+\end{cases}
+\]
+
+\subsection{}
+
+如果 $a=a_0$ 已知，请找出 $b$ 的一个充分统计量。
+
+\begin{answerbox}
+\textbf{解答：}
+
+由于 $X_1,\ldots,X_n$ 是样本，以下按独立同分布处理。当 $a=a_0$ 已知时，联合密度为
+\[
+\begin{aligned}
+f(x_1;b)\cdots f(x_n;b)
+&=\prod_{i=1}^n\frac1b\exp\left\{-\frac{x_i-a_0}{b}\right\}I_{\{x_i>a_0\}}\\
+&=b^{-n}\exp\left\{-\frac{1}{b}\sum_{i=1}^n(x_i-a_0)\right\}I_{\{x_{(1)}>a_0\}}.
+\end{aligned}
+\]
+根据 Neyman 分解定理，令
+\[
+k_1\left(\sum_{i=1}^n(x_i-a_0);b\right)
+=b^{-n}\exp\left\{-\frac{1}{b}\sum_{i=1}^n(x_i-a_0)\right\},
+\]
+\[
+k_2(x_1,\ldots,x_n)=I_{\{x_{(1)}>a_0\}},
+\]
+其中 $k_2$ 不依赖于 $b$。所以
+\[
+Y=\sum_{i=1}^nX_i
+\]
+是 $b$ 的一个充分统计量。
+\end{answerbox}
+
+\subsection{}
+
+如果 $b=b_0$ 已知，请找出 $a$ 的一个充分统计量。
+
+\begin{answerbox}
+\textbf{解答：}
+
+由于 $X_1,\ldots,X_n$ 是样本，以下按独立同分布处理。当 $b=b_0$ 已知时，联合密度为
+\[
+\begin{aligned}
+f(x_1;a)\cdots f(x_n;a)
+&=\prod_{i=1}^n\frac{1}{b_0}\exp\left\{-\frac{x_i-a}{b_0}\right\}I_{\{x_i>a\}}\\
+&=b_0^{-n}\exp\left\{-\frac{1}{b_0}\sum_{i=1}^nx_i\right\}
+\exp\left\{\frac{na}{b_0}\right\}I_{\{a<x_{(1)}\}}.
+\end{aligned}
+\]
+这里含参数 $a$ 的支持条件只能通过 $x_{(1)}$ 进入。根据 Neyman 分解定理，令
+\[
+k_1(x_{(1)};a)=e^{\frac{na}{b_0}}I_{\{a<x_{(1)}\}},
+\]
+\[
+k_2(x_1,\ldots,x_n)=b_0^{-n}e^{-\frac{1}{b_0}\sum_{i=1}^nx_i},
+\]
+其中 $k_2$ 不依赖于 $a$。所以
+\[
+Y=X_{(1)}=\min\{X_1,\ldots,X_n\}
+\]
+是 $a$ 的一个充分统计量。
+\end{answerbox}
+
+\section{Problem 6}
+
+假设 $X_1,\cdots,X_n$ 为来自指数分布 $\operatorname{Exp}(1/\theta)$ 的样本，其 p.d.f. 为
+\[
+f(x;\theta)=\frac{1}{\theta}e^{-x/\theta},\qquad x>0.
+\]
+我们知道，$Y_1=\sum_{i=1}^{n}X_i$ 为一个充分统计量，而 $Y_2=X_1$ 为一个无偏估计量。请用 Rao--Blackwell 定理，计算无偏估计量 $E(Y_2\mid Y_1)$。（提示：仿照课件中 Poisson 分布的做法）
+
+\begin{answerbox}
+\textbf{解答：}
+
+由于 $X_1,\ldots,X_n$ 是来自 $\operatorname{Exp}(1/\theta)$ 的样本，故它们独立同分布，且具有轮换对称性。已知
+\[
+Y_1=\sum_{i=1}^nX_i
+\]
+为 $\theta$ 的充分统计量，且 $Y_2=X_1$ 是 $\theta$ 的无偏估计量。根据 Rao--Blackwell 定理，
+\[
+\varphi(Y_1)=E(Y_2\mid Y_1)
+\]
+仍是 $\theta$ 的无偏估计量，且方差不超过 $Y_2$ 的方差。
+
+现在计算
+\[
+\varphi(y_1)=E\left(X_1\mid \sum_{i=1}^nX_i=y_1\right).
+\]
+由交换性，
+\[
+E\left(X_1\mid Y_1=y_1\right)=\cdots=E\left(X_n\mid Y_1=y_1\right).
+\]
+因此
+\[
+\sum_{i=1}^nE(X_i\mid Y_1=y_1)
+=E\left(\sum_{i=1}^nX_i\mid Y_1=y_1\right)
+=y_1.
+\]
+所以
+\[
+\varphi(y_1)=\frac{y_1}{n},
+\qquad
+\varphi(Y_1)=\frac{Y_1}{n}=\bar X.
+\]
+并且
+\[
+E(\bar X)=\theta,
+\qquad
+\operatorname{Var}(\bar X)=\frac{1}{n^2}\sum_{i=1}^n\operatorname{Var}(X_i)=\frac{\theta^2}{n}\leq \theta^2=\operatorname{Var}(X_1).
+\]
+故 Rao--Blackwell 化后的无偏估计量为 $E(Y_2\mid Y_1)=\frac{Y_1}{n}=\bar X$.
+\end{answerbox}
+
+\section{Problem 7}
+
+设 $X_1,\cdots,X_n$ 为来自几何分布 $\operatorname{Geometric}(\theta)$ 的样本，其 p.m.f. 为
+\[
+P(X=x)=\theta(1-\theta)^{x-1},\qquad x=1,2,\ldots,\quad 0<\theta<1.
+\]
+
+\subsection{}
+
+证明：$T=\sum_{i=1}^{n}X_i$ 是 $\theta$ 的充分统计量，且服从帕斯卡（负二项）分布：
+  \[
+  P(T=t)=\binom{t-1}{n-1}\theta^n(1-\theta)^{t-n},\qquad t=n,n+1,n+2,\ldots.
+  \]
+  （提示：几何分布可视为首次成功所需的试验次数，而负二项分布可视为 $n$ 次成功所需的总试验次数）
+
+\begin{answerbox}
+\textbf{解答：}
+
+\textbf{证明 $T$ 是 $\theta$ 的充分统计量。}
+由于 $X_1,\ldots,X_n$ 是样本，以下按独立同分布处理。联合 p.m.f. 为
+\[
+f(x_1;\theta)\cdots f(x_n;\theta)
+=\prod_{i=1}^n\theta(1-\theta)^{x_i-1}
+=\theta^n(1-\theta)^{\sum_{i=1}^nx_i-n}.
+\]
+根据 Neyman 分解定理，令
+\[
+k_1\left(\sum_{i=1}^nx_i;\theta\right)
+=\theta^n(1-\theta)^{\sum_{i=1}^nx_i-n},
+\qquad
+k_2(x_1,\ldots,x_n)=1,
+\]
+则 $T=\sum_{i=1}^nX_i$ 是 $\theta$ 的充分统计量。
+
+\textbf{证明 $T$ 服从帕斯卡（负二项）分布}
+
+几何分布可视为首次成功所需的试验次数，而负二项分布可视为 $n$ 次成功所需的总试验次数。所以 $P(T=t)$ 可以理解为 在 $t-1$ 次试验中有 $n-1$ 次成功，第 $t$ 次试验成功的概率。
+
+所以，在前 $t-1$ 次试验中成功的次数服从 $\operatorname{Binomial}(t-1, \theta)$ 分布，而第 $t$ 次试验成功的概率为 $\theta$，所以：
+
+$$
+\begin{aligned}
+P(T = t) =& P(\text{在前 } t-1 \text{ 次试验中成功 } n-1 \text{ 次}) \cdot P(\text{第 } t \text{ 次试验成功}) \\
+=& \binom{t-1}{n-1} \theta^{n-1} (1-\theta)^{(t-1)-(n-1)} \cdot \theta \\
+=& \binom{t-1}{n-1} \theta^n (1-\theta)^{t-n}.
+\end{aligned}
+$$
+
+所以，$T$ 服从帕斯卡（负二项）分布得证。
+
+\end{answerbox}
+  
+\subsection{}
+
+  计算 $E(T)$，并由此求 $\theta^{-1}$ 的一个无偏估计量。
+
+\begin{answerbox}
+\textbf{解答：}
+
+由于 $X_i\sim\operatorname{Geometric}(\theta)$，且这里的几何分布表示首次成功所需试验次数，所以
+\[
+E(X_i)=\frac1\theta.
+\]
+又因为样本独立同分布，
+\[
+E(T)=E\left(\sum_{i=1}^nX_i\right)=\sum_{i=1}^nE(X_i)=\frac{n}{\theta}.
+\]
+因此
+\[
+E\left(\frac{T}{n}\right)=\frac1\theta.
+\]
+所以 $\frac{T}{n}=\bar X$ 是 $\theta^{-1}$ 的一个无偏估计量。
+\end{answerbox}
+
+\subsection{}
+
+  定义统计量
+  \[
+  \psi(X_1)=
+  \begin{cases}
+  1, & X_1=1,\\
+  0, & X_1\geq 2.
+  \end{cases}
+  \]
+  试证明 $\psi(X_1)$ 是 $\theta$ 的无偏估计。当 $n\geq 2$ 时，利用 Rao--Blackwell 定理，得到 $\theta$ 的一个无偏估计量，且其方差不超过 $\psi(X_1)$ 的方差。
+
+\begin{answerbox}
+\textbf{解答：}
+
+首先，
+\[
+E\{\psi(X_1)\}=1 \cdot P(X_1=1) + 0 \cdot P(X_1\geq 2) =\theta,
+\]
+所以 $\psi(X_1)$ 是 $\theta$ 的无偏估计量。
+
+当 $n\geq 2$ 时，由第 (1) 问可知 $T=\sum_{i=1}^nX_i$ 是 $\theta$ 的充分统计量。又 $\psi(X_1)$ 是 $\theta$ 的无偏估计量，因此 Rao--Blackwell 定理给出
+\[
+\varphi(T)=E\{\psi(X_1)\mid T\}
+\]
+也是 $\theta$ 的无偏估计量，且
+\[
+\operatorname{Var}\{\varphi(T)\}\leq \operatorname{Var}\{\psi(X_1)\}.
+\]
+下面计算 $\varphi(T)$。对 $t=n,n+1,\ldots$，
+\[
+\begin{aligned}
+\varphi(t)
+&=E\{\psi(X_1)\mid T=t\}\\
+&=P(X_1=1\mid T=t)\\
+&=\frac{P(X_1=1,\,X_2+\cdots+X_n=t-1)}{P(T=t)}.
+\end{aligned}
+\]
+由于 $X_1$ 与 $X_2,\ldots,X_n$ 独立，且 $X_2+\cdots+X_n$ 服从参数为 $(n-1,\theta)$ 的帕斯卡分布，
+\[
+\begin{aligned}
+\varphi(t)
+&=\frac{\theta\binom{t-2}{n-2}\theta^{n-1}(1-\theta)^{t-n}}
+{\binom{t-1}{n-1}\theta^n(1-\theta)^{t-n}}\\
+&=\frac{\binom{t-2}{n-2}}{\binom{t-1}{n-1}}
+=\frac{n-1}{t-1}.
+\end{aligned}
+\]
+因此 Rao--Blackwell 化后的估计量为
+\[
+\varphi(T)=\frac{n-1}{T-1}
+\]
+它是 $\theta$ 的无偏估计量，且方差不超过 $\psi(X_1)$ 的方差。
+\end{answerbox}
+
+\section{Problem 8}
+
+假设 $X_1,\ldots,X_n$ 为取自 $\operatorname{Bernoulli}(\theta)$ 分布的样本。我们希望估计
+\[
+g(\theta)=(1-\theta)^2.
+\]
+
+\subsection{}
+
+试找出 $g(\theta)$ 的极大似然估计量，并判断其是否无偏。
+
+\begin{answerbox}
+\textbf{解答：}
+
+由于 $X_1,\ldots,X_n$ 为 Bernoulli 样本，i.i.d。似然函数为
+\[
+L(\theta)=\prod_{i=1}^n\theta^{X_i}(1-\theta)^{1-X_i}
+=\theta^{\sum_{i=1}^nX_i}(1-\theta)^{n-\sum_{i=1}^nX_i}.
+\]
+对数似然函数为
+\[
+\ell(\theta)=\left(\sum_{i=1}^nX_i\right)\ln\theta+
+\left(n-\sum_{i=1}^nX_i\right)\ln(1-\theta).
+\]
+令 $\ell'(\theta)=0$，得到
+\[
+\hat\theta=\bar X.
+\]
+由 MLE 的不变性，
+\[
+\hat{g}(\theta)=(1-\hat\theta)^2=(1-\bar X)^2.
+\]
+
+下面判断其是否无偏。因为 $\bar X$ 的期望与方差为
+\[
+E(\bar X)=\theta,
+\qquad
+\operatorname{Var}(\bar X)=\frac{\theta(1-\theta)}{n},
+\]
+所以
+\[
+E(\bar X^2)=\operatorname{Var}(\bar X)+\{E(\bar X)\}^2
+=\frac{\theta(1-\theta)}{n}+\theta^2.
+\]
+因此
+\[
+\begin{aligned}
+E\{(1-\bar X)^2\}
+&=1-2E(\bar X)+E(\bar X^2)\\
+&=(1-\theta)^2+\frac{\theta(1-\theta)}{n}.
+\end{aligned}
+\]
+不等于 $(1-\theta)^2$，所以 $(1-\bar X)^2$ 不是 $g(\theta)$ 的无偏估计量。
+\end{answerbox}
+
+\subsection{}
+
+ 证明 $Y_1=\sum_{i=1}^{n}X_i$ 为 $\theta$ 的充分统计量。
+
+\begin{answerbox}
+\textbf{解答：}
+
+由于 $X_1,\ldots,X_n$ 为 Bernoulli 样本，独立同分布。联合 p.m.f. 为
+\[
+f(x_1;\theta)\cdots f(x_n;\theta)
+=\prod_{i=1}^n\theta^{x_i}(1-\theta)^{1-x_i}
+=\theta^{\sum_{i=1}^nx_i}(1-\theta)^{n-\sum_{i=1}^nx_i}.
+\]
+根据 Neyman 分解定理，令
+\[
+k_1\left(\sum_{i=1}^nx_i;\theta\right)
+=\theta^{\sum_{i=1}^nx_i}(1-\theta)^{n-\sum_{i=1}^nx_i},
+\qquad
+k_2(x_1,\ldots,x_n)=1.
+\]
+其中 $k_2$ 不依赖于 $\theta$。所以
+\[
+Y_1=\sum_{i=1}^nX_i
+\]
+是 $\theta$ 的充分统计量。
+\end{answerbox}
+
+\subsection{}
+
+ 我们考虑如下统计量：$Y_2=I_{\{X_1+X_2=0\}}$。试证明 $Y_2$ 为 $g(\theta)$ 的无偏估计。
+  
+\begin{answerbox}
+\textbf{解答：}
+
+当 $n\geq 2$ 时，由于 $X_1$ 与 $X_2$ 独立，
+\[
+E(Y_2)=P(X_1+X_2=0)=P(X_1=0,X_2=0)=P(X_1=0)P(X_2=0)=(1-\theta)^2.
+\]
+所以 $Y_2=I_{\{X_1+X_2=0\}}$ 是 $g(\theta)=(1-\theta)^2$ 的一个无偏估计量。
+\end{answerbox}
+
+\subsection{}
+
+ 利用 Rao--Blackwell 定理，试计算出一个 $g(\theta)$ 的无偏估计量，使它为 $Y_1$ 的函数，且有效性不低于 $Y_2$。
+
+\begin{answerbox}
+\textbf{解答：}
+
+根据 Rao--Blackwell 定理，我们可以计算出一个 $g(\theta)$ 的无偏估计量 $\varphi(Y_1) = E(Y_2 | Y_1)$，其中 $Y_1 = \sum_{i=1}^n X_i$。
+
+现在有：
+
+$$
+\begin{aligned}
+\varphi(y_1) =& E(Y_2 | Y_1 = y_1) \\
+=& P(X_1 + X_2 = 0 | Y_1 = y_1) \\
+=& \frac{P\left(X_1 = 0, X_2 = 0, \sum_{i=3}^n X_i = y_1\right)}{P\left(\sum_{i=1}^n X_i = y_1\right)} \\
+=& \frac{P(X_1 = 0) P(X_2 = 0) P\left(\sum_{i=3}^n X_i = y_1\right)}{P\left(\sum_{i=1}^n X_i = y_1\right)} \\
+=& \frac{(1-\theta)^2 \binom{n-2}{y_1} \theta^{y_1} (1-\theta)^{(n-2)-y_1}}{\binom{n}{y_1} \theta^{y_1} (1-\theta)^{n-y_1}} \\
+=& \frac{(1-\theta)^2 \binom{n-2}{y_1}}{\binom{n}{y_1} (1-\theta)^2} \\
+=& \frac{(n-y_1)(n-y_1-1)}{n(n-1)}.
+\end{aligned}
+$$
+
+于是，根据 Rao--Blackwell 定理，$\varphi(Y_1) = \frac{(n-Y_1)(n-Y_1-1)}{n(n-1)}$ 是 $g(\theta)$ 的一个无偏估计量，且有效性不低于 $Y_2$。
+
+
+\end{answerbox}
+
+\end{document}

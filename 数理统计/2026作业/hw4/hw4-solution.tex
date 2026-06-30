@@ -1,0 +1,1881 @@
+\documentclass[12pt,a4paper]{article}
+% \documentclass{ctexart}
+
+% ==================== 基础宏包 ====================
+\usepackage[UTF8]{ctex}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{hyperref}
+\usepackage[most]{tcolorbox}
+\usepackage{titlesec}
+ \usepackage{tabularx}
+
+\hypersetup{
+  hidelinks
+}
+
+% ==================== 颜色定义 ====================
+\definecolor{mainblue}{RGB}{34,72,112}
+\definecolor{lightblue}{RGB}{241,246,252}
+\definecolor{linegray}{RGB}{210,218,228}
+\definecolor{textgray}{RGB}{90,98,108}
+
+% ==================== 页面设置 ====================
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0.35em}
+\setlength{\headheight}{25pt}
+\linespread{1.2}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\textcolor{textgray}{\small 课程作业}}
+\rhead{\textcolor{textgray}{\small \thepage/\pageref*{LastPage}}}
+\cfoot{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{linegray}\leaders\hrule height \headrulewidth\hfill}}
+
+% ==================== 标题样式 ====================
+\titleformat{\section}
+  {\Large\bfseries\color{mainblue}}
+  {\thesection}
+  {0.6em}
+  {}
+
+\titleformat{\subsection}
+  {\large\bfseries\color{mainblue}}
+  {\thesubsection}
+  {0.6em}
+  {}
+
+\titlespacing*{\section}{0pt}{1.2em}{0.6em}
+\titlespacing*{\subsection}{0pt}{0.8em}{0.4em}
+
+% ==================== 自定义环境 ====================
+\newtcolorbox{infobox}{
+  colback=lightblue,
+  colframe=mainblue,
+  boxrule=0.6pt,
+  arc=2mm,
+  left=1.2em,
+  right=1.2em,
+  top=0.8em,
+  bottom=0.8em
+}
+
+\newtcolorbox{answerbox}{
+  colback=white,
+  colframe=linegray,
+  boxrule=0.5pt,
+  arc=2mm,
+  left=1em,
+  right=1em,
+  top=0.8em,
+  bottom=0.8em,
+  breakable
+}
+
+\newcommand{\course}{数理统计}
+\newcommand{\homeworktitle}{第4次作业}
+\newcommand{\studentname}{倪伟丰}
+\newcommand{\studentid}{2024110089}
+\newcommand{\classname}{24 大数据 2 班}
+\newcommand{\teacher}{袁洪松}
+\newcommand{\duedate}{2026年5月1日}
+
+% ==================== 正文开始 ====================
+\begin{document}
+
+\begin{center}
+  {\Huge\bfseries\color{mainblue}\homeworktitle}\\[0.6em]
+  {\Large\course}\\[1.2em]
+  {\color{linegray}\rule{0.9\textwidth}{0.8pt}}
+\end{center}
+
+\begin{infobox}
+\begin{tabularx}{\textwidth}{>{\bfseries}p{2.2cm} X >{\bfseries}p{2.2cm} X}
+姓名 & \studentname & 学号 & \studentid \\
+班级 & \classname & 教师 & \teacher \\
+提交日期 & \duedate &  &  \\
+\end{tabularx}
+\end{infobox}
+
+\section{Problem 1}
+
+假设 $X_1,\ldots,X_n$ 为取自 $N(\mu,\sigma_0^2)$ 的样本，其中 $\sigma_0$ 已知。对于已知常数 $\mu_0 > \mu_1$，考虑检验问题
+\[
+H_0: \mu = \mu_0 \,\,\text{v.s.}\,\, H_1: \mu = \mu_1.
+\]
+\subsection{}
+
+求此检验问题的一个合理拒绝域。若显著水平定为 $\alpha$，求拒绝域的临界值。
+
+\begin{answerbox}
+\textbf{解答：}
+
+说明，$z_\alpha$ 表示标准正态分布的上 $\alpha$ 分位数，即 $P(Z > z_\alpha) = \alpha$，其中 $Z \sim N(0,1)$。
+
+由题意：$X_1,\ldots,X_n$ 为取自 $N(\mu,\sigma_0^2)$ 的样本，其中 $\sigma_0$ 已知，得到：
+
+$$
+\bar{X} = \frac{1}{n}\sum_{i=1}^{n} X_i \sim N\left(\mu, \frac{\sigma_0^2}{n}\right).
+$$
+
+选择 $\bar{X}$ 为检验统计量，给出拒绝域为：
+
+$$
+\left\{(X_1, \ldots, X_n)| \bar{X} \leq c\right\}
+$$
+
+于是计算：
+
+$$
+P_{\mu_0}\left(\bar{X} \leq c\right) = \alpha
+$$
+
+在原假设成立的条件下，$\bar{X}$ 的分布为 $N\left(\mu_0, \frac{\sigma_0^2}{n}\right)$，因此：
+
+$$
+\frac{\bar{X}-\mu_0}{\sigma_0/\sqrt{n}} \sim N(0,1)
+$$
+
+因此：
+
+$$
+P_{\mu_0}\left\{\bar{X} \leq c\right\} = P\left\{\frac{\bar{X}-\mu_0}{\sigma_0/\sqrt{n}} \leq \frac{c-\mu_0}{\sigma_0/\sqrt{n}}\right\} = \alpha
+$$
+
+于是得到：
+
+$$
+c = \mu_0 + z_{1-\alpha} \frac{\sigma_0}{\sqrt{n}} = \mu_0 - z_{\alpha} \frac{\sigma_0}{\sqrt{n}}
+$$
+
+拒绝域为：
+
+$$
+\left\{(X_1, \ldots, X_n)| \bar{X} \leq \mu_0 - z_{\alpha} \frac{\sigma_0}{\sqrt{n}}\right\}
+$$
+
+\end{answerbox}
+
+\subsection{}
+
+若要使 (1) 中检验的功效不低于某个 $\delta$（$0<\delta<1$），$\mu_1-\mu_0$ 需要满足什么条件？
+
+\begin{answerbox}
+\textbf{解答：}
+
+犯第二类错误的概率为：
+
+$$
+\beta = P_{\mu_1}\left(\bar{X} > c\right) = 1 - P_{\mu_1}\left(\bar{X} \leq c\right)
+$$
+
+根据功效的定义：
+
+$$
+\text{功效} = 1-\beta = P_{\mu_1}\left(\bar{X} \leq c\right)
+$$
+
+在备择假设成立的条件下，$\bar{X}$ 的分布为 $N\left(\mu_1, \frac{\sigma_0^2}{n}\right)$，因此：
+
+$$
+P_{\mu_1}\left(\bar{X} \leq c\right) = P\left\{\frac{\bar{X}-\mu_1}{\sigma_0/\sqrt{n}} \leq \frac{c-\mu_1}{\sigma_0/\sqrt{n}}\right\}
+$$
+
+由第一问：
+
+$$
+c = \mu_0 - z_{\alpha} \frac{\sigma_0}{\sqrt{n}}
+$$
+
+因此：
+
+$$
+P_{\mu_1}\left(\bar{X} \leq c\right) = P\left\{\frac{\bar{X}-\mu_1}{\sigma_0/\sqrt{n}} \leq \frac{\mu_0 - z_{\alpha} \frac{\sigma_0}{\sqrt{n}} - \mu_1}{\sigma_0/\sqrt{n}}\right\} \geq \delta
+$$
+
+于是得到：
+
+$$
+\frac{\mu_0 - z_{\alpha} \frac{\sigma_0}{\sqrt{n}} - \mu_1}{\sigma_0/\sqrt{n}} \geq -z_{\delta}
+$$
+
+因此，$\mu_1-\mu_0$ 需要满足：
+
+$$
+\mu_1 - \mu_0 \leq (z_{\delta} - z_{\alpha}) \frac{\sigma_0}{\sqrt{n}}
+$$
+\end{answerbox}
+
+\subsection{}
+
+对于 (1) 中的拒绝域形式 $\{\bar X \le c\}$，暂不规定其显著水平。试找出使得犯第一类错误与第二类错误概率之和最小的临界值 $c$。
+
+\begin{answerbox}
+\textbf{解答：}
+
+在原假设成立时，$\bar{X} \sim N\left(\mu_0, \frac{\sigma_0^2}{n}\right)$
+
+计算犯第一类错误的概率：
+
+$$
+\alpha = P_{\mu_0}\left(\bar{X} \leq c\right) = P\left(\frac{\bar{X}-\mu_0}{\sigma_0/\sqrt{n}} \leq \frac{c-\mu_0}{\sigma_0/\sqrt{n}}\right) = \Phi\left(\frac{c-\mu_0}{\sigma_0/\sqrt{n}}\right)
+$$
+
+在备择假设成立时，$\bar{X} \sim N\left(\mu_1, \frac{\sigma_0^2}{n}\right)$
+
+计算犯第二类错误的概率：
+
+$$
+\beta = P_{\mu_1}\left(\bar{X} > c\right) = P\left(\frac{\bar{X}-\mu_1}{\sigma_0/\sqrt{n}} > \frac{c-\mu_1}{\sigma_0/\sqrt{n}}\right) = 1-\Phi\left(\frac{c-\mu_1}{\sigma_0/\sqrt{n}}\right) = \Phi\left(\frac{\mu_1-c}{\sigma_0/\sqrt{n}}\right)
+$$
+
+定义函数 $f(c)$ 表示第一类错误概率与第二类错误概率之和关于 $c$ 的函数：
+
+$$
+f(c) = \Phi\left(\frac{c-\mu_0}{\sigma_0/\sqrt{n}}\right) + \Phi\left(\frac{\mu_1-c}{\sigma_0/\sqrt{n}}\right)
+$$
+
+计算 $c$ 的临界值：
+
+$$
+\frac{\text{d}f}{\text{d}c} = \frac{\sqrt{n}}{\sigma_0} \phi\left(\frac{c-\mu_0}{\sigma_0/\sqrt{n}}\right) - \frac{\sqrt{n}}{\sigma_0} \phi\left(\frac{\mu_1-c}{\sigma_0/\sqrt{n}}\right) = 0
+$$
+
+计算得到：
+
+$$
+\left|\frac{c-\mu_0}{\sigma_0/\sqrt{n}}\right| = \left|\frac{\mu_1-c}{\sigma_0/\sqrt{n}}\right|
+$$
+
+解得：
+
+$$
+c = \frac{\mu_0+\mu_1}{2}
+$$
+
+\end{answerbox}
+
+\section{Problem 2}
+
+假设总体服从 $N(\mu,\sigma^2)$，其中 $\mu,\sigma^2$ 均未知。假设对某组样本值，得到 $\mu$ 的置信水平为 $95\%$ 的双侧置信区间为 $(-0.5,\,2.5)$。
+
+考虑假设检验问题
+\[
+H_0: \mu = \mu_0 \,\,\text{v.s.}\,\, H_1: \mu \ne \mu_0,
+\]
+我们采用 $t$-检验。
+
+\subsection{}
+
+在 $5\%$ 的显著性水平下，请分别判断当 $\mu_0=0$ 和 $\mu_0=2.6$ 时，是否应当拒绝 $H_0$。请说明理由。
+
+\begin{answerbox}
+\textbf{解答：}
+
+先考虑如何计算 $\mu$ 的双侧 CI。我们选择枢轴量：
+
+$$
+T = \frac{\bar{X}-\mu}{S/\sqrt{n}}
+$$
+
+计算CI：
+
+$$
+P\left(a < T < b\right) = P\left(a < \frac{\bar{X}-\mu}{S/\sqrt{n}} < b\right) = P\left(\bar{X}-b\frac{S}{\sqrt{n}} < \mu < \bar{X}-a\frac{S}{\sqrt{n}}\right)
+$$
+
+根据等尾原则：
+
+$$
+P\left(T \leq a \right) = P\left(T \geq b \right) = \frac{\alpha}{2} = 0.025
+$$
+
+于是解得：
+
+$$
+a = t_{1-\frac{\alpha}{2}}(n-1) = -t_{\frac{\alpha}{2}}(n-1), \quad b = t_{\frac{\alpha}{2}}(n-1)
+$$
+
+于是得到 $\mu$ 的双侧CI：
+
+$$
+\left(\bar{X}-t_{\frac{\alpha}{2}}(n-1)\frac{S}{\sqrt{n}} , \bar{X}+t_{\frac{\alpha}{2}}(n-1)\frac{S}{\sqrt{n}}\right)
+$$
+
+于是可以解方程组：
+
+$$
+\left\{
+\begin{aligned}
+  \quad&\bar{X}-t_{\frac{\alpha}{2}}(n-1)\frac{S}{\sqrt{n}} = -0.5\\
+  \quad&\bar{X}+t_{\frac{\alpha}{2}}(n-1)\frac{S}{\sqrt{n}} = 2.5
+\end{aligned}
+\right.
+$$
+
+解得：
+
+$$
+\left\{
+\begin{aligned}
+  \quad& \bar{X} = 1\\
+  \quad& \frac{S}{\sqrt{n}} = \frac{3}{2t_{\frac{\alpha}{2}}(n-1)}
+\end{aligned}
+\right.
+$$
+
+其中 $\alpha = 5\%$
+
+接下来做假设检验：
+
+注意到，这道题是双侧检验问题，给出拒绝域：
+
+$$
+\left\{\bar{X} \geq b \text{或} \bar{X} \leq a\right\}
+$$
+
+计算临界值：
+
+$$
+P\left(\bar{X} \geq b \text{或} \bar{X} \leq a\right) = \alpha
+$$
+
+其中 $\alpha = 5\%$
+
+根据等尾原则：
+
+$$
+P\left(\bar{X} \geq b\right) = P\left(\bar{X} \leq a\right) = \frac{\alpha}{2} 
+$$
+
+在原假设成立的情况下，$\mu = \mu_0$：
+
+$$
+T = \frac{\bar{X}-\mu}{S/\sqrt{n}} \sim T(n-1)
+$$
+
+进一步计算临界值：
+
+$$
+P\left(\bar{X} \geq b\right) = P\left(\frac{\bar{X} - \mu_0}{S / \sqrt{n}}\geq \frac{b - \mu_0}{S / \sqrt{n}} \right)
+$$
+
+$$
+P\left(\bar{X} \leq a\right) = P\left(\frac{\bar{X} - \mu_0}{S / \sqrt{n}}\leq \frac{a - \mu_0}{S / \sqrt{n}} \right)
+$$
+
+于是：
+
+$$
+a = -t_{0.025}(n-1)\frac{S}{\sqrt{n}} + \mu_0, \quad b = t_{0.025}(n-1)\frac{S}{\sqrt{n}} + \mu_0
+$$
+
+带入 $\frac{S}{\sqrt{n}}$ 的取值：
+
+$$
+a = -\frac{3}{2} + \mu_0, \quad b = \frac{3}{2} + \mu_0
+$$
+
+(1) 在 $\mu_0 = 0$ 时：
+
+$$
+a = -\frac{3}{2}, \quad b = \frac{3}{2}
+$$
+
+检验统计量 $\bar{X}$ 没有落在拒绝域内，所以没有充足理由拒绝原假设
+
+(2) 在 $\mu_0 = 2.6$ 时：
+
+$$
+a = 1.1, \quad b = 4.1
+$$
+
+检验统计量 $\bar{X} = 0 < a = 1.1$ 落在拒绝域内，故拒绝原假设
+
+\end{answerbox}
+
+\subsection{}
+
+在 $1\%$ 的显著性水平下，请分别判断当 $\mu_0=0$ 和 $\mu_0=2.6$ 时，是否应当拒绝 $H_0$。请说明理由。
+
+\begin{answerbox}
+\textbf{解答：}
+
+记 $\nu=n-1$。由题设给出的 $95\%$ 双侧置信区间
+$$
+\left(\bar X-t_{0.025}(\nu)\frac{S}{\sqrt n},\,
+\bar X+t_{0.025}(\nu)\frac{S}{\sqrt n}\right)=(-0.5,\,2.5)
+$$
+可得
+$$
+\bar X=1,\qquad
+t_{0.025}(\nu)\frac{S}{\sqrt n}=1.5.
+$$
+
+其中 $t_\alpha(\nu)$ 表示自由度为 $\nu$ 的 $t$ 分布的上 $\alpha$ 分位数，即
+$P(T_\nu>t_\alpha(\nu))=\alpha$。
+
+在显著性水平为 $1\%$ 的双侧 $t$ 检验中，拒绝域为
+$$
+\left\{
+\left|\frac{\bar X-\mu_0}{S/\sqrt n}\right|
+>t_{0.005}(\nu)
+\right\}.
+$$
+等价地，若 $\mu_0$ 落在 $99\%$ 双侧置信区间
+$$
+\left(
+\bar X-t_{0.005}(\nu)\frac{S}{\sqrt n},\,
+\bar X+t_{0.005}(\nu)\frac{S}{\sqrt n}
+\right)
+$$
+内，则在 $1\%$ 显著性水平下不拒绝 $H_0$。
+
+由上式可将 $99\%$ 置信区间写成
+$$
+\left(
+1-1.5\frac{t_{0.005}(\nu)}{t_{0.025}(\nu)},\,
+1+1.5\frac{t_{0.005}(\nu)}{t_{0.025}(\nu)}
+\right).
+$$
+由于 $t_{0.005}(\nu)>t_{0.025}(\nu)$，该区间严格包含 $95\%$ 置信区间 $(-0.5,2.5)$。
+
+当 $\mu_0=0$ 时，$0\in(-0.5,2.5)$，故必然落在上述 $99\%$ 置信区间内。因此，在 $1\%$ 显著性水平下不拒绝 $H_0:\mu=0$。
+
+当 $\mu_0=2.6$ 时，需要比较右端点。因为
+$$
+\frac{2.6-1}{1.5}=\frac{16}{15},
+$$
+而对任意自由度 $\nu$，都有
+$$
+\frac{t_{0.005}(\nu)}{t_{0.025}(\nu)}>\frac{16}{15},
+$$
+所以 $2.6$ 也落在 $99\%$ 置信区间内。因此，在 $1\%$ 显著性水平下同样不拒绝 $H_0:\mu=2.6$。
+
+综上，$\mu_0=0$ 与 $\mu_0=2.6$ 两种情形下，在 $1\%$ 显著性水平下均没有充分证据拒绝原假设。
+
+\end{answerbox}
+
+\section{Problem 3}
+
+某高校教务处关注学生使用大语言模型（如 ChatGPT、Gemini）辅助学习的情况。根据一项调查报告显示，全国大学生每周使用 AI 工具的平均时间为 $\mu_0=15$ 小时，且使用时间服从正态分布，总体标准差 $\sigma=4$ 小时。为评估本校学生使用情况是否高于全国平均水平，教务处随机抽取了该校 $64$ 名学生进行无记名调查，得到样本平均使用时间为 $\bar x=16.2$ 小时。假设该校学生使用时间的波动程度与全国水平一致。
+
+\subsection{}
+
+请写出原假设 $H_0$ 与备择假设 $H_1$，并给出在显著性水平 $\alpha$ 下该检验的拒绝域。
+
+\begin{answerbox}
+\textbf{解答：}
+
+由于，该校学生使用时间的波动程度与全国水平一致，所以，设该高校的大学生每周使用 AI 工具的时间总体是 $X \sim N\left(\mu, 4^2\right)$，抽样的样本是 $X_1, \ldots, X_{64} \sim N\left(\mu, 4^2\right)$ 且相互独立。
+于是：
+
+$$
+\bar{X} \sim N\left(\mu, \frac{1}{4}\right)
+$$
+
+写出原假设与备择假设：
+
+$$
+H_0: \mu = 15 \quad \text{vs.} H_1: \mu > 15 
+$$
+
+这是一个单侧假设检验问题，选择 $\bar{X}$ 为检验统计量，给出拒绝域：
+
+$$
+\left\{(X_1, \ldots, X_{64}) | \bar{X} \geq c\right\}
+$$
+
+在原假设成立时：
+
+$$
+\bar{X} \sim N\left(15, \frac{1}{4}\right)
+$$
+
+$$
+\frac{\bar{X}-15}{1/2} \sim N(0,1)
+$$
+
+计算在显著性水平 $\alpha$ 下该检验的拒绝域临界值：
+
+$$
+P\left(\bar{X} \geq c\right) = P\left(\frac{\bar{X}-15}{1/2} \geq \frac{c-15}{1/2}\right) = \alpha
+$$
+
+计算得到：
+
+$$
+c = \frac{1}{2} z_\alpha + 15
+$$
+
+\end{answerbox}
+
+\subsection{}
+
+在显著性水平 $\alpha=0.05$ 下，计算检验统计量的观测值，并判断是否拒绝原假设。
+
+\begin{answerbox}
+\textbf{解答：}
+
+检验统计量 $\bar{X} = \bar{x} = 16.2$
+
+带入 $\alpha = 0.05$，拒绝域的临界值：$c = \frac{1}{2} z_{0.05} + 15 \approx 15.8224$
+
+由于 $\bar{x} = 16.2 > c$ 所以，拒绝原假设，得出
+\end{answerbox}
+
+\subsection{}
+
+计算该检验的 $p$-值。若教务处将显著性水平降低至 $\alpha=0.01$，原有的统计结论是否会发生变化？请说明理由。
+
+\begin{answerbox}
+\textbf{解答：}
+
+$$
+p = P_{15}\left(\bar{X} \geq \bar{x}\right) = P_{15}\left(\frac{\bar{X}-15}{1/2} \geq \frac{16.2-15}{1/2}\right) = 1- \Phi(2.4) \approx 0.0082 < \alpha = 0.01
+$$
+
+\end{answerbox}
+
+\section{Problem 4}
+
+清明节假期，大学生出游的热情高涨。某旅游社交平台发布的调研报告显示，大学生单次三日游的平均花费为 $\mu_0=1500$ 元。某大学学生会认为，受交通成本和假期出行高峰影响，本校学生的实际平均花费可能高于该平台数据。为此，学生会随机调查了 $16$ 名刚旅行归来的同学，记录其单次三日游的花费（单位：元）如下：
+\[
+1520\quad 1480\quad 1550\quad 1490\quad 1580\quad 1470\quad 1530\quad 1510
+\]
+\[
+1560\quad 1500\quad 1540\quad 1460\quad 1570\quad 1485\quad 1525\quad 1495
+\]
+假设旅游花费服从正态分布。
+
+\subsection{}
+
+请写出检验统计量及其分布。在显著性水平 $\alpha=0.01$ 下，确定该检验的拒绝域。
+
+\begin{answerbox}
+\textbf{解答：}
+
+设本校大学生的旅游花费总体为 $X \sim N\left(\mu, \sigma^2\right)$，计学生会抽样的 $16$ 个独立的样本为 $X_1, \ldots, X_{16} \sim N\left(\mu, \sigma^2\right)$
+
+于是：
+
+$$
+\bar{X} = \frac{1}{16} \sum_{i=1}^{16} X_i \sim N\left(\mu, \frac{\sigma^2}{16}\right)
+$$
+
+计算样本均值与方差：
+
+$$
+\bar{x} = 1516.5625, \quad s^2 = 1325.729167
+$$
+
+于是，计算得到：
+
+$$
+s = 36.41
+$$
+
+取 $\bar{X}$ 为检验统计量。
+
+学生会的假设检验应为：
+
+$$
+H_0: \mu = \mu_0 \quad \text{vs.} H_1: \mu >\mu_0
+$$
+
+由于这是一个单侧检验问题，给出拒绝域：
+
+$$
+\left\{(X_1, \ldots, X_{16}) | \bar{X} \geq c\right\}
+$$
+
+接下来计算在显著性水平 $\alpha=0.01$ 下该检验的拒绝域的临界值：
+
+在原假设成立的情况下，$\mu_0 = 1500$
+
+$$
+P_{1500}\left(\bar{X} \geq c\right) = P\left(\frac{\bar{X}-1500}{s/4} \geq \frac{c-1500}{s/4}\right) = \alpha
+$$
+
+其中：
+
+$$
+\frac{\bar{X}-1500}{S/4} \sim T(15)
+$$
+
+于是，计算得到：
+
+$$
+c = \frac{s}{4}t_\alpha(15) + 1500
+$$
+
+带入数值：
+
+$$
+c = \frac{36.41}{4}t_\alpha(15) + 1500 \approx 1523.689
+$$
+
+所以得到拒绝域：
+
+$$
+\left\{(X_1, \ldots, X_{16}) | \bar{X} \geq \frac{36.41}{4}t_\alpha(15) + 1500\right\}
+$$
+\end{answerbox}
+
+
+\subsection{}
+
+计算检验统计量的观测值，并根据观测值做出统计决策。
+
+\begin{answerbox}
+\textbf{解答：}
+检验统计量 $\bar{X} = \bar{x} = 1516.5625 < 1523.689$
+
+因此没有充足理由推翻原假设
+\end{answerbox}
+
+\section{Problem 5}
+
+随着期中考试来临，某宿舍楼 $10$ 名同学为了缓解手机成瘾带来的学习焦虑，自愿参与了为期一周的“数字化脱瘾”实验。实验要求每位同学每天晚上 19:00--21:00 强制进入“专注模式”（远离手机）。为了验证该模式能否显著降低焦虑，实验前后通过专业量表测试了每位同学的“深度学习焦虑得分”（分数越高表示焦虑程度越严重）。数据如表~\ref{tab:anxiety} 所示：
+
+\begin{table}[htbp]
+\centering
+\caption{实验前后10位同学的深度学习焦虑得分}
+\label{tab:anxiety}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{c*{10}{c}}
+\toprule
+学生编号 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\
+\midrule
+之前评分 $X$ & 78 & 82 & 75 & 88 & 90 & 65 & 72 & 85 & 80 & 77 \\
+之后评分 $Y$ & 75 & 86 & 73 & 82 & 85 & 72 & 70 & 80 & 75 & 79 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+假设差值 $D=X-Y$ 服从正态分布。
+
+\subsection{}
+
+本题为何应采用成对数据检验而非独立样本检验？请写出该检验的原假设与备择假设。
+
+\begin{answerbox}
+\textbf{解答：}
+
+因为每位同学的两次测量结果不是独立的，焦虑程度不只是与手机使用有关，还有其他因素共同影响，所以应该采用成对数据检验。
+
+于是使用统计量：$D = X - Y$ 来表示同学实验前与实验后深度学习焦虑的差值的总体，其分布为 $N(\mu_D, \sigma_D^2)$。样本为 $D_1, D_2, \ldots, D_{10}$
+
+根据计算得到 ${D_1, \ldots, D_{10}}$ 为：
+
+$$
+{3, -4, 2, 6, 5, -7, 2, 5, 5, -2}
+$$
+
+进一步计算得到样本均值 $\bar{d} = 1.5$, 样本方差 $s_D^2 = 19.3889$
+
+我们希望能验证专注模式能否显著降低焦虑程度，即验证 $D$ 的总体均值 $\mu_D$ 是否大于 $0$，因此写出原假设与备择假设：
+
+$$
+H_0: \mu_D = 0 \quad \text{vs.}  H_1: \mu_D > 0
+$$
+\end{answerbox}
+
+\subsection{}
+
+在显著性水平 $\alpha=0.05$ 下，该专注模式是否有效？请给出判断过程。
+
+\begin{answerbox}
+\textbf{解答：}
+
+在原假设成立的条件下，我们选择检验统计量：
+
+$$
+\bar{D} \sim N\left(0, \frac{\sigma_D^2}{10}\right)
+$$
+
+由于 $\sigma_D^2$ 未知，使用样本方差 $s_D^2$ 来估计总体方差：
+
+$$
+\frac{\bar{D}}{s_D/\sqrt{10}} \sim T(9)
+$$
+
+计算 p-值：
+
+$$
+\begin{aligned}
+p=& P_{0}\left(\frac{\bar{D}}{S_D/\sqrt{10}} \geq \frac{\bar{d}}{s_D/\sqrt{10}}\right) \\
+=& P_{0}\left(\frac{\bar{D}}{S_D/\sqrt{10}} \geq \frac{1.5}{\sqrt{19.3889/10}}\right) \\
+=& P_{0}\left(\frac{\bar{D}}{S_D/\sqrt{10}} \geq 1.0772\right) \\
+\approx& 0.155 > \alpha = 0.05
+\end{aligned}
+$$
+
+因此没有充足理由拒绝原假设，得出结论：该专注模式在显著性水平 $\alpha=0.05$ 下没有显著降低同学们的焦虑程度。
+\end{answerbox}
+
+\subsection{}
+
+如果某位同学在计算时错误地套用了两样本独立均值检验（假设两总体方差相等且已知均为 $2^2$），请分析这种错误是否会改变 (2) 中的结论。
+
+\begin{answerbox}
+\textbf{解答：}
+
+根据题意，假设实验之前总体 $X \sim N(\mu_X, 4)$，实验之后总体 $Y \sim N(\mu_Y, 4)$
+而实验前的样本为 $X_1, X_2, \ldots, X_{10}$，实验后的样本为 $Y_1, Y_2, \ldots, Y_{10}$
+
+计算得到：
+
+$$
+\bar{x} = \frac{1}{10} \sum_{i=1}^{10} X_i = 79.2, \quad \bar{y} = \frac{1}{10} \sum_{i=1}^{10} Y_i = 77.7
+$$
+
+$$
+S_X^2 = \frac{1}{9} \sum_{i=1}^{10} (X_i - \bar{X})^2 = 57.067, \quad S_Y^2 = \frac{1}{9} \sum_{i=1}^{10} (Y_i - \bar{Y})^2 = 30.678
+$$
+
+写出错误的假设检验：
+
+$$
+H_0: \mu_X - \mu_Y = 0 \quad \text{vs.} \quad H_1: \mu_X - \mu_Y > 0
+$$
+
+给出检验统计量：
+
+$$
+\bar{X} - \bar{Y} \sim N\left(\mu_X - \mu_Y, 0.8\right)
+$$
+
+在原假设成立的条件下，$\mu_X - \mu_Y = 0$，
+
+$$
+\bar{X} - \bar{Y} \sim N\left(0, 0.8\right)
+$$
+
+于是：
+
+$$
+\frac{\bar{X} - \bar{Y}}{\sqrt{0.8}} \sim N\left(0, 1\right)
+$$
+
+计算 p-值：
+
+$$
+\begin{aligned}
+p =& P_{0}\left(\bar{X} - \bar{Y} \geq \bar{x} - \bar{y}\right) \\
+=& P_{0}\left(\bar{X} - \bar{Y} \geq 1.5\right) \\
+=& P_{0}\left(\frac{\bar{X} - \bar{Y}}{\sqrt{0.8}} \geq \frac{1.5}{\sqrt{0.8}}\right) \\
+=& P_{0}\left(Z \geq 1.6771\right) \\
+\approx& 0.0468 < \alpha = 0.05
+\end{aligned}
+$$
+
+因此，错误地套用两样本独立均值检验会导致拒绝原假设，得出结论：该专注模式在显著性水平 $\alpha=0.05$ 下显著降低同学们的焦虑程度。
+
+\end{answerbox}
+
+\section{Problem 6}
+
+某高校体育教学部通过往年数据发现，普通大二男生1000米跑成绩的波动程度稳定在 $\sigma_0^2=400\,(\mathrm{s}^2)$。为进一步提升学生体质健康水平，体育老师希望探究两个问题：一是参加“刷锻跑”的学生（实验组）成绩是否比往年普通学生更加稳定；二是参加上午场1000米测试（组1）与下午场1000米测试（组2）的学生成绩波动是否存在显著差异。为此，随机抽取实验组25人，测得样本方差 $s^2=225$；另抽取上午场16人，样本方差 $s_1^2=300$，下午场21人，样本方差 $s_2^2=600$。假设成绩均服从正态分布。
+
+\subsection{}
+
+针对实验组，请给出原假设 $H_0$ 与备择假设 $H_1$，并写出在显著性水平 $\alpha=0.05$ 下的拒绝域。判断“刷锻跑”是否显著提高了成绩的稳定性。
+
+\begin{answerbox}
+\textbf{解答：}
+
+假设“刷短跑”的学生成绩的总体为 $X \sim N\left(\mu, \sigma^2\right)$，为了研究参加“刷锻跑”的学生（实验组）成绩是否比往年普通学生更加稳定，我们提出如下假设：
+
+$$
+H_0: \sigma^2 = 400 \quad \text{vs.} \quad H_1: \sigma^2 < 400
+$$
+
+给出拒绝域：
+
+$$
+\left\{(X_1, \ldots, X_{25}) | S^2 \leq c\right\}
+$$
+
+构造检验统计量：
+
+$$
+\frac{(n-1)S^2}{\sigma^2} \sim \chi^2(n-1)
+$$
+
+在原假设成立的条件下，$\sigma^2 = \sigma_0^2 = 400$，检验统计量：
+
+$$
+\frac{(n-1)S^2}{400} \sim \chi^2(n-1)
+$$
+
+现在计算显著水平为 $\alpha=0.05$ 时拒绝域的临界值：
+
+$$
+P\left(\frac{(n-1)S^2}{400} \leq \frac{(n-1)c}{400}\right) = \alpha
+$$
+
+于是：
+
+$$
+c = \frac{400}{n-1} \chi^2_{\alpha}(n-1) = \frac{400}{24} \chi^2_{0.05}(24) \approx 266.23
+$$
+
+由于：
+
+$$
+s^2 = 225 < c = 266.23
+$$
+
+因此，在显著性水平 $\alpha=0.05$ 下，拒绝原假设，得出结论：参加“刷锻跑”的学生成绩的波动程度显著小于往年普通学生。
+
+\end{answerbox}
+
+\subsection{}
+
+针对上午场（组1）和下午场（组2），请计算该检验的 $p$-值，并分别给出在显著性水平 $\alpha=0.05$ 和 $\alpha=0.1$ 下的结论。
+
+\begin{answerbox}
+\textbf{解答：}
+
+假设上午场学生成绩的总体为 $X \sim N\left(\mu_1, \sigma_1^2\right)$，下午场学生成绩的总体为 $Y \sim N\left(\mu_2, \sigma_2^2\right)$，为了研究参加上午场1000米测试（组1）与下午场1000米测试（组2）的学生成绩波动是否存在显著差异，我们提出如下假设：
+
+$$
+H_0: \frac{\sigma_1^2}{\sigma_2^2} = 1 \quad \text{vs.} \quad H_1: \frac{\sigma_1^2}{\sigma_2^2} \neq 1
+$$
+
+给出拒绝域：
+
+$$
+\left\{\frac{S_1^2}{S_2^2} \leq a \text{ 或 } \frac{S_1^2}{S_2^2} \geq b\right\}
+$$
+
+构造检验统计量：
+
+$$
+\frac{S_1^2/\sigma_1^2}{S_2^2/\sigma_2^2} \sim F(n_1-1, n_2-1)
+$$
+
+在原假设成立的条件下，$\sigma_1^2 = \sigma_2^2$，检验统计量：
+
+$$
+\frac{S_1^2}{S_2^2} \sim F(15, 20)
+$$
+
+计算检验统计量的观测值：
+
+$$
+\frac{s_1^2}{s_2^2} = \frac{300}{600} = 0.5
+$$
+
+于是可以计算 p-值：
+
+$$
+p = 2\min\left(P_{H_0}\left(\frac{S_1^2}{S_2^2} \leq 0.5\right), P_{H_0}\left(\frac{S_1^2}{S_2^2} \geq 0.5\right)\right)
+$$
+
+$$
+P_{H_0}\left(\frac{S_1^2}{S_2^2} \leq 0.5\right) \approx 0.0876
+$$
+
+$$
+P_{H_0}\left(\frac{S_1^2}{S_2^2} \geq 0.5\right) = 1 - P_{H_0}\left(\frac{S_1^2}{S_2^2} \leq 0.5\right) > P_{H_0}\left(\frac{S_1^2}{S_2^2} \leq 0.5\right)
+$$
+
+故：
+
+$$
+p = 2\min\left(P_{H_0}\left(\frac{S_1^2}{S_2^2} \leq 0.5\right), P_{H_0}\left(\frac{S_1^2}{S_2^2} \geq 0.5\right)\right) = 2P_{H_0}\left(\frac{S_1^2}{S_2^2} \leq 0.5\right) \approx 0.1752
+$$
+
+
+在显著性水平 $\alpha=0.05$ 下，由于 $p > \alpha$，没有充足理由拒绝原假设，得出结论：参加上午场1000米测试（组1）与下午场1000米测试（组2）的学生成绩波动没有显著差异。
+在显著性水平 $\alpha=0.1$ 下，由于 $p > \alpha$，同样没有充足理由拒绝原假设，得出结论：参加上午场1000米测试（组1）与下午场1000米测试（组2）的学生成绩波动没有显著差异。
+
+\end{answerbox}
+
+\section{Problem 7}
+
+某财经类高校校内的一家咖啡店推出了一款魔丸灵珠系列联名冰箱贴。店长希望了解该冰箱贴的每日销量分布情况，以便更好地安排补货和促销活动。已知这家咖啡店每天的客流量为800人左右。店长调出了过去360天的每日销量数据，经整理后得到表。
+
+\begin{table}[htbp]
+\centering
+\caption{每日冰箱贴销量分布}
+\label{tab:sales}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{c*{14}{c}}
+\toprule
+销量（个） & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 \\
+\midrule
+天数 & 2 & 6 & 15 & 27 & 44 & 56 & 68 & 52 & 40 & 25 & 13 & 8 & 3 & 1 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+咖啡店实习生小李就读于该校大数据专业，他根据学习过的理论知识，认为每日冰箱贴销量可能服从二项分布 $\mathrm{Bin}(800,p)$。另一位同专业的实习生小王则观察到销量的频率分布呈现“中间高两边低”的形态，因此推测其服从正态分布。
+
+\subsection{}
+
+  请以如下区间作为二项分布的取值划分：
+
+$$
+A_1=\{0,1\},A_2=\{2\},A_3=\{3\},A_4=\{4\},\ \ldots,\ A_9=\{9\},A_{10}=\{10\},A_{11}=\{11,12,13,\ldots\}.
+$$
+
+  判断是否应接受小李的说法。显著性水平取 $\alpha=0.05$。（参考数据：$\chi^2_{0.05}(8)=15.507$，$\chi^2_{0.05}(9)=16.919$）
+
+\begin{answerbox}
+\textbf{解答：}
+
+写出拟合优度检验：
+
+$$
+H_0: \text{销量服从二项分布} \text{Bin}(800, p) \quad \text{vs.} \quad H_1: \text{销量不服从二项分布} \text{Bin}(800, p)
+$$
+
+于是给出检验统计量：
+
+$$
+Q = \sum_{i=1}^{11} \frac{(n_i - n p_i)^2}{n p_i}
+$$
+
+由于有一个未知参数 $p$，所以自由度为 $11 - 1 - 1 = 9$，在显著性水平 $\alpha=0.05$ 下拒绝域为：
+
+$$
+\left\{(n_1, \ldots, n_{11}) | Q \geq c\right\}
+$$
+
+其中，$c = \chi^2_{0.05}(9) = 16.919$
+
+接下来要先计算 $p$ 的极大似然估计：
+
+对于二项分布 $\text{Bin}(n, p)$，其概率质量函数为：
+
+$$
+P\left(X=k\right) = C_800^k p^k (1-p)^{800-k}
+$$
+
+因此，样本的似然函数为：
+
+$$
+L\left(X_1, \ldots, X_{360}; p\right) = \prod_{i=1}^{360} C_{800}^{X_i} p^{X_i} (1-p)^{800-X_i}
+$$
+
+取对数似然函数：
+
+$$
+\ell\left(X_1, \ldots, X_{360}; p\right) = \sum_{i=1}^{360} \ln C_{800}^{X_i} +  \sum_{i=1}^{360} X_i \ln p +  \sum_{i=1}^{360}(800-X_i) \ln (1-p)
+$$
+
+于是计算得到：
+
+$$
+\frac{\text{d}\ell}{\text{d}p} = \sum_{i=1}^{360} \frac{X_i}{p} - \sum_{i=1}^{360} \frac{800-X_i}{1-p}
+$$
+
+令导数为零，解得 $p$ 的极大似然估计：
+
+$$
+\hat{p} = \frac{\sum_{i=1}^{360} X_i}{360 \cdot 800} \approx 0.0074896.
+$$
+
+接下来汇总每一组的实际频数 $n_i$ 以及计算每一组的理论频数 $n p_i$：
+
+在 $H_0$ 下，
+
+$$
+\hat{P}(X=k)=\binom{800}{k}\hat p^k(1-\hat p)^{800-k}.
+$$
+
+计算得各组理论概率约为：
+
+\[
+\resizebox{\textwidth}{!}{%
+$\begin{array}{c|ccccccccccc}
+\text{组} & A_1&A_2&A_3&A_4&A_5&A_6&A_7&A_8&A_9&A_{10}&A_{11} \\ \hline
+p_i &
+0.01720&
+0.04447&
+0.08927&
+0.13423&
+0.16125&
+0.16123&
+0.13800&
+0.10323&
+0.06855&
+0.04092&
+0.04166
+\end{array}$%
+}
+\]
+
+故理论频数 $n p_i =360P_i$ 为
+
+\[
+\resizebox{\textwidth}{!}{%
+$\begin{array}{c|ccccccccccc}
+\text{组} & A_1&A_2&A_3&A_4&A_5&A_6&A_7&A_8&A_9&A_{10}&A_{11} \\ \hline
+np_i &
+6.191&
+16.011&
+32.138&
+48.321&
+58.050&
+58.042&
+49.681&
+37.162&
+24.677&
+14.730&
+14.998
+\end{array}$%
+}
+\]
+
+由题意，实际频数 $n_i$ 为：
+
+\[
+\resizebox{\textwidth}{!}{%
+$\begin{array}{c|ccccccccccc}
+\text{组} & A_1&A_2&A_3&A_4&A_5&A_6&A_7&A_8&A_9&A_{10}&A_{11} \\ \hline
+n_i &
+8&
+15&
+27&
+44 & 56 & 68 & 52 & 40 & 25 & 13 & 12
+\end{array}$%
+}
+\]
+
+计算检验统计量：
+
+$$
+Q = \sum_{i=1}^{11} \frac{(n_i - n p_i)^2}{n p_i} \approx 4.713 < c = 16.919
+$$
+
+因此，在显著性水平 $\alpha=0.05$ 下，没有充足理由拒绝原假设，得出结论：每日冰箱贴销量服从二项分布 $\text{Bin}(800, p)$。
+\end{answerbox}
+
+\subsection{}
+
+  请以如下区间作为正态分布的取值划分：
+  \[
+  B_1=(-\infty,\hat\mu-1.8\hat\sigma],\quad B_2=(\hat\mu-1.8\hat\sigma,\hat\mu-1.4\hat\sigma],\quad B_3=(\hat\mu-1.4\hat\sigma,\hat\mu-\hat\sigma],
+  \]
+  \[
+  B_4=(\hat\mu-\hat\sigma,\hat\mu-0.6\hat\sigma],\ \ldots,\ B_9=(\hat\mu+\hat\sigma,\hat\mu+1.4\hat\sigma],\quad B_{10}=(\hat\mu+1.4\hat\sigma,\hat\mu+1.8\hat\sigma],
+  \]
+  \[
+  B_{11}=(\hat\mu+1.8\hat\sigma,\infty).
+  \]
+  其中 $\hat\mu$ 和 $\hat\sigma$ 分别为总体均值与标准差的极大似然估计。判断是否应接受小王的说法。显著性水平取 $\alpha=0.05$。（参考数据：$\chi^2_{0.05}(7)=14.067$，$\chi^2_{0.05}(8)=15.507$）
+
+\begin{answerbox}
+\textbf{解答：}
+
+写出拟合优度检验：
+
+$$
+H_0: \text{销量服从正态分布} N(\hat\mu, \hat\sigma^2) \quad \text{vs.} \quad H_1: \text{销量不服从正态分布} N(\hat\mu, \hat\sigma^2)
+$$
+
+于是给出检验统计量：
+
+$$
+Q = \sum_{i=1}^{11} \frac{(n_i - n p_i)^2}{n p_i}
+$$
+
+由于有两个未知参数 $\hat\mu$ 和 $\hat\sigma$，所以自由度为 $11 - 1 - 2 = 8$，在显著性水平 $\alpha=0.05$ 下拒绝域为：
+
+$$
+\left\{(n_1, \ldots, n_{11}) | Q \geq c\right\}
+$$
+
+其中，$c = \chi^2_{0.05}(8) = 15.507$
+
+接下来要先计算 $\hat\mu$ 和 $\hat\sigma$ 的极大似然估计：
+
+对于正态分布 $N(\mu, \sigma^2)$，其概率密度函数为：
+
+$$
+f(x) = \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2}
+$$
+因此，样本的似然函数为：
+
+$$
+L\left(X_1, \ldots, X_{360}\right) = \prod_{i=1}^{360} f(X_i) = \prod_{i=1}^{360} \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{1}{2}\left(\frac{X_i-\mu}{\sigma}\right)^2} = (2\pi)^{-\frac{360}{2}} \sigma^{-360} e^{-\frac{1}{2\sigma^2} \sum_{i=1}^{360} (X_i - \mu)^2}
+$$
+
+取对数似然函数为：
+
+$$
+\ell\left(X_1, \ldots, X_{360}; \mu, \sigma\right) = -\frac{360}{2} \ln(2\pi) - 360 \ln(\sigma) - \frac{1}{2\sigma^2} \sum_{i=1}^{360} (X_i - \mu)^2
+$$
+
+分别对 $\mu$ 和 $\sigma$ 求偏导数：
+
+$$
+\frac{\partial \ell}{\partial \mu} = \frac{1}{\sigma^2} \sum_{i=1}^{360} (X_i - \mu), \quad \frac{\partial \ell}{\partial \sigma} = -\frac{360}{\sigma} + \frac{1}{\sigma^3} \sum_{i=1}^{360} (X_i - \mu)^2
+$$
+
+令偏导数为零，解得 $\mu$ 和 $\sigma$ 的极大似然估计量：
+
+$$
+\hat{\mu} = \frac{1}{360} \sum_{i=1}^{360} X_i = \bar{X}, \quad \hat{\sigma}^2 = \frac{1}{360} \sum_{i=1}^{360} (X_i - \hat{\mu})^2
+$$
+
+带入实际的取值，得到极大似然估计值：
+
+$$
+\hat{\mu} \approx 5.9917, \quad \hat{\sigma} \approx 2.3208
+$$
+
+于是可以计算每一组的理论概率 $p_i$：
+
+$$
+P\left(l \leq X \leq  u\right) = P\left(\frac{l-\hat{\mu}}{\hat{\sigma}} \leq \frac{X-\hat{\mu}}{\hat{\sigma}} \leq \frac{u-\hat{\mu}}{\hat{\sigma}}\right) = \Phi\left(\frac{u-\hat{\mu}}{\hat{\sigma}}\right) - \Phi\left(\frac{l-\hat{\mu}}{\hat{\sigma}}\right)
+$$
+
+计算得各组理论概率约为：
+
+\[
+\resizebox{\textwidth}{!}{%
+$\begin{array}{c|ccccccccccc}
+\text{组} & B_1&B_2&B_3&B_4&B_5&B_6&B_7&B_8&B_9&B_{10}&B_{11} \\ \hline
+p_i &
+0.03593&
+0.04483&
+0.07790&
+0.11560&
+0.14649&
+0.15852&
+0.14649&
+0.11560&
+0.07790&
+0.04483&
+0.03593
+\end{array}$%
+}
+\]
+
+于是理论频数 $np_i$：
+
+\[
+\resizebox{\textwidth}{!}{%
+$\begin{array}{c|ccccccccccc}
+\text{组} & B_1&B_2&B_3&B_4&B_5&B_6&B_7&B_8&B_9&B_{10}&B_{11} \\ \hline
+np_i &
+12.935&
+16.137&
+28.043&
+41.615&
+52.735&
+57.067&
+52.735&
+41.615&
+28.043&
+16.137&
+12.935
+\end{array}$%
+}
+\]
+
+于是可以计算检验统计量：
+
+$$
+Q = \sum_{i=1}^{11} \frac{(n_i - n p_i)^2}{n p_i} \approx 5.516 < c = 15.507,
+$$
+
+于是，得出结论：在显著性水平 $\alpha=0.05$ 下，没有充足理由拒绝原假设，得出结论：每日冰箱贴销量服从正态分布 $N(\hat\mu, \hat\sigma^2)$。
+
+\end{answerbox}
+
+\subsection{}
+
+  小李对第 (2) 问中的区间划分方式提出质疑，认为应该采用等概率划分（即每个区间理论概率相等）来避免区间选择的主观性。请采用等概率划分（将正态分布支撑集划分为11个等概率区间）重新进行拟合优度检验，并比较与第 (2) 问的结论是否一致。若不一致，请分析造成这种差异的原因。
+
+\begin{answerbox}
+\textbf{解答：}
+
+设标准正态分位点满足
+
+$$
+z_j=\Phi^{-1}\left(\frac{j}{11}\right),\qquad j=1,2,\ldots,10.
+$$
+
+查算得近似值：
+
+$$
+\begin{aligned}
+z_1&=-1.3352,\quad z_2=-0.9085,\quad z_3=-0.6046,\quad z_4=-0.3488,\quad z_5=-0.1142,\\
+z_6&= 0.1142,\quad z_7= 0.3488,\quad z_8= 0.6046,\quad z_9= 0.9085,\quad z_{10}=1.3352.
+\end{aligned}
+$$
+
+换回到 $N(\hat\mu,\hat\sigma^2)$ 上，边界为
+
+$$
+c_j=\hat\mu+\hat\sigma z_j.
+$$
+
+计算得
+
+$$
+\begin{aligned}
+c_1&=2.8930,\quad c_2=3.8833,\quad c_3=4.5886,\quad c_4=5.1823,\quad c_5=5.7267,\\
+c_6&=6.2567,\quad c_7=6.8011,\quad c_8=7.3948,\quad c_9=8.1000,\quad c_{10}=9.0903.
+\end{aligned}
+$$
+
+于是 11 个区间为
+
+$$
+(-\infty,c_1],(c_1,c_2],\ldots,(c_{10},\infty).
+$$
+
+由于销量是整数，于是区间可以调整为：
+
+$$
+\resizebox{\textwidth}{!}{%
+$\begin{array}{c|c|c|c|c|c|c|c|c|c|c|c}
+\text{组} & C_1&C_2&C_3&C_4&C_5&C_6&C_7&C_8&C_9&C_{10}&C_{11} \\ \hline
+\text{取值} &
+0, 1, 2&
+3&
+4&
+5&
+&
+6&
+&
+7&
+8&
+9&
+10, 11, 12, \ldots
+\end{array}$%
+}
+$$
+
+于是，我们可以计算实际频数：
+
+\[
+\resizebox{\textwidth}{!}{%
+$\begin{array}{c|ccccccccccc}
+\text{组} & C_1&C_2&C_3&C_4&C_5&C_6&C_7&C_8&C_9&C_{10}&C_{11} \\ \hline
+n_i & 23&27&44&56&0&68&0&52&40&25&25
+\end{array}$%
+}
+\]
+
+计算理论概率：
+
+因为是等概率划分，每组理论概率都为 (1/11)，故理论频数都相同：
+
+$$
+p_i=\frac{1}{11}, \quad np_i = \frac{360}{11} = 32.7273.
+$$
+
+由于我们检验的是和第二问同一个原假设，所以自由度不变，检验统计量依然服从 $\chi^2(8)$ 分布，因此拒绝域的临界值为：
+
+$$
+c = \chi^2_{0.05}(8)=15.507.
+$$
+
+计算检验统计量值：
+
+$$
+\chi^2=\sum_{i=1}^{11}\frac{(O_i-E_i)^2}{E_i}
+\approx 144.411 \geq c = 15.507.
+$$
+
+因此，在显著性水平 $\alpha=0.05$ 下，拒绝原假设，得出结论：每日冰箱贴销量不服从正态分布 $N(\hat\mu, \hat\sigma^2)$。
+
+\vspace{0.5em}
+
+\textbf{为什么调整了区间划分标准后能拒绝原假设了呢？} 11 个等概率区间是按照连续正态分布切出来的。由于区间宽度在中心区域很窄，而销量只能取整数，结果会出现某些区间里根本没有整数点，例如第 5 组和第 7 组观测频数都为 0，但理论上它们各自应有 $32.727$ 个样本，这会把卡方统计量迅速拉大。
+这正说明对于离散样本去检验连续分布时，结论会明显依赖分组。等概率分组虽然“客观”，但这里会暴露出“连续模型与离散数据颗粒度不匹配”的问题，因此拒绝更强烈。
+
+\end{answerbox}
+
+\section{Problem 8}
+
+该咖啡店为了提升口感，尝试了 3 种不同的咖啡豆烘焙程度（浅度、中度、深度）。店长邀请了若干名资深咖啡爱好者对不同烘焙程度的咖啡进行“酸度平衡感”打分（满分 10 分）。由于打分人数不同，各水平下的样本容量分别为 $n_1=21$，$n_2=31$，$n_3=26$。根据评分数据计算出的组内样本方差如下：
+\[
+S_1^2=\frac{1}{n_1-1}\sum_{j=1}^{n_1}(X_{1j}-\bar X_{1\cdot})^2=0.45,
+\]
+\[
+S_2^2=\frac{1}{n_2-1}\sum_{j=1}^{n_2}(X_{2j}-\bar X_{2\cdot})^2=0.38,
+\]
+\[
+S_3^2=\frac{1}{n_3-1}\sum_{j=1}^{n_3}(X_{3j}-\bar X_{3\cdot})^2=0.52.
+\]
+此外，计算出组间平方和 $S_A=5.40$。请列出方差分析表，并判断在 $5\%$ 的显著性水平下，是否认为不同烘焙程度对咖啡酸度的平衡感评分有显著影响。
+
+\begin{answerbox}
+\textbf{解答：}
+
+首先计算基本组内数据：
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{c|c|c}
+\hline
+组 & 观测数 & 样本方差 \\
+\hline
+组1 & 21 & 0.45 \\
+组2 & 31 & 0.38 \\
+组3 & 26 & 0.52 \\
+\hline
+\end{tabular}
+\end{center}
+
+于是我们知道，组内自由度为 $n_1 + n_2 + n_3 - 3 = 75$，组间自由度为 $3 - 1 = 2$，总自由度为 $n_1 + n_2 + n_3 - 1 = 77$。
+
+接下来逐步计算方差分析表中需要的数据：
+
+组内平方和： 
+
+$$
+S_E = \sum_{i=1}^{r} (n_i - 1) S_i^2 = 20 \cdot 0.45 + 30 \cdot 0.38 + 25 \cdot 0.52 = 33.4
+$$
+
+接下来计算总离差平方和：
+
+$$
+S_T = S_A + S_E = 5.40 + 33.4 = 38.80
+$$
+
+进一步计算 $MS_E$ 与 $MS_A$：
+
+$$
+MS_E = \frac{S_E}{n_1 + n_2 + n_3 - 3} = \frac{33.4}{75} \approx 0.4453
+$$
+
+$$
+MS_A = \frac{S_A}{3 - 1} = \frac{5.40}{2} = 2.70
+$$
+
+给出检验统计量：
+
+$$
+F = \frac{MS_A}{MS_E} \sim F(r-1, n-r) = F(2, 75)
+$$
+
+给出拒绝域：
+
+$$
+\left\{F \geq c\right\}
+$$
+
+其中，$c$ 是 $F(2, 75)$ 分布在显著性水平 $\alpha=0.05$ 下的临界值，故：
+
+$$
+c = F_{5\%}(2, 75) \approx 3.1186
+$$
+
+带入实际数值，得到检验统计量的取值：
+
+$$
+F = \frac{MS_A}{MS_E} = \frac{2.70}{0.4453} \approx 6.0629
+$$
+
+进一步，计算 p-值：
+
+$$
+p = P_{H_0}\left(F \geq \frac{MS_A}{MS_E}\right) = P_{H_0}\left(F \geq 6.0628\right) \approx 0.0036 < 0.05
+$$
+
+于是可以给出方差分析表：
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{c|c|c|c|c|c|c}
+\hline
+方差来源 & 平方和 & 自由度 & 均方 & \(F\) & \(p\)-值 & 临界值 \\
+\hline
+组间 & 5.40 & 2 & 2.70 & 6.0629 & 0.0036 & 3.1186 \\
+组内 & 33.40 & 75 & 0.4453 &  &  &  \\
+总计 & 38.80 & 77 &  &  &  &  \\
+\hline
+\end{tabular}
+\end{center}
+
+如果使用临界值法，$F = 6.0629 > c = 3.1186$，拒绝原假设；
+如果使用 p-值法，$p = 0.0036 < \alpha = 0.05$，同样拒绝原假设。
+
+因此，在显著性水平 $\alpha=0.05$ 下，认为不同烘焙程度对咖啡酸度的平衡感评分有显著影响。
+
+\end{answerbox}
+
+\section{Problem 9}
+
+为了调研校内4个不同食堂在午餐高峰期的排队效率，某高校后勤部门随机记录了不同天数各食堂窗口的排队等待时间（单位：分钟）。各组的样本容量分别为 $n_1=32$，$n_2=28$，$n_3=35$，$n_4=30$。经过初步计算，得到如下方差分析表的部分数据：
+
+\begin{table}[htbp]
+\centering
+\caption{各食堂排队时间方差分析表}
+\label{tab:anova-canteen}
+\renewcommand{\arraystretch}{1.2}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{>{\centering\arraybackslash}p{3cm}>{\centering\arraybackslash}p{2.6cm}>{\centering\arraybackslash}p{2.8cm}>{\centering\arraybackslash}p{2.4cm}>{\centering\arraybackslash}p{1cm}>{\centering\arraybackslash}p{1.8cm}>{\centering\arraybackslash}p{1.6cm}}
+\toprule
+Source & Sum of Squares & Degree of freedom & Mean Squares & $F$ & p-value & $F$ crit \\
+\midrule
+Between groups & 45.60 &  &  &  &  &  \\
+Within groups & 326.25 &  &  &  &  &  \\
+Total &  &  &  &  &  &  \\
+\bottomrule
+\end{tabular}%
+}
+\end{table}
+
+
+\subsection{}
+
+补全上述方差分析表中的空格。
+
+\begin{answerbox}
+\textbf{解答：}
+
+由于一共有 4 组，且每组的样本容量分别为 $n_1=32$，$n_2=28$，$n_3=35$，$n_4=30$，因此总样本容量为 $125$。
+
+组间自由度为 $4 - 1 = 3$，组内自由度为 $125 - 4 = 121$，总自由度为 $125 - 1 = 124$。
+
+有方差分析表，我们已经得到了，组间平方和 $S_A = 45.60$，组内平方和 $S_E = 326.25$，因此，总离差平方和为：
+
+$$
+S_T = S_A + S_E = 45.60 + 326.25 = 371.85.
+$$
+
+接下来计算均方：
+
+$$
+MS_E = \frac{1}{n-r} \sum_{i=1}^{r} (n_i - 1) S_i^2 = \frac{326.25}{121} \approx 2.6963
+$$
+
+$$
+MS_A = \frac{1}{r-1} \sum_{i=1}^{r} (\bar{X_i} - \bar{X})^2 = \frac{45.60}{3} = 15.20
+$$
+
+给出检验统计量：
+
+$$
+F = \frac{MS_A}{MS_E} \sim F(r-1, n-r) = F(3, 121)
+$$
+
+带入实际数值，得到检验统计量的取值：
+
+$$
+F = \frac{MS_A}{MS_E} = \frac{15.20}{2.6963} \approx 5.6374
+$$
+
+给出拒绝域：
+
+$$
+\left\{F \geq c\right\}
+$$
+
+其中，$c$ 是 $F(3, 121)$ 分布在显著性水平 $\alpha=0.05$ 下的临界值，故：
+
+$$
+c = F_{5\%}(3, 121) \approx 2.6795
+$$
+
+计算 p-值：
+
+$$
+p = P_{H_0}\left(F \geq \frac{MS_A}{MS_E}\right) = P_{H_0}\left(F \geq 5.6374\right) \approx 0.0012 < 0.05
+$$
+
+于是可以给出完整的方差分析表：
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{>{\centering\arraybackslash}p{3cm}>{\centering\arraybackslash}p{2.6cm}>{\centering\arraybackslash}p{2.8cm}>{\centering\arraybackslash}p{2.4cm}>{\centering\arraybackslash}p{1.4cm}>{\centering\arraybackslash}p{1.8cm}>{\centering\arraybackslash}p{1.6cm}}
+\toprule
+Source & Sum of Squares & Degree of freedom & Mean Squares & $F$ & p-value & $F$ crit \\
+\midrule
+Between groups & 45.60 & 3   & 15.20  & 5.6374 & 0.0012 & 2.6795 \\
+Within groups  & 326.25 & 121 & 2.6963 &        &        &        \\
+Total          & 371.85 & 124 &        &        &        &        \\
+\bottomrule
+\end{tabular}%
+}
+\end{center}
+\end{answerbox}
+
+\subsection{}
+
+在显著性水平 $\alpha=0.05$ 下，判断不同食堂的平均排队时间是否存在显著差异。
+
+\begin{answerbox}
+\textbf{解答：}
+
+如果使用临界值法，$F = 5.6374 > c = 2.6795$，拒绝原假设；
+如果使用 p-值法，$p = 0.0012 < \alpha =0.05$，同样拒绝原假设。
+
+因此，在显著性水平 $\alpha=0.05$ 下，认为不同食堂的平均排队时间存在显著差异。
+\end{answerbox}
+
+\section{Problem 10}
+
+某大学图书馆测试四种不同学习区域（静音区、讨论区、多媒体区、一楼中厅）对学生单次连续学习时长（单位：分钟）的影响。每组随机分配 10 名学生，其单次学习时长数据如表所示。
+
+\begin{table}[htbp]
+\centering
+\caption{不同学习区域的学生学习时长数据}
+\label{tab:study}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{c*{10}{c}}
+\toprule
+学习区域 & \multicolumn{10}{c}{学习时长（分钟）} \\
+\midrule
+静音区 & 162 & 158 & 165 & 170 & 168 & 155 & 160 & 172 & 166 & 164 \\
+讨论区 & 148 & 152 & 145 & 150 & 147 & 155 & 149 & 153 & 151 & 150 \\
+多媒体区 & 155 & 158 & 152 & 160 & 157 & 149 & 153 & 156 & 154 & 151 \\
+一楼中厅 & 145 & 148 & 142 & 150 & 147 & 140 & 146 & 149 & 144 & 143 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{}
+
+作出方差分析表，并判断在 $5\%$ 显著水平下，不同组的学习时长均值是否有显著差异。
+
+\begin{answerbox}
+\textbf{解答：}
+
+首先计算基本组内数据表：
+
+\begin{center}
+\begin{tabular}{ccccc}
+\toprule
+组别 & 观测数 & 求和 & 平均 & 方差 \\
+\midrule
+静音区   & 10 & 1640 & 164.0 & 28.6667 \\
+讨论区   & 10 & 1500 & 150.0 & 8.6667 \\
+多媒体区 & 10 & 1545 & 154.5 & 11.3889 \\
+一楼中厅 & 10 & 1454 & 145.4 & 10.2667 \\
+所有组   & 40 & 6139 & 153.475 & 14.74722222 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+计算组间平方和：
+
+$$
+S_E = \sum_{i=1}^{r} (n_i - 1) S_i^2 = 9 \cdot 28.6667 + 9 \cdot 8.6667 + 9 \cdot 11.3889 + 9 \cdot 10.2667 = 530.9
+$$
+
+代入数据，计算组内平方和：
+
+$$
+S_A = \sum_{i=1}^{r} n_i (\bar{X_i} - \bar{X})^2 = 1891.075
+$$
+
+于是计算得到总离差平方和：
+
+$$
+S_T = S_A + S_E = 1891.075 + 530.9 = 2421.975
+$$
+
+计算均方：
+
+$$
+MS_E = \frac{1}{n-r} \sum_{i= 1}^{r} (n_i - 1) S_i^2 = \frac{S_E}{n-r} = \frac{530.9}{36} \approx 14.74722
+$$
+
+$$
+MS_A = \frac{S_A}{r-1} = \frac{1891.075}{3} \approx 630.3583
+$$
+
+给出检验统计量：
+
+$$
+F = \frac{MS_A}{MS_E} \sim F(r-1, n-r) = F(3, 36)
+$$
+
+带入实际数值，得到检验统计量的取值：
+
+$$
+F = \frac{MS_A}{MS_E} = \frac{630.3583}{14.74722} \approx 42.744
+$$
+
+给出拒绝域：
+
+$$
+\left\{F \geq c\right\}
+$$
+
+其中，$c$ 是 $F(3, 36)$ 分布在显著性水平 $\alpha=0.05$ 下的临界值，故：
+
+$$
+c = F_{5\%}(3, 36) \approx 2.866265551
+$$
+
+计算 p-值：
+
+$$
+p = P_{H_0}\left(F \geq \frac{MS_A}{MS_E}\right) = P_{H_0}\left(F \geq 42.744\right) \approx 5.93738 \times 10^{-12} < 0.05
+$$
+
+给出方差分析表：
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{ccccccc}
+\toprule
+差异源 & SS & df & MS & $F$ & P-value & $F$ crit \\
+\midrule
+组间 & 1891.075 & 3  & 630.3583 & 42.7442 & $5.93738\times 10^{-12}$ & 2.8663 \\
+组内 & 530.900  & 36 & 14.7472  &         &                         &        \\
+总计 & 2421.975 & 39 &          &         &                         &        \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+根绝临界值法，$F = 42.744 > c = 2.866265551$，拒绝原假设；
+于是得出结论，在显著性水平 $\alpha=0.05$ 下，不同组的学习时长均值存在显著差异。
+
+\end{answerbox}
+
+\subsection{}
+
+给出 $\sigma^2$，以及 $\mu_1,\mu_2,\mu_3,\mu_4$ 的估计值。
+
+\begin{answerbox}
+\textbf{解答：}
+
+在单因素方差分析中，$\sigma^2$ 通常使用组内均方 $MS_E$ 来估计，因此：
+
+$$\hat{\sigma}^2 = MS_E \approx 14.74722$$。
+
+对于 $\mu_1, \mu_2, \mu_3, \mu_4$ 的估计值，我们可以直接使用各组的样本均值来估计：
+
+$$
+\hat{\mu_i} = \bar{X_i}, \quad i=1,2,3,4
+$$
+
+于是：
+
+$$
+\hat{\mu_1} = 164.0, \quad \hat{\mu_2} = 150.0, \quad \hat{\mu_3} = 154.5, \quad \hat{\mu_4} = 145.4
+$$
+
+\end{answerbox}
+
+\subsection{}
+
+在 $5\%$ 的显著性水平下，检验讨论区组与一楼中厅组的均值是否有显著差异。
+
+\begin{answerbox}
+\textbf{解答：}
+
+给出检验假设：
+
+$$
+H_0: \mu_2 - \mu_4 = 0 \quad \text{vs.} \quad H_1: \mu_2 - \mu_4 \neq 0
+$$
+
+使用 $MS_E$ 作为两组组内方差的估计，从而给出检验统计量：
+
+$$
+T = \frac{\bar{X_2} - \bar{X_4}}{\sqrt{MS_E \left(\frac{1}{n_2} + \frac{1}{n_4}\right)}} \sim t(n-r) = t(36)
+$$
+
+给出拒绝域：
+
+$$
+\left\{T \geq b \text{或} T \leq a\right\}
+$$
+
+根据等尾原则：
+
+$$
+P\left(T \geq b \right) = P\left(T \leq a \right) = \frac{\alpha}{2}
+$$
+
+于是计算得到：
+
+$$
+a = t_{1-\alpha/2}(n-r)= -b, \quad b = t_{\alpha/2}(n-r)
+$$
+
+查表得到：
+
+$$
+a = t_{1-5\%}(36)= -b, \quad b = t_{5\%}(36) \approx 2.0281
+$$
+
+接下来计算检验统计量的取值：
+
+$$
+T = \frac{\bar{X_2} - \bar{X_4}}{\sqrt{MS_E \left(\frac{1}{n_2} + \frac{1}{n_4}\right)}} = \frac{150.0 - 145.4}{\sqrt{14.74722 \left(\frac{1}{10} + \frac{1}{10}\right)}} \approx 2.6785 > b \approx 2.0281
+$$
+
+根据临界值法，$T = 2.6785 > b = 2.0281$，拒绝原假设；
+得出结论，在显著性水平 $\alpha=0.05$ 下，讨论区组与一楼中厅组的均值存在显著差异。
+
+\end{answerbox}
+
+\section{Problem 11}
+
+假设有 $r$ 个互相独立的正态总体，分布分别为 $N(\mu_1,\sigma^2)$，$N(\mu_2,\sigma^2)$，$\ldots$，$N(\mu_r,\sigma^2)$，其中 $\mu_1,\mu_2,\ldots,\mu_r,\sigma^2$ 均未知。抽取的样本如下：
+\[
+X_{11},X_{12},\ldots,X_{1n_1} \sim N(\mu_1,\sigma^2)
+\]
+\[
+X_{21},X_{22},\ldots,X_{2n_2} \sim N(\mu_2,\sigma^2)
+\]
+\[
+\cdots
+\]
+\[
+X_{r1},X_{r2},\ldots,X_{rn_r} \sim N(\mu_r,\sigma^2)
+\]
+我们记总的样本量为
+\[
+n=n_1+n_2+\cdots+n_r,
+\]
+第 $i$ 组的样本均值为 $\bar X_{i\cdot}$，样本方差为 $S_i^2$（$i=1,2,\ldots,r$）。
+
+再令
+\[
+\mathrm{MSE}=\frac{1}{n-r}\sum_{i=1}^r (n_i-1)S_i^2 = \frac{SE}{n-r}.
+\]
+（即组内均方）
+
+
+\subsection{}
+
+选取 $SE/\sigma^2$ 为枢轴量，求出 $\sigma^2$ 的置信水平为 $1-\alpha$ 的双侧置信区间。
+
+\begin{answerbox}
+\textbf{解答：}
+
+选取 $S_E/\sigma^2$ 为枢轴量，由于：
+
+$$
+S_E = \sum_{i=1}^r (n_i-1) S_i^2
+$$
+
+故：
+
+$$
+\frac{S_E}{\sigma^2} \sim \chi^2(n-r)
+$$
+
+因此计算：
+
+$$
+P\left(a \leq \frac{S_E}{\sigma^2} \leq b\right) = 1-\alpha
+$$
+
+根据等尾原则：
+
+$$
+P\left(\frac{S_E}{\sigma^2} \leq a\right) = P\left(\frac{S_E}{\sigma^2} \geq b\right) = \frac{\alpha}{2}
+$$
+
+于是：
+
+$$
+a = \chi^2_{1-\alpha/2}(n-r) = -b, \quad b = \chi^2_{\alpha/2}(n-r)
+$$
+
+因此，$\sigma^2$ 的置信水平为 $1-\alpha$ 的双侧置信区间为：
+
+$$
+\left( \frac{S_E}{\chi^2_{\alpha/2}(n-r)}, \frac{S_E}{\chi^2_{1-\alpha/2}(n-r)} \right)
+$$
+
+\end{answerbox}
+
+\subsection{}
+
+对于某个 $1\le i\le r$，选用
+  \[
+  G=\frac{\sqrt{n_i}(\bar X_{i\cdot}-\mu_i)}{\sqrt{\mathrm{MSE}}}
+  \]
+  作为枢轴量。请推出 $G$ 的分布，并由此求出 $\mu_i$ 的置信水平为 $1-\alpha$ 的双侧置信区间。
+
+\begin{answerbox}
+\textbf{解答：}
+
+由题意 $r$ 个互相独立的正态总体，分布分别为 $N(\mu_1,\sigma^2)$，$N(\mu_2,\sigma^2)$，$\ldots$，$N(\mu_r,\sigma^2)$，其中 $\mu_1,\mu_2,\ldots,\mu_r,\sigma^2$ 均未知。
+
+抽取的样本如下：
+\[
+X_{11},X_{12},\ldots,X_{1n_1} \sim N(\mu_1,\sigma^2)
+\]
+\[
+X_{21},X_{22},\ldots,X_{2n_2} \sim N(\mu_2,\sigma^2)
+\]
+\[
+\cdots
+\]
+\[
+X_{r1},X_{r2},\ldots,X_{rn_r} \sim N(\mu_r,\sigma^2)
+\]
+
+于是，$\bar{X}_{i\cdot} \sim N\left(\mu_i, \frac{\sigma^2}{n_i}\right)$，且 $S_E/\sigma^2 \sim \chi^2(n-r)$，因此：
+
+根据 $MS_E$ 的定义：
+
+$$
+S_E = \sum_{i=1}^r (n_i - 1) S_i^2
+$$
+
+所以：
+
+$$
+\frac{S_E}{\sigma^2} = \sum_{i=1}^r (n_i - 1) \frac{S_i^2}{\sigma^2} \sim \chi^2(n-r) 
+$$
+
+因此，对于 $G$ 的分布：
+
+$$
+G=\frac{\sqrt{n_i}(\bar X_{i\cdot}-\mu_i)}{\sqrt{\mathrm{MSE}}} = \frac{\frac{\bar{X_i}-\mu_i}{\sigma/\sqrt{n_i}}}{\sqrt{\frac{S_E}{\sigma^2}/(n-r)}}
+$$
+
+于是，由于分子 $\frac{\bar{X_i}-\mu_i}{\sigma/\sqrt{n_i}} \sim N(0,1)$ ，分母中的 $\frac{S_E}{\sigma^2} \sim \chi^2(n-r)$ ，因此，根据 $t$ 分布的定义：
+
+$$
+G=\frac{\sqrt{n_i}(\bar X_{i\cdot}-\mu_i)}{\sqrt{\mathrm{MSE}}} \sim t(n-r).
+$$
+
+由此，我们取 $G$ 为枢轴量，计算 $\mu_i$ 的置信水平为 $1-\alpha$ 的双侧置信区间：
+
+$$
+P\left(a \leq G \leq b\right) = 1-\alpha
+$$
+
+根据等尾原则：
+
+$$
+P\left(G \leq a\right) = P\left(G \geq b\right) = \frac{\alpha}{2}
+$$
+
+于是：
+
+$$
+a = t_{1-\alpha/2}(n-r) = -b, \quad b = t_{\alpha/2}(n-r)
+$$
+
+因此，$\mu_i$ 的置信水平为 $1-\alpha$ 的双侧置信区间为：
+
+$$
+\left( \bar{X}_{i\cdot} - t_{\alpha/2}(n-r) \sqrt{\frac{\mathrm{MSE}}{n_i}}, \bar{X}_{i\cdot} + t_{\alpha/2}(n-r)\sqrt{\frac{\mathrm{MSE}}{n_i}} \right)
+$$
+
+\end{answerbox}
+
+\end{document}

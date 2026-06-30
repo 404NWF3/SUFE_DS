@@ -1,0 +1,1442 @@
+\documentclass[12pt,a4paper]{article}
+% \documentclass{ctexart}
+
+% ==================== 基础宏包 ====================
+\usepackage[UTF8]{ctex}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{hyperref}
+\usepackage[most]{tcolorbox}
+\usepackage{titlesec}
+ \usepackage{tabularx}
+
+\hypersetup{
+  hidelinks
+}
+
+% ==================== 颜色定义 ====================
+\definecolor{mainblue}{RGB}{34,72,112}
+\definecolor{lightblue}{RGB}{241,246,252}
+\definecolor{linegray}{RGB}{210,218,228}
+\definecolor{textgray}{RGB}{90,98,108}
+
+% ==================== 页面设置 ====================
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0.35em}
+\setlength{\headheight}{25pt}
+\linespread{1.2}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\textcolor{textgray}{\small 课程作业}}
+\rhead{\textcolor{textgray}{\small \thepage/\pageref*{LastPage}}}
+\cfoot{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{linegray}\leaders\hrule height \headrulewidth\hfill}}
+
+% ==================== 标题样式 ====================
+\titleformat{\section}
+  {\Large\bfseries\color{mainblue}}
+  {\thesection}
+  {0.6em}
+  {}
+
+\titleformat{\subsection}
+  {\large\bfseries\color{mainblue}}
+  {\thesubsection}
+  {0.6em}
+  {}
+
+\titlespacing*{\section}{0pt}{1.2em}{0.6em}
+\titlespacing*{\subsection}{0pt}{0.8em}{0.4em}
+
+% ==================== 自定义环境 ====================
+\newtcolorbox{infobox}{
+  colback=lightblue,
+  colframe=mainblue,
+  boxrule=0.6pt,
+  arc=2mm,
+  left=1.2em,
+  right=1.2em,
+  top=0.8em,
+  bottom=0.8em
+}
+
+\newtcolorbox{answerbox}{
+  colback=white,
+  colframe=linegray,
+  boxrule=0.5pt,
+  arc=2mm,
+  left=1em,
+  right=1em,
+  top=0.8em,
+  bottom=0.8em,
+  breakable
+}
+
+\newcommand{\course}{数理统计}
+\newcommand{\homeworktitle}{第5次作业}
+\newcommand{\studentname}{倪伟丰}
+\newcommand{\studentid}{2024110089}
+\newcommand{\classname}{24 大数据 2 班}
+\newcommand{\teacher}{袁洪松}
+\newcommand{\duedate}{2026年5月15日}
+
+% ==================== 正文开始 ====================
+\begin{document}
+
+\begin{center}
+  {\Huge\bfseries\color{mainblue}\homeworktitle}\\[0.6em]
+  {\Large\course}\\[1.2em]
+  {\color{linegray}\rule{0.9\textwidth}{0.8pt}}
+\end{center}
+
+\begin{infobox}
+\begin{tabularx}{\textwidth}{>{\bfseries}p{2.2cm} X >{\bfseries}p{2.2cm} X}
+姓名 & \studentname & 学号 & \studentid \\
+班级 & \classname & 教师 & \teacher \\
+提交日期 & \duedate &  &  \\
+\end{tabularx}
+\end{infobox}
+
+
+\section{Problem 1}
+
+设 $X_1,\cdots,X_{10}$ 是瑞利分布（Rayleigh distribution）的 10 个独立样本，其概率密度函数为：
+\[
+  f(x;\sigma)=\frac{x}{\sigma^2}e^{-x^2/(2\sigma^2)},\qquad x>0,
+\]
+其中 $\sigma>0$ 为尺度参数（与噪声强度的平方根有关）。现测得这 10 个样本的值为：
+\[
+  1.2,\ 2.3,\ 1.8,\ 2.5,\ 3.1,\ 2.0,\ 1.5,\ 2.7,\ 2.2,\ 1.9.
+\]
+请用极大似然估计法求参数 $\sigma$ 的估计值。
+
+\begin{answerbox}
+\textbf{解答：}
+
+写出极大似然估计的似然函数：
+
+$$
+L(X_1, \ldots, X_{10}; \sigma) = \prod_{i=1}^{10} f(X_i; \sigma) = \prod_{i=1}^{10} \frac{X_i}{\sigma^2} e^{-X_i^2/(2\sigma^2)}
+$$
+
+对数似然函数：
+
+$$
+\ell(\sigma) = \sum_{i=1}^{10} \left( \ln X_i - 2\ln \sigma - \frac{X_i^2}{2\sigma^2} \right) = \sum_{i=1}^{10} \ln X_i - 20\ln \sigma - \frac{1}{2\sigma^2} \sum_{i=1}^{10} X_i^2
+$$
+
+对 $\sigma$ 求导并令其等于零：
+
+$$
+\frac{\text{d}\ell(\sigma)}{\text{d}\sigma} = -\frac{20}{\sigma} + \frac{1}{\sigma^3} \sum_{i=1}^{10} X_i^2 = 0
+$$
+
+解得：
+
+$$
+\hat{\sigma} = \sqrt{\frac{1}{20} \sum_{i=1}^{10} X_i^2}
+$$
+
+计算 $\frac{1}{20} \sum_{i=1}^{10} X_i^2$：
+
+$$
+\frac{1}{20} \sum_{i=1}^{10} X_i^2 = \frac{1}{20} \cdot 47.82 = 2.391
+$$
+
+于是计算得到极大似然估计值：
+
+$$
+\hat{\sigma} = \sqrt{2.391} \approx 1.5463
+$$
+
+\end{answerbox}
+
+\section{Problem 2}
+
+假设 $X_1,\cdots,X_n$ 为取自指数分布 $\operatorname{Exp}(1/\theta)$ 的样本。我们知道其 p.d.f. 为
+\[
+  f(x;\theta)=
+  \begin{cases}
+    \dfrac{1}{\theta}e^{-x/\theta}, & x>0,\\[0.4em]
+    0, & x\le 0.
+  \end{cases}
+\]
+
+\subsection{}
+
+用三种方法来计算 Fisher 信息量 $I(\theta)$。
+
+\begin{answerbox}
+\textbf{解答：}
+
+\textbf{方法一}
+
+$$
+I(\theta) = E\left[\left\{\frac{\partial}{\partial \theta} \ln f(X; \theta)\right\}^2\right]
+$$
+
+其中：
+
+$$
+\frac{\partial}{\partial \theta} \ln f(X; \theta) = -\frac{1}{\theta} + \frac{X}{\theta^2} 
+$$
+
+带入计算得到：
+
+$$
+\begin{aligned}
+I(\theta) = & E\left[\left(-\frac{1}{\theta} + \frac{X}{\theta^2}\right)^2\right] \\  
+= & E\left[\frac{1}{\theta^2} - \frac{2X}{\theta^3} + \frac{X^2}{\theta^4}\right] \\
+= & \frac{1}{\theta^2} - \frac{2}{\theta^3} E[X] + \frac{1}{\theta^4} E[X^2] \\
+= & \frac{1}{\theta^2} - \frac{2}{\theta^3} \cdot \theta + \frac{1}{\theta^4} \cdot 2\theta^2 \\
+= & \frac{1}{\theta^2} - \frac{2}{\theta^2} + \frac{2}{\theta^2} \\
+= & \frac{1}{\theta^2}
+\end{aligned}
+$$
+
+\textbf{方法二}
+
+$$
+\begin{aligned}
+ I(\theta) = &Var\left(\frac{\partial}{\partial \theta} \ln f(X; \theta)\right)\\
+= & Var\left(-\frac{1}{\theta} + \frac{X}{\theta^2}\right) \\
+= & Var\left(\frac{X}{\theta^2}\right) \\
+= & \frac{1}{\theta^4} Var(X) \\
+= & \frac{1}{\theta^4} \cdot \theta^2 \\
+= & \frac{1}{\theta^2}
+\end{aligned}
+$$
+
+\textbf{方法三}
+
+$$
+\begin{aligned}
+I(\theta) = & -E\left[\frac{\partial^2}{\partial \theta^2} \ln f(X; \theta)\right] \\
+= & -E\left[\frac{\partial}{\partial \theta} \left(-\frac{1}{\theta} + \frac{X}{\theta^2}\right)\right] \\
+= & -E\left[\frac{1}{\theta^2} - \frac{2X}{\theta^3}\right] \\
+= & -\left[\frac{1}{\theta^2} - \frac{2}{\theta^3} E[X]\right] \\
+= & -\left[\frac{1}{\theta^2} - \frac{2}{\theta^3} \cdot \theta\right] \\
+= & -\left[\frac{1}{\theta^2} - \frac{2}{\theta^2}\right] \\
+= & \frac{1}{\theta^2}
+\end{aligned}
+$$
+\end{answerbox}
+
+\subsection{}
+
+找出 $\theta$ 的 MLE $\hat{\theta}$，并证明其无偏性。
+
+\begin{answerbox}
+\textbf{解答：}
+
+写出极大似然估计的似然函数：
+
+$$
+L(X_1, \ldots, X_n; \theta) = \prod_{i=1}^n f(X_i; \theta) = \prod_{i=1}^n \frac{1}{\theta} e^{-X_i/\theta}
+$$
+
+写出对数似然函数：
+
+$$
+\ell(\theta) = \sum_{i=1}^n \left( -\ln \theta - \frac{X_i}{\theta} \right) = -n \ln \theta - \frac{1}{\theta} \sum_{i=1}^n X_i 
+$$
+
+对 $\theta$ 求导并令其等于零：
+
+$$
+\frac{\text{d} \ell(\theta)}{\text{d} \theta} = -\frac{n}{\theta} + \frac{1}{\theta^2} \sum_{i=1}^n X_i = 0
+$$
+
+解得：
+
+$$
+\hat{\theta} = \frac{1}{n} \sum_{i=1}^n X_i = \bar{X}
+$$
+
+证明 $\hat{\theta}$ 的无偏性：
+
+$$
+E[\hat{\theta}] = E\left[\frac{1}{n} \sum_{i=1}^n X_i\right] = \frac{1}{n} \sum_{i=1}^n EX_i = \frac{1}{n} \cdot n \cdot \theta = \theta
+$$
+
+\end{answerbox}
+
+\subsection{}
+
+判断 $\hat{\theta}$ 是否达到 RCB。
+
+\begin{answerbox}
+\textbf{解答：}
+
+计算 $\hat{\theta}$ 的方差，由于 $X_i$ 独立同分布：
+
+$$
+Var(\hat{\theta}) = Var\left(\frac{1}{n} \sum_{i=1}^n X_i\right) = \frac{1}{n^2} \sum_{i=1}^n Var(X_i) = \frac{1}{n^2} \cdot n \cdot \theta^2 = \frac{\theta^2}{n}
+$$
+
+计算 RCB：
+
+$$
+\text{RCB} = \frac{1}{nI(\theta)} = \frac{\theta^2}{n}
+$$
+
+由于 $Var(\hat{\theta}) = \frac{\theta ^2}{n} = \text{RCB}$，因此 $\hat{\theta}$ 达到 RCB，是有效估计量。
+
+\end{answerbox}
+
+\section{Problem 3}
+
+某总体服从双参数指数分布，对应的概率密度函数为
+\[
+  f(x;\theta)=
+  \begin{cases}
+    \dfrac{1}{\theta}e^{-(x-\mu_0)/\theta}, & x>\mu_0,\\[0.4em]
+    0, & x\le \mu_0,
+  \end{cases}
+\]
+其中 $\mu_0$ 已知。现从中抽取 $n$ 个样本，分别为 $X_1,\cdots,X_n$。
+
+\subsection{}
+
+计算 Fisher 信息量 $I(\theta)$。（用一种方法即可）
+
+\begin{answerbox}
+\textbf{解答：}
+
+计算 Fisher 信息量：
+
+$$
+I(\theta) = Var\left(\frac{\partial}{\partial \theta} \ln f(X; \theta)\right) = Var\left(-\frac{1}{\theta} + \frac{X-\mu_0}{\theta^2}\right) = Var\left(\frac{X-\mu_0}{\theta^2}\right) 
+$$
+
+令 $Y = X-\mu_0$，则 $Y \sim \text{Exp}(\frac{1}{\theta})$，因此 $EY = \theta$, $Var(Y) = \theta^2$。
+于是得到 $E(X-\mu_0) = \theta$ 和 $Var(X-\mu_0) = \theta^2$。
+
+于是：
+
+$$
+I(\theta) = Var\left(\frac{X-\mu_0}{\theta^2}\right) = \frac{1}{\theta^4} Var(X-\mu_0) = \frac{1}{\theta ^2}
+$$
+
+\end{answerbox}
+
+\subsection{}
+
+找出 $\theta$ 的 MLE $\hat{\theta}$，并证明其无偏性。
+
+\begin{answerbox}
+\textbf{解答：}
+
+写出极大似然估计的似然函数：
+
+$$
+L(X_1, \ldots, X_n; \theta) = \prod_{i=1}^n f(X_i; \theta) = \prod_{i=1}^n \frac{1}{\theta} e^{-(X_i-\mu_0)/\theta}
+$$
+
+写出对数似然函数：
+
+$$
+\ell(\theta) = \sum_{i=1}^n \left( -\ln \theta - \frac{X_i-\mu_0}{\theta} \right) = -n \ln \theta - \frac{1}{\theta} \sum_{i=1}^n (X_i - \mu_0)
+$$
+
+对 $\theta$ 求导并令其等于零：
+
+$$
+\frac{\text{d} \ell}{\text{d} \theta} = -\frac{n}{\theta} + \frac{1}{\theta^2} \sum_{i=1}^n (X_i - \mu_0) = 0
+$$
+
+解得：
+
+$$
+\hat{\theta} = \frac{1}{n} \sum_{i=1}^n (X_i - \mu_0)
+$$
+
+证明 $\hat{\theta}$ 的无偏性：
+
+$$
+E[\hat{\theta}] = E\left[\frac{1}{n} \sum_{i=1}^n (X_i - \mu_0)\right] = \frac{1}{n} \sum_{i=1}^n E[X_i - \mu_0] = \frac{1}{n} \cdot n \cdot \theta = \theta
+$$
+
+所以 $\hat{\theta}$ 是 $\theta$ 的一个无偏估计量。
+\end{answerbox}
+
+\subsection{}
+
+判断 $\hat{\theta}$ 是否达到 RCB。
+
+\begin{answerbox}
+\textbf{解答：}
+
+计算 $\hat{\theta}$ 的方差，由于 $X_i$ 独立同分布：
+
+$$
+Var(\hat{\theta}) = Var\left(\frac{1}{n} \sum_{i=1}^n (X_i - \mu_0)\right) = \frac{1}{n^2} \sum_{i=1}^n Var(X_i) 
+$$
+
+计算 RCB：
+
+$$
+\text{RCB} = \frac{1}{nI(\theta)} = \frac{\theta^2}{n}
+$$
+
+由于 $Var(\hat{\theta}) = \frac{\theta ^2}{n} = \text{RCB}$，因此 $\hat{\theta}$ 达到 RCB，是有效估计量。
+
+\end{answerbox}
+
+\section{Problem 4}
+
+假设 $X_1,\cdots,X_n$ 为取自 gamma 分布 $\Gamma(\alpha_0,\theta)$ 的样本，其中 $\alpha_0$ 已知。我们知道其 p.d.f. 为
+\[
+  f(x;\theta)=
+  \begin{cases}
+    \dfrac{1}{\Gamma(\alpha_0)\theta^{\alpha_0}}x^{\alpha_0-1}e^{-x/\theta}, & x>0,\\[0.4em]
+    0, & x\le 0.
+  \end{cases}
+\]
+
+\subsection{}
+
+用三种方法来计算 Fisher 信息量 $I(\theta)$。
+
+\begin{answerbox}
+\textbf{解答：}
+
+$$
+\ln f(x; \theta) = -\ln \Gamma(\alpha_0) - \alpha_0 \ln \theta + (\alpha_0 - 1) \ln x - \frac{x}{\theta}
+$$
+
+$$
+\frac{\partial \ln f(x; \theta)}{\partial \theta} = -\frac{\alpha_0}{\theta} + \frac{x}{\theta^2}
+$$
+
+\textbf{方法一}
+
+$$
+\begin{aligned}
+I(\theta) = & E\left[\left\{\frac{\partial \ln f(x; \theta)}{\partial \theta}\right\}^2\right] \\
+= & E\left[\left(-\frac{\alpha_0}{\theta} + \frac{X}{\theta^2}\right)^2\right] \\
+= & E\left[\frac{\alpha_0^2}{\theta^2} - \frac{2\alpha_0 X}{\theta^3} + \frac{X^2}{\theta^4}\right] \\
+= & \frac{\alpha_0^2}{\theta^2} - \frac{2\alpha_0}{\theta^3} E[X] + \frac{1}{\theta^4} E[X^2] \\
+= & \frac{\alpha_0^2}{\theta^2} - \frac{2\alpha_0}{\theta^3} \cdot \alpha_0 \theta + \frac{1}{\theta^4} \cdot \alpha_0 (\alpha_0 + 1) \theta^2 \\
+= & \frac{\alpha_0^2}{\theta^2} - \frac{2\alpha_0^2}{\theta^2} + \frac{\alpha_0 (\alpha_0 + 1)}{\theta^2} \\
+= & \frac{\alpha_0}{\theta^2}
+\end{aligned}
+$$
+
+\textbf{方法二}
+
+$$
+\begin{aligned}
+I(\theta) = & Var\left(\frac{\partial \ln f(x; \theta)}{\partial \theta}\right) \\
+= & Var\left(-\frac{\alpha_0}{\theta} + \frac{X}{\theta^2}\right) \\
+= & Var\left(\frac{X}{\theta^2}\right) \\
+= & \frac{1}{\theta^4} Var(X) \\
+= & \frac{1}{\theta^4} \cdot \alpha_0 \theta^2 \\
+= & \frac{\alpha_0}{\theta^2}
+\end{aligned}
+$$
+
+\textbf{方法三}
+
+$$
+\begin{aligned}
+I(\theta) = & -E\left[\frac{\partial^2 \ln f(x; \theta)}{\partial \theta^2}\right] \\
+= & -E\left[\frac{\partial}{\partial \theta} \left(-\frac{\alpha_0}{\theta} + \frac{X}{\theta^2}\right)\right] \\
+= & -E\left[\frac{\alpha_0}{\theta^2} - \frac{2X}{\theta^3}\right] \\
+= & -\frac{\alpha_0}{\theta^2} + \frac{2}{\theta^3} E[X] \\
+= & -\frac{\alpha_0}{\theta^2} + \frac{2}{\theta^3} \cdot \alpha_0 \theta \\
+= & \frac{\alpha_0}{\theta^2}
+\end{aligned}
+$$
+
+\end{answerbox}
+
+\subsection{}
+
+$\theta$ 的 MLE $\hat{\theta}$，并证明其无偏性。
+
+\begin{answerbox}
+\textbf{解答：}
+
+写出极大似然估计的似然函数：
+
+$$
+L(X_1, \ldots, X_n; \theta) = \prod_{i=1}^n f(X_i; \theta) = \prod_{i=1}^n \frac{1}{\Gamma(\alpha_0) \theta^{\alpha_0}} X_i^{\alpha_0 - 1} e^{-X_i/\theta}
+$$  
+
+写出对数似然函数：
+
+$$
+\begin{aligned}
+\ell(\theta) &= \sum_{i=1}^n \left( -\ln \Gamma(\alpha_0) - \alpha_0 \ln \theta + (\alpha_0 - 1) \ln X_i - \frac{X_i}{\theta} \right)  \\
+&= -n \ln \Gamma(\alpha_0) - n\alpha_0 \ln \theta + (\alpha_0 - 1) \sum_{i=1}^n \ln X_i - \frac{1}{\theta} \sum_{i=1}^n X_i
+\end{aligned}
+$$
+
+
+对 $\theta$ 求导并令其等于零：
+
+$$
+\frac{\text{d} \ell}{\text{d} \theta} = -\frac{n\alpha_0}{\theta} + \frac{1}{\theta^2} \sum_{i=1}^n X_i = 0
+$$
+
+解得：
+$$
+\hat{\theta} = \frac{1}{n\alpha_0} \sum_{i=1}^n X_i
+$$
+
+证明 $\hat{\theta}$ 的无偏性：
+
+$$
+E[\hat{\theta}] = E\left[\frac{1}{n\alpha_0} \sum_{i=1}^n X_i\right] = \frac{1}{n\alpha_0} \sum_{i=1}^n E[X_i] = \frac{1}{n\alpha_0} \cdot n \cdot \alpha_0 \theta = \theta
+$$
+所以 $\hat{\theta}$ 是 $\theta$ 的一个无偏估计量。
+\end{answerbox}
+
+\subsection{}
+
+判断 $\hat{\theta}$ 是否达到 RCB。
+
+\begin{answerbox}
+\textbf{解答：}
+
+计算 $\hat{\theta}$ 的方差，由于 $X_i$ 独立同分布：
+
+$$
+\begin{aligned}
+Var(\hat{\theta}) &= Var\left(\frac{1}{n\alpha_0} \sum_{i=1}^n X_i\right) \\
+&= \frac{1}{n^2 \alpha_0^2} Var(\sum_{i=1}^n X_i) \\
+&= \frac{1}{n^2 \alpha_0^2} \sum_{i=1}^n Var(X_i) \text{由于 $X_i$ 独立同分布} \\
+&= \frac{1}{n^2 \alpha_0^2} \cdot n \cdot \alpha_0 \theta^2 \\
+&= \frac{\theta^2}{n\alpha_0}
+\end{aligned}
+$$
+
+计算 RCB：
+
+$$
+\text{RCB} = \frac{1}{nI(\theta)} = \frac{1}{n \cdot \frac{\alpha_0}{\theta^2}} = \frac{\theta^2}{n\alpha_0}
+$$
+
+由于 $Var(\hat{\theta}) = \frac{\theta^2}{n\alpha_0} = \text{RCB}$，因此 $\hat{\theta}$ 达到 RCB，是有效估计量。
+
+\end{answerbox}
+
+\section{Problem 5}
+
+假设 $X_1,\cdots,X_n$ 为取自正态分布 $N(\mu_0,\theta)$ 的样本，其中 $\mu_0$ 已知（注意：$\theta$ 为方差而非标准差）。
+
+\subsection{}
+
+计算 Fisher 信息量 $I(\theta)$。（用三种方法之一即可）
+
+\begin{answerbox}
+\textbf{解答：}
+
+写出 pdf：
+
+$$
+f(x; \theta) = \frac{1}{\sqrt{2\pi \theta}} e^{-(x-\mu_0)^2/(2\theta)}
+$$
+
+$$
+\ln f(x; \theta) = -\frac{1}{2} \ln (2\pi \theta) - \frac{(x-\mu_0)^2}{2\theta}
+$$
+
+$$
+\frac{\partial \ln f(x; \theta)}{\partial \theta} = -\frac{1}{2\theta} + \frac{(x-\mu_0)^2}{2\theta^2}
+$$
+
+$$
+\frac{\partial^2 \ln f(x; \theta)}{\partial \theta^2} = \frac{1}{2\theta^2} - \frac{(x-\mu_0)^2}{\theta^3}
+$$
+
+计算 Fisher 信息量：
+
+$$
+\begin{aligned}
+I(\theta) &= -E\left[\frac{\partial^2 \ln f(x; \theta)}{\partial \theta^2}\right] \\
+&= -E\left[\frac{1}{2\theta^2} - \frac{(X-\mu_0)^2}{\theta^3}\right] \\
+&= -\frac{1}{2\theta^2} + \frac{1}{\theta^3} E[(X-\mu_0)^2] \\
+&= -\frac{1}{2\theta^2} + \frac{1}{\theta^3} \cdot (0^2 + \theta) \\
+&= \frac{1}{2\theta^2}
+\end{aligned}
+$$
+
+\end{answerbox}
+
+\subsection{}
+
+证明 $\theta$ 的 MLE 为 $\theta$ 的一个无偏且有效的估计量。
+
+\begin{answerbox}
+\textbf{解答：}
+
+写出极大似然估计的似然函数：
+
+$$
+L(X_1, \ldots, X_n; \theta) = \prod_{i=1}^n f(X_i; \theta) = \prod_{i=1}^n \frac{1}{\sqrt{2\pi \theta}} e^{-(X_i-\mu_0)^2/(2\theta)}
+$$
+
+写出对数似然函数：
+
+$$
+\ell(X_1, \ldots, X_n; \theta) = \sum_{i=1}^n \left( -\frac{1}{2} \ln (2\pi \theta) - \frac{(X_i-\mu_0)^2}{2\theta} \right) = -\frac{n}{2} \ln (2\pi \theta) - \frac{1}{2\theta} \sum_{i=1}^n (X_i-\mu_0)^2
+$$
+
+对 $\theta$ 求导并令其等于零：
+
+$$
+\frac{\text{d} \ell}{\text{d} \theta} = -\frac{n}{2\theta} + \frac{1}{2\theta^2} \sum_{i=1}^n (X_i-\mu_0)^2 = 0
+$$
+
+解得：
+$$
+\hat{\theta} = \frac{1}{n} \sum_{i=1}^n (X_i-\mu_0)^2
+$$
+
+证明 $\hat{\theta}$ 的无偏性：
+
+$$
+E[\hat{\theta}] = E\left[\frac{1}{n} \sum_{i=1}^n (X_i-\mu_0)^2\right] = \frac{1}{n} \sum_{i=1}^n E[(X_i-\mu_0)^2] = \frac{1}{n} \cdot n \cdot \theta = \theta
+$$
+所以 $\hat{\theta}$ 是 $\theta$ 的一个无偏估计量。
+
+计算 $\hat{\theta}$ 的方差，由于 $X_i$ 独立同分布，服从 $N(\mu_0, \theta)$，所以 $X_i - \mu_0 \sim N(0, \theta)$
+
+因此，$\sum_{i=1}^n \frac{(X_i-\mu_0)^2}{\theta} \sim \chi^2(n)$
+
+于是，$E\left[\sum_{i=1}^n \frac{(X_i-\mu_0)^2}{\theta}\right] = n$，$Var\left[\sum_{i=1}^n \frac{(X_i-\mu_0)^2}{\theta}\right] = 2n$
+
+$$
+\begin{aligned}
+Var(\hat{\theta}) =& Var\left(\frac{1}{n} \sum_{i=1}^n (X_i-\mu_0)^2\right) \\
+=& \frac{1}{n^2} Var\left(\sum_{i=1}^n (X_i-\mu_0)^2\right) \\
+=& \frac{\theta^2}{n^2} Var\left(\sum_{i=1}^n  \frac{(X_i-\mu_0)^2}{\theta}\right) \\
+=& \frac{\theta^2}{n^2} \cdot 2n \\
+=& \frac{2\theta^2}{n}
+\end{aligned}
+$$
+
+计算 RCB：
+
+$$
+RCB = \frac{1}{nI(\theta)} = \frac{1}{n \cdot \frac{1}{2\theta^2}} = \frac{2\theta^2}{n}
+$$
+
+由于 $Var(\hat{\theta}) = \frac{2\theta^2}{n} = RCB$，因此 $\hat{\theta}$ 达到 RCB，是有效估计量。
+
+
+\end{answerbox}
+
+\subsection{}
+
+我们知道，样本方差 $S^2$ 作为 $\theta$ 的估计量也是无偏的。试求 $S^2$ 的有效性。
+
+\begin{answerbox}
+\textbf{解答：}
+
+样本方差 $S^2$ 为：
+
+$$
+S^2 = \frac{1}{n-1} \sum_{i=1}^n (X_i - \bar{X})^2
+$$
+
+由于 $X_i$ 独立同分布，服从 $N(\mu_0, \theta)$，所以 $\sum_{i=1}^n \frac{(X_i-\bar{X})^2}{\theta} \sim \chi^2(n-1)$
+
+计算 $Var(S^2)$：
+
+$$
+\begin{aligned}
+Var(S^2) =& Var\left(\frac{1}{n-1} \sum_{i=1}^n (X_i - \bar{X})^2\right) \\
+=& \frac{1}{(n-1)^2} Var\left(\sum_{i=1}^n (X_i - \bar{X})^2\right) \\
+=& \frac{\theta^2}{(n-1)^2} Var\left(\sum_{i=1}^n \frac{(X_i - \bar{X})^2}{\theta}\right) \\
+=& \frac{\theta^2}{(n-1)^2} \cdot 2(n-1) \\
+=& \frac{2\theta^2}{n-1}
+\end{aligned}
+$$
+
+由于 $Var(S^2) = \frac{2\theta^2}{n-1} > RCB = \frac{2\theta^2}{n}$，因此 $S^2$ 不达到 RCB，不是有效估计量。
+
+\end{answerbox}
+
+\section{Problem 6}
+
+假设 $X_1,X_2$ 为取自泊松分布 $\operatorname{Po}(\theta)$ 的样本（即 $n=2$），其中 $\theta>0$ 未知。
+
+\subsection{}
+
+证明：$X_1X_2$ 为 $\theta^2$ 的一个无偏估计。
+
+\begin{answerbox}
+\textbf{解答：}
+
+由于 $X_1$ 和 $X_2$ 独立同分布，且 $X_i \sim \operatorname{Po}(\theta)$，所以：
+
+$$
+E[X_1 X_2] = E[X_1] E[X_2] = \theta \cdot \theta = \theta^2
+$$
+
+因此，$X_1 X_2$ 是 $\theta^2$ 的一个无偏估计量。
+
+\end{answerbox}
+
+\subsection{}
+
+计算 1 中的估计量的有效性。（注意：此时估计的目标是 $k(\theta)=\theta^2$。）
+
+\begin{answerbox}
+\textbf{解答：}
+
+计算 $X_1 X_2$ 的方差：
+
+$$
+\begin{aligned}
+Var(X_1 X_2) =& E[X_1^2 X_2^2] - (E[X_1 X_2])^2 \\
+=& E[X_1^2] E[X_2^2] - \theta^4 \quad \text{(由于 $X_1$ 和 $X_2$ 独立同分布)} \\
+=& (\theta^2 + \theta)(\theta^2 + \theta) - \theta^4 \\
+=& \theta^4 + 2\theta^3 + \theta^2 - \theta^4 \\
+=& 2\theta^3 + \theta^2
+\end{aligned}
+$$
+
+计算 Fisher 信息量 $I(\theta^2)$：
+
+泊松分布的 pmf 为：
+
+$$
+f(x; \theta) = \frac{\theta^x e^{-\theta}}{x!}, \quad x = 0, 1, 2, \ldots
+$$
+
+于是：
+
+$$
+\ln f(x; \theta) = x \ln \theta - \theta - \ln x!
+$$
+
+$$
+\frac{\partial \ln f(x; \theta)}{\partial \theta} = \frac{x}{\theta} - 1
+$$
+
+于是可以计算得到 $X_1 X_2$ 的 Fisher 信息量：
+
+$$
+I(\theta) = Var\left(\frac{\partial \ln f(X; \theta)}{\partial \theta}\right) = Var\left(\frac{X}{\theta} - 1\right) = Var\left(\frac{X}{\theta}\right) = \frac{1}{\theta^2} Var(X) = \frac{1}{\theta^2} \cdot \theta = \frac{1}{\theta}
+$$
+
+计算 RCB：
+
+$$
+RCB = \frac{k'(\theta)^2}{nI(\theta)} = \frac{(2\theta)^2}{n \cdot \frac{1}{\theta}} = \frac{4\theta^3}{n}
+$$
+
+由于 $Var(X_1 X_2) = 2\theta^3 + \theta^2 > RCB = \frac{4\theta^3}{n}$，因此 $X_1 X_2$ 不达到 RCB，不是有效估计量。
+
+\end{answerbox}
+
+\section{Problem 7}
+
+某总体的密度函数为
+\[
+  f(x;\theta)=\frac{4\theta^4}{(x+\theta)^5},\qquad x>0,\ \theta>0,
+\]
+其中 $\theta$ 为未知参数。设 $X_1,X_2,\ldots,X_n$ 为取自该总体的简单随机样本。
+
+\subsection{}
+
+证明 $\hat{\theta}=3\bar{X}$ 是 $\theta$ 的一个无偏估计量。
+
+\begin{answerbox}
+\textbf{解答：}
+
+$$
+\begin{aligned}
+E\hat{\theta} =& E[3\bar{X}] = 3E\bar{X} \\
+=& 3 E\left[\frac{1}{n}\sum_{i=1}^{n} X_i\right] \\
+=& \frac{3}{n} \sum_{i=1}^{n} E[X_i]
+\end{aligned}
+$$
+
+其中：
+
+$$
+\begin{aligned}
+EX =& \int_0^{\infty} x \cdot \frac{4\theta^4}{(x+\theta)^5} dx \\
+=& \int_0^{\infty} \frac{4 \theta^4}{(x+\theta)^4} - \frac{4\theta^5}{(x+\theta)^5}dx \\
+=& -\frac{4}{3}\theta^4 \cdot \frac{1}{(x+\theta)^3} + \theta^5 \cdot \frac{1}{(x+\theta)^4} \Big|_0^{\infty} \\
+=& \frac{1}{3}\theta
+\end{aligned}
+$$
+
+所以，
+
+$$
+\begin{aligned}
+E\hat{\theta} =& \frac{3}{n} \sum_{i=1}^{n} E[X_i] \\
+=& \frac{3}{n} \cdot n \cdot \frac{1}{3}\theta \\
+=& \theta
+\end{aligned}
+$$
+
+所以， $\hat{\theta}=3\bar{X}$ 是 $\theta$ 的一个无偏估计量。
+\end{answerbox}
+
+\subsection{}
+
+求参数 $\theta$ 的 Fisher 信息量 $I(\theta)$。
+
+\begin{answerbox}
+\textbf{解答：}
+
+$$
+\ln f(x; \theta) = \ln 4 + 4 \ln \theta - 5 \ln (x + \theta)
+$$
+
+$$
+\frac{\partial \ln f(x; \theta)}{\partial \theta} = \frac{4}{\theta} - \frac{5}{x + \theta}
+$$
+
+$$
+\frac{\partial^2 \ln f(x; \theta)}{\partial \theta^2} = -\frac{4}{\theta^2} + \frac{5}{(x + \theta)^2}
+$$
+
+计算 Fisher 信息量：
+
+$$
+I(\theta) = -E\left[\frac{\partial^2 \ln f(x; \theta)}{\partial \theta^2}\right] = -E\left[-\frac{4}{\theta^2} + \frac{5}{(X + \theta)^2}\right] = \frac{4}{\theta^2} - 5 E\left[\frac{1}{(X + \theta)^2}\right]
+$$
+
+其中：
+
+$$
+\begin{aligned}
+E\left[\frac{1}{(X + \theta)^2}\right] =& \int_{0}^{+\infty} \frac{1}{(x + \theta)^2} \cdot \frac{4\theta^4}{(x+\theta)^5} dx \\
+=& \int_{0}^{+\infty} \frac{4\theta^4}{(x + \theta)^7} dx \\
+=& -\frac{2\theta^4}{3(x+\theta)^6} \Big|_0^{+\infty} \\
+=& \frac{2}{3\theta^2}
+\end{aligned}
+$$
+
+于是，
+
+$$
+I(\theta) = \frac{4}{\theta^2} - 5 E\left[\frac{1}{(X + \theta)^2}\right] = \frac{4}{\theta^2} - 5 \cdot \frac{2}{3\theta^2} = \frac{2}{3\theta^2}
+$$
+
+\end{answerbox}
+
+\subsection{}
+
+计算 $\hat{\theta}$ 的方差，并求其有效性。
+
+\begin{answerbox}
+\textbf{解答：}
+
+由于 $X_i$ 独立同分布，计算 $\hat{\theta}$ 的方差：
+
+$$
+Var(3\bar{X}) = Var\left(\frac{3}{n}\sum_{i=1}^{n} X_i\right) = \frac{9}{n^2} \sum_{i=1}^{n} Var(X_i) = \frac{9}{n^2} \cdot n \cdot Var(X) = \frac{9}{n} Var(X)
+$$
+
+接下来计算 $Var(X)$：
+
+$$
+Var(X) = E[X^2] - (EX)^2
+$$
+
+其中：
+
+$$
+\begin{aligned}
+E[X^2] =& \int_0^{\infty} x^2 \cdot \frac{4\theta^4}{(x+\theta)^5} dx \\
+=& \int_{\theta}^{+\infty} \frac{4(t-\theta)^2\theta^4}{t^5} d(t-\theta) \\
+=& 4\theta^4 \int_{\theta}^{+\infty} t^{-3} - 2\theta t^{-4} + \theta^2 t^{-5} dt \\
+=& \frac{\theta^2}{3}
+\end{aligned}
+$$
+
+所以：
+
+$$
+Var(X) = E[X^2] - (EX)^2 = \frac{\theta^2}{3} - \left(\frac{1}{3}\theta\right)^2 = \frac{2\theta^2}{9}
+$$
+
+于是计算得到：
+
+$$
+Var(3\bar{X}) = \frac{9}{n} Var(X) = \frac{2}{n} \theta^2
+$$
+
+计算 RCB：
+
+$$
+RCB = \frac{1}{nI(\theta)} = \frac{1}{n \cdot \frac{2}{3\theta^2}} = \frac{3\theta^2}{2n}
+$$
+
+由于 $Var(\hat{\theta}) = {2\theta^2}{n} > RCB = \frac{3\theta^2}{2n}$，因此 $\hat{\theta}$ 不达到 RCB，不是有效估计量。
+
+\end{answerbox}
+
+
+\section{Problem 8}
+对于 Problem 1 中的瑞利分布
+\[
+  f(x;\sigma)=\frac{x}{\sigma^2}e^{-x^2/(2\sigma^2)},\qquad x>0,\ \sigma>0,
+\]
+考虑以下检验问题
+\[
+  H_0:\sigma=\sigma_0\quad \text{vs}\quad H_1:\sigma\ne\sigma_0.
+\]
+
+\subsection{}
+
+证明检验统计量 $\Lambda$ 可以表示为
+  \[
+    W=\frac{1}{\sigma_0^2}\sum_{i=1}^{n}X_i^2
+  \]
+  的函数。
+
+\begin{answerbox}
+\textbf{解答：}
+
+写出似然函数：
+
+$$
+L(\sigma; X) = \prod_{i=1}^n f(X_i; \sigma) = \prod_{i=1}^n \frac{X_i}{\sigma^2} e^{-X_i^2/(2\sigma^2)} = \frac{\prod_{i=1}^n X_i}{\sigma^{2n}} e^{-\sum_{i=1}^n X_i^2/(2\sigma^2)}
+$$
+
+写出对数似然函数：
+
+$$
+\ell(\sigma; X) = \sum_{i=1}^n \left( \ln X_i - 2 \ln \sigma - \frac{X_i^2}{2\sigma^2} \right) = \sum_{i=1}^n \ln X_i - 2n \ln \sigma - \frac{1}{2\sigma^2} \sum_{i=1}^n X_i^2
+$$
+
+令对数似然函数导数为0：
+
+$$
+\frac{\partial \ell(\sigma; X)}{\partial \sigma} = -\frac{2n}{\sigma} + \frac{1}{\sigma^3} \sum_{i=1}^n X_i^2 = 0
+$$
+
+计算解得：
+
+$$
+\hat{\sigma} = \sqrt{\frac{1}{2n} \sum_{i=1}^n X_i^2}=\sqrt{\frac{\sigma_0^2}{2n}W}
+$$
+
+计算
+
+$$
+\Lambda = \frac{L(\sigma_0; X)}{L(\hat{\sigma}; X)}= \frac{\frac{\prod_{i=1}^n X_i}{\sigma_0^{2n}} e^{-\sum_{i=1}^n X_i^2/(2\sigma_0^2)}}{\frac{\prod_{i=1}^n X_i}{\hat{\sigma}^{2n}} e^{-\sum_{i=1}^n X_i^2/(2\hat{\sigma}^2)}} = \frac{\hat{\sigma}^{2n}}{\sigma_0^{2n}} e^{-\sum_{i=1}^n X_i^2/(2\sigma_0^2) + \sum_{i=1}^n X_i^2/(2\hat{\sigma}^2)}
+$$
+
+于是可以把 $\Lambda$ 表示为 $W$ 的函数：
+
+$$
+\Lambda = \left(\frac{W}{2n}\right)^n e^{n - \frac{W}{2}}
+$$
+
+\end{answerbox}
+
+\subsection{}
+
+求 $W$ 在 $H_0$ 下的分布，并给出该检验的显著水平为 $\alpha$ 的拒绝域。（提示：1. 可以利用 $Y_i=\dfrac{X_i^2}{\sigma_0^2}$ 的分布得出 $W$ 的分布。2. $\operatorname{Exp}(1/2)$ 分布即为 $\chi^2(2)$ 分布。）
+
+\begin{answerbox}
+\textbf{解答：}
+
+先计算 $Y_i = \frac{X_i^2}{\sigma_0^2}$ 的分布。
+
+由题意：
+
+$$
+f_{X_i}(x) = \frac{x}{\sigma_0^2} e^{-x^2/(2\sigma_0^2)}, \quad x > 0
+$$
+
+令 $Y_i = \frac{X_i^2}{\sigma_0^2}$，则 $X_i = \sigma_0 \sqrt{Y_i}$，且 $dx = \sigma_0 \frac{1}{2\sqrt{Y_i}} dy_i$。
+
+代入得：
+
+$$
+f_{Y_i}(y) = f_{X_i}(\sigma_0 \sqrt{y}) \cdot \left|\frac{dx}{dy}\right| = \frac{\sigma_0 \sqrt{y}}{\sigma_0^2} e^{-\sigma_0^2 y/(2\sigma_0^2)} \cdot \frac{\sigma_0}{2\sqrt{y}} = \frac{1}{2} e^{-y/2}, \quad y > 0
+$$
+
+因此，$Y_i \sim \operatorname{Exp}(1/2)$，即 $Y_i \sim \chi^2(2)$。
+
+由于 $W = \sum_{i=1}^n Y_i$，且 $Y_i$ 独立同分布，所以：
+
+$$
+W \sim \chi^2(2n)
+$$
+
+于是，在 $H_0$ 下，$W$ 服从自由度为 $2n$ 的卡方分布。
+
+该检验的显著水平为 $\alpha$ 的拒绝域为：
+
+$$
+\left\{\Lambda \leq c\right\}
+$$
+
+接下来我们再观察 $W$ 的函数 $\Lambda$ 关于 $W$ 的单调性：
+
+$$
+\ln \Lambda = n \ln \left(\frac{W}{2n}\right) + n - \frac{W}{2}
+$$
+
+令：
+
+$$
+\frac{\partial \ln \Lambda}{\partial W} = \frac{n}{W} - \frac{1}{2} > 0
+$$
+
+解得：
+
+$$
+W < 2n
+$$
+
+当 $W < 2n$ 时，$\frac{\partial \ln \Lambda}{\partial W} < 0$，即 $\Lambda$ 关于 $W$ 是单调递增的；当 $W > 2n$ 时，$\frac{\partial \ln \Lambda}{\partial W} > 0$，即 $\Lambda$ 关于 $W$ 是单调递减的。
+
+因此，拒绝域可以表示为：
+
+$$
+\left\{W \leq c'_1 \text{ 或 } W \geq c'_2\right\}
+$$
+
+又由于显著性水平为 $\alpha$：
+
+$$
+P_{H_0}\left\{W \leq c'_1 \text{ 或 } W \geq c'_2\right\} = \alpha
+$$
+
+因此，根据等尾原则，临界值 $c'_1$ 和 $c'_2$ 为：
+
+$$
+c'_1 = \chi^2_{1-\alpha/2}(2n), \quad c'_2 = \chi^2_{\alpha/2}(2n)
+$$
+
+于是，显著水平为 $\alpha$ 的拒绝域为：
+
+$$
+\left\{W \leq \chi^2_{1-\alpha/2}(2n) \text{ 或 } W \geq \chi^2_{\alpha/2}(2n)\right\}
+$$
+
+\end{answerbox}
+
+\section{Problem 9}
+
+设 $X_1,\cdots,X_n$ 为取自正态分布 $N(\mu,\sigma_0^2)$ 的样本，其中 $\sigma_0$ 已知。考虑以下假设检验：
+\[
+  H_0:\mu=\mu_0\quad \text{v.s.}\quad H_1:\mu\ne\mu_0.
+\]
+试证明检验统计量 $\Lambda$ 可以表示为
+\[
+  W=\frac{\bar{X}-\mu_0}{\sigma_0/\sqrt{n}}
+\]
+的函数，并得到有关 $W$ 的显著水平为 $\alpha$ 的拒绝域。
+
+\begin{answerbox}
+\textbf{解答：}
+
+写出似然函数：
+
+$$
+L(\mu; X) = \prod_{i=1}^n f(X_i; \mu) = \prod_{i=1}^n \frac{1}{\sqrt{2\pi \sigma_0^2}} e^{-(X_i-\mu)^2/(2\sigma_0^2)} = \frac{1}{(2\pi \sigma_0^2)^{n/2}} e^{-\sum_{i=1}^n (X_i-\mu)^2/(2\sigma_0^2)}
+$$
+
+写出对数似然函数：
+
+$$
+\ell(\mu; X) = -\frac{n}{2} \ln (2\pi \sigma_0^2) - \frac{1}{2\sigma_0^2} \sum_{i=1}^n (X_i-\mu)^2
+$$
+
+令对数似然函数导数为0：
+
+$$
+\frac{\text{d}\ell}{\text{d}\mu} = \frac{1}{\sigma_0^2} \sum_{i=1}^n (X_i - \mu) = 0
+$$
+
+于是得到 $\mu$ 的极大似然估计：
+
+$$
+\hat{\mu} = \bar{X}
+$$
+
+$\Lambda$ 的定义为：
+
+$$
+\Lambda = \frac{L(\mu_0; X)}{L(\hat{\mu}; X)} = \frac{e^{-\sum_{i=1}^n (X_i-\mu_0)^2/(2\sigma_0^2)}}{e^{-\sum_{i=1}^n (X_i-\bar{X})^2/(2\sigma_0^2)}} = e^{-\frac{1}{2\sigma_0^2} \left( \sum_{i=1}^n (X_i-\mu_0)^2 - \sum_{i=1}^n (X_i-\bar{X})^2 \right)}
+$$
+
+把 $\Lambda$ 写为 $W$ 的函数：
+
+$$
+\Lambda = e^{-\frac{1}{2\sigma_0^2} \left( \sum_{i=1}^n (X_i-\mu_0)^2 - \sum_{i=1}^n (X_i-\bar{X})^2 \right)} = e^{-\frac{n}{2\sigma_0^2} (\bar{X}-\mu_0)^2} = e^{-\frac{W^2}{2}}
+$$
+
+在原假设成立的条件下，$W$ 服从标准正态分布 $N(0,1)$。
+
+于是给出显著水平为 $\alpha$ 的拒绝域：
+
+$$
+\left\{\Lambda \leq c\right\}
+$$
+
+接下来需要得到 $W$ 的函数 $\Lambda$ 的单调性：
+
+$$
+\frac{\partial \Lambda}{\partial W} = -W e^{-\frac{W^2}{2}}
+$$
+
+于是当 $W \leq 0$ 时 $\Lambda$ 单调递增，否则单调递减。
+
+于是，显著性水平为 $\alpha$ 的拒绝域可以写成：
+
+$$
+\left\{|W| \geq c'\right\}
+$$
+
+令 $P_{H_0}\left\{|W| \geq c'\right\} = \alpha$，则 $c' = z_{\alpha/2}$，其中 $z_{\alpha/2}$ 是标准正态分布的上 $\alpha/2$ 分位数。
+
+于是，显著性水平为 $\alpha$ 的拒绝域为：
+
+$$
+\left\{|W| \geq z_{\alpha/2}\right\}
+$$
+
+\end{answerbox}
+
+\section{Problem 10}
+
+Exercise 6.3.15 in Hogg.
+
+Let $X_1,X_2,\cdots,X_n$ be a random sample from a distribution with pmf
+\[
+  p(x;\theta)=\theta^x(1-\theta)^{1-x},\qquad x=0,1,
+\]
+where $0<\theta<1$. We wish to test $H_0:\theta=1/3$ versus $H_1:\theta\ne 1/3$.
+
+\subsection{}
+
+Find $\Lambda$ and $-2\log\Lambda$.
+
+\begin{answerbox}
+\textbf{解答：}
+
+写出似然函数：
+
+$$
+L(\theta; X) = \prod_{i=1}^n p(X_i; \theta) = \prod_{i=1}^n \theta^{X_i} (1-\theta)^{1-X_i} = \theta^{\sum_{i=1}^n X_i} (1-\theta)^{n - \sum_{i=1}^n X_i}
+$$
+
+写出对数似然函数：
+
+$$
+\ell(\theta; X) = \sum_{i=1}^n \left( X_i \ln \theta + (1 - X_i) \ln (1 - \theta) \right) = \left( \sum_{i=1}^n X_i \right) \ln \theta + \left( n - \sum_{i=1}^n X_i \right) \ln (1 - \theta)
+$$
+
+计算 $\theta$ 的极大似然估计：
+
+$$
+\frac{\partial \ell}{\partial \theta} = \frac{1}{\theta} \sum_{i=1}^n X_i - \frac{1}{1-\theta} \sum_{i=1}^n (1 - X_i) = \frac{1}{\theta} \sum_{i=1}^n X_i - \frac{1}{1-\theta} \left( n - \sum_{i=1}^n X_i \right) = 0
+$$
+
+解得 $\theta$ 的极大似然估计为：
+
+$$
+\hat{\theta} = \frac{1}{n} \sum_{i=1}^n X_i = \bar{X}
+$$
+
+于是，在原假设成立的条件下，$\Lambda$ 为：
+
+$$
+\Lambda = \frac{L(1/3; X)}{L(\hat{\theta}; X)} = \frac{(1/3)^{\sum_{i=1}^n X_i} (2/3)^{n - \sum_{i=1}^n X_i}}{(\bar{X})^{\sum_{i=1}^n X_i} (1-\bar{X})^{n - \sum_{i=1}^n X_i}}
+$$
+
+于是可以得到：
+
+$$
+-2\log \Lambda = -2 \left( \sum_{i=1}^n X_i \ln \frac{1/3}{\bar{X}} + \left( n - \sum_{i=1}^n X_i \right) \ln \frac{2/3}{1-\bar{X}} \right)
+$$
+\end{answerbox}
+
+\subsection{}
+
+Determine the Wald-type test.
+
+\begin{answerbox}
+\textbf{解答：}
+
+计算 Fisher 信息量：
+
+$$
+\ln p(x; \theta) = x \ln \theta + (1-x) \ln (1-\theta)
+$$
+
+于是：
+
+$$
+\frac{\partial p}{\partial \theta} = \frac{x}{\theta} - \frac{1-x}{1-\theta} = \frac{x - \theta}{\theta(1-\theta)}
+$$
+
+于是计算得：
+
+$$
+I(\theta) = Var\left(\frac{\partial p}{\partial \theta}\right) = Var\left(\frac{X - \theta}{\theta(1-\theta)}\right) = \frac{1}{\theta^2 (1-\theta)^2} Var(X) = \frac{1}{\theta(1-\theta)}
+$$
+
+计算 Wald-type 统计量：
+
+$$
+\chi^2_W = n I(\hat{\theta}_n)(\hat{\theta}_n - \theta_0)^2 = n \cdot \frac{1}{\hat{\theta}_n (1-\hat{\theta}_n)} (\hat{\theta}_n - 1/3)^2 = \frac{n}{\bar{X}(1-\bar{X})} (\bar{X} - 1/3)^2
+$$
+
+在原假设成立的条件下，当 $n \to \infty$ 时，$\chi^2_W$ 依分布收敛为 $\chi^2_1$。
+
+所以可以给出显著水平为 $\alpha$ 的拒绝域：
+
+$$
+\left\{\chi^2_W \geq \chi^2_{\alpha}(1)\right\}
+$$
+
+\end{answerbox}
+
+
+\subsection{}
+
+What is Rao's score statistic?
+
+\begin{answerbox}
+\textbf{解答：}
+
+$$
+\chi^2_R = \left(\frac{\ell'(\theta_0)}{\sqrt{nI(\theta_0)}}\right)^2 
+$$
+
+其中：
+
+$$
+\ell'(\theta) =  \frac{1}{\theta} \sum_{i=1}^n X_i - \frac{1}{1-\theta} \sum_{i=1}^n (1 - X_i)
+$$
+
+所以：
+
+$$
+\chi^2_R = \left(\frac{\frac{1}{\theta_0} \sum_{i=1}^n X_i - \frac{1}{1-\theta_0} \sum_{i=1}^n (1 - X_i)}{\sqrt{n \cdot \frac{1}{\theta_0(1-\theta_0)}}}\right)^2 = \frac{n}{\theta_0(1-\theta_0)} \left( \bar{X} - \theta_0 \right)^2= \frac{n(3\bar{X}-1)^2}{2}
+$$
+
+
+\end{answerbox}
+
+
+\section{Problem 11}
+
+
+设 $X_1,\cdots,X_n$ 为取自泊松分布 $\operatorname{Po}(\theta)$ 的样本，对于以下假设检验：
+\[
+  H_0:\theta=5\quad \text{v.s.}\quad H_1:\theta\ne 5.
+\]
+
+\subsection{}
+
+求 $-2\log\Lambda$ 和对应的显著水平为 $\alpha$ 的拒绝域。
+
+\begin{answerbox}
+\textbf{解答：}
+
+写出似然函数：
+
+$$
+L(\theta; X) = \prod_{i=1}^n \frac{\theta^{X_i} e^{-\theta}}{X_i!} = \frac{\theta^{\sum_{i=1}^n X_i} e^{-n\theta}}{\prod_{i=1}^n X_i!}
+$$
+
+
+写出对数似然函数：
+
+$$
+\ell(\theta; X) = \sum_{i=1}^n \left( X_i \ln \theta - \theta - \ln X_i! \right) = \left( \sum_{i=1}^n X_i \right) \ln \theta - n\theta - \sum_{i=1}^n \ln X_i!
+$$
+
+
+计算 $\theta$ 的极大似然估计：
+
+$$
+\frac{\partial \ell}{\partial \theta} = \frac{1}{\theta} \sum_{i=1}^n X_i - n = 0
+$$
+解得 $\theta$ 的极大似然估计为：
+
+$$
+\hat{\theta} = \frac{1}{n} \sum_{i=1}^n X_i = \bar{X}
+$$
+
+接下来计算 $\Lambda$:
+
+$$
+\Lambda = \frac{L(5; X)}{L(\hat{\theta}; X)} = \frac{5^{\sum_{i=1}^n X_i} e^{-5n}}{\hat{\theta}^{\sum_{i=1}^n X_i} e^{-\hat{\theta} n}} = \left(\frac{5}{\bar{X}}\right)^{\sum_{i=1}^n X_i} e^{n(\bar{X}-5)}
+$$
+
+于是：
+
+$$
+-2\log \Lambda = -2 \left( \sum_{i=1}^n X_i \ln \frac{5}{\bar{X}} + n(\bar{X}-5) \right)
+$$
+
+在原假设成立的条件下，当 $n \to \infty$ 时，$-2\log \Lambda$ 依分布收敛为 $\chi^2_1$。
+
+所以可以给出显著水平为 $\alpha$ 的拒绝域：
+
+$$
+\left\{-2\log \Lambda \geq \chi^2_{\alpha}(1)\right\}
+$$
+\end{answerbox}
+
+\subsection{}
+
+求 Wald 型检验统计量和对应的显著水平为 $\alpha$ 的拒绝域。
+
+\begin{answerbox}
+\text{解答：}
+
+计算 Fisher 信息量：
+
+$$
+\ln p(x; \theta) = x \ln \theta - \theta - \ln x!
+$$
+
+$$
+\frac{\partial \ln p(x; \theta)}{\partial \theta} = \frac{x}{\theta} - 1
+$$
+
+于是：
+
+$$
+I(\theta) = Var\left(\frac{\partial \ln p(x; \theta)}{\partial \theta}\right) = Var\left(\frac{X}{\theta} - 1\right) = \frac{1}{\theta^2} Var(X) = \frac{1}{\theta}
+$$
+
+计算 Wald 型检验统计量：
+
+$$
+\chi^2_W = n I(\hat{\theta}_n)(\hat{\theta}_n - \theta_0)^2 = n \cdot \frac{1}{\hat{\theta}_n} (\hat{\theta}_n - 5)^2 = \frac{n}{\bar{X}} (\bar{X} - 5)^2
+$$
+
+在原假设成立的条件下，当 $n \to \infty$ 时，$\chi^2_W$ 依分布收敛为 $\chi^2_1$。
+
+所以可以给出显著水平为 $\alpha$ 的拒绝域：
+
+$$
+\left\{\chi^2_W \geq \chi^2_{\alpha}(1)\right\}
+$$
+\end{answerbox}
+
+\subsection{}
+
+求得分型检验统计量和对应的显著水平为 $\alpha$ 的拒绝域。
+
+\begin{answerbox}
+\textbf{解答：}
+
+计算 Rao's score statistic：
+
+$$
+\chi^2_R = \left(\frac{\ell'(\theta_0)}{\sqrt{nI(\theta_0)}}\right)^2 
+$$
+
+其中：
+
+$$
+\ell'(\theta) =  \frac{1}{\theta} \sum_{i=1}^n X_i - n
+$$
+
+所以：
+
+$$
+\chi^2_R = \left(\frac{\frac{1}{5} \sum_{i=1}^n X_i - n}{\sqrt{n \cdot \frac{1}{5}}}\right)^2 = \frac{n}{5} \left( \bar{X} - 5 \right)^2
+$$
+
+在原假设成立的条件下，当 $n \to \infty$ 时，$\chi^2_R$ 依分布收敛为 $\chi^2_1$。
+
+所以可以给出显著水平为 $\alpha$ 的拒绝域：
+
+$$
+\left\{\chi^2_R \geq \chi^2_{\alpha}(1)\right\}
+$$
+\end{answerbox}
+
+\section{Problem 12}
+
+在地球上发现了一些外星生物。根据黑暗森林法则，地球人相信自己正处于一场灭顶危机之中。地球人共俘虏了编号为 $0,1,2,\ldots,2m$ 的共 $2m+1$ 个外星生物（$m$ 为正整数）。已知第 $1,2,\ldots,m$ 号生物来自于 $\alpha$ 星球，第 $m+1,m+2,\ldots,2m$ 号生物来自于 $\beta$ 星球，而最后关键的 0 号生物不知来自于 $\alpha$ 星球还是 $\beta$ 星球。地球人掌握一种技术，可以测出两个外星生物的脑电波能否交互。已知来自于同一星球的两个生物脑电波能够交互的概率为 $p$，来自于不同星球的两个生物脑电波能够交互的概率为 $q$，其中 $0<q<p<1$ 为已知参数。
+
+现在通过逐对测试，将 0 号生物与其余 $2m$ 个生物脑电波能否交互的情况记为样本 $X_1,\ldots,X_{2m}$，其中 $X_i$ 为互相独立的 0/1 随机变量。具体来说，$X_i=1$ 表示 0 号生物与第 $i$ 号生物可以交互，$X_i=0$ 表示 0 号生物与第 $i$ 号生物不能交互。地球人希望检验
+\[
+  H_0:\text{0 号生物来自于 }\alpha\text{ 星球}
+  \quad \text{vs}\quad
+  H_1:\text{0 号生物来自于 }\beta\text{ 星球}.
+\]
+由于 $H_0$ 与 $H_1$ 均为简单假设，似然比检验等价于用以下检验统计量
+\[
+  \Lambda'=
+  \frac{H_0\text{ 下的似然函数}}{H_1\text{ 下的似然函数}},
+\]
+并取拒绝域 $\{\Lambda'\le c\}$。
+
+我们记
+\[
+  A=\sum_{i=1}^{m}X_i,\qquad B=\sum_{i=m+1}^{2m}X_i,
+\]
+分别表示 0 号生物与来自 $\alpha$ 星球和 $\beta$ 星球的生物能够交互的总数量。试证明：上述似然比检验的拒绝域等价于 $\{A-B\le c'\}$ 的形式。
+
+\begin{answerbox}
+\textbf{解答：}
+
+在原假设成立时，$X_i \sim bernoulli(p) \forall i=1,2,\ldots,m$，$X_i \sim bernoulli(q) \forall i=m+1,m+2,\ldots,2m$。
+
+此时，似然函数为：
+
+$$
+L(X_1, \ldots, X_{2m}; H_0) = \prod_{i=1}^m p^{X_i} (1-p)^{1-X_i} \cdot \prod_{i=m+1}^{2m} q^{X_i} (1-q)^{1-X_i} = p^A (1-p)^{m-A} \cdot q^B (1-q)^{m-B}
+$$
+
+在备择假设成立时，$X_i \sim bernoulli(q) \forall i=1,2,\ldots,m$，$X_i \sim bernoulli(p) \forall i=m+1,m+2,\ldots,2m$。
+
+此时，似然函数为：
+
+$$
+L(X_1, \ldots, X_{2m}; H_1) = \prod_{i=1}^m q^{X_i} (1-q)^{1-X_i} \cdot \prod_{i=m+1}^{2m} p^{X_i} (1-p)^{1-X_i} = q^A (1-q)^{m-A} \cdot p^B (1-p)^{m-B}
+$$
+
+于是可以计算得到：
+
+$$
+\Lambda' = \frac{L(X_1, \ldots, X_{2m}; H_0)}{L(X_1, \ldots, X_{2m}; H_1)} = \frac{p^A (1-p)^{m-A} \cdot q^B (1-q)^{m-B}}{q^A (1-q)^{m-A} \cdot p^B (1-p)^{m-B}} 
+$$
+
+化简得到：
+
+$$
+\Lambda' = \left(\frac{p}{q}\right)^A \left(\frac{1-p}{1-q}\right)^{m-A} \cdot \left(\frac{q}{p}\right)^B \left(\frac{1-q}{1-p}\right)^{m-B} = \left(\frac{p}{q}\right)^{A-B} \cdot \left(\frac{1-p}{1-q}\right)^{B-A} 
+$$
+
+于是，可以把 $\Lambda'$ 表示为 $A-B$ 的函数，拒绝域就可以写为：
+
+$$
+\left\{\left(\frac{p(1-q)}{q(1-p)}\right)^{A-B} \leq c\right\}
+$$
+
+令 $r = \frac{p(1-q)}{q(1-p)}$，则拒绝域等价于
+
+$$
+\left\{A-B \leq \log_r c\right\}
+$$
+
+也就是说，拒绝域等价于 $\{A-B \leq c'\}$ 的形式，其中 $c' = \log_r c$。
+\end{answerbox}
+
+\end{document}

@@ -1,0 +1,1040 @@
+\documentclass[12pt,a4paper]{article}
+% \documentclass{ctexart}
+
+% ==================== 基础宏包 ====================
+\usepackage[UTF8]{ctex}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{hyperref}
+\usepackage[most]{tcolorbox}
+\usepackage{titlesec}
+ \usepackage{tabularx}
+
+\hypersetup{
+  hidelinks
+}
+
+% ==================== 颜色定义 ====================
+\definecolor{mainblue}{RGB}{34,72,112}
+\definecolor{lightblue}{RGB}{241,246,252}
+\definecolor{linegray}{RGB}{210,218,228}
+\definecolor{textgray}{RGB}{90,98,108}
+
+% ==================== 页面设置 ====================
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0.35em}
+\setlength{\headheight}{25pt}
+\linespread{1.2}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\textcolor{textgray}{\small 课程作业}}
+\rhead{\textcolor{textgray}{\small \thepage/\pageref*{LastPage}}}
+\cfoot{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{linegray}\leaders\hrule height \headrulewidth\hfill}}
+
+% ==================== 标题样式 ====================
+\titleformat{\section}
+  {\Large\bfseries\color{mainblue}}
+  {\thesection}
+  {0.6em}
+  {}
+
+\titleformat{\subsection}
+  {\large\bfseries\color{mainblue}}
+  {\thesubsection}
+  {0.6em}
+  {}
+
+\titlespacing*{\section}{0pt}{1.2em}{0.6em}
+\titlespacing*{\subsection}{0pt}{0.8em}{0.4em}
+
+% ==================== 自定义环境 ====================
+\newtcolorbox{infobox}{
+  colback=lightblue,
+  colframe=mainblue,
+  boxrule=0.6pt,
+  arc=2mm,
+  left=1.2em,
+  right=1.2em,
+  top=0.8em,
+  bottom=0.8em
+}
+
+\newtcolorbox{answerbox}{
+  colback=white,
+  colframe=linegray,
+  boxrule=0.5pt,
+  arc=2mm,
+  left=1em,
+  right=1em,
+  top=0.8em,
+  bottom=0.8em,
+  breakable
+}
+
+\newcommand{\course}{数理统计}
+\newcommand{\homeworktitle}{第7次作业}
+\newcommand{\studentname}{倪伟丰}
+\newcommand{\studentid}{2024110089}
+\newcommand{\classname}{24 大数据 2 班}
+\newcommand{\teacher}{袁洪松}
+\newcommand{\duedate}{2026年6月19日}
+
+% ==================== 正文开始 ====================
+\begin{document}
+
+\begin{center}
+  {\Huge\bfseries\color{mainblue}\homeworktitle}\\[0.6em]
+  {\Large\course}\\[1.2em]
+  {\color{linegray}\rule{0.9\textwidth}{0.8pt}}
+\end{center}
+
+\begin{infobox}
+\begin{tabularx}{\textwidth}{>{\bfseries}p{2.2cm} X >{\bfseries}p{2.2cm} X}
+姓名 & \studentname & 学号 & \studentid \\
+班级 & \classname & 教师 & \teacher \\
+提交日期 & \duedate &  &  \\
+\end{tabularx}
+\end{infobox}
+
+
+\section{Problem 1}
+
+假设 $X_1,\ldots,X_n$ 为取自下列分布之一的样本。决定每个分布是否属于正则指数分布类。如果是，则找出一个完备充分统计量；若不是，请说明理由。
+
+
+\subsection{} 
+ 
+几何分布，其 p.m.f. 为
+    \[
+        f(x;\theta)=(1-\theta)^x\theta,\qquad x=0,1,2,\ldots
+    \]
+    其中 $0<\theta<1$。
+
+\begin{answerbox}
+\textbf{解答：}
+
+其 p.m.f. 为：
+\[
+\begin{aligned}
+f(x;\theta)=&(1-\theta)^x\theta,\qquad x=0,1,2,\ldots \\
+=& \exp\left\{x\ln(1-\theta)+\ln\theta\right\} \\
+\end{aligned}
+\]
+其中 $0<\theta<1$。
+
+可以知道：
+
+$$
+S = \left\{0, 1, 2, \ldots\right\}
+$$
+$$
+p(\theta) = \ln (1-\theta)
+$$
+$$
+K(x) = x
+$$
+$$
+H(x) = 0
+$$
+$$
+q(\theta) = \ln \theta
+$$
+
+所以为正则指数分布类。
+
+于是，统计量 $Y_1 = \sum_{i=1}^{n} K(X_i) = \sum_{i=1}^{n} X_i$ 是完备充分统计量。
+
+\end{answerbox}
+
+\subsection{} 
+ 
+拉普拉斯分布，其 p.d.f. 为
+    \[
+        f(x;a,b)=\frac{1}{2b}e^{-|x-a|/b},\qquad -\infty<x<+\infty
+    \]
+    其中 $a=a_0$ 已知，$b$ 可变。
+
+\begin{answerbox}
+\textbf{解答：}
+
+拉普拉斯分布，其 p.d.f. 为
+\[
+\begin{aligned}
+f(x;a,b)=&\frac{1}{2b}e^{-|x-a|/b},\qquad -\infty<x<+\infty \\
+=& \exp\left\{-\ln(2b)-\frac{|x-a|}{b}\right\} \\
+\end{aligned}
+\]
+其中 $a=a_0$ 已知，$b$ 可变。
+
+可以知道：
+
+$$
+S = \left\{x \mid -\infty < x < +\infty\right\}
+$$
+$$
+p(b) = -\frac{1}{b}
+$$
+$$
+K(x) = |x-a|
+$$
+$$
+H(x) = 0
+$$
+$$
+q(b) = -\ln(2b)
+$$
+
+所以为正则指数分布类。
+
+于是，统计量 $Y_1 = \sum_{i=1}^{n} K(X_i) = \sum_{i=1}^{n} |X_i-a|$ 是完备充分统计量。
+
+\end{answerbox}
+
+\subsection{} 
+ 
+瑞利分布，其 p.d.f. 为
+    \[
+        f(x;\theta)=\frac{1}{\theta^2}x e^{-x^2/(2\theta^2)},\qquad x>0
+    \]
+    其中 $\theta>0$。
+
+\begin{answerbox}
+\textbf{解答：}
+
+瑞利分布，其 p.d.f. 为
+\[
+\begin{aligned}
+f(x;\theta)=&\frac{1}{\theta^2}x e^{-x^2/(2\theta^2)},\qquad x>0 \\
+=& \exp\left\{-2\ln \theta + \ln x - \frac{x^2}{2\theta^2}\right\} \\
+\end{aligned}
+\]
+其中 $\theta>0$。
+
+可以知道：
+
+$$
+S = \left\{x \mid x > 0\right\}
+$$
+$$
+p(\theta) = -\frac{1}{2\theta^2}
+$$
+$$
+K(x) = x^2
+$$
+$$
+H(x) = \ln x
+$$
+$$
+q(\theta) = -2\ln \theta
+$$
+
+所以为正则指数分布类。
+
+于是，统计量 $Y_1 = \sum_{i=1}^{n} K(X_i) = \sum_{i=1}^{n} X_i^2$ 是完备充分统计量。
+
+
+
+\end{answerbox}
+
+
+\subsection{} 
+ 
+负二项分布，其 p.m.f. 为
+    \[
+        f(x;\theta)=\binom{x+r-1}{x}(1-\theta)^r\theta^x,
+        \qquad x=0,1,2,\ldots
+    \]
+    其中 $r$ 为已知正整数，$0<\theta<1$ 为未知参数。
+
+\begin{answerbox}
+\textbf{解答：}
+
+负二项分布，其 p.m.f. 为
+\[
+\begin{aligned}
+f(x;\theta)=&\binom{x+r-1}{x}(1-\theta)^r\theta^x,\qquad x=0,1,2,\ldots \\
+=& \exp\left\{\ln \binom{x+r-1}{x} + r\ln(1-\theta) + x\ln \theta\right\} \\
+\end{aligned}
+\]
+其中 $r$ 为已知正整数，$0<\theta<1$ 为未知参数。
+
+可以知道：
+
+$$
+S = \left\{0, 1, 2, \ldots\right\}
+$$
+$$
+p(\theta) = \ln \theta
+$$
+$$
+K(x) = x
+$$
+$$
+H(x) = \ln \binom{x+r-1}{x}
+$$
+$$
+q(\theta) = r \ln(1-\theta)
+$$
+
+所以为正则指数分布类。
+
+于是，统计量 $Y_1 = \sum_{i=1}^{n} K(X_i) = \sum_{i=1}^{n} X_i$ 是完备充分统计量。
+
+\end{answerbox}
+
+\subsection{} 
+ 
+beta$(\theta,1)$ 分布，其 p.m.f. 为
+    \[
+        f(x;\theta)=\theta x^{\theta-1},\qquad 0<x<1
+    \]
+    其中 $\theta>0$。
+
+\begin{answerbox}
+\textbf{解答：}
+
+beta$(\theta,1)$ 分布，其 p.m.f. 为
+\[
+\begin{aligned}
+f(x;\theta)=&\theta x^{\theta-1},\qquad 0<x<1 \\
+=& \exp\left\{\ln \theta + (\theta-1)\ln x\right\} \\
+\end{aligned}
+\]
+其中 $\theta>0$。
+
+$$
+S = \left\{x \mid 0 < x < 1\right\}
+$$
+$$
+p(\theta) = \theta - 1
+$$
+$$
+K(x) = \ln x
+$$
+$$
+H(x) = 0
+$$
+$$
+q(\theta) = \ln \theta
+$$
+
+所以为正则指数分布类。
+
+于是，统计量 $Y_1 = \sum_{i=1}^{n} K(X_i) = \sum_{i=1}^{n} \ln X_i$ 是完备充分统计量。
+
+\end{answerbox}
+
+\subsection{} 
+ 
+“平移的指数分布”，其 p.d.f. 为
+    \[
+        f(x;\theta)=e^{-(x-\theta)},\qquad x>\theta,
+    \]
+    其中 $-\infty<\theta<\infty$。
+
+\begin{answerbox}
+\textbf{解答：}
+
+“平移的指数分布”，其 p.d.f. 为
+    \[
+        f(x;\theta)=e^{-(x-\theta)},\qquad x>\theta,
+    \]
+    其中 $-\infty<\theta<\infty$。
+
+其支撑集为
+$$
+S(x) = \left\{x \mid x > \theta\right\}
+$$
+
+由于支撑集依赖于参数 $\theta$，所以不是正则指数分布类。
+
+由 Neyman 分解定理，
+$$
+\prod_{i=1}^{n} f(x_i;\theta) = \exp\left\{-\sum_{i=1}^{n} x_i + n\theta\right\}\cdot \mathbf{1}_{\{x_{(1)} > \theta\}},
+$$
+
+故 $Y_1 = X_{(1)} = \min_i X_i$ 是 $\theta$ 的充分统计量
+
+接下来计算 $Y_1$ 的 p.d.f.：
+
+$$
+g(y;\theta) = ne^{-n(y-\theta)},\qquad y>\theta
+$$
+
+接下来，要计算 $E\left[u(Y_1)\right] = 0$：
+
+$$
+E\left[u(Y_1)\right] = \int_{\theta}^{+\infty} u(y) g(y;\theta) dy = 0
+$$
+
+对左右两边求导：
+
+$$
+\frac{d}{d\theta} \int_{\theta}^{+\infty} u(y) g(y;\theta) dy = -u(y) g(y;\theta) = 0
+$$
+
+由于，$g(y;\theta) = ne^{-n(y-\theta)} > 0$，所以 $u(y) = 0$ 对于 $y>\theta$ 恒成立。
+
+所以可以知道，$Y_1 = X_{(1)}$ 是 $\theta$ 的完备充分统计量。
+\end{answerbox}
+
+\section{Problem 2}
+
+对于以下概率密度函数：
+\[
+    f(x;\theta)=\frac{1}{6\theta^4}x^3e^{-x/\theta},\qquad
+    0<x<\infty,\quad 0<\theta<\infty
+\]
+其余为零。$X_1,X_2,\ldots,X_n$ 是来自该分布的一个随机样本。
+
+\subsection{}
+
+求 $\theta$ 的完备充分统计量 $Y_1$。
+
+\begin{answerbox}
+\textbf{解答：}
+对于以下概率密度函数：
+\[
+\begin{aligned}
+f(x;\theta)=&\frac{1}{6\theta^4}x^3e^{-x/\theta},\qquad 0<x<\infty,\quad 0<\theta<\infty \\
+=& \exp\left\{-4\ln \theta + 3\ln x - \frac{x}{\theta} - \ln 6\right\} \\
+\end{aligned}
+\]
+
+可以知道：
+
+$$
+S = \left\{x \mid 0 < x < \infty\right\}
+$$
+$$
+p(\theta) = -\frac{1}{\theta}
+$$
+$$
+K(x) = x
+$$
+$$
+H(x) = 3\ln x - \ln 6
+$$
+$$
+q(\theta) = -4 \ln \theta
+$$
+
+所以为正则指数分布类。
+
+于是，统计量 $Y_1 = \sum_{i=1}^{n} K(X_i) = \sum_{i=1}^{n} X_i$ 是完备充分统计量。
+
+\end{answerbox}
+
+\subsection{}
+
+求该统计量的函数 $\varphi(Y_1)$，使得其为 $\theta$ 的 MVUE。
+
+\begin{answerbox}
+\textbf{解答：}
+
+先计算：
+
+$$
+\begin{aligned}
+EX =& \int_{0}^{\infty} x f(x;\theta) dx \\
+=& \int_{0}^{\infty} x \cdot \frac{1}{6\theta^4}x^3e^{-x/\theta} dx \\
+=& \frac{\theta}{6} \int_{0}^{\infty}  \left(\frac{x}{\theta}\right)^4 e^{-x/\theta} dx/\theta \\
+=& \frac{\theta}{6} \varGamma(5) \\
+=& 4\theta
+\end{aligned}
+$$
+
+所以：
+
+$$
+EY_1 = E\sum_{i=1}^{n} X_i = n EX = 4n\theta
+$$
+
+$$
+E\left[\frac{Y_1}{4n}\right] = \theta
+$$
+
+因此 $\varphi(Y_1) = \frac{Y_1}{4n}$ 是 $\theta$ 的 无偏估计量。
+
+又因为 $Y_1$ 是 $\theta$ 的完备充分统计量，所以 $\varphi(Y_1)$ 是 $\theta$ 的 MVUE。
+
+\end{answerbox}
+
+\section{Problem 3}
+
+假设 $X_1,\ldots,X_n$ 为取自正态分布 $N(\mu_0,\theta)$ 的样本，其中 $\mu_0$ 已知。找出 $\theta$ 的 MVUE，并判断其是否为有效估计量。
+
+\begin{answerbox}
+\textbf{解答：}
+
+可以写出 $\mu_0$ 已知条件下的正态分布的 p.d.f.：
+
+$$
+\begin{aligned}
+f(x;\theta) =& \frac{1}{\sqrt{2\pi \theta}} \exp\left\{-\frac{(x-\mu_0)^2}{2\theta}\right\} \\
+=& \exp\left\{-\frac{1}{2}\ln(2\pi \theta) - \frac{(x-\mu_0)^2}{2\theta}\right\}
+\end{aligned}
+$$
+
+可以知道：
+
+$$
+S = \left\{x \mid -\infty < x < \infty\right\}
+$$
+$$
+p(\theta) = -\frac{1}{2\theta}
+$$
+$$
+K(x) = (x-\mu_0)^2
+$$
+$$
+H(x) = 0
+$$
+$$
+q(\theta) = -\frac{1}{2}\ln (2 \pi\theta)
+$$
+
+所以为正则指数分布类。
+
+于是，统计量 $Y_1 = \sum_{i=1}^{n} K(X_i) = \sum_{i=1}^{n} (X_i-\mu_0)^2$ 是完备充分统计量。
+
+由于：
+
+$$
+\frac{1}{\theta}Y_1 = \sum_{i=1}^{n} \frac{(X_i-\mu_0)^2}{\theta} \sim \chi^2(n)
+$$
+
+所以：
+
+$$
+E\left[\frac{1}{\theta}Y_1 \right] = n
+$$
+
+$$
+EY_1 = n\theta
+$$
+
+$$
+E\left[\frac{Y_1}{n}\right] = \theta
+$$
+
+因此 $\frac{Y_1}{n}$ 是 $\theta$ 的无偏估计量。
+
+又因为 $Y_1$ 是 $\theta$ 的完备充分统计量，所以 $\frac{Y_1}{n}$ 是 $\theta$ 的 MVUE。
+
+接下来判断 $\frac{Y_1}{n}$ 是否为有效估计量。
+
+先计算 $Var\left(\frac{Y_1}{n}\right)$，利用 $\frac{Y_1}{\theta}\sim\chi^2(n)$，$Var(\chi^2(n))=2n$：
+
+$$
+Var\left(\frac{Y_1}{n}\right) = \frac{1}{n^2} Var(Y_1) = \frac{\theta^2}{n^2} Var\left(\frac{Y_1}{\theta}\right) = \frac{\theta^2}{n^2}\cdot 2n = \frac{2\theta^2}{n}
+$$
+
+再计算单个观测的 Fisher 信息量 $I_1(\theta)$：
+
+$$
+\ln f(x; \theta) = -\frac{1}{2}\ln(2\pi \theta) - \frac{(x-\mu_0)^2}{2\theta}
+$$
+
+$$
+\frac{\partial \ln f(x; \theta)}{\partial \theta} = -\frac{1}{2\theta} + \frac{(x-\mu_0)^2}{2\theta^2}
+$$
+
+由于 $\frac{(X-\mu_0)^2}{\theta}\sim\chi^2(1)$，故 $Var\left((X-\mu_0)^2\right) = \theta^2 \cdot Var(\chi^2(1)) = 2\theta^2$，于是
+
+$$
+\begin{aligned}
+I_1(\theta) &= E\left[\left(\frac{\partial \ln f}{\partial \theta}\right)^2\right] = Var\left(\frac{\partial \ln f}{\partial \theta}\right) \\
+&= Var\left(\frac{(X-\mu_0)^2}{2\theta^2}\right) \\
+&= \frac{1}{4\theta^4} Var\left((X-\mu_0)^2\right) \\
+&= \frac{1}{4\theta^4}\cdot 2\theta^2 = \frac{1}{2\theta^2}
+\end{aligned}
+$$
+
+对 $g(\theta)=\theta$（$g'(\theta)=1$），$n$ 个样本下的 Cramér--Rao 下界为：
+
+$$
+\text{CRLB} = \frac{[g'(\theta)]^2}{n I_1(\theta)} = \frac{1}{n\cdot \frac{1}{2\theta^2}} = \frac{2\theta^2}{n}
+$$
+
+由于 $Var\left(\frac{Y_1}{n}\right) = \frac{2\theta^2}{n} = \text{CRLB}$，所以 $\frac{Y_1}{n}$ 达到了 Cramér--Rao 下界，是有效估计量。
+ 
+\end{answerbox}
+
+\section{Problem 4}
+
+Weibull 分布具有 p.d.f.
+\[
+    f(x;\theta)=\frac{k_0 x^{k_0-1}}{\theta^{k_0}}
+    \exp\left(-\frac{x^{k_0}}{\theta^{k_0}}\right),\qquad x>0
+\]
+其中 $k_0$ 已知，$\theta>0$ 未知。假设 $X_1,\ldots,X_n$ 是来自该分布的 $n$ 个独立样本。
+
+\subsection{}
+
+将 Weibull 分布写成正则指数分布类的形式，并找出一个完备充分统计量 $Y$。
+
+\begin{answerbox}
+\textbf{解答：}
+
+Weibull 分布具有 p.d.f.
+\[
+\begin{aligned}
+    f(x;\theta)=&\frac{k_0 x^{k_0-1}}{\theta^{k_0}}
+    \exp\left(-\frac{x^{k_0}}{\theta^{k_0}}\right),\qquad x>0\\
+    =& \exp\left\{\ln k_0 + (k_0-1)\ln x - k_0 \ln \theta - \frac{x^{k_0}}{\theta^{k_0}}\right\}
+\end{aligned}
+\]
+
+可以知道：
+
+$$
+S = \left\{x \mid x >0 \right\}
+$$
+$$
+p(\theta) = -\frac{1}{\theta^{k_0}}
+$$
+$$
+K(x) = x^{k_0}
+$$
+$$
+H(x) = (k_0-1)\ln x
+$$
+$$
+q(\theta) = \ln k_0 - k_0 \ln \theta
+$$
+
+所以为正则指数分布类。
+
+于是，统计量 $Y = \sum_{i=1}^{n} K(X_i) = \sum_{i=1}^{n} X_i^{k_0}$ 是完备充分统计量。
+
+
+\end{answerbox}
+
+
+\subsection{}
+
+找出 $Y$ 的一个函数，使其为 $\theta^{k_0}$ 的 MVUE。（提示：先计算 $E(Y)$。）
+
+\begin{answerbox}
+\textbf{解答：}
+
+注意 $Y = \sum_{i=1}^{n} X_i^{k_0}$ 是 $n$ 项之和，应先求单个观测的 $E\left[X^{k_0}\right]$。令 $t = x^{k_0}/\theta^{k_0}$，则 $dt = \frac{k_0 x^{k_0-1}}{\theta^{k_0}} dx$：
+
+$$
+\begin{aligned}
+E\left[X^{k_0}\right] =& \int_{0}^{\infty} x^{k_0} \cdot \frac{k_0 x^{k_0-1}}{\theta^{k_0}} \exp\left(-\frac{x^{k_0}}{\theta^{k_0}}\right) dx \\
+=& \theta^{k_0} \int_{0}^{\infty} t \exp(-t) dt \\
+=& \theta^{k_0} \cdot \Gamma(2) \\
+=& \theta^{k_0}
+\end{aligned}
+$$
+
+由期望可加性：
+
+$$
+EY = E\sum_{i=1}^{n} X_i^{k_0} = n\,E\left[X^{k_0}\right] = n\theta^{k_0},
+\qquad E\left[\frac{Y}{n}\right] = \theta^{k_0}.
+$$
+
+于是，$\dfrac{Y}{n}$ 是 $\theta^{k_0}$ 的无偏估计量。又因为 $Y$ 是 $\theta^{k_0}$ 的完备充分统计量，由 Lehmann--Scheffé 定理，$\dfrac{Y}{n} = \dfrac{1}{n}\sum_{i=1}^{n} X_i^{k_0}$ 是 $\theta^{k_0}$ 的 MVUE。
+
+\end{answerbox}
+
+\section{Problem 5}
+
+假设 $X_1,\ldots,X_n$ 是取自正态分布 $N(\theta,\sigma_0^2)$ 的 $n$ 个独立样本。对于已知常数 $a,b,c$，试找出
+\[
+    g(\theta)=a\theta^2+b\theta+c
+\]
+的 MVUE。
+
+\begin{answerbox}
+\textbf{解答：}
+
+首先，一个完备充分统计量是 $Y = \sum_{i=1}^{n} X_i$。
+
+$$
+EY = E\sum_{i=1}^{n} X_i = n\theta
+$$
+
+所以，$\frac{Y}{n}$ 是 $\theta$ 的无偏估计量。
+
+由于 $X_1,\ldots,X_n$ 相互独立，方差可加，$Var\left(\sum_{i=1}^{n} X_i\right) = \sum_{i=1}^{n} Var(X_i) = n\sigma_0^2$，故
+
+$$
+EY^2 = E\left(\sum_{i=1}^{n} X_i\right)^2 = Var\left(\sum_{i=1}^{n} X_i\right) + \left(E\sum_{i=1}^{n} X_i\right)^2 = n\sigma_0^2 + n^2 \theta^2
+$$
+
+所以，$\frac{Y^2}{n^2}-\frac{\sigma_0^2}{n}$ 是 $\theta^2$ 的无偏估计量。
+
+所以，我们要找到一个 $Y$ 的函数，使其为 $g(\theta)$ 的无偏估计量。由期望的线性性：
+
+$$
+g(Y) = a\left(\frac{Y^2}{n^2}-\frac{\sigma_0^2}{n}\right) + b \cdot \frac{Y}{n} + c
+= \frac{a}{n^2}Y^2 + \frac{b}{n}Y + \left(c - \frac{a\sigma_0^2}{n}\right)
+$$
+
+由于 $Y$ 是完备充分统计量，且 $g(Y)$ 是 $g(\theta)$ 的无偏估计量，由 Lehmann--Scheffé 定理，$g(Y)$ 是 $g(\theta)$ 的 MVUE。
+\end{answerbox}
+
+\section{Problem 6}
+
+设 $X_1,\ldots,X_n$ 为来自 Poisson$(\theta)$ 的样本，其 p.m.f. 为
+\[
+    P(X=x)=\frac{\theta^x e^{-\theta}}{x!},\qquad x=0,1,2,\ldots,\quad \theta>0.
+\]
+对于给定的非负整数 $k$，考虑函数
+\[
+    g(\theta)=P(X_1=k)=\frac{\theta^k e^{-\theta}}{k!}.
+\]
+
+\subsection{}
+
+求 $\theta$ 的完备充分统计量。
+
+\begin{answerbox}
+\textbf{解答：}
+
+对于 Poisson 分布，其 p.m.f. 为：
+
+$$
+\begin{aligned}
+P(X=x) =& \frac{\theta^x e^{-\theta}}{x!},\qquad x=0,1,2,\ldots,\quad \theta>0 \\
+=& \exp\left\{x \ln \theta - \theta - \ln x!\right\}
+\end{aligned}
+$$
+
+可以知道：
+
+$$
+S(x) = \left\{x \mid x = 0, 1, 2, \ldots\right\}
+$$
+$$
+p(\theta) = \ln \theta
+$$
+$$
+K(x) = x
+$$
+$$
+H(x) = -\ln x!
+$$
+$$
+q(\theta) = -\theta
+$$
+
+所以是正则指数分布类。
+
+于是，统计量 $Y_1 = \sum_{i=1}^{n} K(X_i) = \sum_{i=1}^{n} X_i$ 是CSS。
+
+\end{answerbox}
+
+\subsection{}
+
+定义统计量 $\psi(X_1)=I_{\{X_1=k\}}$。试证明：$\psi(X_1)$ 是 $g(\theta)$ 的一个无偏估计。
+
+\begin{answerbox}
+\textbf{解答：}
+
+$$
+E\left[\psi(X_1)\right] = P\left\{X_1=k\right\} \cdot 1 + P\left\{X_1 \neq k\right\} \cdot 0 = \frac{\theta^k}{k!}e^{-\theta} 
+$$
+
+所以，$\psi(X_1)$ 是 $g(\theta)$ 的一个无偏估计量。
+
+\end{answerbox}
+
+\subsection{}
+
+利用 Rao--Blackwell 定理，得到 $g(\theta)$ 的 MVUE。
+
+\begin{answerbox}
+\textbf{解答：}
+
+由于 $Y_1$ 是 $\theta$ 的完备充分统计量，$\psi(X_1)$ 是 $g(\theta)$ 的一个无偏估计量，所以根据 Rao--Blackwell 定理，$E\left[\psi(X_1) \mid Y_1\right]$ 是 $g(\theta)$ 的 MVUE。
+
+$$
+\begin{aligned}
+E\left[\psi(X_1) \mid Y_1 = y_1\right] =& P\left\{X_1=k \mid Y_1=y_1\right\} \\
+=& \frac{P\left\{X_1=k, Y_1=y_1\right\}}{P\left\{Y_1=y_1\right\}} \\
+\end{aligned}
+$$
+
+其中：
+$$
+Y_1 = \sum_{i=1}^{n} X_i \sim Possion(n\theta)
+$$
+
+
+所以，
+
+$$
+P\left\{Y_1 = y_1\right\} = \frac{(n\theta)^{y_1} e^{-n\theta}}{y_1!}
+$$
+
+$$
+\begin{aligned}
+P\left\{X_1=k, Y_1=y_1\right\} =& P\left\{X_1=k, \sum_{i=2}^{n} X_i = y_1-k\right\} \\
+=& P\left\{X_1=k\right\} \cdot P\left\{\sum_{i=2}^{n} X_i = y_1-k\right\}  \quad \text{独立性}\\
+=& \frac{\theta^k e^{-\theta}}{k!} \cdot \frac{((n-1)\theta)^{y_1-k} e^{-(n-1)\theta}}{(y_1-k)!} \\
+=& \frac{(n-1)^{y_1-k}\,\theta^{y_1} e^{-n\theta}}{k!(y_1-k)!} \\
+\end{aligned}
+$$
+
+$$
+\begin{aligned}
+E\left[\psi(X_1) \mid Y_1=y_1\right] =&  \frac{P\left\{X_1=k, Y_1=y_1\right\}}{P\left\{Y_1=y_1\right\}} \\
+=& \frac{(n-1)^{y_1-k}\,\theta^{y_1} e^{-n\theta}}{k!(y_1-k)!} \cdot \frac{y_1!}{(n\theta)^{y_1} e^{-n\theta}} \\
+=& \frac{y_1!}{k!(y_1-k)!} \cdot \frac{(n-1)^{y_1-k}}{n^{y_1}} \\
+=& \binom{y_1}{k}\left(\frac{1}{n}\right)^{k}\left(\frac{n-1}{n}\right)^{y_1-k} \\
+\end{aligned}
+$$
+
+在给定 $Y_1=y_1$ 下 $X_1 \sim \text{Bin}(y_1, 1/n)$。
+
+所以，根据 Rao--Blackwell 定理（结合 $Y_1$ 完备充分，再用 Lehmann--Scheffé 定理），$g(\theta)$ 的 MVUE 为
+$$
+E\left[\psi(X_1) \mid Y_1\right] = \binom{Y_1}{k}\frac{(n-1)^{Y_1-k}}{n^{Y_1}}
+$$
+（当 $Y_1 < k$ 时取 $0$）。
+
+\end{answerbox}
+
+
+\section{Problem 7}
+
+假设 $X_1,\ldots,X_n$ 是来自 Bin$(2,\theta)$ 分布的样本。我们希望找到 $g(\theta)=\theta(1+\theta)$ 的 MVUE。
+
+\subsection{}
+
+我们先试着用 Rao--Blackwell 定理来寻找 MVUE。
+
+\begin{answerbox}
+\textbf{解答：}
+
+先找到 $\theta$ 的 MVUE。对于 Bin$(2,\theta)$ 分布，其 p.m.f. 为：
+
+$$
+\begin{aligned}
+P(X=x) =& C_2^x \theta^x (1-\theta)^{2-x},\qquad x=0,1,2 \\
+=& \exp\left\{\ln C_2^x + x \ln \theta + (2-x) \ln (1-\theta)\right\} \\ 
+=& \exp\left\{\ln C_2^x + 2 \ln (1-\theta) + x \ln \frac{\theta}{1-\theta}\right\} \\
+\end{aligned}
+$$
+
+可以知道：
+
+$$S(x) = \{0, 1, 2\}$$
+$$p(\theta) = \ln \frac{\theta}{1-\theta}$$
+$$K(x) = x$$
+$$H(x) = \ln C_2^x$$
+$$q(\theta) = 2\ln (1-\theta)$$
+
+所以是正则指数分布类。
+
+于是，统计量 $Y_1 = \sum_{i=1}^{n} K(X_i) = \sum_{i=1}^{n} X_i$ 是CSS。且 $Y_1 \sim \text{Bin}(2n, \theta)$。
+
+由于：
+
+$$
+EX_1 = 2\theta
+$$
+
+所以，$\frac{X_1}{2}$ 是 $\theta$ 的无偏估计量。
+
+根据 Rao--Blackwell 定理，$E\left[\frac{X_1}{2} \mid Y_1\right]$ 是 $\theta$ 的 MVUE。
+
+$$
+\begin{aligned}
+E\left[\frac{X_1}{2} \mid Y_1 = y_1\right] =& \frac{1}{2} E\left[X_1 \mid Y_1 = y_1\right] \\
+\end{aligned}
+$$
+
+由于，$E\left[Y_1 \mid Y_1 = y_1\right] =  y_1$，又根据对称性：
+
+$$
+E\left[Y_1 \mid Y_1 = y_1\right]  = E\left[\sum_{i=1}^{n}X_i \mid Y_1 = y_1\right] =\sum_{i=1}^{n} E\left[X_i \mid Y_1 = y_1\right] = n E\left[X_1 \mid Y_1 = y_1\right]
+$$
+
+所以：
+
+$$
+E\left[X_1 \mid Y_1 = y_1\right] = \frac{y_1}{n}
+$$
+
+于是：
+
+$$
+E\left[\frac{X_1}{2} \mid Y_1 = y_1\right] = \frac{1}{2} \cdot \frac{y_1}{n} = \frac{y_1}{2n}
+$$
+
+根据 Rao--Blackwell 定理，$E\left[\frac{X_1}{2} \mid Y_1\right] = \frac{Y_1}{2n}$ 是 $\theta$ 的 MVUE。
+
+\end{answerbox}
+
+\subsection{}
+
+    \begin{enumerate}[label=(\alph*),leftmargin=2.2em]
+        \item 找出 $g(\theta)$ 的一个只依赖于 $X_1$ 的无偏估计量 $Y_2$。
+        \item 找到完备充分统计量 $Y_1$，再计算 $E(Y_2\mid Y_1)$ 得到 MVUE。
+    \end{enumerate}
+
+\begin{answerbox}
+\textbf{解答：}
+
+(a) 由于：
+
+$$
+EX_1^2 = Var(X_1) + (EX_1)^2 = 2\theta(1-\theta) + (2\theta)^2 = 2(\theta + \theta^2)
+$$
+
+所以，$Y_2 = \frac{X_1^2}{2}$ 是 $g(\theta)$ 的一个只依赖于 $X_1$ 的无偏估计量。
+
+(b) 
+
+由上一题，$Y_1 = \sum_{i=1}^{n} X_i$ 是 $\theta$ 的完备充分统计量。
+
+所以，根据 Rao--Blackwell 定理，$\psi(Y_1) =E\left[Y_2 \mid Y_1\right]$ 是 $g(\theta)$ 的 MVUE。
+
+接下来计算 $\psi(y_1) = E\left[Y_2 \mid Y_1 = y_1\right]$：
+
+$$
+\begin{aligned}
+E\left[Y_2 \mid Y_1 = y_1\right] =& \frac{1}{2} E\left[X_1^2 \mid Y_1 = y_1\right]
+\end{aligned}
+$$
+
+其中，
+
+$$
+\begin{aligned}
+E\left[X_1^2 \mid Y_1 = y_1\right] =& E\left[(X_1-1)X_1 + X_1 \mid Y_1 = y_1\right]\\
+=& E\left[(X_1-1)X_1 \mid Y_1 = y_1\right] + E\left[X_1 \mid Y_1 = y_1\right]
+\end{aligned}
+$$
+
+由上一问，$E\left[X_1 \mid Y_1 = y_1\right] = \frac{y_1}{n}$。
+
+现在计算 $E\left[(X_1-1)X_1 \mid Y_1 = y_1\right]$。注意 $(X_1-1)X_1$ 仅当 $X_1=2$ 时非零（取值 $2$），且 $\sum_{i=2}^{n} X_i \sim \text{Bin}(2n-2, \theta)$：
+$$
+\begin{aligned}
+E\left[(X_1-1)X_1 \mid Y_1 = y_1\right] =& 0 \cdot P\left\{X_1 \in \{0,1\}  \mid Y_1 = y_1\right\} + 2 \cdot P\left\{X_1=2 \mid Y_1 = y_1\right\} \\
+=& 2 \cdot \frac{P\left\{X_1=2, \sum_{i=2}^{n} X_i = y_1 - 2\right\}}{P\left\{Y_1 = y_1\right\}} \\ 
+=& 2 \cdot \frac{P\left\{X_1=2\right\} \cdot P\left\{\sum_{i=2}^{n} X_i = y_1 - 2\right\}}{P\left\{Y_1 = y_1\right\}} \quad \text{独立性}\\ 
+=& 2 \cdot \frac{C_{2n-2}^{y_1-2} \theta^{y_1} (1-\theta)^{2n-y_1}}{C_{2n}^{y_1} \theta^{y_1} (1-\theta)^{2n-y_1}} \\
+=& \frac{y_1(y_1-1)}{n(2n-1)}
+\end{aligned}
+$$
+
+所以：
+
+$$
+\begin{aligned}
+E\left[X_1^2 \mid Y_1 = y_1\right] =& E\left[(X_1-1)X_1 \mid Y_1 = y_1\right] + E\left[X_1 \mid Y_1 = y_1\right] \\
+=& \frac{y_1(y_1-1)}{n(2n-1)} + \frac{y_1}{n} \\
+=& \frac{y_1(y_1+2n-2)}{n(2n-1)}
+\end{aligned}
+$$
+
+于是：
+
+$$
+E\left[Y_2 \mid Y_1 = y_1\right] = \frac{1}{2} E\left[X_1^2 \mid Y_1 = y_1\right] = \frac{y_1(y_1+2n-2)}{2n(2n-1)}
+$$
+
+根据 Rao--Blackwell 定理，$\psi(Y_1) = E\left[Y_2 \mid Y_1\right] = \frac{Y_1(Y_1+2n-2)}{2n(2n-1)}$ 是 $g(\theta)$ 的 MVUE。
+
+
+\end{answerbox}
+
+\subsection{}
+
+我们再试着直接寻找完备充分统计量的函数，使它是 $g(\theta)$ 的无偏估计量。延用 1(b) 中的完备充分统计量 $Y_1$，通过计算 $E(Y_1)$ 与 $E(Y_1^2)$，试直接构造一个 $Y_1$ 的函数，使其为 $g(\theta)$ 的 MVUE。
+
+\begin{answerbox}
+\textbf{解答：}
+
+由于 $Y_1 \sim \text{Bin}(2n, \theta)$，所以：
+
+$$
+EY_1 = 2n\theta
+$$
+$$
+EY_1^2 = Var(Y_1) + (EY_1)^2 = 2n\theta(1-\theta) + 4n^2 \theta^2 = 2n\theta + (4n^2-2n) \theta^2
+$$
+
+所以，$\frac{Y_1}{2n}$ 是 $\theta$ 的无偏估计量，$\frac{Y_1^2-Y_1}{4n^2-2n}$ 是 $\theta^2$ 的无偏估计量。
+
+于是：
+
+$$
+g(\theta) = \theta(1+\theta) = \theta + \theta^2
+$$
+
+$$
+\hat{g} = \frac{Y_1}{2n} + \frac{Y_1^2-Y_1}{4n^2-2n} =  \frac{y_1(y_1+2n-2)}{2n(2n-1)}
+$$
+
+由于 $Y_1$ 是 $\theta$ 的完备充分统计量，所以 $\hat{g}$ 是 $g(\theta)$ 的 MVUE。
+
+\end{answerbox}
+
+\section{Problem 8}
+
+逆高斯分布常用于对寿命数据进行建模，其 p.d.f. 为
+\[
+    f(x;\theta_1,\theta_2)=\left(\frac{\theta_2}{2\pi x^3}\right)^{1/2}
+    \exp\left[-\frac{\theta_2(x-\theta_1)^2}{2\theta_1^2 x}\right],
+    \qquad 0<x<\infty
+\]
+设 $X_1,\ldots,X_n$ 为来自该分布的随机样本，求 $(\theta_1,\theta_2)$ 的完备充分统计量。
+
+\begin{answerbox}
+\textbf{解答：}
+
+对于逆高斯分布，其 p.d.f. 为：
+
+\[
+\begin{aligned}
+f(x;\theta_1,\theta_2)&=\left(\frac{\theta_2}{2\pi x^3}\right)^{1/2}
+    \exp\left[-\frac{\theta_2(x-\theta_1)^2}{2\theta_1^2 x}\right],
+    \qquad 0<x<\infty \\
+=& \exp\left\{\frac{1}{2}\ln \theta_2 - \frac{1}{2}\ln (2\pi) - \frac{3}{2} \ln x - \frac{\theta_2(x-\theta_1)^2}{2\theta_1^2 x}\right\} \\
+=& \exp\left\{\frac{1}{2}\ln \theta_2 - \frac{1}{2}\ln (2\pi) - \frac{3}{2} \ln x - \frac{\theta_2}{2\theta_1^2}\left(x + \frac{\theta_1^2}{x} - 2\theta_1\right)\right\} \\
+=& \exp\left\{\frac{1}{2}\ln \theta_2 - \frac{1}{2}\ln (2\pi) + \frac{\theta_2}{\theta_1} - \frac{3}{2} \ln x - \frac{\theta_2}{2\theta_1^2}x - \frac{\theta_2}{2}\cdot \frac{1}{x} \right\}
+\end{aligned}
+\]
+
+可以知道：
+
+$$
+S(x) = \left\{x \mid x > 0\right\}
+$$
+$$
+p(\theta_1, \theta_2) = \left(- \frac{\theta_2}{2\theta_1^2}, - \frac{\theta_2}{2}\right)
+$$
+$$
+\mathbf{K}(x) = \left(x,  \frac{1}{x}\right)
+$$
+$$
+H(x) = - \frac{3}{2} \ln x 
+$$
+$$
+q(\theta_1, \theta_2) = \frac{1}{2}\ln \theta_2 - \frac{1}{2}\ln (2\pi) + \frac{\theta_2}{\theta_1}
+$$
+
+所以是正则指数分布类。可以得到，统计量 $Y = \left(\sum_{i=1}^{n} X_i, \sum_{i=1}^{n} \frac{1}{X_i}\right)$ 是 $(\theta_1, \theta_2)$ 的完备充分统计量。
+
+\end{answerbox}
+
+\end{document}
