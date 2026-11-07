@@ -1,0 +1,34 @@
+{
+  "name": "sufe-ds-library",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "dev": "npm run build && node scripts/serve.mjs",
+    "preview": "node scripts/serve.mjs",
+    "test": "node --test scripts/*.test.mjs",
+    "check": "node scripts/check.mjs"
+  },
+  "overrides": {
+    "katex": "$katex"
+  },
+  "dependencies": {
+    "github-slugger": "2.0.0",
+    "katex": "0.19.1",
+    "rehype-katex": "7.0.1",
+    "rehype-stringify": "10.0.1",
+    "remark-gfm": "4.0.1",
+    "remark-math": "6.0.0",
+    "remark-parse": "11.0.0",
+    "remark-rehype": "11.1.2",
+    "unified": "11.0.5",
+    "unist-util-visit": "5.2.0"
+  },
+  "devDependencies": {
+    "parse5": "8.1.0"
+  }
+}

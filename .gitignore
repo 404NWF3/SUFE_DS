@@ -3,3 +3,6 @@
 .smtcmp_chat_histories/
 copilot-conversations/
 copilot-prompt/
+site/node_modules/
+site/dist/
+site/.cache/
