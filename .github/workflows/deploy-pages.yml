@@ -25,6 +25,7 @@ jobs:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /site/
+            /assistant/
             *.md
             *.url
       - name: Set up Node
@@ -39,6 +40,9 @@ jobs:
       - name: Test Markdown and path handling
         run: npm test
         working-directory: site
+      - name: Test public Q&A permissions and agent
+        run: npm test
+        working-directory: assistant
       - name: Build and check the website
         run: npm run build && npm run check
         working-directory: site

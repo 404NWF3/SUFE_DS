@@ -1,0 +1,19 @@
+{
+  "name": "sufe-ds-public-qa",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node --test test/*.test.mjs",
+    "db:generate": "drizzle-kit generate",
+    "dev": "node --env-file-if-exists=.env.local scripts/dev.mjs"
+  },
+  "devDependencies": {
+    "drizzle-kit": "0.31.10",
+    "drizzle-orm": "0.45.2",
+    "esbuild": "0.28.2"
+  },
+  "overrides": {
+    "esbuild": "$esbuild"
+  }
+}

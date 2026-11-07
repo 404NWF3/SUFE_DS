@@ -33,7 +33,7 @@
 
 ## 技术与维护
 
-使用 Node.js 静态生成脚本、原生 CSS 和少量浏览器 JavaScript。Markdown 通过 remark/rehype 渲染，公式由 KaTeX 在构建时生成；没有后台、数据库或运行时 GitHub API 请求。
+使用 Node.js 静态生成脚本、原生 CSS 和少量浏览器 JavaScript。Markdown 通过 remark/rehype 渲染，公式由 KaTeX 在构建时生成；资料浏览不依赖后台。后续增加的公开学习问答使用独立托管后端，范围与数据规则见 [问答规格](ai-assistant-spec.md)。
 
 网站工程位于 `site/`，发布产物为 `site/dist/`；依赖、产物与检查报告不进入 Git。GitHub Actions 稀疏检出网站代码、Markdown 和外链快捷方式，读取 Git 索引生成其他格式的下载清单。原始资料不进入发布产物。
 

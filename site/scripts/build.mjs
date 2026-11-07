@@ -1,4 +1,5 @@
 import { execFileSync } from "node:child_process";
+import { assistantPage } from "./assistant-page.mjs";
 import {
   readFile,
   writeFile,
@@ -190,8 +191,9 @@ function layout({
   active = "",
   pathname = "",
   isNote = false,
+  isAssistant = false,
 }) {
-  return `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${e(title)} · SUFE DS</title><meta name="description" content="${e(description)}"><meta name="theme-color" content="#f7f8f2"><link rel="icon" href="${base}assets/favicon.svg" type="image/svg+xml"><link rel="canonical" href="${siteUrl}${base}${pathname}"><meta property="og:title" content="${e(title)} · SUFE DS"><meta property="og:description" content="${e(description)}"><meta property="og:type" content="${isNote ? "article" : "website"}"><meta property="og:url" content="${siteUrl}${base}${pathname}"><link rel="stylesheet" href="${base}assets/style.css?v=${ref.slice(0, 12)}">${isNote ? `<link rel="stylesheet" href="${base}assets/katex/katex.min.css">` : ""}<script src="${base}assets/app.js" defer></script></head><body class="${isNote ? "reading-page" : ""}"><a class="skip-link" href="#main">跳到主要内容</a><header class="header"><div class="header-inner"><a class="brand" href="${base}" aria-label="SUFE DS 首页">${brand}</a><nav class="nav" aria-label="主导航"><a ${active === "home" ? 'aria-current="page"' : ""} href="${base}">首页</a><a ${active === "courses" ? 'aria-current="page"' : ""} href="${base}courses/">课程目录</a><a ${active === "resources" ? 'aria-current="page"' : ""} href="${base}resources/">全部资料</a><a ${active === "about" ? 'aria-current="page"' : ""} href="${base}about/">关于</a></nav><a class="github-link" href="${repoUrl}" ${external}>${icon("github")}<span>GitHub</span>${icon("diagonal")}</a><button class="mobile-menu" aria-label="展开导航" aria-expanded="false">${icon("menu")}</button></div></header><main id="main">${body}</main><footer class="footer"><div class="container footer-inner"><div><a class="brand footer-brand" href="${base}">${brand}</a><p>让整理过的知识，走得更远一点。</p></div><div class="footer-links"><a href="${base}courses/">浏览课程</a><a href="${base}about/">关于与贡献</a><a href="${repoUrl}" ${external}>GitHub ${icon("diagonal")}</a><span>学生自发共建 · 非学校官方网站</span></div></div><div class="container footer-bottom"><span>资料仅供学习交流，版权归原作者所有。</span><span>Made for learning, shared with everyone.</span></div></footer><div class="toast" role="status" aria-live="polite"></div></body></html>`;
+  return `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${e(title)} · SUFE DS</title><meta name="description" content="${e(description)}"><meta name="theme-color" content="#f7f8f2"><link rel="icon" href="${base}assets/favicon.svg" type="image/svg+xml"><link rel="canonical" href="${siteUrl}${base}${pathname}"><meta property="og:title" content="${e(title)} · SUFE DS"><meta property="og:description" content="${e(description)}"><meta property="og:type" content="${isNote ? "article" : "website"}"><meta property="og:url" content="${siteUrl}${base}${pathname}"><link rel="stylesheet" href="${base}assets/style.css?v=${ref.slice(0, 12)}">${isNote || isAssistant ? `<link rel="stylesheet" href="${base}assets/katex/katex.min.css">` : ""}<script src="${base}assets/app.js?v=${ref.slice(0, 12)}" defer></script>${isAssistant ? `<link rel="stylesheet" href="${base}assets/assistant.css?v=${ref.slice(0,12)}"><script type="module" src="${base}assets/assistant.js?v=${ref.slice(0,12)}"></script>` : ""}</head><body class="${isNote ? "reading-page" : ""}"><a class="skip-link" href="#main">跳到主要内容</a><header class="header"><div class="header-inner"><a class="brand" href="${base}" aria-label="SUFE DS 首页">${brand}</a><nav class="nav" aria-label="主导航"><a ${active === "home" ? 'aria-current="page"' : ""} href="${base}">首页</a><a ${active === "courses" ? 'aria-current="page"' : ""} href="${base}courses/">课程目录</a><a ${active === "resources" ? 'aria-current="page"' : ""} href="${base}resources/">全部资料</a><a ${active === "ask" ? 'aria-current="page"' : ""} href="${base}ask/">学习问答</a><a ${active === "about" ? 'aria-current="page"' : ""} href="${base}about/">关于</a></nav><a class="github-link" href="${repoUrl}" ${external}>${icon("github")}<span>GitHub</span>${icon("diagonal")}</a><button class="mobile-menu" aria-label="展开导航" aria-expanded="false">${icon("menu")}</button></div></header><main id="main">${body}</main><footer class="footer"><div class="container footer-inner"><div><a class="brand footer-brand" href="${base}">${brand}</a><p>让整理过的知识，走得更远一点。</p></div><div class="footer-links"><a href="${base}courses/">浏览课程</a><a href="${base}about/">关于与贡献</a><a href="${repoUrl}" ${external}>GitHub ${icon("diagonal")}</a><span>学生自发共建 · 非学校官方网站</span></div></div><div class="container footer-bottom"><span>资料仅供学习交流，版权归原作者所有。</span><span>Made for learning, shared with everyone.</span></div></footer><div class="toast" role="status" aria-live="polite"></div></body></html>`;
 }
 function sectionTitle(kicker, title, aside = "") {
   return `<div class="section-heading"><div><p class="eyebrow">${kicker}</p><h2>${title}</h2></div>${aside}</div>`;
@@ -316,7 +318,7 @@ for (const note of notes) {
   const siblingNotes = note.course.notes
     .filter((n) => n.id !== note.id)
     .slice(0, 5);
-  const body = `<div class="container note-layout"><aside class="note-sidebar"><a class="back-link" href="${courseHref(note.course)}">← ${e(note.course.title)}</a><p class="eyebrow">同课程笔记</p><nav aria-label="同课程笔记"><a class="current" href="${href(note)}">${e(note.title)}</a>${siblingNotes.map((n) => `<a href="${href(n)}">${e(n.title)}</a>`).join("")}</nav><a class="sidebar-all" href="${courseHref(note.course)}">全部课程资料 ${icon("arrow")}</a></aside><article class="note-main"><div class="note-heading"><div class="breadcrumbs"><a href="${base}courses/">课程</a><span>/</span><a href="${courseHref(note.course)}">${e(note.course.title)}</a><span>/</span>学习笔记</div><h1 id="${e(noteTitleId)}">${e(note.title)}</h1><div class="note-meta">${badge("Markdown", "green")}<span>约 ${Math.max(1, Math.round(note.markdown.length / 600))} 分钟阅读</span><a href="${resolver.sourceUrl(note.path)}" ${external}>查看原文 ${icon("diagonal")}</a></div><div class="reader-actions"><a class="button primary" href="${resolver.downloadUrl(note.path)}" data-download-md="${resolver.rawUrl(note.path)}" data-filename="${e(path.posix.basename(note.path))}" ${external}>${icon("download")}下载 Markdown</a><button class="button secondary" data-copy>${icon("copy")}复制链接</button></div></div><details class="mobile-toc"><summary>本文目录</summary><nav>${headings.map((h) => `<a href="#${e(h.id)}">${e(h.text)}</a>`).join("")}</nav></details><div class="prose note-prose">${noteBody}</div><div class="note-end"><span>读到这里，辛苦了。</span><a href="${courseHref(note.course)}">继续探索这门课程 ${icon("arrow")}</a></div></article><aside class="toc"><p class="eyebrow">ON THIS PAGE</p><nav aria-label="本文目录">${headings.map((h) => `<a class="depth-${h.depth}" href="#${e(h.id)}">${e(h.text)}</a>`).join("")}</nav><a class="toc-top" href="#main">↑ 回到顶部</a></aside></div>`;
+  const body = `<div class="container note-layout"><aside class="note-sidebar"><a class="back-link" href="${courseHref(note.course)}">← ${e(note.course.title)}</a><p class="eyebrow">同课程笔记</p><nav aria-label="同课程笔记"><a class="current" href="${href(note)}">${e(note.title)}</a>${siblingNotes.map((n) => `<a href="${href(n)}">${e(n.title)}</a>`).join("")}</nav><a class="sidebar-all" href="${courseHref(note.course)}">全部课程资料 ${icon("arrow")}</a></aside><article class="note-main"><div class="note-heading"><div class="breadcrumbs"><a href="${base}courses/">课程</a><span>/</span><a href="${courseHref(note.course)}">${e(note.course.title)}</a><span>/</span>学习笔记</div><h1 id="${e(noteTitleId)}">${e(note.title)}</h1><div class="note-meta">${badge("Markdown", "green")}<span>约 ${Math.max(1, Math.round(note.markdown.length / 600))} 分钟阅读</span><a href="${resolver.sourceUrl(note.path)}" ${external}>查看原文 ${icon("diagonal")}</a></div><div class="reader-actions"><a class="button primary" href="${resolver.downloadUrl(note.path)}" data-download-md="${resolver.rawUrl(note.path)}" data-filename="${e(path.posix.basename(note.path))}" ${external}>${icon("download")}下载 Markdown</a><a class="button secondary" href="${base}ask/?note=${note.id}">问问学习助教</a><button class="button secondary" data-copy>${icon("copy")}复制链接</button></div></div><details class="mobile-toc"><summary>本文目录</summary><nav>${headings.map((h) => `<a href="#${e(h.id)}">${e(h.text)}</a>`).join("")}</nav></details><div class="prose note-prose">${noteBody}</div><div class="note-end"><span>读到这里，辛苦了。</span><a href="${courseHref(note.course)}">继续探索这门课程 ${icon("arrow")}</a></div></article><aside class="toc"><p class="eyebrow">ON THIS PAGE</p><nav aria-label="本文目录">${headings.map((h) => `<a class="depth-${h.depth}" href="#${e(h.id)}">${e(h.text)}</a>`).join("")}</nav><a class="toc-top" href="#main">↑ 回到顶部</a></aside></div>`;
   await writePage(
     `notes/${note.id}`,
     layout({
@@ -340,6 +342,19 @@ await writePage(
   }),
 );
 
+await writePage("ask", layout({
+  title: "公开学习问答", active: "ask", pathname: "ask/", isAssistant: true,
+  description: "和 DeepSeek 学习助教、同学一起讨论课程问题。提问、回答与补充公开共享。",
+  body: assistantPage({courses, base, api: process.env.AI_API_BASE || "https://sufe-ds-learning-qa.arctan37.chatgpt.site"}),
+}));
+await writeFile(path.join(dist, "assets/notes-index.json"), JSON.stringify({
+  version: 1, revision: ref, notes: notes.map(note => ({
+    id: note.id, title: note.title, course: note.course.title, courseId: note.course.id,
+    path: note.path, summary: note.summary,
+    headings: [...note.markdown.matchAll(/^#{1,4}\s+(.+)$/gm)].map(m => m[1]).join(" | ").slice(0, 3000),
+  })),
+}));
+
 await writeFile(
   path.join(dist, "404.html"),
   layout({
@@ -347,7 +362,7 @@ await writeFile(
     body: `<div class="container not-found"><p class="eyebrow">404 / PAGE NOT FOUND</p><h1>这一页，暂时翻不到。</h1><p>也许链接已经变动，试试从课程目录重新出发。</p><a class="button primary" href="${base}courses/">浏览课程 ${icon("arrow")}</a></div>`,
   }),
 );
-for (const name of ["style.css", "app.js", "favicon.svg"])
+for (const name of ["style.css", "app.js", "favicon.svg", "assistant.css", "assistant.js"])
   await copyFile(path.join(site, "src", name), path.join(dist, "assets", name));
 await mkdir(path.join(dist, "assets/katex"), { recursive: true });
 await copyFile(
@@ -359,12 +374,17 @@ await cp(
   path.join(dist, "assets/katex/fonts"),
   { recursive: true },
 );
+await mkdir(path.join(dist, "assets/vendor"), {recursive:true});
+for (const [source, name] of [["marked/lib/marked.esm.js", "marked.esm.js"], ["dompurify/dist/purify.es.mjs", "purify.es.js"]])
+  await copyFile(path.join(site, "node_modules", source), path.join(dist, "assets/vendor", name));
+await copyFile(path.join(site, "node_modules/katex/dist/katex.mjs"), path.join(dist, "assets/katex/katex.js"));
 await writeFile(path.join(dist, ".nojekyll"), "");
 const urls = [
   "",
   "courses/",
   "resources/",
   "about/",
+  "ask/",
   ...courses.map((c) => `courses/${c.id}/`),
   ...notes.map((n) => `notes/${n.id}/`),
 ];

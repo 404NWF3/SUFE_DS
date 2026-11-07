@@ -6,3 +6,5 @@ copilot-prompt/
 site/node_modules/
 site/dist/
 site/.cache/
+.local/
+deepseek-api-key

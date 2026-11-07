@@ -39,4 +39,10 @@ npm --prefix site run check
 
 CI 使用稀疏检出，只取得网站代码、Markdown 和 `.url`；其余文件从 Git 索引枚举，下载时仍从原仓库取得。未检出的文件大小不显示，格式和下载不受影响。
 
-站点基础路径为 `/SUFE_DS/`，配置在 `src/config.mjs`。没有后台、数据库、在线文件转换或运行时 GitHub API 请求。
+站点基础路径为 `/SUFE_DS/`，配置在 `src/config.mjs`。资料浏览不依赖后台或数据库，也不进行在线文件转换。公开问答使用下述独立后端。
+
+## 公开学习问答
+
+`/ask/` 是公开问答入口，笔记页也可携带当前笔记提问。学习资料浏览仍是静态站点；问答由独立的托管服务保存讨论并调用 DeepSeek。前端不持有 API 密钥。服务源码与运维步骤见 [问答服务说明](../assistant/README.md)，产品范围见 [问答规格](../docs/ai-assistant-spec.md)。
+
+构建可用 `AI_API_BASE` 指定后端地址。本地开发使用 `http://127.0.0.1:8787`，生产使用已配置的托管服务地址。`assets/notes-index.json` 仅包含笔记目录、摘要和来源路径，Agent 按需从原 GitHub 仓库读取正文。

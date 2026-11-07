@@ -17,8 +17,10 @@
     "katex": "$katex"
   },
   "dependencies": {
+    "dompurify": "3.4.17",
     "github-slugger": "2.0.0",
     "katex": "0.19.1",
+    "marked": "18.1.3",
     "rehype-katex": "7.0.1",
     "rehype-stringify": "10.0.1",
     "remark-gfm": "4.0.1",
