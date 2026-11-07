@@ -323,7 +323,7 @@ img {
   stroke-linecap: round;
 }
 .hero-description {
-  font-size: 14px;
+  font-size: 18px;
   line-height: 1.95;
   color: var(--muted);
   margin-bottom: 29px;
@@ -1751,7 +1751,7 @@ img {
     font-size: 50px;
   }
   .hero-description {
-    font-size: 13px;
+    font-size: 16px;
   }
   .hero-visual {
     transform: scale(0.88);
@@ -1874,7 +1874,7 @@ img {
     letter-spacing: 0.07em;
   }
   .hero-description {
-    font-size: 12px;
+    font-size: 16px;
   }
   .desktop-break {
     display: none;
@@ -2119,12 +2119,12 @@ img {
     letter-spacing: 0.08em;
   }
   .hero h1 {
-    font-size: 46px;
+    font-size: clamp(34px, 10.8vw, 46px);
     letter-spacing: -0.04em;
     margin: 20px 0 25px;
   }
   .hero-description {
-    font-size: 12px;
+    font-size: 16px;
     line-height: 1.95;
     max-width: 340px;
     margin-bottom: 23px;
