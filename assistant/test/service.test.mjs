@@ -87,6 +87,7 @@ test('indexes reject path traversal and tools only fetch pinned Markdown paths',
 test('DeepSeek tool loop searches then reads a source and returns grounded references',async()=>{
   const id='a'.repeat(12),revision='b'.repeat(40),modelRequests=[];
   const fakeFetch=async(url,options)=>{
+    assert.equal(options.redirect,'manual','Worker fetch must not use unsupported error redirects or forward credentials');
     if(url.endsWith('notes-index.json'))return Response.json({revision,notes:[{id,path:'概率论/条件概率.md',title:'条件概率',course:'概率论',summary:'条件事件'}]});
     if(url.startsWith('https://raw.githubusercontent.com/'))return new Response('# 条件概率\nP(A|B)=P(A∩B)/P(B)，其中 P(B)>0。');
     assert.equal(url,'https://api.deepseek.com/chat/completions');const body=JSON.parse(options.body);modelRequests.push(body);

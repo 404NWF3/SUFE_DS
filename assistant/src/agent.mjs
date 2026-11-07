@@ -23,7 +23,7 @@ export function validateIndex(value) {
 }
 export async function getIndex(fetcher = fetch, signal) {
   if (fetcher === fetch && indexCache?.expires > Date.now()) return indexCache.data;
-  const data = validateIndex(JSON.parse(await boundedText(await fetcher(INDEX, {signal,redirect:'error'}), 1500000)));
+  const data = validateIndex(JSON.parse(await boundedText(await fetcher(INDEX, {signal,redirect:'manual'}), 1500000)));
   if (fetcher === fetch) indexCache = {data,expires:Date.now()+300000};
   return data;
 }
@@ -43,7 +43,7 @@ export function searchNotes(index, query, course = '') {
 export async function readNote(index, id, query, fetcher = fetch, signal) {
   const note = index.notes.find(n=>n.id===id); if(!note) return {error:'没有找到该笔记，请先搜索资料。'};
   const url = `${RAW}${index.revision}/${note.path.split('/').map(encodeURIComponent).join('/')}`;
-  const markdown = await boundedText(await fetcher(url,{signal,redirect:'error'}), 700000);
+  const markdown = await boundedText(await fetcher(url,{signal,redirect:'manual'}), 700000);
   const match = normalized(markdown).indexOf(normalized(query).slice(0,100));
   const start = match > 0 ? Math.max(0,match-1200) : 0;
   const content = markdown.slice(start,start+6500);
@@ -62,7 +62,7 @@ const system = `你是 SUFE 数据科学与大数据技术资料分享计划的�
 export async function runAgent({thread,replies,env,fetcher=fetch,signal}) {
   if (!env.DEEPSEEK_API_KEY) throw new HttpError(503,'AI 服务尚未接通，问题和同学回复已经保留。');
   let index;
-  try { index = await getIndex(fetcher, signal); } catch { throw new HttpError(502,'资料索引暂时无法读取，请稍后重试。'); }
+  try { index = await getIndex(fetcher, signal); } catch(error) { console.error('qa_index_unavailable',error.name,error.message); throw new HttpError(502,'资料索引暂时无法读取，请稍后重试。'); }
   const messages = [{role:'system',content:system}, {role:'user',content:`课程：${thread.course || '未指定'}\n当前笔记 ID：${thread.note_id || '无'}\n问题：${thread.title}\n${thread.body}`}];
   for (const reply of replies.slice(-10)) messages.push({role:reply.kind==='assistant'?'assistant':'user',content:(reply.kind==='assistant'?'':`${reply.author_name}补充：`)+reply.body.slice(0,2200)});
   messages.push({role:'user',content:'请结合问题、后续讨论和可查阅的笔记继续解答。'});
@@ -71,7 +71,7 @@ export async function runAgent({thread,replies,env,fetcher=fetch,signal}) {
     let response;
     try {
       response = await fetcher('https://api.deepseek.com/chat/completions', {
-        method:'POST', headers:{'Content-Type':'application/json',Authorization:`Bearer ${env.DEEPSEEK_API_KEY}`},signal,
+        method:'POST', headers:{'Content-Type':'application/json',Authorization:`Bearer ${env.DEEPSEEK_API_KEY}`},signal,redirect:'manual',
         body:JSON.stringify({model:env.DEEPSEEK_MODEL || 'deepseek-flash',messages,thinking:{type:'disabled'},max_tokens:2200,stream:false,...(round<2 && calls<4 ? {tools}: {})}),
       });
     } catch { throw new HttpError(504,'AI 回答超时或连接中断，请稍后重试。'); }
