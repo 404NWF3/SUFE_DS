@@ -113,6 +113,7 @@ async function openThread(id,push=true){if(!/^[a-f0-9-]{36}$/.test(id))return;th
 window.addEventListener('popstate',()=>{const id=new URLSearchParams(location.search).get('thread');if(id)openThread(id,false);else{threadId=null;threadData=null;detailSequence++;clearTimeout(pollTimer);$('[data-thread-view]').hidden=true;$('[data-compose-view]').hidden=false;}});
 async function askAi(id){
   if(!requireSession() || pendingAi===id)return;
+  error('');
   pendingAi=id;if(threadData?.thread.id===id)renderThread(threadData);
   try{await api(`/api/threads/${id}/answer`,{method:'POST',body:{}});}catch(err){error(err.message);}finally{pendingAi=null;if(threadId===id)await loadThread(id);listThreads();}
 }
