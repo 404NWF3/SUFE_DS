@@ -1,0 +1,187 @@
+% !TeX program = xelatex
+% 可编辑题目版：文字、公式、矩阵与表格均为原生 LaTeX。
+\documentclass[UTF8,a4paper,11pt,fontset=fandol]{ctexart}
+\usepackage[margin=22mm,top=20mm,bottom=20mm]{geometry}
+\usepackage{amsmath,amssymb,bm,booktabs,enumitem,needspace}
+\usepackage[hidelinks]{hyperref}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+\linespread{1.12}
+\setlist[enumerate]{label=\arabic*),leftmargin=2.2em,itemsep=6pt,topsep=5pt,parsep=2pt}
+\setlist[itemize]{leftmargin=1.8em,itemsep=3pt,topsep=4pt}
+\newenvironment{choices}{\begin{enumerate}[label=(\Alph*),leftmargin=2.3em,itemsep=1pt,topsep=3pt]}{\end{enumerate}}
+\newcommand{\blank}{\mbox{（\hspace{1.5em}）}}
+\newcommand{\problem}[2]{\par\addvspace{10pt}\Needspace{5\baselineskip}\textbf{Problem #1 (#2 pts).}\ }
+\newcommand{\examheader}[2]{%
+  {\large #1 Fall: High-dimensional Data Analysis}\par
+  \vspace{6pt}
+  \begin{center}{\Large\bfseries #2}\\[3pt]{\small 无答案版}\end{center}
+  \vspace{2pt}}
+\newcommand{\tabletitle}[1]{\par\smallskip\begin{center}#1\end{center}\vspace{-5pt}}
+\newcommand{\trans}{^{\mathsf T}}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\newcommand{\norm}[1]{\left\lVert #1\right\rVert}
+\raggedbottom
+
+% 来源：../../原试卷/Sample_Midterm_1_Fall26.pdf（原文件 7 页）
+% 保留题干与原始数据；清空选择与判断答案并删除全部解答。
+\begin{document}
+\examheader{2026}{Sample Midterm Exam 1}
+\textbf{说明：}本样卷供同学们参考。正式考试中的风格和难度与此样卷类似。
+
+\problem{1}{10}判断题，请判断以下说法为正确（T）或者错误（F）。
+\begin{enumerate}
+  \item 简单线性回归中，若用最小二乘（OLS）估计，则数据的中心点$(\bar x,\bar y)$一定落在估计出的回归线上。\blank
+  \item 在包含$p$个自变量的线性回归$Y\sim X_1+\cdots+X_p$中，用最小二乘法估计回归系数，则$\widehat\sigma^2=\mathrm{RSS}/(n-p-1)$是$\sigma_*^2$的无偏估计。\blank
+  \item 对于一个有$d$个水平的类别型变量$F$，做线性回归$Y\sim F$。若采用虚拟变量法引入$(d-1)$个虚拟变量，则所有虚拟变量的回归系数都代表该类别与$Y$的总样本均值$\bar y=\sum_{i=1}^n y_i/n$的差异。\blank
+  \item 在logistic回归，回归的$G^2$（deviance）越小，说明模型拟合得越好。\blank
+  \item 非线性回归的Gauss-Newton算法一定保证收敛到全局最优解。\blank
+\end{enumerate}
+
+\problem{2}{16}单选题，每题只有一个正确答案。
+\begin{enumerate}[itemsep=10pt]
+  \Needspace{8\baselineskip}
+  \item 在多元线性回归中，加入一个与因变量完全不相关但与其他自变量高度相关的变量，最可能导致\blank
+  \begin{choices}
+    \item 新变量的系数会非常显著（即$p$-值很小）
+    \item 所有变量系数的标准误都会减小
+    \item 原来自变量的系数出现变化，甚至由显著变得不显著
+    \item 模型的$R^2$显著提高
+  \end{choices}
+  \Needspace{7\baselineskip}
+  \item 以下关于$R_{\mathrm{adj}}^2$的说法中，正确的是\blank
+  \begin{choices}
+    \item 其唯一目标是提升模型在训练数据上的拟合优度
+    \item 它可以帮助我们避免过拟合
+    \item 它确保了模型中所有变量的系数都是统计显著的
+    \item 当选取的变量数$k$固定时，$R_{\mathrm{adj}}^2$就完全确定了
+  \end{choices}
+  \Needspace{8\baselineskip}
+  \item 关于lasso和岭回归的说法，错误的是\blank
+  \begin{choices}
+    \item lasso可以将某些系数压缩至0，从而实现变量选择；而岭回归通常做不到
+    \item 两者都可以用于处理变量数量多于样本数量（$p>n$）的情况
+    \item 两者估计出的回归系数都是有偏的
+    \item 对于每一个自变量，lasso生成的回归系数的长度（即绝对值）一定比岭回归要小
+  \end{choices}
+  \Needspace{7\baselineskip}
+  \item 关于主成分分析，以下说法错误的是\blank
+  \begin{choices}
+    \item 主成分是原始变量的线性组合，且各主成分之间相互正交
+    \item 通常需要保留所有特征值大于0的主成分
+    \item 载荷表示主成分中每个变量的权重
+    \item 得分表示每个样本点在主成分方向上的值
+  \end{choices}
+\end{enumerate}
+
+\problem{3}{15}在一个简单线性回归中，样本数量为$n=14$，计算出$\mathrm{SYY}=20$，$\mathrm{SXX}=20$，$\mathrm{SXY}=10$，$\mathrm{RSS}=15$。
+\begin{enumerate}[label=\arabic*.]
+  \item (5 pts) 斜率的最小二乘估计$\widehat\beta_1$。
+  \item (5 pts) 求出可决系数$R^2$。
+  \item (5 pts) 构造$t$-检验来判断$\beta_1^*$是否显著非0。这里显著水平选$\alpha=0.05$，已知$t(12)$-分布的上分位数$t_{\alpha/2}(12)=2.45$。
+\end{enumerate}
+
+\problem{4}{14}假设一个线性回归中，有一个连续自变量为$X$和一个分类自变量$F$，$F$有3个类别。样本量为$n=10$。我们从一个只有截距的模型开始，用向前选变量法做了三步，其中$F$生成的虚拟变量整组一起加进来。表1给出了过程中拟合的四个模型以及相应的RSS。注意模型(2)、(3)、(4)也都自然包含了截距。
+
+\tabletitle{表1}
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{clc}
+\toprule
+序号 & 模型 & RSS\\
+\midrule
+(1) & $Y\sim1$（只有截距的模型） & 100\\
+(2) & $Y\sim X$ & 48\\
+(3) & $Y\sim X+F$ & 24\\
+(4) & $Y\sim X+F+X:F$ & 18\\
+\bottomrule
+\end{tabular}
+\end{center}
+\begin{enumerate}[label=\arabic*.]
+  \item (7 pts) 我们知道，adjusted $R^2$的定义为
+  \begin{equation*}
+    R_{\mathrm{adj}}^2=1-\frac{n-1}{n-k-1}(1-R^2),
+  \end{equation*}
+  其中$k$为模型中包含的自变量个数。试用此准则选出合适的模型。
+  \item (7 pts) 已知AIC的定义为
+  \begin{equation*}
+    \mathrm{AIC}=n\log\left(\frac{\mathrm{RSS}}{n}\right)+2(k+1).
+  \end{equation*}
+  试用此准则选出合适的模型。（已知：$e^{0.2}\approx1.2$，$e^{0.4}\approx1.5$。）
+\end{enumerate}
+
+\newpage
+\problem{5}{14}一次商业推广活动中，商家统计了一些用户的基本信息，以及每位用户是否最后有购买行为。我们通过logistic回归来分析用户的购买行为受哪些因素影响。我们选用的数据样本量为$n=500$，每位用户的信息包括
+\begin{itemize}
+  \item $X$：收入（万元），为连续变量；
+  \item $A$：性别，为分类变量，分为“女性（F）”、“男性（M）”；
+  \item $Y$：是否购买，为0/1变量。若存在购买行为，则取值为1；反之则取值为0。
+\end{itemize}
+现在拟合一个logistic回归模型$Y\sim X+A+X:A$，得到表2中的summary结果。
+
+\tabletitle{表2：Summary table}
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{lrrrr}
+\toprule
+ & Estimate & Std.\ Error & $z$ value & $\Pr(>|z|)$\\
+\midrule
+(Intercept) & 1.55 & 1.20 & 1.32 & 0.19\\
+$X$ & 0.47 & 0.22 & 2.11 & 0.035\\
+$M$ & $-1.66$ & 0.53 & $-3.15$ & 0.0016\\
+$X:M$ & 0.35 & 0.40 & 0.88 & 0.38\\
+\midrule
+\multicolumn{5}{l}{Null Deviance: 188.50 on 499 degrees of freedom}\\
+\multicolumn{5}{l}{Residual deviance: 43.12 on 496 degrees of freedom}\\
+\bottomrule
+\end{tabular}
+\end{center}
+\begin{enumerate}
+  \item (5 pts) 对于一个收入为$x_{\mathrm{new}}=1.5$的女性新用户，试用表中的数据给出其购买的概率。可以只列式不计算。
+  \item (5 pts) 我们比较女性用户与男性用户的购买odds（即购买概率/不购买概率）。固定收入水平$x=1$，构建一个全模型和一个主效应模型。在这两个模型之下，分别说明两性用户的购买odds之间的关系。
+  \item (4 pts) 在未来的商业推广活动中，对用户群体购买行为的预测决定了营销策略的方向。经理A说：“我们应该不要漏掉可能的客户，即使这样会使我们在未来的商业推广活动中产生更高的费用。”经理B说：“我们应该跟专注特定的用户群体进行精准营销，这样可以节省营销成本。”针对两个经理的话，我们分别应该怎么去预测下次营销活动中新用的购买行为？
+\end{enumerate}
+
+\problem{6}{16}对于线性回归，我们令$A=(\bm X\trans\bm X)^{-1}\bm X\trans\in\mathbb R^{(p+1)\times n}$，则最小二乘估计量可以写为$\widehat{\bm\beta}=A\bm Y$。现在给定任何一个满足$\widetilde A\bm X=I$的常数矩阵$\widetilde A\in\mathbb R^{(p+1)\times n}$，考虑一个估计量$\widetilde{\bm\beta}=\widetilde A\bm Y$。
+\begin{enumerate}[label=\arabic*.]
+  \item (4 pts) 证明：$\widetilde{\bm\beta}$为$\bm\beta^*$的无偏估计量。
+  \item (4 pts) 对于任何常数向量$\bm c\in\mathbb R^{p+1}$，令$u_1=\bm c\trans\widehat{\bm\beta}$，$u_2=\bm c\trans\widetilde{\bm\beta}$。证明：$u_1,u_2$均为$\bm c\trans\bm\beta^*$的无偏估计量。
+  \item (4 pts) 证明：$\Cov(u_1,u_2)=\Var(u_1)$。
+  \item (4 pts) 利用3的结论，证明$\Var(u_1)\le\Var(u_2)$。
+\end{enumerate}
+
+\newpage
+\problem{7}{15}假设两个自变量$Z_1,Z_2$分别有一列样本值$\bm Z_1=(z_{11},\ldots,z_{n1})\trans\in\mathbb R^n$，$\bm Z_2=(z_{12},\ldots,z_{n2})\trans\in\mathbb R^n$，它都已中心化、标准化，并且互相正交。即
+\begin{equation*}
+  \sum_{i=1}^n z_{i1}/n=\sum_{i=1}^n z_{i2}/n=0,\qquad
+  \norm{\bm Z_1}^2=\norm{\bm Z_2}^2=1,\qquad
+  \bm Z_1\trans\bm Z_2=0.
+\end{equation*}
+另外有因变量$Y$的样本值$\bm Y=(y_1,\ldots,y_n)\trans$，也已做好中心化，即$\sum_{i=1}^n y_i/n=0$。
+\begin{enumerate}[label=\arabic*.]
+  \item (5 pts) 考虑简单回归$Y\sim Z_1$，由于变量都已中心化，可以不用加入截距。此时最小二乘的目标为
+  \begin{equation*}
+    \min_{\gamma_1}\norm{\bm Y-\gamma_1\bm Z_1}^2.
+  \end{equation*}
+  证明：此时回归的$R^2$等于$\rho_1^2$，其中
+  \begin{equation*}
+    \rho_1=\frac{\bm Z_1\trans\bm Y}{\norm{\bm Z_1}\norm{\bm Y}}
+  \end{equation*}
+  为$Z_1$与$Y$的样本相关系数。
+
+  \item (5 pts) 考虑二元回归$Y\sim Z_1+Z_2$，同样不用加入截距。证明：用最小二乘法估计出的两个斜率为
+  \begin{equation*}
+    \widehat\gamma_1=\bm Z_1\trans\bm Y,\qquad
+    \widehat\gamma_2=\bm Z_2\trans\bm Y.
+  \end{equation*}
+
+  \item (5 pts) 假设变量$X_1=Z_1$，$X_2=Z_1+Z_2$，其样本即为$\bm X_1=\bm Z_1$，$\bm X_2=\bm Z_1+\bm Z_2$。现在用$X_1,X_2$作为自变量，做回归$Y\sim X_1+X_2$（不加截距），并用岭回归做正则化，即求解
+  \begin{equation*}
+    \min_{\beta_1,\beta_2}
+    \norm{\bm Y-\beta_1\bm X_1-\beta_2\bm X_2}^2+\lambda(\beta_1^2+\beta_2^2).
+  \end{equation*}
+  请求出岭回归的解，将其写成依赖于$\widehat\gamma_1,\widehat\gamma_2,\lambda$的表达式。
+\end{enumerate}
+\end{document}

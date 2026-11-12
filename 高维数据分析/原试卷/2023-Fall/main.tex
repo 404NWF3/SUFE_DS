@@ -1,0 +1,186 @@
+% !TeX program = xelatex
+% 可编辑题目版：文字、公式、矩阵与表格均为原生 LaTeX。
+\documentclass[UTF8,a4paper,11pt,fontset=fandol]{ctexart}
+\usepackage[margin=22mm,top=20mm,bottom=20mm]{geometry}
+\usepackage{amsmath,amssymb,bm,booktabs,enumitem,needspace}
+\usepackage[hidelinks]{hyperref}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+\linespread{1.12}
+\setlist[enumerate]{label=\arabic*),leftmargin=2.2em,itemsep=6pt,topsep=5pt,parsep=2pt}
+\setlist[itemize]{leftmargin=1.8em,itemsep=3pt,topsep=4pt}
+\newenvironment{choices}{\begin{enumerate}[label=(\Alph*),leftmargin=2.3em,itemsep=1pt,topsep=3pt]}{\end{enumerate}}
+\newcommand{\blank}{\mbox{（\hspace{1.5em}）}}
+\newcommand{\problem}[2]{\par\addvspace{10pt}\Needspace{5\baselineskip}\textbf{Problem #1 (#2 pts).}\ }
+\newcommand{\examheader}[2]{%
+  {\large #1 Fall: High-dimensional Data Analysis}\par
+  \vspace{6pt}
+  \begin{center}{\Large\bfseries #2}\\[3pt]{\small 无答案版}\end{center}
+  \vspace{2pt}}
+\newcommand{\tabletitle}[1]{\par\smallskip\begin{center}#1\end{center}\vspace{-5pt}}
+\newcommand{\trans}{^{\mathsf T}}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\newcommand{\norm}[1]{\left\lVert #1\right\rVert}
+\raggedbottom
+
+% 来源：../../原试卷/Midterm_solutions_Fall23.pdf（原文件 7 页）
+% 保留题干与原始数据；清空判断答案并删除全部解答。
+\begin{document}
+\examheader{2023}{Midterm Exam}
+\textbf{说明：}
+\begin{enumerate}[label=\arabic*.,itemsep=3pt]
+  \item 期中考试时间为2023年11月6日10:05-12:05。
+  \item 总共6道大题，总分100分。
+  \item 除笔以外，不允许带任何其它工具（包括自己的草稿纸）。手机请一律交到讲台上。
+  \item 请将答案统一写在答题纸上。
+  \item 步骤分将占有重要比例，请写清楚解题过程。
+\end{enumerate}
+
+\problem{1}{20}判断题，请判断以下说法为正确（T）或者错误（F）。
+\begin{enumerate}
+  \item 对于简单线性回归，拟合的回归线一定经过数据的中心点$(\bar x,\bar y)$。\blank
+  \item 回归$Y\sim X_1$的RSS一定不大于$Y\sim X_1+X_2$的RSS。\blank
+  \item 对于多元线性回归，RSS符合一个卡方分布。\blank
+  \item 若$F$为一个$d$个类别的factor，则回归$Y\sim F$的$t$-统计量的自由度为$d$。\blank
+  \item 向前选变量法（forward selection）不适用于$p>n$的情况。\blank
+  \item 一般来说，模型的灵活度越高，预测时方差越小，偏差越大。\blank
+  \item 对于线性回归的lasso方法，随着tuning parameter $\lambda$的增加，选出的变量个数会逐渐减少。\blank
+  \item 非线性回归的Gauss-Newton法一定可以收敛到似然函数的极大值点。\blank
+  \item 对于logistic回归模型，回归的$G^2$（deviance）越小，说明模型拟合得越好。\blank
+  \item 在logistic回归中，若$Y$为因变量，$\theta$为成功概率，那么odds of success $\theta/(1-\theta)$可以表示为自变量的线性函数。\blank
+\end{enumerate}
+
+\newpage
+\problem{2}{20}假设一个多元线性模型，$n=8$，$p=3$，样本值在表1中给出。另外知道$t$-分布的上分位数$t_{0.025}(4)=2.78$。
+
+\tabletitle{表1：样本值}
+\begin{center}
+\renewcommand{\arraystretch}{1.22}
+\begin{tabular}{ccccc}
+\toprule
+样本 & $X_1$ & $X_2$ & $X_3$ & $Y$\\
+\midrule
+1 & $1/\sqrt8$  & $1/\sqrt8$  & $1/\sqrt8$  & $-1$\\
+2 & $1/\sqrt8$  & $1/\sqrt8$  & $-1/\sqrt8$ & $-1$\\
+3 & $1/\sqrt8$  & $-1/\sqrt8$ & $1/\sqrt8$  & $2$\\
+4 & $1/\sqrt8$  & $-1/\sqrt8$ & $-1/\sqrt8$ & $2$\\
+5 & $-1/\sqrt8$ & $1/\sqrt8$  & $1/\sqrt8$  & $-1$\\
+6 & $-1/\sqrt8$ & $1/\sqrt8$  & $-1/\sqrt8$ & $-1$\\
+7 & $-1/\sqrt8$ & $-1/\sqrt8$ & $1/\sqrt8$  & $2$\\
+8 & $-1/\sqrt8$ & $-1/\sqrt8$ & $-1/\sqrt8$ & $-2$\\
+\bottomrule
+\end{tabular}
+\end{center}
+\begin{enumerate}
+  \item (7 pts) 请求出最小二乘估计量$\widehat{\bm\beta}$。
+  \item (7 pts) 请求出$\beta_1^*$置信水平为95\%的置信区间。
+  \item (6 pts) 若采用$\lambda=2$的lasso，请求出估计量$\widehat{\bm\beta}^{\mathrm{lasso}}$。
+\end{enumerate}
+
+\problem{3}{16}假设一个线性回归模型可能包含两个自变量$X_1,X_2$。若只包含$X_1$，得到$\mathrm{RSS}_1=21$。若只包含$X_2$，得到$\mathrm{RSS}_2=24$。若同时包含$X_1,X_2$，则得到$\mathrm{RSS}_3=15$。另外已知$n=10$。
+\begin{enumerate}
+  \item (8 pts) 根据AIC的定义
+  \begin{equation*}
+    \mathrm{AIC}=n\log\left(\frac{\mathrm{RSS}}{n}\right)+2(k+1),
+  \end{equation*}
+  试用AIC作为准则，决定应该使用哪个模型。（已知：$e^{0.2}=1.221$）
+  \item (8 pts) 根据Adjusted $R^2$的定义
+  \begin{equation*}
+    R_{\mathrm{adj}}^2=1-\frac{n-1}{n-k-1}(1-R^2),
+  \end{equation*}
+  试用Adjusted $R^2$作为准则，决定应该使用哪个模型。
+\end{enumerate}
+
+\newpage
+\problem{4}{18}有一批信用卡数据，样本量为$n=300$，数据包含了每位用户的以下信息：
+\begin{itemize}
+  \item $X$：收入，为连续变量；
+  \item $F$：教育程度，为分类变量，共分为“高等（A）”、“中等（B）”、“初等（C）”三个级别；
+  \item $Y$：是否存在逾期行为，为0/1变量。若存在逾期行为，则取值为1；反之则取值为0。
+\end{itemize}
+现在拟合一个logistic回归模型$Y\sim X+F+X:F$，得到表2中的summary结果。我们忽略关于系数显著性的检验结果，即summary中所有变量都用上。
+
+\tabletitle{表2：Summary table}
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.12}
+\begin{tabular}{lrrrr}
+\toprule
+ & Estimate & Std.\ Error & $z$ value & $\Pr(>|z|)$\\
+\midrule
+(Intercept) & 2.02 & 1.53 & 1.32 & 0.19\\
+$X$ & $-2.07$ & 1.05 & $-1.97$ & 0.05\\
+$B$ & 1.47 & \textbf{(a)} & 4.44 & 0.00\\
+$C$ & 0.28 & 1.83 & 0.15 & 0.88\\
+$X:B$ & $-1.68$ & 0.66 & $-2.54$ & 0.01\\
+$X:C$ & $-1.82$ & 0.96 & $-1.89$ & 0.06\\
+\midrule
+\multicolumn{5}{l}{Null Deviance: 255.97 on 399 degrees of freedom}\\
+\multicolumn{5}{l}{Residual deviance: 132.11 on \textbf{(b)} degrees of freedom}\\
+\bottomrule
+\end{tabular}
+\end{center}
+\begin{enumerate}
+  \item (6 pts) 将表中的(a)(b)用给出的数字补充完整，可以只列式不计算。另外请仅用表中数字给出变量$X$的系数$\beta_1^*$置信水平为95\%的置信区间。
+  \item (6 pts) 若有一个新用户，其收入为$x_{\mathrm{new}}=20{,}000$，教育水平为“中等”。试用表中的数据给出其逾期的概率。可以只列式不计算。
+  \item (6 pts) 如果把$Y$的定义颠倒，即若存在逾期行为，则$Y$取0，反之则$Y$取1。再拟合logistic回归模型时，是否所有的回归系数恰好为原来值的相反数？请说明理由。
+\end{enumerate}
+
+\problem{5}{14}假设一个简单线性模型
+\begin{equation*}
+  y_i=\beta_0^*+\beta_1^*x_i+e_i,\qquad 1\le i\le n,
+\end{equation*}
+其中$e_i\overset{\mathrm{i.i.d.}}{\sim}N(0,\sigma_*^2)$。假设用最小二乘法得出的估计值为$\widehat\beta_0,\widehat\beta_1$，回归的$R^2$记为$r^2$。假设我们对数据进行如下变换
+\begin{equation*}
+  y_i'=\frac{y_i-c_1}{d_1},\qquad x_i'=\frac{x_i-c_2}{d_2}.
+\end{equation*}
+然后用数据$(x_1',y_1'),\ldots,(x_n',y_n')$进行最小二乘估计，得到估计值$\widehat\beta_0',\widehat\beta_1'$，以及$R^2$的值$r'^2$。
+\begin{enumerate}
+  \item (7 pts) 试推出$\widehat\beta_0',\widehat\beta_1'$与$\widehat\beta_0,\widehat\beta_1$的关系。
+  \item (7 pts) 证明$r^2=r'^2$。
+\end{enumerate}
+
+\newpage
+\problem{6}{12}假设有$q$个随机变量组成的一个随机向量$\bm W=(W_1,\ldots,W_q)\trans$，它的协方差矩阵为$\Cov(\bm W)=\Sigma$。
+\begin{enumerate}
+  \item (4 pts) 从$\bm W$出发，我们构造$p$个自变量$X_1,\ldots,X_p$，其中$p>q$。具体如下：
+  \begin{equation*}
+    \begin{aligned}
+      X_1&=a_{11}W_1+\cdots+a_{1q}W_q\\
+      &\cdots\\
+      X_p&=a_{p1}W_1+\cdots+a_{pq}W_q,
+    \end{aligned}
+  \end{equation*}
+  其中$a_{ij}$均为取定的常数。
+
+  记$\bm X=(X_1,\ldots,X_p)\trans$，同时记
+  \begin{equation*}
+    A=\begin{bmatrix}
+      a_{11}&\cdots&a_{1q}\\
+      &\cdots&\\
+      a_{p1}&\cdots&a_{pq}
+    \end{bmatrix}\in\mathbb R^{p\times q}.
+  \end{equation*}
+  注意到$\bm X$的协方差矩阵为$\Cov(\bm X)=A\Sigma A\trans$。现在对这$p$个自变量$X_1,\ldots,X_p$进行主成分分析。试证明：只存在$q$个有效的主成分（即前$q$个主成分代表了自变量的全部信息）。
+
+  \item (4 pts) 现在假设1)中$\bm X$对$\bm W$的依赖关系中有一些随机扰动：
+  \begin{equation*}
+    \begin{aligned}
+      X_1&=a_{11}W_1+\cdots+a_{1q}W_q+\epsilon_1\\
+      &\cdots\\
+      X_p&=a_{p1}W_1+\cdots+a_{pq}W_q+\epsilon_p,
+    \end{aligned}
+  \end{equation*}
+  其中$\epsilon_1,\ldots,\epsilon_p$为i.i.d.\ $N(0,\tau^2)$分布的随机变量，且均与$\bm W$互相独立。此时再对这$p$个自变量$X_1,\ldots,X_p$进行主成分分析。试证明：此时$\Cov(\bm X)$的前$q$个特征值为
+  \begin{equation*}
+    \lambda_1+\tau^2\ge\cdots\ge\lambda_q+\tau^2,
+  \end{equation*}
+  其中$\lambda_1\ge\cdots\ge\lambda_q$为$A\Sigma A\trans$的前$q$个特征值。
+
+  \item (4 pts) 延续2)中的设定。试证明：前$q$个主成分代表的信息占总信息的比例为
+  \begin{equation*}
+    \frac{\sum_{i=1}^q\lambda_i+q\tau^2}{\sum_{i=1}^q\lambda_i+p\tau^2}.
+  \end{equation*}
+\end{enumerate}
+\end{document}

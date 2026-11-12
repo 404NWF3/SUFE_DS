@@ -1,0 +1,117 @@
+\documentclass[11pt]{ctexart}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{2026 Fall: High-dimensional Data Analysis}
+\fancyhead[R]{模拟卷 · 自测版（无答案）}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\newcommand{\fillblank}{\mbox{（\qquad）}}
+
+\title{\textbf{模拟期中试卷 1}\\[0.2em]
+\large （按第 1--6 讲范围自编 · 无答案）}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+\vspace{-1.2cm}
+
+\noindent\textbf{说明：}本卷按照课程第 1--6 讲的范围自编（至 ridge / lasso / elastic net 为止，含 Stein 缩减；不含 logistic 回归与 Gauss--Newton），题型、分值与难度仿照样卷。判断题与单选题请把答案写在括号内。
+
+\vspace{0.6em}
+
+\noindent\textbf{Problem 1 (10 pts).} 判断题，请判断以下说法为正确 (T) 或者错误 (F)。
+\begin{enumerate}
+\item 在简单线性回归中，$\mathrm{Cov}(\hat\beta_0, \hat\beta_1) = -\sigma^{*2}\bar{x}/SXX$，因此当 $\bar{x} = 0$ 时 $\hat\beta_0$ 与 $\hat\beta_1$ 不相关。\fillblank
+\item 训练集上的 RSS 越小，模型对新数据的预测误差一定越小。\fillblank
+\item 在岭回归中，tuning parameter $\lambda$ 越大，回归系数估计的方差越小，偏差平方越大。\fillblank
+\item 三次样条在每个结点处函数值、一阶导数与二阶导数都连续，但三阶导数允许发生跳跃。\fillblank
+\item 主成分分析中，主成分的载荷（loadings）依赖于因变量 $Y$ 的取值。\fillblank
+\end{enumerate}
+
+\noindent\textbf{Problem 2 (16 pts).} 单选题，每题只有一个正确答案。
+\begin{enumerate}
+\item 在包含 $p$ 个自变量的线性回归中，$\sigma_*^2$ 的无偏估计是\fillblank\\
+(A) $\mathrm{RSS}/n$\quad
+(B) $\mathrm{RSS}/(n-1)$\quad
+(C) $\mathrm{RSS}/(n-p-1)$\quad
+(D) $\mathrm{RSS}/(n-p)$
+\item 已知某自变量 $X_j$ 对其余自变量回归的 $R_j^2 = 0.96$，则其方差膨胀因子 $\mathrm{VIF}_j$ 为\fillblank\\
+(A) $4$\quad
+(B) $12.5$\quad
+(C) $25$\quad
+(D) $96$
+\item 关于 AIC 与 BIC，下列说法正确的是\fillblank\\
+(A) AIC 对变量个数的惩罚总是比 BIC 更重\\
+(B) 当 $n \geq 8$ 时，BIC 的惩罚比 AIC 更重，因此 BIC 选出的变量个数一般不会多于 AIC\\
+(C) AIC 与 BIC 都是预测误差的无偏估计\\
+(D) $\mathrm{BIC} = n\log(\mathrm{RSS}/n) + 2(k+1)$
+\item 在正交设计（$X^{\top}X = I$）下，lasso 的解为软阈值 $\mathrm{sign}(z)(|z|-\lambda)_+$，岭回归的解为 $z/(1+\lambda)$。下列说法正确的是\fillblank\\
+(A) lasso 对每个系数的压缩程度一定比岭回归大\\
+(B) lasso 可以把系数精确压缩为 $0$（从而实现变量选择），而岭回归不能\\
+(C) 岭回归也可以把系数精确压缩为 $0$\\
+(D) 两者的差别仅在于计算速度
+\end{enumerate}
+
+\noindent\textbf{Problem 3 (15 pts).} 在一个简单线性回归中，样本数量为 $n = 25$，计算出 $\mathrm{SYY} = 40$，$\mathrm{SXX} = 50$，$\mathrm{SXY} = 25$，$\mathrm{RSS} = 30$。
+\begin{enumerate}
+\item (5 pts) 求斜率的最小二乘估计 $\hat\beta_1$。
+\item (5 pts) 构造 $\beta_1^*$ 的一个 $95\%$ 置信水平的置信区间（已知 $t_{0.025}(23) = 2.07$）。
+\item (5 pts) 求出可决系数 $R^2$。
+\end{enumerate}
+
+\noindent\textbf{Problem 4 (14 pts).} 假设一个线性回归中，有一个连续自变量 $X$ 和一个分类自变量 $F$（$F$ 有 $3$ 个类别）。样本量为 $n = 12$。我们从一个只有截距的模型开始，用向前选变量法做了三步，其中 $F$ 生成的虚拟变量整组一起加进来。表~\ref{tab:mock1p4} 给出了四个模型及相应的 RSS。注意模型 (2), (3), (4) 也都自然包含了截距。
+
+\begin{table}[h]
+\centering
+\caption{Problem 4 的四个模型}
+\label{tab:mock1p4}
+\begin{tabular}{clc}
+\toprule
+序号 & 模型 & RSS \\
+\midrule
+(1) & $Y \sim 1$（只有截距的模型） & 120 \\
+(2) & $Y \sim X$ & 60 \\
+(3) & $Y \sim X + F$ & 30 \\
+(4) & $Y \sim X + F + X : F$ & 24 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{enumerate}
+\item (7 pts) 用 adjusted $R^2$ 准则（$R^2_{\mathrm{adj}} = 1 - \frac{n-1}{n-k-1}(1-R^2)$，$k$ 为自变量个数）选出合适的模型。
+\item (7 pts) BIC 的定义为 $\mathrm{BIC} = n\log(\mathrm{RSS}/n) + (k+1)\log n$。试用此准则选出合适的模型。（已知：$\log 12 \approx 2.5$，$e^{0.2} \approx 1.2$，$e^{0.4} \approx 1.5$，$e^{0.21} \approx 1.23$，$e^{0.42} \approx 1.52$。）
+\end{enumerate}
+
+\noindent\textbf{Problem 5 (15 pts).} 设随机向量 $X = (X_1, X_2)^{\top}$ 的协方差矩阵为
+\[
+\Gamma = \begin{pmatrix} 2 & 1 \\ 1 & 2 \end{pmatrix}.
+\]
+\begin{enumerate}
+\item (5 pts) 求 $\Gamma$ 的两个特征值及对应的单位特征向量，并写出第一主成分的方向 $u_1$（载荷）。
+\item (5 pts) 第一主成分解释的方差比例是多少？两个主成分各自解释的方差是多少？
+\item (5 pts) 用 Lagrange 乘子法证明如下结论：$\max_{a:\|a\|=1} a^{\top}\Gamma a$ 的解必满足 $\Gamma a = \lambda a$（即 $a$ 是特征向量），且目标函数的最大值恰为对应的特征值 $\lambda$。据此说明第一主成分为什么取最大特征值对应的特征向量。
+\end{enumerate}
+
+\noindent\textbf{Problem 6 (16 pts).} 考虑已中心化的多元线性回归 $Y = X\beta^* + e$，$e \sim N(0, \sigma^{*2}I_n)$（不含截距项）。岭回归定义为
+\[
+\min_b\ \|Y - Xb\|^2 + \lambda\|b\|^2, \qquad \lambda > 0.
+\]
+\begin{enumerate}
+\item (5 pts) 求出岭回归的闭式解，并证明 $X^{\top}X + \lambda I$ 恒为正定矩阵、必定可逆——哪怕 $p > n$（即 $X^{\top}X$ 本身奇异时）也成立。
+\item (5 pts) 写出岭回归估计量的期望，证明当 $\lambda > 0$ 时它一般是有偏的，并指出偏差项的形式。
+\item (6 pts) 现设正交设计 $X^{\top}X = I_p$。对某个分量写出岭回归估计的方差与偏差平方（均为 $\lambda$ 的函数），并求出使预测误差 $\mathrm{PE}(\lambda) = \mathrm{Var} + \mathrm{bias}^2 + \sigma^{*2}$ 最小的最优 $\lambda$（用 $\beta_j^*$ 与 $\sigma_*^2$ 表示）。
+\end{enumerate}
+
+\noindent\textbf{Problem 7 (14 pts).} 设 $y_1, \ldots, y_n \overset{i.i.d.}{\sim} N(\mu, 1)$（$n > 2$），要估计 $\mu$ 并预测新观测 $y_{\mathrm{new}} = \mu + e_{\mathrm{new}}$（$\mathrm{Var}(e_{\mathrm{new}}) = 1$，与样本独立）。考虑把样本均值再乘以系数 $c$（$0 \le c \le 1$）的估计量 $\hat\mu(c) = c\bar{y}$。
+\begin{enumerate}
+\item (7 pts) 写出 $\hat\mu(c)$ 的预测误差 $\mathrm{PE}(c) = \mathrm{Var} + \mathrm{bias}^2 + 1$ 关于 $c$ 的表达式，求出最优的 $c^*$（用 $\mu$ 与 $n$ 表示），并验证 $\mathrm{PE}(c^*) < \mathrm{PE}(1)$（即 Stein 缩减现象）。
+\item (7 pts) 考虑惩罚最小二乘 $\min_\beta\ \sum_{i=1}^n (y_i - \beta)^2 + \lambda\beta^2$。求出其解 $\hat\beta$（用 $\bar{y}$, $n$, $\lambda$ 表示），并求出使该解恰好具有 Stein 形式 $\frac{\bar{y}^2}{\bar{y}^2 + 1/n}\,\bar{y}$ 的 $\lambda$（用 $\bar{y}$ 与 $n$ 表示）。
+\end{enumerate}
+
+\end{document}

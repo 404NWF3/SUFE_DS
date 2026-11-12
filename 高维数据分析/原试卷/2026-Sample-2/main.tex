@@ -1,0 +1,245 @@
+% !TeX program = xelatex
+% 可编辑题目版：文字、公式、矩阵与表格均为原生 LaTeX。
+\documentclass[UTF8,a4paper,11pt,fontset=fandol]{ctexart}
+\usepackage[margin=22mm,top=20mm,bottom=20mm]{geometry}
+\usepackage{amsmath,amssymb,bm,booktabs,enumitem,needspace}
+\usepackage[hidelinks]{hyperref}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+\linespread{1.12}
+\setlist[enumerate]{label=\arabic*),leftmargin=2.2em,itemsep=6pt,topsep=5pt,parsep=2pt}
+\setlist[itemize]{leftmargin=1.8em,itemsep=3pt,topsep=4pt}
+\newenvironment{choices}{\begin{enumerate}[label=(\Alph*),leftmargin=2.3em,itemsep=1pt,topsep=3pt]}{\end{enumerate}}
+\newcommand{\blank}{\mbox{（\hspace{1.5em}）}}
+\newcommand{\problem}[2]{\par\addvspace{10pt}\Needspace{5\baselineskip}\textbf{Problem #1 (#2 pts).}\ }
+\newcommand{\examheader}[2]{%
+  {\large #1 Fall: High-dimensional Data Analysis}\par
+  \vspace{6pt}
+  \begin{center}{\Large\bfseries #2}\\[3pt]{\small 无答案版}\end{center}
+  \vspace{2pt}}
+\newcommand{\tabletitle}[1]{\par\smallskip{\centering #1\par}\vspace{-6pt}}
+\newcommand{\trans}{^{\mathsf T}}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\newcommand{\norm}[1]{\left\lVert #1\right\rVert}
+\raggedbottom
+
+% 来源：../../原试卷/Sample_Midterm_2_Fall26.pdf（原文件 8 页）
+% 保留题干与原始数据；清空选择与判断答案并删除全部解答。
+\begin{document}
+\examheader{2026}{Sample Midterm Exam 2}
+\textbf{说明：}本样卷供同学们参考。正式考试中的风格和难度与此样卷类似。
+
+\problem{1}{10}判断题，请判断以下说法为正确（T）或者错误（F）。
+\begin{enumerate}
+  \item 回归$Y\sim X_1$的RSS一定不小于$Y\sim X_1+X_2$的RSS。\blank
+  \item 对于线性回归模型来说，模型包含的变量越多，则预测误差越小。\blank
+  \item 在线性回归的岭回归方法中，tuning parameter $\lambda$越大，则预测时方差越大，偏差平方越小。\blank
+  \item 对非线性回归模型来说，参数估计的Gauss-Newton算法总是能够收敛到全局最优解。\blank
+  \item 当$n$较大时，BIC对于变量数的惩罚比AIC更加严厉（换句话说，BIC选出的变量数一般不会多于AIC）。\blank
+\end{enumerate}
+
+\problem{2}{16}单选题，每题只有一个正确答案。
+\begin{enumerate}[itemsep=9pt]
+  \Needspace{7\baselineskip}
+  \item 在线性回归中，下面哪一个量仅依赖于自变量，而不依赖于因变量？\blank
+  \begin{choices}
+    \item 最小二乘估计量$\widehat{\bm\beta}$
+    \item 第一个主成分的载荷（loadings）
+    \item 残差平方和RSS
+    \item $R^2$
+  \end{choices}
+  \Needspace{7\baselineskip}
+  \item 下面哪种变量选择方法不适用于$p>n$的情形？\blank
+  \begin{choices}
+    \item 向前选变量法（forward selection）
+    \item 向后选变量法（backward elimination）
+    \item 岭回归（ridge regression）
+    \item lasso
+  \end{choices}
+  \Needspace{8\baselineskip}
+  \item 下列哪个模型可以直接转化为一个线性模型？（其中$\theta_1^*,\theta_2^*$为未知参数）\blank
+  \begin{choices}
+    \item $y_i=\theta_1^*+\exp(\theta_2^*+\log x_i)+e_i$
+    \item $y_i=\theta_1^*+\exp(\theta_2^*\log x_i)+e_i$
+    \item $y_i=\theta_1^*+\log(\theta_2^*+x_i)+e_i$
+    \item $y_i=\theta_1^*\exp(\theta_2^*x_i)+e_i$
+  \end{choices}
+  \Needspace{7\baselineskip}
+  \item 下列关于logistic回归的说法正确的是\blank
+  \begin{choices}
+    \item 自变量只允许是连续型的
+    \item 因变量只能是0-1变量
+    \item 成功概率为自变量的一个线性组合
+    \item 回归的$G^2$（deviance）越小，说明模型拟合得越好
+  \end{choices}
+\end{enumerate}
+
+\problem{3}{14}假设如下回归模型
+\begin{equation*}
+  y_i=\beta_0^*+\beta_1^*x_i+\beta_2^*(3x_i^2-2)+e_i,\qquad i=1,2,3.
+\end{equation*}
+其中$e_i\overset{\mathrm{i.i.d.}}{\sim}N(0,\sigma^{*2})$。我们给定自变量的值$x_1=-1$，$x_2=0$，$x_3=1$，而因变量的值则用$y_1,y_2,y_3$表示。
+\begin{enumerate}
+  \item (8 pts) 求出$\beta_0^*,\beta_1^*,\beta_2^*$的最小二乘估计量。
+  \item (6 pts) 证明：当已知$\beta_2^*=0$时，$\beta_0^*,\beta_1^*$的最小二乘估计量保持不变。
+\end{enumerate}
+
+\problem{4}{16}在一个线性回归中有连续因变量$Y$，有一个连续自变量$X$与一个分类变量$F$，其中$F$有两个类别$\{A,B\}$。样本数为$n=8$。我们分别拟合三个模型，得到如下结果：
+
+\tabletitle{表1：模型1：$Y\sim X$}
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.12}
+\begin{tabular}{lrrrr}
+\toprule
+ & Estimate & Std.\ Error & $t$ value & $\Pr(>|t|)$\\
+\midrule
+(Intercept) & 32.31 & 2.00 & 16.16 & 3.58E-06\\
+$X$ & 14.32 & 0.70 & 20.46 & 8.87E-07\\
+\midrule
+\multicolumn{5}{l}{R-squared: 0.34}\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\tabletitle{表2：模型2：$Y\sim X+F$}
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.12}
+\begin{tabular}{lrrrr}
+\toprule
+ & Estimate & Std.\ Error & $t$ value & $\Pr(>|t|)$\\
+\midrule
+(Intercept) & 29.66 & 2.04 & 14.54 & 1.39E-05\\
+$X$ & 14.57 & 0.69 & 21.12 & 2.21E-06\\
+$B$ & 3.83 & 0.74 & 5.18 & 1.77E-03\\
+\midrule
+\multicolumn{5}{l}{R-squared: 0.50}\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\tabletitle{表3：模型3：$Y\sim X+F+X:F$}
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.12}
+\begin{tabular}{lrrrr}
+\toprule
+ & Estimate & Std.\ Error & $t$ value & $\Pr(>|t|)$\\
+\midrule
+(Intercept) & 30.36 & 2.86 & 10.62 & 2.22E-04\\
+$X$ & 14.33 & 0.98 & 14.62 & 6.36E-05\\
+$B$ & 2.47 & 3.96 & 0.62 & 0.28\\
+$X:B$ & 0.48 & 1.38 & 0.35 & 0.37\\
+\midrule
+\multicolumn{5}{l}{R-squared: 0.64}\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{enumerate}
+  \item (4 pts) 从模型的基本设定方面，简述三个模型在回归的截距以及$X$的斜率上有何区别。
+  \item (4 pts) 对于模型2，请构建$X$回归系数的一个95\%置信水平的置信区间（允许用符号表示$t$-分布的分位数）。判断0是否被包含在这个置信区间之内。
+  \item (4 pts) 如果用$t$-检验的显著性为判断依据来选择模型，最合理的模型应该是什么样的？
+  \item (4 pts) 如果用$R_{\mathrm{adj}}^2$为判断依据来选择，应该用哪一个模型？
+\end{enumerate}
+
+\newpage
+\problem{5}{15}在一个logistic回归中，因变量$Y$是一个0-1变量，有三个连续型自变量$X_1,X_2,X_3$。我们拟合模型$Y\sim X_1+X_2+X_3$，得到如表4的结果。
+
+\tabletitle{表4：Logistic模型$Y\sim X_1+X_2+X_3$的结果}
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{lrrrr}
+\toprule
+ & Estimate & Std.\ Error & $z$ value & $\Pr(>|z|)$\\
+\midrule
+(Intercept) & $-15.55$ & 7.29 & $-2.13$ & 0.033\\
+$X_1$ & $-0.59$ & 0.36 & (a) & 0.10\\
+$X_2$ & 0.56 & 0.33 & 1.70 & 0.089\\
+$X_3$ & 1.96 & (b) & 2.23 & (c)\\
+\midrule
+\multicolumn{5}{l}{Residual deviance: 14.18 on 16 degrees of freedom}\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{enumerate}
+  \item (5 pts) 用表4中给出的数字计算缺失的(a)-(c)值。只需要给出计算式，不要求计算结果。
+  \item (5 pts) 假设$x_1=5$，$x_2=25$。根据表4的结果，我们需要选定怎样的$x_3$值才能使得$y=1$的概率为40\%？只需要给出计算式，不要求计算结果。
+  \item (5 pts) AIC一般定义为
+  \begin{equation*}
+    \mathrm{AIC}=-2\log(\text{maximum likelihood})+2\cdot\text{number of parameters}.
+  \end{equation*}
+  现在我们拟合一个不含$X_1$的模型，得到如表5的结果。如果用AIC作为模型选择准则，应该选用哪个模型？
+  
+  \tabletitle{表5：Logistic模型$Y\sim X_2+X_3$的结果}
+  \begin{center}
+  \small
+  \renewcommand{\arraystretch}{1.15}
+  \begin{tabular}{lrrrr}
+  \toprule
+   & Estimate & Std.\ Error & $z$ value & $\Pr(>|z|)$\\
+  \midrule
+  (Intercept) & $-7.60$ & 4.44 & $-1.71$ & 0.087\\
+  $X_2$ & 0.087 & 0.14 & 0.60 & 0.55\\
+  $X_3$ & 1.53 & 0.68 & 2.25 & 0.024\\
+  \midrule
+  \multicolumn{5}{l}{Residual deviance: 18.16 on 17 degrees of freedom}\\
+  \bottomrule
+  \end{tabular}
+  \end{center}
+  （提示：Residual deviance即logistic回归的deviance，定义为$G^2=2(l^s-\widehat l)$，其中$l^s$与$\widehat l$分别为饱和模型以及logistic模型的最大对数似然函数值。）
+\end{enumerate}
+
+\newpage
+\problem{6}{15}考虑一个简单线性模型
+\begin{equation*}
+  y_i=\beta_0^*+\beta_1^*x_i+e_i,\qquad i=1,\ldots,n,
+\end{equation*}
+其中$e_i\overset{\mathrm{i.i.d.}}{\sim}N(0,\sigma^{*2})$。现在对于某给定函数$g(x)$，定义$z_i=g(x_i)$。让$\bar z=\sum_{i=1}^n z_i/n$。考虑$\beta_1^*$的一个估计量
+\begin{equation*}
+  \widetilde\beta_1=\frac{\sum_{i=1}^n(z_i-\bar z)y_i}{\sum_{i=1}^n(z_i-\bar z)x_i}.
+\end{equation*}
+\begin{enumerate}
+  \item (5 pts) 证明：$\widetilde\beta_1$是无偏的。
+  \item (5 pts) 证明：
+  \begin{equation*}
+    \Var(\widetilde\beta_1)=
+    \frac{\sum_{i=1}^n(z_i-\bar z)^2}
+         {\left\{\sum_{i=1}^n(z_i-\bar z)x_i\right\}^2}\sigma^{*2}.
+  \end{equation*}
+  \item (5 pts) 记$\beta_1^*$最小二乘估计量为$\widehat\beta_1$。我们知道，
+  \begin{equation*}
+    \widehat\beta_1=\frac{\sum_{i=1}^n(x_i-\bar x)y_i}{\sum_{i=1}^n(x_i-\bar x)x_i}.
+  \end{equation*}
+  证明：
+  \begin{equation*}
+    \Var(\widehat\beta_1)\le\Var(\widetilde\beta_1).
+  \end{equation*}
+  （提示：可以利用柯西-施瓦茨不等式
+  \begin{equation*}
+    \left\{\frac1n\sum_{i=1}^n(z_i-\bar z)(x_i-\bar x)\right\}^2
+    \le
+    \left\{\frac1n\sum_{i=1}^n(z_i-\bar z)^2\right\}
+    \left\{\frac1n\sum_{i=1}^n(x_i-\bar x)^2\right\}.
+  \end{equation*}
+  ）
+\end{enumerate}
+
+\problem{7}{14}假设有$2m+n$个因变量的样本$y_1,\ldots,y_{2m+n}$，分为三组，分别满足
+\begin{equation*}
+  \begin{aligned}
+    y_i&=\theta^*+e_i,       &&1\le i\le m,\\
+    y_i&=\theta^*+\phi^*+e_i, &&m+1\le i\le2m,\\
+    y_i&=\theta^*-2\phi^*+e_i,&&2m+1\le i\le2m+n,
+  \end{aligned}
+\end{equation*}
+其中$e_i\overset{\mathrm{i.i.d.}}{\sim}N(0,\sigma^{*2})$。
+\begin{enumerate}
+  \item (7 pts) 求出$\theta^*$与$\phi^*$的最小二乘估计量$\widehat\theta$与$\widehat\phi$。
+  \item (7 pts) 证明：当$m=2n$时，1)中求得的$\widehat\theta$与$\widehat\phi$相关系数为0。
+\end{enumerate}
+\end{document}

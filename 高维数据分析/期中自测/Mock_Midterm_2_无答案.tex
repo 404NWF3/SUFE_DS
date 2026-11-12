@@ -1,0 +1,158 @@
+\documentclass[11pt]{ctexart}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{2026 Fall: High-dimensional Data Analysis}
+\fancyhead[R]{模拟卷 · 自测版（无答案）}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\newcommand{\fillblank}{\mbox{（\qquad）}}
+
+\title{\textbf{模拟期中试卷 2}\\[0.2em]
+\large （按第 1--6 讲范围自编 · 无答案）}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+\vspace{-1.2cm}
+
+\noindent\textbf{说明：}本卷按照课程第 1--6 讲的范围自编（至 ridge / lasso / elastic net 为止，含 Stein 缩减；不含 logistic 回归与 Gauss--Newton），题型、分值与难度仿照样卷。判断题与单选题请把答案写在括号内。
+
+\vspace{0.6em}
+
+\noindent\textbf{Problem 1 (10 pts).} 判断题，请判断以下说法为正确 (T) 或者错误 (F)。
+\begin{enumerate}
+\item 对因子变量更换基准类（baseline），回归的拟合值与 RSS 保持不变。\fillblank
+\item 向后剔除法（backward elimination）可以直接用于 $p > n$ 的情形。\fillblank
+\item 前 $q$ 个主成分保留的方差比例为 $\sum_{j \leq q}\lambda_j \big/ \sum_j \lambda_j$，其中 $\lambda_j$ 为协方差矩阵的特征值。\fillblank
+\item lasso 的 L1 惩罚项在 $0$ 处是光滑的，因此不能将系数精确压缩为 $0$。\fillblank
+\item 用交叉验证选出模型之后，应当再用全部数据重新拟合一次，作为最终模型。\fillblank
+\end{enumerate}
+
+\noindent\textbf{Problem 2 (16 pts).} 单选题，每题只有一个正确答案。
+\begin{enumerate}
+\item 含有 $K$ 个结点的三次样条，其自由度（即基函数的个数）为\fillblank\\
+(A) $K+1$\quad
+(B) $K+2$\quad
+(C) $K+4$\quad
+(D) $4K$
+\item 关于多重共线性，下列说法\textbf{错误}的是\fillblank\\
+(A) $\mathrm{VIF}_j > 10$ 提示存在共线性\\
+(B) 共线性使 $X^{\top}X$ 的最小特征值接近 $0$，从而导致系数估计的方差变大\\
+(C) 岭回归可以缓解共线性带来的方差膨胀\\
+(D) 完全共线时最小二乘估计仍然唯一
+\item 关于预测误差的分解 $\mathrm{PE} = \mathrm{Var} + \mathrm{bias}^2 + \sigma_*^2$，下列说法正确的是\fillblank\\
+(A) 训练误差是预测误差的无偏估计\\
+(B) 模型 flexibility 增大时，方差增大、偏差平方减小\\
+(C) 不可消减误差 $\sigma_*^2$ 可以通过增加自变量来消除\\
+(D) 预测误差随模型中变量个数的增加而单调下降
+\item 关于逐步回归，下列说法正确的是\fillblank\\
+(A) 向前选择每步删除一个变量\\
+(B) 向后剔除可以从截距模型出发\\
+(C) 向前选择与向后剔除都保证找到 $2^p$ 个子集的全局最优\\
+(D) 向前选择不要求 $p < n$，而向后剔除要求全集模型可估
+\end{enumerate}
+
+\noindent\textbf{Problem 3 (14 pts).} 某因子 $F$ 有两个类别 $\{A, B\}$，每类各 $3$ 个观测。拟合模型 $Y \sim F$（以 $A$ 为基准类，设 $U_i = I\{F_i = B\}$），即
+\[
+y_i = \beta_0^* + \beta_1^* u_i + e_i.
+\]
+已知 $A$ 组观测值为 $2, 4, 6$，$B$ 组观测值为 $5, 7, 9$。
+\begin{enumerate}
+\item (7 pts) 写出设计矩阵 $X$（含截距列），并用最小二乘法求出 $\hat\beta_0$ 与 $\hat\beta_1$。
+\item (7 pts) 若改用 $B$ 为基准类，重新写出两个系数的估计值；并回答 RSS 是否改变，说明理由。
+\end{enumerate}
+
+\noindent\textbf{Problem 4 (16 pts).} 一个线性回归中有连续自变量 $X$ 与二分类变量 $F \in \{A, B\}$，样本数为 $n = 12$。分别拟合三个模型，结果如下。
+
+\begin{table}[h]
+\centering
+\caption{模型 1：$Y \sim X$}
+\begin{tabular}{lrrrr}
+\toprule
+ & Estimate & Std.\ Error & t value & $\Pr(>|t|)$ \\
+\midrule
+(Intercept) & 10.20 & 1.00 & 10.20 & 1.2E-06 \\
+$X$ & 2.05 & 0.30 & 6.83 & 1.1E-04 \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.3em}
+\centering $R$-squared: 0.60
+\end{table}
+
+\begin{table}[h]
+\centering
+\caption{模型 2：$Y \sim X + F$}
+\begin{tabular}{lrrrr}
+\toprule
+ & Estimate & Std.\ Error & t value & $\Pr(>|t|)$ \\
+\midrule
+(Intercept) & 8.90 & 1.10 & 8.09 & 1.7E-05 \\
+$X$ & 2.10 & 0.28 & 7.50 & 5.3E-05 \\
+$B$ & 4.50 & 0.90 & 5.00 & 1.1E-03 \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.3em}
+\centering $R$-squared: 0.72
+\end{table}
+
+\begin{table}[h]
+\centering
+\caption{模型 3：$Y \sim X + F + X : F$}
+\begin{tabular}{lrrrr}
+\toprule
+ & Estimate & Std.\ Error & t value & $\Pr(>|t|)$ \\
+\midrule
+(Intercept) & 9.30 & 1.50 & 6.20 & 1.5E-04 \\
+$X$ & 2.02 & 0.40 & 5.05 & 1.0E-03 \\
+$B$ & 3.00 & 2.10 & 1.43 & 0.19 \\
+$X : B$ & 0.60 & 0.60 & 1.00 & 0.35 \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.3em}
+\centering $R$-squared: 0.78
+\end{table}
+
+\begin{enumerate}
+\item (4 pts) 从模型的基本设定方面，简述三个模型在回归的截距以及 $X$ 的斜率上有何区别。
+\item (4 pts) 对于模型 2，请构建 $X$ 回归系数的一个 $95\%$ 置信水平的置信区间（允许用 $t_{0.025}(9)$ 表示分位数）。判断 $0$ 是否被包含在这个置信区间之内。
+\item (4 pts) 如果以 $t$-检验的显著性为判断依据来选择模型，最合理的模型是哪一个？
+\item (4 pts) 如果以 $R^2_{\mathrm{adj}}$ 为判断依据来选择，应该用哪一个模型？（$R^2_{\mathrm{adj}} = 1 - \frac{n-1}{n-k-1}(1-R^2)$。）
+\end{enumerate}
+
+\noindent\textbf{Problem 5 (14 pts).} 考虑正交设计（$X^{\top}X = I$）下的正则化。记 $\hat\beta^{\mathrm{ols}} = X^{\top}Y$ 的第 $j$ 个分量为 $z_j$。
+\begin{enumerate}
+\item (5 pts) 写出 lasso 解的软阈值公式 $\hat\beta_j^{\mathrm{lasso}} = \mathrm{sign}(z_j)(|z_j| - \lambda)_+$。设 $z = (3, -1, 0.5)^{\top}$，$\lambda = 1$，求出三个系数。
+\item (5 pts) 对 $z_1 = 3$，同一 $\lambda$ 下岭回归的解为 $3/(1+\lambda)$。比较此时 lasso 与岭回归对该系数的压缩结果，并说明为什么 lasso 能做变量选择而岭回归不能（从惩罚函数在 $0$ 处的几何性质回答）。
+\item (4 pts) 写出 elastic net 在正交设计下的解（用 $z_j$, $\lambda$, $\alpha$ 表示），并验证 $\alpha = 1$ 时退化为 lasso、$\alpha = 0$ 时退化为岭回归。
+\end{enumerate}
+
+\noindent\textbf{Problem 6 (16 pts).} 考虑异方差线性模型 $Y = X\beta^* + e$，其中 $e_1, \ldots, e_n$ 相互独立，$\mathrm{Var}(e_i) = \sigma_*^2 / w_i$，权重 $w_i > 0$ 已知（记 $W = \mathrm{diag}(w_1, \ldots, w_n)$）。设 $y_i \sim N(x_i^{\top}\beta,\ \sigma^2/w_i)$。
+\begin{enumerate}
+\item (6 pts) 写出似然函数与对数似然，先对 $\sigma^2$ 求最优（profile），再证明 $\beta$ 的极大似然估计等价于加权最小二乘 $\min_\beta \sum_{i=1}^n w_i(y_i - x_i^{\top}\beta)^2$，并给出闭式解 $\hat\beta_W$。
+\item (5 pts) 证明 $\hat\beta_W$ 无偏，并求出 $\mathrm{Cov}(\hat\beta_W)$（化简到最简形式）。
+\item (5 pts) 证明 Gauss--Markov 定理的加权版本：对任何满足 $\tilde{A}X = I$ 的常数矩阵 $\tilde{A} \in \mathbb{R}^{(p+1)\times n}$，以及任何常向量 $c$，都有
+\[
+\mathrm{Var}\big(c^{\top}\hat\beta_W\big) \leq \mathrm{Var}\big(c^{\top}\tilde\beta\big), \qquad \tilde\beta = \tilde{A}Y.
+\]
+并据此说明：在异方差下误用普通最小二乘，其方差不会小于 WLS。（提示：可模仿矩阵版 Gauss--Markov 的证明，把内积换成加权的 $\langle u, v\rangle_W = u^{\top}Wv$。）
+\end{enumerate}
+
+\noindent\textbf{Problem 7 (14 pts).} 给定两个结点 $\xi_1 < \xi_2$，考虑截断幂基
+\[
+\big\{\,1,\ x,\ x^2,\ x^3,\ (x-\xi_1)_+^3,\ (x-\xi_2)_+^3\,\big\}, \qquad (x-\xi)_+ = \max(x-\xi, 0).
+\]
+\begin{enumerate}
+\item (6 pts) 用约束计数说明：为什么 $K$ 个结点的三次样条有 $K+4$ 个自由度？具体到本题的 $K = 2$，自由度是多少？
+\item (8 pts) 验证基函数 $h(x) = (x-\xi)_+^3$（$\xi$ 为任意结点）确实是一个三次样条：分段为三次多项式，在 $\xi$ 处函数值、一阶导数、二阶导数都连续，并求出其三阶导数在 $\xi$ 处的左右极限，说明为什么三阶导数的跳跃是被允许的。
+\end{enumerate}
+
+\end{document}

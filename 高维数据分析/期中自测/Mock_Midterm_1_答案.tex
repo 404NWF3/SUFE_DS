@@ -1,0 +1,164 @@
+\documentclass[11pt]{ctexart}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{2026 Fall: High-dimensional Data Analysis}
+\fancyhead[R]{模拟卷 1 · 参考答案}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\newcommand{\ans}[1]{{\color{red}#1}}
+
+\title{\textbf{模拟期中试卷 1}\\[0.2em]
+\large （参考答案）}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+\vspace{-1.2cm}
+
+\noindent\textbf{Problem 1 (10 pts).} 判断题。
+\begin{enumerate}
+\item 在简单线性回归中，$\mathrm{Cov}(\hat\beta_0, \hat\beta_1) = -\sigma^{*2}\bar{x}/SXX$，因此当 $\bar{x} = 0$ 时 $\hat\beta_0$ 与 $\hat\beta_1$ 不相关。\hfill\ans{（T）}
+\item 训练集上的 RSS 越小，模型对新数据的预测误差一定越小。\hfill\ans{（F）}
+\item 岭回归中 $\lambda$ 越大，回归系数估计的方差越小，偏差平方越大。\hfill\ans{（T）}
+\item 三次样条在每个结点处函数值、一阶导数与二阶导数都连续，但三阶导数允许发生跳跃。\hfill\ans{（T）}
+\item 主成分分析中，主成分的载荷（loadings）依赖于因变量 $Y$ 的取值。\hfill\ans{（F）}
+\end{enumerate}
+
+\ans{\textbf{简评：}2) 训练 RSS 随 flexibility 单调下降，但预测误差 = 方差 + 偏差$^2$ + $\sigma_*^2$ 呈 U 形，训练 RSS 不能衡量预测误差；5) PCA 是无监督方法，只依赖自变量 $X$ 的协方差结构。}
+
+\noindent\textbf{Problem 2 (16 pts).} 单选题。
+\begin{enumerate}
+\item $\sigma_*^2$ 的无偏估计是\hfill\ans{（C）}
+\item $\mathrm{VIF}_j = 1/(1-R_j^2) = 1/0.04 = 25$。\hfill\ans{（C）}
+\item $n \geq 8$ 时 $\log n > 2$，BIC 惩罚 $(k+1)\log n$ 重于 AIC 的 $2(k+1)$。\hfill\ans{（B）}
+\item lasso 的软阈值可把系数精确截断为 $0$；ridge 只能乘性收缩 $z/(1+\lambda) \neq 0$。\hfill\ans{（B）}
+\end{enumerate}
+
+\noindent\textbf{Problem 3 (15 pts).} $n = 25$，$\mathrm{SYY} = 40$，$\mathrm{SXX} = 50$，$\mathrm{SXY} = 25$，$\mathrm{RSS} = 30$。
+
+\ans{
+1. $\hat\beta_1 = \mathrm{SXY}/\mathrm{SXX} = 25/50 = 0.5$。
+
+2. 先算 $\hat\sigma^2 = \mathrm{RSS}/(n-2) = 30/23 \approx 1.304$，于是
+\[
+se(\hat\beta_1) = \sqrt{\frac{\hat\sigma^2}{SXX}} = \sqrt{\frac{30}{23 \times 50}} = \sqrt{0.0261} \approx 0.1615.
+\]
+置信区间为
+\[
+\big[\,0.5 - 2.07 \times 0.1615,\ 0.5 + 2.07 \times 0.1615\,\big] \approx [\,0.166,\ 0.834\,].
+\]
+
+3. $R^2 = 1 - \mathrm{RSS}/\mathrm{SYY} = 1 - 30/40 = 0.25$。
+}
+
+\noindent\textbf{Problem 4 (14 pts).} $n = 12$，RSS 分别为 $120, 60, 30, 24$。
+
+\ans{
+1. 先算 $R^2 = 1 - \mathrm{RSS}/\mathrm{RSS}_{(1)}$：
+\begin{center}
+\begin{tabular}{clcccc}
+\toprule
+序号 & 模型 & $k$ & $R^2$ & $R^2_{\mathrm{adj}}$ & \\
+\midrule
+(1) & $Y \sim 1$ & 0 & 0 & 0 & \\
+(2) & $Y \sim X$ & 1 & 0.50 & $1 - \frac{11}{10}(0.5) = 0.45$ & \\
+(3) & $Y \sim X + F$ & 3 & 0.75 & $1 - \frac{11}{8}(0.25) = 0.656$ & \\
+(4) & $Y \sim X + F + X{:}F$ & 5 & 0.80 & $1 - \frac{11}{6}(0.2) = 0.633$ & \\
+\bottomrule
+\end{tabular}
+\end{center}
+$R^2_{\mathrm{adj}}$ 最大的是模型 (3)，故选\textbf{模型 (3)}。
+
+2. 两模型比较：模型 B 比模型 A 多 $q$ 个系数时，BIC 偏好 B 当且仅当
+\[
+\frac{\mathrm{RSS}_A}{\mathrm{RSS}_B} \geq e^{\,q\log n / n}.
+\]
+代入 $n = 12$，$\log 12 \approx 2.5$：
+\begin{itemize}
+\item (1)$\to$(2)：$q=1$，阈值 $e^{2.5/12} = e^{0.21} \approx 1.23$；$120/60 = 2 \geq 1.23$ \checkmark，选 (2)；
+\item (2)$\to$(3)：$q=2$，阈值 $e^{5/12} = e^{0.42} \approx 1.52$；$60/30 = 2 \geq 1.52$ \checkmark，选 (3)；
+\item (3)$\to$(4)：$q=2$，阈值 $\approx 1.52$；$30/24 = 1.25 < 1.52$ $\times$，选 (3)。
+\end{itemize}
+BIC 亦选\textbf{模型 (3)}（与第 1 问一致）。
+}
+
+\noindent\textbf{Problem 5 (15 pts).} $\Gamma = \begin{pmatrix} 2 & 1 \\ 1 & 2 \end{pmatrix}$。
+
+\ans{
+1. 特征方程 $\det(\Gamma - \lambda I) = (2-\lambda)^2 - 1 = 0$，得 $\lambda_1 = 3$，$\lambda_2 = 1$。\\
+$\lambda_1 = 3$ 对应 $(\Gamma - 3I)a = 0 \Rightarrow a_1 = a_2$，单位化得 $u_1 = (1, 1)^{\top}/\sqrt{2}$；\\
+$\lambda_2 = 1$ 对应 $u_2 = (1, -1)^{\top}/\sqrt{2}$。第一主成分方向为 $u_1 = (1,1)^{\top}/\sqrt{2}$。
+
+2. 主成分 $Z_j = u_j^{\top}X$ 的方差为 $\lambda_j$（特征值），故 $Z_1$ 解释方差 $3$、占 $\frac{3}{3+1} = 75\%$；$Z_2$ 解释方差 $1$、占 $25\%$。（总和 $\sum\lambda_j = \mathrm{tr}\,\Gamma = 4$。）
+
+3. 构造 Lagrange 函数 $L(a, \lambda) = a^{\top}\Gamma a - \lambda(a^{\top}a - 1)$，
+\[
+\nabla_a L = 2\Gamma a - 2\lambda a = 0 \ \Longrightarrow\ \Gamma a = \lambda a,
+\]
+即极值点必为特征向量。代回目标：$a^{\top}\Gamma a = \lambda\, a^{\top}a = \lambda$——目标值恰为特征值。故最大化即取\textbf{最大特征值} $\lambda_1$，对应单位特征向量 $u_1$。（这就是 PCA = 协方差矩阵特征分解。）
+}
+
+\noindent\textbf{Problem 6 (16 pts).} 岭回归 $\min_b \|Y - Xb\|^2 + \lambda\|b\|^2$。
+
+\ans{
+1. 目标函数对 $b$ 求梯度：
+\[
+\nabla_b F = -2X^{\top}(Y - Xb) + 2\lambda b = 0 \ \Longrightarrow\ (X^{\top}X + \lambda I)b = X^{\top}Y,
+\]
+\[
+\hat\beta_{\mathrm{ridge}} = (X^{\top}X + \lambda I)^{-1}X^{\top}Y.
+\]
+可逆性：$X^{\top}X$ 对称半正定，设其特征值为 $\mu_j \geq 0$，则 $X^{\top}X + \lambda I$ 的特征值为 $\mu_j + \lambda > 0$（$\lambda > 0$），故恒正定、必可逆——即使 $p > n$ 时 $X^{\top}X$ 奇异（有零特征值）也无妨。
+
+2. $\mathbb{E}(\hat\beta_{\mathrm{ridge}}) = (X^{\top}X + \lambda I)^{-1}X^{\top}X\,\beta^* = \beta^* - \lambda(X^{\top}X + \lambda I)^{-1}\beta^* \neq \beta^*$（$\lambda > 0$ 时一般严格有偏），偏差为 $-\lambda(X^{\top}X + \lambda I)^{-1}\beta^*$。
+
+3. 正交设计 $X^{\top}X = I$：$\hat\beta_{\mathrm{ridge}} = \frac{1}{1+\lambda}X^{\top}Y = \frac{1}{1+\lambda}\hat\beta^{\mathrm{ols}}$。第 $j$ 个分量
+\[
+\mathrm{Var} = \frac{\sigma_*^2}{(1+\lambda)^2}, \qquad \mathrm{bias}^2 = \Big(\frac{1}{1+\lambda} - 1\Big)^2 (\beta_j^*)^2 = \frac{\lambda^2(\beta_j^*)^2}{(1+\lambda)^2}.
+\]
+\[
+\mathrm{PE}(\lambda) = \frac{\sigma_*^2 + \lambda^2(\beta_j^*)^2}{(1+\lambda)^2} + \sigma_*^2.
+\]
+对 $\lambda$ 求导（商的导数，$(1+\lambda)^3 > 0$）：
+\[
+\frac{d\,\mathrm{PE}}{d\lambda} = \frac{2\big[\lambda(\beta_j^*)^2(1+\lambda) - \sigma_*^2 - \lambda^2(\beta_j^*)^2\big]}{(1+\lambda)^3} = \frac{2\big[\lambda(\beta_j^*)^2 - \sigma_*^2\big]}{(1+\lambda)^3} = 0,
+\]
+得最优 $\lambda^* = \dfrac{\sigma_*^2}{(\beta_j^*)^2}$。趋势：$\lambda \uparrow$ 时方差 $\downarrow$、偏差$^2$ $\uparrow$（与 Problem 1 判断题 3 呼应）。
+}
+
+\noindent\textbf{Problem 7 (14 pts).} Stein 缩减。
+
+\ans{
+1. $\mathrm{Var}(c\bar{y}) = c^2/n$，$\mathbb{E}(c\bar{y}) - \mu = (c-1)\mu$，故
+\[
+\mathrm{PE}(c) = \frac{c^2}{n} + (1-c)^2\mu^2 + 1.
+\]
+一阶条件：
+\[
+\frac{d\,\mathrm{PE}}{dc} = \frac{2c}{n} - 2(1-c)\mu^2 = 0 \ \Longrightarrow\ c^*\Big(\frac{1}{n} + \mu^2\Big) = \mu^2 \ \Longrightarrow\ c^* = \frac{\mu^2}{\mu^2 + 1/n},
+\]
+二阶导 $\frac{2}{n} + 2\mu^2 > 0$，确为最小值点。用一阶条件 $(1-c^*)\mu^2 = c^*/n$ 化简最小值：
+\[
+\mathrm{PE}(c^*) = \frac{c^{*2}}{n} + (1-c^*)\cdot\frac{c^*}{n} + 1 = \frac{c^*}{n} + 1 < 1 + \frac{1}{n} = \mathrm{PE}(1),
+\]
+即有偏的缩减估计严格优于无偏的 $\bar{y}$（Stein 现象）。
+
+2. 对 $g(\beta) = \sum_i(y_i - \beta)^2 + \lambda\beta^2$ 求导：
+\[
+g'(\beta) = -2\sum_i(y_i - \beta) + 2\lambda\beta = 0 \ \Longrightarrow\ \hat\beta = \frac{\sum_i y_i}{n+\lambda} = \frac{n\bar{y}}{n+\lambda}.
+\]
+要它等于 $\dfrac{\bar{y}^2}{\bar{y}^2 + 1/n}\bar{y}$，注意
+\[
+\frac{n}{n+\lambda} = \frac{n\bar{y}^2}{n\bar{y}^2 + 1} \ \Longleftrightarrow\ n + \lambda = n + \frac{1}{\bar{y}^2} \ \Longleftrightarrow\ \lambda = \frac{1}{\bar{y}^2}.
+\]
+即把未知的 $\mu^2$ 用 $\bar{y}^2$ 代入（$c^*$ 的可计算版本），与第 1 问的最优形式一致。
+}
+
+\end{document}

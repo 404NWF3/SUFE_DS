@@ -1,0 +1,160 @@
+\documentclass[11pt]{ctexart}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{2026 Fall: High-dimensional Data Analysis}
+\fancyhead[R]{模拟卷 2 · 参考答案}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\newcommand{\ans}[1]{{\color{red}#1}}
+
+\title{\textbf{模拟期中试卷 2}\\[0.2em]
+\large （参考答案）}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+\vspace{-1.2cm}
+
+\noindent\textbf{Problem 1 (10 pts).} 判断题。
+\begin{enumerate}
+\item 对因子变量更换基准类（baseline），回归的拟合值与 RSS 保持不变。\hfill\ans{（T）}
+\item 向后剔除法（backward elimination）可以直接用于 $p > n$ 的情形。\hfill\ans{（F）}
+\item 前 $q$ 个主成分保留的方差比例为 $\sum_{j \leq q}\lambda_j \big/ \sum_j \lambda_j$。\hfill\ans{（T）}
+\item lasso 的 L1 惩罚项在 $0$ 处是光滑的，因此不能将系数精确压缩为 $0$。\hfill\ans{（F）}
+\item 用交叉验证选出模型之后，应当再用全部数据重新拟合一次。\hfill\ans{（T）}
+\end{enumerate}
+
+\ans{\textbf{简评：}1) 换基准只是给同一列空间换一组基，列空间不变，投影与 RSS 不变；2) BE 从全集模型出发，全集须可估（$p < n$）；4) L1 惩罚 $|\beta|$ 在 $0$ 处有\textbf{尖点}（不可微），菱形约束的顶点恰在坐标轴上，故可把系数\textbf{精确}压为 $0$。}
+
+\noindent\textbf{Problem 2 (16 pts).} 单选题。
+\begin{enumerate}
+\item $4(K{+}1)$ 个系数减去 $3K$ 个连续性约束 $= K+4$。\hfill\ans{（C）}
+\item 完全共线时 $X^{\top}X$ 不满秩，OLS 无解（不唯一）。\hfill\ans{（D）}
+\item flexibility $\uparrow$：方差 $\uparrow$、偏差$^2$ $\downarrow$（bias--variance tradeoff）。\hfill\ans{（B）}
+\item FS 每步\textbf{加入}变量且不要求 $p<n$；BE 需要全集可估；两者都是贪心算法，不保证 $2^p$ 全局最优。\hfill\ans{（D）}
+\end{enumerate}
+
+\noindent\textbf{Problem 3 (14 pts).} $A$ 组：$2, 4, 6$；$B$ 组：$5, 7, 9$。
+
+\ans{
+1. 设计矩阵与因变量
+\[
+X = \begin{pmatrix} 1 & 0 \\ 1 & 0 \\ 1 & 0 \\ 1 & 1 \\ 1 & 1 \\ 1 & 1 \end{pmatrix}, \qquad Y = \begin{pmatrix} 2 \\ 4 \\ 6 \\ 5 \\ 7 \\ 9 \end{pmatrix}, \qquad
+X^{\top}X = \begin{pmatrix} 6 & 3 \\ 3 & 3 \end{pmatrix},\quad X^{\top}Y = \begin{pmatrix} 33 \\ 21 \end{pmatrix}.
+\]
+\[
+\hat\beta = (X^{\top}X)^{-1}X^{\top}Y = \frac{1}{9}\begin{pmatrix} 3 & -3 \\ -3 & 6 \end{pmatrix}\begin{pmatrix} 33 \\ 21 \end{pmatrix} = \frac{1}{9}\begin{pmatrix} 36 \\ 27 \end{pmatrix} = \begin{pmatrix} 4 \\ 3 \end{pmatrix}.
+\]
+（即 $\hat\beta_0 = \bar{y}_A = 4$，$\hat\beta_1 = \bar{y}_B - \bar{y}_A = 7 - 4 = 3$——因子回归的最小二乘解恰为各类样本均值。）
+
+2. 以 $B$ 为基准：$\hat\beta_0' = \bar{y}_B = 7$，$\hat\beta_1' = \bar{y}_A - \bar{y}_B = -3$。\\
+\textbf{RSS 不变}：换基准只是把同一列空间 $\mathrm{col}(X)$ 换一组基，最小二乘拟合是 $Y$ 在该子空间上的正交投影，投影（因而拟合值与 RSS）与基的选取无关。
+}
+
+\noindent\textbf{Problem 4 (16 pts).} 三模型对比。
+
+\ans{
+1. 模型 1：两类\textbf{共用}截距与斜率（一条回归直线）；模型 2：各类有各自截距、\textbf{共用}斜率（一组平行线）；模型 3：各类有各自截距与斜率（两条任意的直线，交互项放开斜率）。
+
+2. 模型 2 的自由度：$n - (k+1) = 12 - 3 = 9$。置信区间
+\[
+\big[\,2.10 - 0.28 \cdot t_{0.025}(9),\ 2.10 + 0.28 \cdot t_{0.025}(9)\,\big].
+\]
+由于 $t = 2.10/0.28 = 7.5$ 高度显著（$p = 5.3\times 10^{-5}$），$0$ \textbf{不在}该区间内。
+
+3. 模型 3 中 $X{:}B$ 的 $t = 0.60/0.60 = 1.00$、$p = 0.35$，不显著，应删去交互项；回到模型 2 后所有系数均显著（$X$：$t=7.5$；$B$：$t=5.0$）。故按 $t$ 检验应选\textbf{模型 2}。
+
+4. $R^2_{\mathrm{adj}} = 1 - \frac{n-1}{n-k-1}(1-R^2)$，$n = 12$：
+\[
+M_1:\ 1 - \tfrac{11}{10}(0.40) = 0.560, \qquad M_2:\ 1 - \tfrac{11}{9}(0.28) = 0.658, \qquad M_3:\ 1 - \tfrac{11}{8}(0.22) = 0.698.
+\]
+最大的是模型 3，故按 $R^2_{\mathrm{adj}}$ 应选\textbf{模型 3}。\\
+（对照第 3 问：两种准则给出\textbf{不同}答案——$t$ 检验只看单个系数，$R^2_{\mathrm{adj}}$ 为预测拟合度 penalize 复杂度；模型 3 的交互项虽不显著，但 $R^2$ 的提升抵过了自由度的惩罚。）
+}
+
+\noindent\textbf{Problem 5 (14 pts).} 正交设计下的正则化。
+
+\ans{
+1. 软阈值 $\hat\beta_j^{\mathrm{lasso}} = \mathrm{sign}(z_j)(|z_j| - \lambda)_+$：$z = (3, -1, 0.5)^{\top}$，$\lambda = 1$，
+\[
+\hat\beta^{\mathrm{lasso}} = \big(\,(3-1)_+,\ \mathrm{sign}(-1)(|-1|-1)_+,\ (0.5-1)_+\,\big)^{\top} = (2,\ 0,\ 0)^{\top}.
+\]
+
+2. ridge 给 $z_1 = 3$ 的解为 $3/2 = 1.5$，lasso 给 $2$。关键差别不在压缩幅度，而在于：lasso 的 L1 惩罚 $|\beta|$ 在 $0$ 处有\textbf{尖点}（不可微），其约束区域 $\|b\|_1 \leq s$ 是顶点位于坐标轴上的\textbf{菱形}，损失函数的椭圆等值线最先碰到的往往是顶点（某分量为精确的 $0$）——故 lasso 把 $|z_j| \leq \lambda$ 的系数\textbf{精确截断为 $0$}，实现变量选择；而 ridge 的 L2 惩罚 $\beta^2$ 在 $0$ 处\textbf{光滑}，约束 $\|b\|_2 \leq s$ 是球，切点几乎不落在坐标轴上，只能同比例收缩 $z/(1+\lambda)$，\textbf{永远不等于 $0$}，不能做变量选择。
+
+3. elastic net（正交设计）：
+\[
+\hat\beta_j^{\mathrm{enet}} = \frac{\mathrm{sign}(z_j)}{1 + \lambda(1-\alpha)}\big(|z_j| - \lambda\alpha\big)_+,
+\]
+即"lasso 式阈值 $\lambda\alpha$ 截断 + ridge 式因子压缩"。$\alpha = 1$：$\mathrm{sign}(z_j)(|z_j|-\lambda)_+$（lasso）；$\alpha = 0$：$\dfrac{z_j}{1+\lambda}$（ridge）。
+}
+
+\noindent\textbf{Problem 6 (16 pts).} 异方差与 WLS。
+
+\ans{
+1. 由 $y_i \sim N(x_i^{\top}\beta,\ \sigma^2/w_i)$，似然
+\[
+L = \prod_{i=1}^n \sqrt{\frac{w_i}{2\pi\sigma^2}}\ \exp\Big\{-\frac{w_i}{2\sigma^2}(y_i - x_i^{\top}\beta)^2\Big\},
+\]
+\[
+l = \frac{1}{2}\sum_i \log w_i - \frac{n}{2}\log(2\pi) - \frac{n}{2}\log\sigma^2 - \frac{1}{2\sigma^2}S_W, \qquad S_W = \sum_i w_i(y_i - x_i^{\top}\beta)^2.
+\]
+对 $\sigma^2$ 求导：$\frac{\partial l}{\partial \sigma^2} = -\frac{n}{2\sigma^2} + \frac{S_W}{2\sigma^4} = 0 \Rightarrow \tilde\sigma^2 = S_W/n$。代回得 $l_{\max} = -\frac{n}{2}\log S_W + \text{常数}$，故最大化 $l$ 等价于最小化 $S_W$（加权最小二乘）。对 $\beta$ 求梯度：
+\[
+\nabla_\beta S_W = -2X^{\top}W(Y - X\beta) = 0 \ \Longrightarrow\ \hat\beta_W = (X^{\top}WX)^{-1}X^{\top}WY.
+\]
+
+2. 无偏性：
+\[
+\mathbb{E}(\hat\beta_W) = (X^{\top}WX)^{-1}X^{\top}WX\,\beta^* + (X^{\top}WX)^{-1}X^{\top}W\,\mathbb{E}(e) = \beta^*.
+\]
+协方差（注意 $\mathrm{Cov}(e) = \sigma_*^2W^{-1}$）：
+\[
+\mathrm{Cov}(\hat\beta_W) = (X^{\top}WX)^{-1}X^{\top}W \cdot \sigma_*^2W^{-1} \cdot WX(X^{\top}WX)^{-1} = \sigma_*^2(X^{\top}WX)^{-1}.
+\]
+
+3. 记 $A_W = (X^{\top}WX)^{-1}X^{\top}W$（显然 $A_WX = I$）。对任何满足 $\tilde{A}X = I$ 的 $\tilde{A}$，令 $u_W = c^{\top}\hat\beta_W$、$u_2 = c^{\top}\tilde\beta$。核心恒等式：
+\[
+\mathrm{Cov}(u_W, u_2) = \mathbb{E}\big[(c^{\top}A_We)(c^{\top}\tilde{A}e)^{\top}\big] = \sigma_*^2\,c^{\top}A_WW^{-1}\tilde{A}^{\top}c,
+\]
+\[
+A_WW^{-1}\tilde{A}^{\top} = (X^{\top}WX)^{-1}X^{\top}\underbrace{WW^{-1}}_{=\,I}\tilde{A}^{\top} = (X^{\top}WX)^{-1}\underbrace{X^{\top}\tilde{A}^{\top}}_{=(\tilde{A}X)^{\top}=I} = (X^{\top}WX)^{-1},
+\]
+而 $\mathrm{Var}(u_W) = \sigma_*^2c^{\top}A_WW^{-1}A_W^{\top}c = \sigma_*^2c^{\top}(X^{\top}WX)^{-1}c$，故 $\mathrm{Cov}(u_W,u_2) = \mathrm{Var}(u_W)$。于是
+\[
+\mathrm{Cov}(u_W,\, u_2 - u_W) = 0 \ \Longrightarrow\ \mathrm{Var}(u_2) = \mathrm{Var}(u_W) + \mathrm{Var}(u_2 - u_W) \geq \mathrm{Var}(u_W).
+\]
+OLS 对应 $\tilde{A} = (X^{\top}X)^{-1}X^{\top}$，满足 $\tilde{A}X = I$，故在异方差下
+\[
+\mathrm{Var}\big(c^{\top}\hat\beta^{\mathrm{OLS}}\big) \geq \mathrm{Var}\big(c^{\top}\hat\beta_W\big),
+\]
+误用 OLS 方差不会小于 WLS（Gauss--Markov 的加权版）。
+}
+
+\noindent\textbf{Problem 7 (14 pts).} 三次样条的截断幂基。
+
+\ans{
+1. $K$ 个结点把实轴分为 $K+1$ 个区间，每段一个三次多项式（$4$ 个系数），共 $4(K{+}1)$ 个待定系数；三次样条要求在每个结点处 $f$、$f'$、$f''$ 连续（各 $1$ 个约束，共 $3K$ 个）。自由度
+\[
+4(K+1) - 3K = K + 4.
+\]
+$K = 2$ 时为 $6$，恰为题目所列基函数 $\{1, x, x^2, x^3, (x-\xi_1)_+^3, (x-\xi_2)_+^3\}$ 的个数。
+
+2. 对 $h(x) = (x-\xi)_+^3$：当 $x < \xi$ 时 $h \equiv 0$（平凡的三次多项式，$h' = h'' = h''' = 0$）；当 $x \geq \xi$ 时 $h = (x-\xi)^3$。在结点处逐阶检查：
+\[
+h(\xi) = 0 \ (\text{两侧相等}); \qquad h'(x) = 3(x-\xi)^2 \Rightarrow h'(\xi) = 0 \ (\text{两侧相等});
+\]
+\[
+h''(x) = 6(x-\xi) \Rightarrow h''(\xi) = 0 \ (\text{两侧相等}).
+\]
+三阶导：$x < \xi$ 时为 $0$，$x > \xi$ 时为 $6$，在 $\xi$ 处从 $0$ \textbf{跳到} $6$。三次样条的定义只要求 $C^2$（函数、一阶、二阶导连续），三阶导的跳跃正是"分段多项式"的标志，是\textbf{被允许}的——所以 $h$ 是三次样条，且同一结论对每个 $(x-\xi_k)_+^3$ 成立。
+}
+
+\end{document}

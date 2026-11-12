@@ -1,0 +1,227 @@
+\documentclass[11pt]{ctexart}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{2026 Fall: High-dimensional Data Analysis}
+\fancyhead[R]{自测版（无答案）}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\newcommand{\fillblank}{\mbox{（\qquad）}}
+
+\title{\textbf{Sample Midterm Exam 2}\\[0.2em]
+\large （自测版 · 无答案）}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+\vspace{-1.2cm}
+
+\noindent\textbf{说明：}本样卷供同学们参考。正式考试中的风格和难度与此样卷类似。
+
+\vspace{0.6em}
+
+\noindent\textbf{Problem 1 (10 pts).} 判断题，请判断以下说法为正确 (T) 或者错误 (F)。
+\begin{enumerate}
+\item 回归 $Y \sim X_1$ 的 RSS 一定不小于 $Y \sim X_1 + X_2$ 的 RSS。\fillblank
+\item 对于线性回归模型来说，模型包含的变量越多，则预测误差越小。\fillblank
+\item 在线性回归的岭回归方法中，tuning parameter $\lambda$ 越大，则预测时方差越大，偏差平方越小。\fillblank
+\item 对非线性回归模型来说，参数估计的 Gauss-Newton 算法总是能够收敛到全局最优解。\fillblank
+\item 当 $n$ 较大时，BIC 对于变量数的惩罚比 AIC 更加严厉（换句话说，BIC 选出的变量数一般不会多于 AIC）。\fillblank
+\end{enumerate}
+
+\noindent\textbf{Problem 2 (16 pts).} 单选题，每题只有一个正确答案。
+\begin{enumerate}
+\item 在线性回归中，下面哪一个量仅依赖于自变量，而不依赖于因变量？\fillblank\\
+(A) 最小二乘估计量 $\hat{\beta}$\quad
+(B) 第一个主成分的载荷 (loadings)\\
+(C) 残差平方和 RSS\quad
+(D) $R^2$
+\item 下面哪种变量选择方法不适用于 $p > n$ 的情形？\fillblank\\
+(A) 向前选变量法 (forward selection)\quad
+(B) 向后选变量法 (backward elimination)\\
+(C) 岭回归 (ridge regression)\quad
+(D) lasso
+\item 下列哪个模型可以直接转化为一个线性模型？（其中 $\theta_1^*, \theta_2^*$ 为未知参数）\fillblank\\
+(A) $y_i = \theta_1^* + \exp(\theta_2^* + \log x_i) + e_i$\quad
+(B) $y_i = \theta_1^* + \exp(\theta_2^* \log x_i) + e_i$\\
+(C) $y_i = \theta_1^* + \log(\theta_2^* + x_i) + e_i$\quad
+(D) $y_i = \theta_1^* \exp(\theta_2^* x_i) + e_i$
+\item 下列关于 logistic 回归的说法正确的是\fillblank\\
+(A) 自变量只允许是连续型的\quad
+(B) 因变量只能是 0-1 变量\\
+(C) 成功概率为自变量的一个线性组合\quad
+(D) 回归的 $G^2$ (deviance) 越小，说明模型拟合得越好
+\end{enumerate}
+
+\noindent\textbf{Problem 3 (14 pts).} 假设如下回归模型
+\[
+y_i = \beta_0^* + \beta_1^* x_i + \beta_2^* \left(3x_i^2 - 2\right) + e_i, \qquad i = 1, 2, 3.
+\]
+其中 $e_i \stackrel{i.i.d.}{\sim} N(0, \sigma_*^2)$。我们给定自变量的值 $x_1 = -1$，$x_2 = 0$，$x_3 = 1$，而因变量的值则用 $y_1, y_2, y_3$ 表示。
+\begin{enumerate}
+\item (8 pts) 求出 $\beta_0^*, \beta_1^*, \beta_2^*$ 的最小二乘估计量。
+\item (6 pts) 证明：当已知 $\beta_2^* = 0$ 时，$\beta_0^*, \beta_1^*$ 的最小二乘估计量保持不变。
+\end{enumerate}
+
+\noindent\textbf{Problem 4 (16 pts).} 在一个线性回归中有连续因变量 $Y$，有一个连续自变量 $X$ 与一个分类变量 $F$，其中 $F$ 有两个类别 $\{A, B\}$。样本数为 $n = 8$。我们分别拟合三个模型，得到如下结果：
+
+\begin{table}[h]
+\centering
+\caption{模型 1：$Y \sim X$}
+\begin{tabular}{lrrrr}
+\toprule
+ & Estimate & Std.\ Error & t value & $\Pr(>|t|)$ \\
+\midrule
+(Intercept) & 32.31 & 2.00 & 16.16 & 3.58E-06 \\
+$X$ & 14.32 & 0.70 & 20.46 & 8.87E-07 \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.3em}
+\centering $R$-squared: 0.34
+\end{table}
+
+\begin{table}[h]
+\centering
+\caption{模型 2：$Y \sim X + F$}
+\begin{tabular}{lrrrr}
+\toprule
+ & Estimate & Std.\ Error & t value & $\Pr(>|t|)$ \\
+\midrule
+(Intercept) & 29.66 & 2.04 & 14.54 & 1.39E-05 \\
+$X$ & 14.57 & 0.69 & 21.12 & 2.21E-06 \\
+$B$ & 3.83 & 0.74 & 5.18 & 1.77E-03 \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.3em}
+\centering $R$-squared: 0.50
+\end{table}
+
+\begin{table}[h]
+\centering
+\caption{模型 3：$Y \sim X + F + X : F$}
+\begin{tabular}{lrrrr}
+\toprule
+ & Estimate & Std.\ Error & t value & $\Pr(>|t|)$ \\
+\midrule
+(Intercept) & 30.36 & 2.86 & 10.62 & 2.22E-04 \\
+$X$ & 14.33 & 0.98 & 14.62 & 6.36E-05 \\
+$B$ & 2.47 & 3.96 & 0.62 & 0.28 \\
+$X : B$ & 0.48 & 1.38 & 0.35 & 0.37 \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.3em}
+\centering $R$-squared: 0.64
+\end{table}
+
+\begin{enumerate}
+\item (4 pts) 从模型的基本设定方面，简述三个模型在回归的截距以及 $X$ 的斜率上有何区别。
+\item (4 pts) 对于模型 2，请构建 $X$ 回归系数的一个 $95\%$ 置信水平的置信区间（允许用符号表示 $t$-分布的分位数）。判断 $0$ 是否被包含在这个置信区间之内。
+\item (4 pts) 如果用 $t$-检验的显著性为判断依据来选择模型，最合理的模型应该是什么样的？
+\item (4 pts) 如果用 $R^2_{\mathrm{adj}}$ 为判断依据来选择，应该用哪一个模型？
+\end{enumerate}
+
+\noindent\textbf{Problem 5 (15 pts).} 在一个 logistic 回归中，因变量 $Y$ 是一个 $0$-$1$ 变量，有三个连续型自变量 $X_1, X_2, X_3$。我们拟合模型 $Y \sim X_1 + X_2 + X_3$，得到表~\ref{tab:mt2p5} 的结果。
+
+\begin{table}[h]
+\centering
+\caption{Logistic 模型 $Y \sim X_1 + X_2 + X_3$ 的结果}
+\label{tab:mt2p5}
+\begin{tabular}{lrrrr}
+\toprule
+ & Estimate & Std.\ Error & z value & $\Pr(>|z|)$ \\
+\midrule
+(Intercept) & $-15.55$ & 7.29 & $-2.13$ & 0.033 \\
+$X_1$ & $-0.59$ & 0.36 & (a) & 0.10 \\
+$X_2$ & 0.56 & 0.33 & 1.70 & 0.089 \\
+$X_3$ & 1.96 & (b) & 2.23 & (c) \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.3em}
+\centering Residual deviance: 14.18 on 16 degrees of freedom
+\end{table}
+
+\begin{enumerate}
+\item (5 pts) 用表~\ref{tab:mt2p5} 中给出的数字计算缺失的 (a)--(c) 值。只需要给出计算式，不要求计算结果。
+\item (5 pts) 假设 $x_1 = 5$，$x_2 = 25$。根据表~\ref{tab:mt2p5} 的结果，我们需要选定怎样的 $x_3$ 值才能使得 $y = 1$ 的概率为 $40\%$？只需要给出计算式，不要求计算结果。
+\item (5 pts) AIC 一般定义为
+\[
+\mathrm{AIC} = -2\log(\text{maximum likelihood}) + 2 \times \text{number of parameters}.
+\]
+现在我们拟合一个不含 $X_1$ 的模型，得到表~\ref{tab:mt2p5b} 的结果。如果用 AIC 作为模型选择准则，应该选用哪个模型？
+\end{enumerate}
+
+\begin{table}[h]
+\centering
+\caption{Logistic 模型 $Y \sim X_2 + X_3$ 的结果}
+\label{tab:mt2p5b}
+\begin{tabular}{lrrrr}
+\toprule
+ & Estimate & Std.\ Error & z value & $\Pr(>|z|)$ \\
+\midrule
+(Intercept) & $-7.60$ & 4.44 & $-1.71$ & 0.087 \\
+$X_2$ & 0.087 & 0.14 & 0.60 & 0.55 \\
+$X_3$ & 1.53 & 0.68 & 2.25 & 0.024 \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.3em}
+\centering Residual deviance: 18.16 on 17 degrees of freedom
+\end{table}
+
+\noindent（提示：Residual deviance 即 logistic 回归的 deviance，定义为 $G^2 = 2(l_s - \hat{l})$，其中 $l_s$ 与 $\hat{l}$ 分别为饱和模型以及 logistic 模型的最大对数似然函数值。）
+
+\noindent\textbf{Problem 6 (15 pts).} 考虑一个简单线性模型
+\[
+y_i = \beta_0^* + \beta_1^* x_i + e_i, \qquad i = 1, \ldots, n,
+\]
+其中 $e_i \stackrel{i.i.d.}{\sim} N(0, \sigma_*^2)$。现在对于某给定函数 $g(x)$，定义 $z_i = g(x_i)$。令 $\bar{z} = \sum_{i=1}^n z_i / n$。考虑 $\beta_1^*$ 的一个估计量
+\[
+\tilde{\beta}_1 = \frac{\sum_{i=1}^n (z_i - \bar{z}) y_i}{\sum_{i=1}^n (z_i - \bar{z}) x_i}.
+\]
+\begin{enumerate}
+\item (5 pts) 证明：$\tilde{\beta}_1$ 是无偏的。
+\item (5 pts) 证明：
+\[
+\mathrm{Var}(\tilde{\beta}_1) = \frac{\sum_{i=1}^n (z_i - \bar{z})^2}{\left\{\sum_{i=1}^n (z_i - \bar{z}) x_i\right\}^2}\, \sigma_*^2.
+\]
+\item (5 pts) 记 $\beta_1^*$ 最小二乘估计量为 $\hat{\beta}_1$。我们知道，
+\[
+\hat{\beta}_1 = \frac{\sum_{i=1}^n (x_i - \bar{x}) y_i}{\sum_{i=1}^n (x_i - \bar{x}) x_i}.
+\]
+证明：
+\[
+\mathrm{Var}(\hat{\beta}_1) \leq \mathrm{Var}(\tilde{\beta}_1).
+\]
+（提示：可以利用柯西-施瓦茨不等式
+\[
+\left(\frac{1}{n}\sum_{i=1}^n (z_i - \bar{z})(x_i - \bar{x})\right)^2
+\leq
+\left(\frac{1}{n}\sum_{i=1}^n (z_i - \bar{z})^2\right)
+\left(\frac{1}{n}\sum_{i=1}^n (x_i - \bar{x})^2\right).
+\]）
+\end{enumerate}
+
+\noindent\textbf{Problem 7 (14 pts).} 假设有 $2m + n$ 个因变量的样本 $y_1, \ldots, y_{2m+n}$，分为三组，分别满足
+\[
+y_i = \begin{cases}
+\theta^* + e_i, & 1 \leq i \leq m,\\[0.2em]
+\theta^* + \phi^* + e_i, & m+1 \leq i \leq 2m,\\[0.2em]
+\theta^* - 2\phi^* + e_i, & 2m+1 \leq i \leq 2m+n,
+\end{cases}
+\]
+其中 $e_i \stackrel{i.i.d.}{\sim} N(0, \sigma_*^2)$。
+\begin{enumerate}
+\item (7 pts) 求出 $\theta^*$ 与 $\phi^*$ 的最小二乘估计量 $\hat{\theta}$ 与 $\hat{\phi}$。
+\item (7 pts) 证明：当 $m = 2n$ 时，1) 中求得的 $\hat{\theta}$ 与 $\hat{\phi}$ 相关系数为 $0$。
+\end{enumerate}
+
+\end{document}
