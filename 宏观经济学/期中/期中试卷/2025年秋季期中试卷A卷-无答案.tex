@@ -1,0 +1,134 @@
+% !TeX program = xelatex
+% 来源：../2025年秋季期中试卷A卷答案.pdf（原件未修改）。
+% 无答案试卷。独立源文件，使用 XeLaTeX 编译；正文、表格和排版均可编辑。
+\documentclass[UTF8,11pt,a4paper,fontset=fandol]{ctexart}
+\usepackage[a4paper,top=18mm,bottom=18mm,left=23mm,right=23mm,footskip=9mm]{geometry}
+\usepackage{array,tabularx,enumitem,amsmath,amssymb}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\linespread{1.12}\selectfont
+\pagestyle{plain}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcommand{\scoretitle}[1]{%
+  \noindent\begin{tabular}{|c|c|}\hline
+  \raisebox{0pt}[2.4ex][1.4ex]{\bfseries 得分} & \makebox[1.15cm]{} \\ \hline
+  \end{tabular}\hspace{1em}\textbf{#1}\par\vspace{0.6em}}
+\newcommand{\tfgrid}{%
+  \begin{tabularx}{\linewidth}{|*{10}{Y|}}
+  \hline 1&2&3&4&5&6&7&8&9&10 \\ \hline
+  \rule{0pt}{2.5em} &&&&&&&&& \\ \hline
+  \end{tabularx}}
+\newcommand{\mcgrid}{%
+  \begin{center}\begin{tabularx}{0.74\linewidth}{|*{7}{Y|}}
+  \hline 1&2&3&4&5&6&7 \\ \hline
+  \rule{0pt}{2.25em} &&&&&& \\ \hline
+  \end{tabularx}\end{center}}
+\newcommand{\tfitem}[1]{\item #1\nobreak\hfill（\qquad）}
+\newcommand{\fourchoices}[4]{%
+  \par\nopagebreak\begin{tabularx}{\linewidth}{@{}XXXX@{}}
+  A．#1 & B．#2 & C．#3 & D．#4
+  \end{tabularx}\par}
+\newcommand{\choice}[1]{\par\nopagebreak #1}
+\newcommand{\blankpart}[1]{\noindent（#1）\par\vfill}
+\begin{document}
+
+\begin{center}
+{\small\bfseries 诚实考试吾心不虚，公平竞争方显实力，\\
+考试失败尚有机会，考试舞弊前功尽弃。}\\[-0.3em]
+\rule{\linewidth}{0.5pt}\\[0.25em]
+{\large\bfseries 上海财经大学《宏观经济学》课程期中考试卷（A）\quad 闭卷}\\[0.55em]
+课程代码\underline{\makebox[2.6cm]{100096}}\qquad 课程序号\underline{\makebox[2.7cm]{}}\\[0.45em]
+{\bfseries 2025---2026 学年第 1 学期}\\[0.7em]
+姓名\underline{\makebox[2.3cm]{}}\quad 学号\underline{\makebox[2.6cm]{}}\quad 班级\underline{\makebox[2.3cm]{}}\\[0.65em]
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|c|*{6}{C{1.5cm}|}}
+\hline 题号 & 一 & 二 & 三 & 四 & 五 & 总分 \\ \hline
+\rule{0pt}{2.2em}得分 & & & & & & \\ \hline
+\end{tabular}
+\end{center}
+\vspace{-0.3em}
+\hspace*{2em}请仔细阅读以下内容，并签名承诺。一旦您签名，将作为诚信承诺的依据，若您在考试过程中出现舞弊行为，将按照学校有关规定严肃处理；若您拒绝进行诚信承诺，将取消考试资格。
+
+\hspace*{2em}考试结束后，考卷必须与答题纸同时上交。未上交考卷，或没有诚信签字的考卷将计以零分。
+\begin{center}{\large\bfseries 诚信承诺书}\end{center}
+\hspace*{2em}我谨以至诚承诺，在此次考试过程中，我绝无任何舞弊行为，也绝不帮助他人舞弊。
+
+\hfill 学生签名：\underline{\makebox[2.7cm]{}}\par
+\hfill \underline{\makebox[1.0cm]{}}年\underline{\makebox[0.6cm]{}}月\underline{\makebox[0.6cm]{}}日\par
+\vspace{0.6em}
+\scoretitle{一、判断题（每题 2 分，共计 20 分，正确填 $\surd$，错误填 $\times$）}
+\tfgrid
+\begin{enumerate}[label=\arabic*.,leftmargin=*,itemsep=0.8em,topsep=0.9em]
+
+\tfitem{购买新车既可能是耐用品消费，又可能是投资。}
+\tfitem{政府在基础设施建设方面的花费属于政府购买。}
+\tfitem{根据定义，公共储蓄不能为负。}
+\end{enumerate}
+
+\begin{enumerate}[label=\arabic*.,start=4,leftmargin=*,itemsep=2.2em,topsep=0.6em]
+\tfitem{尽管统计的篮子有所不同，但 CPI 和 PPI 是同步且同向变化的。}
+\tfitem{比较任意两个经济体，资本存量越高的经济体中资本的边际产出就越低。}
+\tfitem{提高失业保险能够缓解失业的痛苦，但同时可能导致摩擦性失业增加。}
+\tfitem{劳动力数量相同的两个经济体，失业率越低的经济体内就业人数越多。}
+\tfitem{银行杠杆率的上升会使得货币乘数上升。}
+\tfitem{通货紧缩对经济来说是有益的，因为它提高了货币的购买力。}
+\tfitem{未被预期到的通货膨胀有利于经济中的债权人。}
+\end{enumerate}
+\newpage
+\scoretitle{二、单选题（每小题 4 分，共计 28 分）}
+\mcgrid
+\begin{enumerate}[label=\arabic*.,leftmargin=*,itemsep=0.55em,topsep=0em]
+\item 以下哪一项没有直接计入中国的 GDP？（\qquad）
+\choice{A．你领取教育部颁发的国家奖学金}
+\choice{B．特斯拉在上海市建立新的汽车生产厂}
+\choice{C．你去电影院观看国产电影}
+\choice{D．上海财经大学支付教师工资}
+\item 在一个封闭经济体中，如果当年的消费为 4，投资为 5，政府购买为 3，那么该经济的国民储蓄为（\qquad）
+\fourchoices{3}{4}{5}{不确定}
+\item 以下哪种商品价格不直接计入核心 CPI？（\qquad）
+\fourchoices{新车价格}{猪肉价格}{大学学费}{以上都不对}
+\item 经济体 A 的实际 GDP 增长率为 5\%，经济体 B 的名义 GDP 增长率为 6\%，且两个经济体的通货膨胀率相同。以下哪项说法正确？（\qquad）
+\choice{A．经济体 A 的经济增长速度比经济体 B 快}
+\choice{B．经济体 B 的经济增长速度比经济体 A 快}
+\choice{C．经济体 A 和 B 的货币供给增长率相同}
+\choice{D．经济体 A 和 B 的经济增长速度谁快谁慢不确定}
+\item 根据可贷资金市场理论，以下哪个现象会直接导致均衡利率的下降？（\qquad）
+\choice{A．政府降低税收}
+\choice{B．政府降低公务员工资}
+\choice{C．政府新建公路、铁路}
+\choice{D．以上都不对}
+\item 当企业售出一件存货中的商品时，当年的 GDP 会因此（\qquad）
+\fourchoices{增加}{减少}{不变}{以上都不对}
+\item 如果央行提高法定存款准备金率，同时在公开市场上卖出政府债券，那么货币供给会因此（\qquad）
+\fourchoices{增加}{减少}{不变}{不确定}
+\end{enumerate}
+\newpage
+\scoretitle{三、计算题（共 20 分）}
+\textbf{1.（本题 20 分）}在某经济体中，有 100 名成年人。近期的人口普查发现，该经济体内的失业率是 15\%，而劳动参与率是 60\%。
+
+（1）请计算该经济体内就业人口、失业人口以及非劳动力人口数量。\mbox{（6 分）}
+
+（2）假设情景 I：经济衰退使得该经济体内共有 6 位就业者失去了工作，并共有 10 位劳动力退出了劳动力市场。给定经济内其他成员的状态不变，计算此假设情景下的失业率和劳动参与率。\mbox{（6 分）}
+
+（3）假设情景 II：经济繁荣使得该经济体内共有 10 位失去信心的工人重新进入劳动力市场寻找工作，其中的 5 人顺利找到了工作。给定经济内其他成员的状态不变，计算此假设情景下的失业率和劳动参与率。\mbox{（6 分）}
+
+（4）比较两个假设情景下经济内的失业率，你会发现什么有趣的现象？请指出并解释。\mbox{（2 分）}
+
+\textbf{注：题干内的假设情景互相独立，并非按照先后顺序依次发生。}
+\par\medskip\textbf{答：}\par\smallskip
+\blankpart{1}\blankpart{2}\blankpart{3}\blankpart{4}
+\newpage
+\scoretitle{四、作图分析题（20 分）}
+\textbf{1.（本题 20 分）}请基于可贷资金市场，作图分析
+
+（1）如果经济内掀起一波消费热潮，这会对均衡下的利率和投资产生什么影响？\\
+\hspace*{2em}请详细解释原因。\mbox{（6 分）}
+
+（2）如果税收增加且政府购买不变，这会对均衡下的利率和投资产生什么影响？\\
+\hspace*{2em}请详细解释原因。\mbox{（6 分）}
+
+（3）如果税收和政府购买同时增加，且税收增加的幅度小于政府购买增加的幅度，这会对均衡下的利率和投资产生什么影响？\hspace{0pt}\mbox{请详细解释原因。（8 分）}
+\par\medskip\textbf{答：}\par\smallskip
+\blankpart{1}\blankpart{2}\blankpart{3}
+\end{document}

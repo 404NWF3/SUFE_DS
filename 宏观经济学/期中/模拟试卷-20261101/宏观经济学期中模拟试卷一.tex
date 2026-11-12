@@ -1,0 +1,89 @@
+% !TeX program = xelatex
+% 自编练习，参照 2025 年秋季 A/B 卷结构。独立 XeLaTeX 源文件。
+\documentclass[UTF8,11pt,a4paper,fontset=fandol]{ctexart}
+\usepackage[top=18mm,bottom=18mm,left=21mm,right=21mm,footskip=9mm]{geometry}
+\usepackage{amsmath,amssymb,array,tabularx,enumitem,fancyhdr,tikz}
+\usetikzlibrary{arrows.meta}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.3em}
+\linespread{1.12}\selectfont
+\setlength{\headheight}{14pt}
+\pagestyle{fancy}\fancyhf{}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcommand{\sect}[1]{\par\vspace{0.7em}{\large\bfseries #1}\par\vspace{0.6em}}
+\newcommand{\choices}[4]{\par\nopagebreak\begin{tabularx}{\linewidth}{@{}XX@{}}A．#1&B．#2\\C．#3&D．#4\end{tabularx}\par}
+\newcommand{\verticalchoices}[4]{\par\nopagebreak A．#1\par B．#2\par C．#3\par D．#4\par}
+\newcommand{\ans}[1]{\par\textbf{解析：}#1\par}
+\begin{document}
+\fancyhead[R]{\small 自编模拟卷一 · 闭卷练习}
+\begin{center}{\Large\bfseries 宏观经济学期中模拟试卷一}\\[0.5em]参照 2025 年秋季 A 卷结构\quad 总分 88 分\\[0.6em]姓名\underline{\makebox[2.5cm]{}}\quad 学号\underline{\makebox[3cm]{}}\quad 日期\underline{\makebox[2cm]{}}\end{center}
+\begin{tabularx}{\linewidth}{|Y|Y|Y|Y|Y|Y|}\hline 题号&一&二&三&四&总分\\\hline 满分&20&28&20&20&88\\\hline\rule{0pt}{2em}得分&&&&&\\\hline\end{tabularx}\par
+\smallskip\textbf{考试范围：}Chapter 23、24、25、26、28、29 全章，以及 Chapter 30 原课件第 1--14 页。判断与单选答案填入表格；计算与作图题写明过程。
+\sect{一、判断题（每题 2 分，共 20 分）}正确填 $\surd$，错误填 $\times$。
+\par\smallskip\begin{tabularx}{\linewidth}{|*{10}{Y|}}\hline
+1&2&3&4&5&6&7&8&9&10\\\hline
+\rule{0pt}{2.0em}&&&&&&&&&\\\hline
+\end{tabularx}\par\smallskip
+\begin{enumerate}[label=\arabic*.,leftmargin=*,itemsep=1.1em,topsep=0.3em]
+\item 企业当期在境内生产、但年末尚未售出的最终产品，应作为当期存货投资计入 GDP。\hfill（\quad）
+\item 居民购买一件进口消费品时，消费和进口可以同时增加；在不考虑国内销售服务的情况下，这笔购买不直接增加本国 GDP。\hfill（\quad）
+\item 若 CPI 和 GDP 平减指数在同一基年都等于 100，则此后两种指数的年度涨幅必然相同。\hfill（\quad）
+\item 在技术和其他投入不变时，资本边际收益递减意味着资本存量增加会使总产出下降。\hfill（\quad）
+\item 在教材生产函数 $Y=AF(L,K,H,N)$ 中，$N$ 表示人口数量。\hfill（\quad）
+\item 一个封闭经济体即使存在政府预算赤字，其国民储蓄仍然可能为正。\hfill（\quad）
+\item 在竞争性劳动市场的简单模型中，只要存在法定最低工资，无论其水平高低，都会造成结构性失业。\hfill（\quad）
+\item 效率工资理论认为，企业有时会主动支付高于市场均衡水平的工资，以减少人员流失或提高工作努力程度。\hfill（\quad）
+\item 在公众不持有现金的简单银行体系中，若法定准备金率为 20\%，而所有银行的实际准备金率均为 25\%，则货币乘数为 5。\hfill（\quad）
+\item 若货币流通速度与实际产出均不变，货币数量增加 8\%，价格水平也增加 8\%。\hfill（\quad）
+\end{enumerate}
+\newpage\sect{二、单选题（每题 4 分，共 28 分）}每题只有一个正确答案。
+\par\smallskip\begin{tabularx}{\linewidth}{|*{7}{Y|}}\hline
+1&2&3&4&5&6&7\\\hline
+\rule{0pt}{2.0em}&&&&&&\\\hline
+\end{tabularx}\par\smallskip
+\begin{enumerate}[label=\arabic*.,leftmargin=*,itemsep=0.85em,topsep=0.3em]
+\item 小林以 80 万元购买一套五年前建成的旧住房，并另外支付当期房产中介服务费 2 万元。忽略其他交易，这两笔支出合计对本期 GDP 的直接贡献为多少万元？（\quad）
+\choices{0}{2}{80}{82}
+\item 某封闭经济体当年 $Y=1800$、$C=1100$、$G=400$、净税收 $T=350$。国民储蓄和投资分别为多少？（\quad）
+\choices{300 和 300}{350 和 350}{300 和 350}{350 和 300}
+\item 本国生产的一种工业设备全部出口，不进入本国居民消费篮子。当期只有该设备价格上涨，所有商品产量及其他价格均不变。其直接影响是：（\quad）
+\choices{CPI 上升，GDP 平减指数不变}{CPI 与 GDP 平减指数都上升}{CPI 不变，GDP 平减指数上升}{两个指数都不变}
+\item 某国名义 GDP 从 800 增至 924，GDP 平减指数从 100 增至 110。该国实际 GDP 增长率为：（\quad）
+\choices{10\%}{15.5\%}{4.5\%}{5\%}
+\item 一家企业组织员工学习使用已有的生产软件，社会掌握的生产方法并未因此改变。这主要增加了生产函数中的哪一项？（\quad）
+\choices{物质资本 $K$}{人力资本 $H$}{自然资源 $N$}{技术知识 $A$}
+\item 假设劳动力总量不变，每期就业者失去工作的比例为 $s=2\%$，失业者找到工作的比例为 $f=18\%$。稳态失业率为：（\quad）
+\choices{2\%}{9\%}{10\%}{20\%}
+\item 初始货币数量 $M=400$、流通速度 $V=5$、实际产出 $Y=1000$。之后 $M$ 增至 440，$Y$ 增至 1100，$V$ 不变。价格水平将：（\quad）
+\choices{保持不变}{上升 $10\%$}{下降 $10\%$}{上升 $21\%$}
+\end{enumerate}
+\newpage\sect{三、计算题（1 题，共 20 分）}
+某经济体共有 200 名成年人。初始失业率为 12\%，劳动参与率为 75\%。所有人数均为实际人数，无须作整数近似。
+
+\textbf{说明：}情景 I 与情景 II 相互独立，均从初始状态出发；成年人口总数始终不变。百分比保留两位小数即可。
+
+（1）计算初始的劳动力、就业人口、失业人口和非劳动力人口。\hfill\mbox{（6 分）}
+\par\vspace{0.4em}\textbf{答：}\par\vfill
+
+（2）情景 I：12 名初始就业者失去工作，并继续积极求职；另外，15 名初始失业者停止求职并退出劳动力市场。其他人状态不变。计算新的失业率和劳动参与率。\hfill\mbox{（6 分）}
+\par\vspace{0.4em}\textbf{答：}\par\vfill
+
+（3）情景 II：30 名初始非劳动力重新进入劳动力市场，其中 12 人立即找到工作，另外 18 人积极求职但尚未找到工作。其他人状态不变。计算新的失业率和劳动参与率。\hfill\mbox{（6 分）}
+\par\vspace{0.4em}\textbf{答：}\par\vfill
+
+（4）分别将情景 I、II 与初始状态比较，说明为什么不能仅凭失业率升降判断就业状况是否改善。\hfill\mbox{（2 分）}
+\par\vspace{0.4em}\textbf{答：}\par\vfill
+\newpage\sect{四、作图分析题（1 题，共 20 分）}
+请使用封闭经济的可贷资金市场模型，分析下列三个相互独立的情景。横轴为可贷资金数量，纵轴为实际利率 $r$；国民储蓄供给曲线向右上倾斜，投资需求曲线向右下倾斜。除题目明确给出的变化外，其他条件不变，产出 $Y$ 固定。每问均须作图，标出新旧曲线、均衡点，并解释均衡利率与投资数量的变化。
+
+（1）政府削减政府购买，净税收不变；在每一个给定利率下，私人储蓄均不变。\hfill\mbox{（6 分）}
+\par\vspace{0.5em}\textbf{作图与分析：}\par\vfill
+
+（2）技术革新提高了新建厂房与设备的预期回报，使每一个给定利率下的投资需求增加；储蓄供给行为不变。\hfill\mbox{（6 分）}
+\par\vspace{0.5em}\textbf{作图与分析：}\par\vfill
+
+（3）净税收增加 100，政府购买增加 80；在每一个给定利率下，居民消费因增税减少 60。投资需求曲线不变。请先分别计算私人储蓄、公共储蓄与国民储蓄的变化，再作图分析。\hfill\mbox{（8 分）}
+\par\vspace{0.5em}\textbf{作图与分析：}\par\vfill
+\end{document}

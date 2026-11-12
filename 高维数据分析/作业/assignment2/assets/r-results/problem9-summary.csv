@@ -1,0 +1,2 @@
+"method","package_version","lambda","cv_mse","test_mse","retained_groups"
+"Group lasso","1.6",0.0956607599298918,1.39460991391023,1.0651646977119,"4,5"

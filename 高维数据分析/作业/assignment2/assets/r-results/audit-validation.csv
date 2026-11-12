@@ -1,0 +1,23 @@
+"check","error","tolerance","passed"
+"P1 reference recoding preserves fitted values",2.91038304567337e-11,1e-08,TRUE
+"P2 raw and orthogonal polynomial bases agree",4.37694325228222e-12,1e-08,TRUE
+"P2 R BIC constant reconciles reduced BIC",1.36424205265939e-12,1e-08,TRUE
+"P3 GCV agrees with RSS and effective df",1.13686837721616e-13,1e-06,TRUE
+"P4 PCA scores give orthogonal columns",2.27373675443232e-13,1e-08,TRUE
+"P4 score variance sums to nine",1.77635683940025e-15,1e-08,TRUE
+"P4 PCR coefficients from projections agree",1.70974345792274e-14,1e-08,TRUE
+"P5 saturated fit equals observed cell means",4.36557456851006e-11,1e-08,TRUE
+"P5 stated alias identity holds",0,1e-08,TRUE
+"P6 three methods match exhaustive BIC minimum",2.27373675443232e-13,1e-08,TRUE
+"P7 OLS normal equations",0,1e-08,TRUE
+"P7 ridge normal equations",4.44089209850063e-16,1e-08,TRUE
+"P7 lasso KKT active coordinate",0,1e-08,TRUE
+"P7 lasso KKT zero coordinate",0,1e-08,TRUE
+"P8 ridge original-scale prediction",0,1e-08,TRUE
+"P8 lasso original-scale prediction",0,1e-08,TRUE
+"P8 manual five-fold MSE alpha 0",3.5527136788005e-14,1e-08,TRUE
+"P8 manual five-fold MSE alpha 1",7.105427357601e-15,1e-08,TRUE
+"P9 training columns have zero mean",5.88714262524566e-15,1e-08,TRUE
+"P9 training columns have unit sample SD",1.55431223447522e-15,1e-08,TRUE
+"P9 standardized coefficient prediction",0,1e-08,TRUE
+"P9 manual five-fold MSE",2.8421709430404e-14,1e-10,TRUE

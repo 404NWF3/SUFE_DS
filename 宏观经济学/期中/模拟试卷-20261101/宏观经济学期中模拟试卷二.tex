@@ -1,0 +1,94 @@
+% !TeX program = xelatex
+% 自编练习，参照 2025 年秋季 A/B 卷结构。独立 XeLaTeX 源文件。
+\documentclass[UTF8,11pt,a4paper,fontset=fandol]{ctexart}
+\usepackage[top=18mm,bottom=18mm,left=21mm,right=21mm,footskip=9mm]{geometry}
+\usepackage{amsmath,amssymb,array,tabularx,enumitem,fancyhdr,tikz}
+\usetikzlibrary{arrows.meta}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.3em}
+\linespread{1.12}\selectfont
+\setlength{\headheight}{14pt}
+\pagestyle{fancy}\fancyhf{}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcommand{\sect}[1]{\par\vspace{0.7em}{\large\bfseries #1}\par\vspace{0.6em}}
+\newcommand{\choices}[4]{\par\nopagebreak\begin{tabularx}{\linewidth}{@{}XX@{}}A．#1&B．#2\\C．#3&D．#4\end{tabularx}\par}
+\newcommand{\verticalchoices}[4]{\par\nopagebreak A．#1\par B．#2\par C．#3\par D．#4\par}
+\newcommand{\ans}[1]{\par\textbf{解析：}#1\par}
+\begin{document}
+\fancyhead[R]{\small 自编模拟卷二 · 闭卷练习}
+\begin{center}{\Large\bfseries 宏观经济学期中模拟试卷二}\\[0.5em]参照 2025 年秋季 B 卷结构\quad 总分 88 分\\[0.6em]姓名\underline{\makebox[2.5cm]{}}\quad 学号\underline{\makebox[3cm]{}}\quad 日期\underline{\makebox[2cm]{}}\end{center}
+\begin{tabularx}{\linewidth}{|Y|Y|Y|Y|Y|Y|}\hline 题号&一&二&三&四&总分\\\hline 满分&20&28&20&20&88\\\hline\rule{0pt}{2em}得分&&&&&\\\hline\end{tabularx}\par
+\smallskip\textbf{考试范围：}Chapter 23、24、25、26、28、29 全章，以及 Chapter 30 原课件第 1--14 页。判断与单选答案填入表格；计算与作图题写明过程。
+\sect{一、判断题（每题 2 分，共 20 分）}正确填 $\surd$，错误填 $\times$。
+\par\smallskip\begin{tabularx}{\linewidth}{|*{10}{Y|}}\hline
+1&2&3&4&5&6&7&8&9&10\\\hline
+\rule{0pt}{2.0em}&&&&&&&&&\\\hline
+\end{tabularx}\par\smallskip
+\begin{enumerate}[label=\arabic*.,leftmargin=*,itemsep=1.1em,topsep=0.3em]
+\item 政府发放养老金属于转移支付，养老金本身不计入 GDP 支出法中的政府购买。\hfill（\quad）
+\item 只要两国人均实际 GDP 相同，就可以断定两国居民的经济福利水平相同。\hfill（\quad）
+\item 固定消费篮子没有及时反映消费者转向相对便宜商品的行为，可能高估生活费用的上升。\hfill（\quad）
+\item 生产函数具有规模报酬不变，与资本的边际收益递减可以同时成立。\hfill（\quad）
+\item 在技术不进步、其他相关条件不变的资本积累模型中，一次性提高储蓄率必然使人均实际产出的增长率永久提高。\hfill（\quad）
+\item 公司发行债券和发行股票都使购买者成为公司的部分所有者，并享有相同的剩余利润索取权。\hfill（\quad）
+\item 在劳动力总量不变的两状态模型中，若失去工作的概率不变，而失业者找到工作的概率上升，则稳态失业率下降。\hfill（\quad）
+\item 在成年人口总数不变时，统计失业率下降必然意味着就业人数增加。\hfill（\quad）
+\item 居民把原来持有的纸币存入活期账户，在银行尚未据此发放新贷款的瞬间，流通中现金减少与活期存款增加相抵，货币总量不变。\hfill（\quad）
+\item 仅凭数量方程 $MV=PY$，无须对 $V$ 和 $Y$ 作任何假设，就能推出货币数量增长 10\% 必使价格水平增长 10\%。\hfill（\quad）
+\end{enumerate}
+\newpage\sect{二、单选题（每题 4 分，共 28 分）}每题只有一个正确答案。
+\par\smallskip\begin{tabularx}{\linewidth}{|*{7}{Y|}}\hline
+1&2&3&4&5&6&7\\\hline
+\rule{0pt}{2.0em}&&&&&&\\\hline
+\end{tabularx}\par\smallskip
+\begin{enumerate}[label=\arabic*.,leftmargin=*,itemsep=0.85em,topsep=0.3em]
+\item 小周存入银行 1 万元，一年名义利率为 6\%。同期 CPI 从 120 上升到 127.2。忽略税费，小周一年后本息的购买力相对于存款时：（\quad）
+\choices{提高}{不变}{降低}{无法判断}
+\item 某消费篮子固定包含 2 份食品和 3 次公交出行。基年食品单价为 5 元、公交单价为 2 元；本年分别为 6 元、4 元。以基年 CPI 为 100，本年 CPI 为：（\quad）
+\choices{125}{140}{150}{160}
+\item 封闭经济体中，$Y=2000$、$C=1250$、$G=450$、净税收 $T=300$。私人储蓄、公共储蓄和国民储蓄依次为：（\quad）
+\choices{$450,\;-150,\;300$}{$300,\;-150,\;150$}{$450,\;150,\;600$}{$300,\;150,\;450$}
+\item 某经济体实际 GDP 一年增长 8.12\%，同期人口增长 2\%。按精确公式计算，人均实际 GDP 增长率为：（\quad）
+\choices{8.12\%}{6.12\%}{4.06\%}{6\%}
+\item 以下哪种情况最符合摩擦性失业的含义？（\quad）
+\choices{约束性最低工资使部分求职者无法就业}{总需求下降导致企业裁员}{毕业生花时间寻找更匹配自身能力的职位}{产业转型后劳动者技能与现有岗位长期不匹配}
+\item 在公众不持有现金、所有银行实际准备金率保持 20\% 的简单模型中，央行向商业银行出售 20 亿元政府债券，银行以准备金支付。假定体系完成存款收缩且其他条件不变，货币供给最终变化为：（\quad）
+\choices{增加 100 亿元}{减少 100 亿元}{减少 20 亿元}{增加 20 亿元}
+\item 某经济体 $M=600$、$V=4$、实际 GDP 为 1500。若数量方程中的 $P$ 以基期为 1，而 GDP 平减指数以基期为 100，则该平减指数为：（\quad）
+\choices{120}{150}{180}{160}
+\end{enumerate}
+\newpage\sect{三、计算题（1 题，共 20 分）}
+某商业银行初始资产负债表如下，单位均为亿元。存款为公众的活期存款，一般性债务不计入本题的货币总量。
+\begin{center}\renewcommand{\arraystretch}{1.35}
+\begin{tabularx}{0.9\linewidth}{|X|r|X|r|}\hline
+\multicolumn{2}{|c|}{资产}&\multicolumn{2}{c|}{负债和所有者权益}\\\hline
+存款准备金&80&存款&400\\\hline
+贷款&300&一般性债务&50\\\hline
+有价证券&120&资本（所有者权益）&50\\\hline
+合计&500&合计&500\\\hline
+\end{tabularx}\end{center}
+
+\textbf{说明：}两个情景相互独立，均从初始资产负债表出发。杠杆率定义为资产总额除以所有者权益；账面所有者权益允许为负，须与股东本金的损失比例区分。
+
+（1）计算该银行的实际存款准备金率和杠杆率。若所有银行均保持这一实际准备金率，公众不持有现金，计算简单模型中的货币乘数。\hfill\mbox{（6 分）}
+\par\vspace{0.4em}\textbf{答：}\par\vfill
+
+（2）情景 I：股东向银行追加资本 50 亿元，这笔资金全部计入该银行准备金；存款、一般性债务及其他资产项目均不变。计算新的资产总额、所有者权益和杠杆率，并判断银行在权益耗尽前可吸收的资产损失比例是上升还是下降。\hfill\mbox{（7 分）}
+\par\vspace{0.4em}\textbf{答：}\par\vfill
+
+（3）情景 II：初始贷款资产发生 20\% 的损失，其他资产和全部负债不变，且无人追加资本。计算账面所有者权益及其相对初始权益的变化百分比；另在股东有限责任且不再出资的条件下，指出原股东本金的损失比例。\hfill\mbox{（7 分）}
+\par\vspace{0.4em}\textbf{答：}\par\vfill
+\newpage\sect{四、作图分析题（1 题，共 20 分）}
+请采用课件中的长期货币供求模型，分别分析下列三个相互独立的情景。横轴为名义货币量 $M$，纵轴为货币价值 $1/P$；货币供给曲线垂直，货币需求曲线向右下倾斜。除题目明确给出的变化外，其他条件不变。每问均须标出新旧曲线、均衡点，并解释均衡名义货币量与价格水平的变化。
+
+（1）央行在公开市场买入政府债券，使银行体系准备金增加。实际准备金率及公众持币习惯不变，货币需求曲线不变。\hfill\mbox{（6 分）}
+\par\vspace{0.5em}\textbf{作图与分析：}\par\vfill
+
+（2）一种新的支付方式使交易更加便利，在每一个给定物价水平下，人们希望持有的名义货币减少。货币供给保持不变。\hfill\mbox{（6 分）}
+\par\vspace{0.5em}\textbf{作图与分析：}\par\vfill
+
+（3）其他非货币资产的收益率下降，且这些资产的流动性与风险不变。货币供给保持不变。请进一步判断实际货币余额的变化，并解释为何货币需求曲线移动后，均衡名义货币量不一定改变。\hfill\mbox{（8 分）}
+\par\vspace{0.5em}\textbf{作图与分析：}\par\vfill
+\end{document}

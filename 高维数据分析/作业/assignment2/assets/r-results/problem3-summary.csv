@@ -1,0 +1,5 @@
+"method","RSS","design_columns","effective_df"
+"Cubic polynomial",189848.974146678,4,4
+"Cubic regression spline",189662.808879196,7,7
+"Natural cubic spline",190131.115389428,5,5
+"Smoothing spline (GCV)",175888.744520347,NA,18.2221346048581

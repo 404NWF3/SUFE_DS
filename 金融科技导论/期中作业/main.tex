@@ -1,0 +1,159 @@
+% !TeX program = xelatex
+% Source: ../中金自动化因子发现引擎案例研究.md
+\documentclass[UTF8,a4paper,zihao=-4,fontset=fandol]{ctexart}
+\usepackage[margin=25mm,headheight=15pt]{geometry}
+\usepackage{amsmath,xcolor,fancyhdr,enumitem}
+\usepackage{graphicx,caption}
+\captionsetup{font=small,labelfont=bf,skip=6pt,hypcap=false}
+\usepackage[unicode,hidelinks]{hyperref}
+\setmainfont{Times New Roman}
+\ctexset{section={numbering=false,format=\Large\bfseries,beforeskip=18pt,afterskip=9pt},subsection={numbering=false,format=\large\bfseries,beforeskip=12pt,afterskip=6pt}}
+\linespread{1.25}
+\setlength{\parskip}{4pt}
+\setlength{\emergencystretch}{3em}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small 金融科技导论 · 案例研究}
+\fancyhead[R]{\small 中金自动化因子发现引擎}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+\widowpenalty=10000
+\clubpenalty=10000
+\begin{document}
+\begin{center}
+{\LARGE\bfseries 中金公司基于 Loop Engineering 的\\[6pt]自动化因子发现引擎\par}
+\vspace{14pt}
+\textbf{组员姓名及学号}：不告诉你\par
+\textbf{课程名称}：《金融科技导论》期中作业\par
+\end{center}
+\section{摘要}
+因子挖掘是量化投资的核心环节，传统上高度依赖研究员手工提出假设、编写代码、回测验证，存在效率低、易同质化、易过拟合等痛点。2026年3月以来，以 Karpathy 的 autoresearch 和微软 RD-Agent 为代表的"Auto-Research"范式兴起，证明智能体可以自主完成"提出假设—执行实验—反馈迭代"的科研闭环。本文以中金公司研究部2026年8月发布的"基于Loop Engineering的自动化因子发现引擎"为案例，按"背景与业务场景—原有业务痛点—金融科技解决方案—应用效果与创新价值—风险分析"五个部分展开。该系统在3天无人值守运行中完成581轮迭代、测试16,939个候选因子，最终保留69个独立因子；Top 5因子等权复合年化超额收益18.3\%，夏普比率3.14，全程零人工干预。研究表明，因子挖掘的流程性工作已具备智能体自动化可行性，但"自动化发现"与"自动化可信"之间仍需质量闸门与经济学含义审查来弥合。
+
+\textbf{关键词}：金融科技；量化投资；因子挖掘；大语言模型；智能体；Loop Engineering
+
+\section{一、背景与业务场景}
+\subsection{（一）案例概况}
+本案例研究对象为中金公司（CICC）研究部于2026年8月3日发布的《大模型系列（7）：基于Loop Engineering的自动化因子发现引擎》（郑文才、周萧潇、刘均伟）\cite{cicc-loop-2026}。该应用属于量化投资业务中的\textbf{因子挖掘环节}（投资研究的上游），服务于A股多因子选股体系，目标是用大模型智能体替代研究员完成价量因子的自动化发现、筛选与入库。
+
+\subsection{（二）行业背景之一：Auto-Research——因子挖掘能否依靠智能体自动化？}
+\textbf{这一问题在2026年初得到了标志性回答。} 2026年3月，OpenAI创始成员、特斯拉前AI总监 Andrej Karpathy 开源了 autoresearch 项目：给AI智能体一个真实的LLM训练环境和三个核心文件（只读的评估脚本 prepare.py、可被智能体修改的训练脚本 train.py、人类编写的指令文件 program.md），智能体即可彻夜自主循环"改代码\ensuremath{\rightarrow}跑5分钟实验\ensuremath{\rightarrow}看指标\ensuremath{\rightarrow}保留或丢弃"，人类不再触碰底层代码，只需编写"研究组织代码"\cite{karpathy-autoresearch}\cite{infoq-autoresearch}。实测中，智能体两天内自主完成276次实验、筛出29项有效改进，将模型训练效率提升约11\%，全程零人工干预，项目上线数天即获数万GitHub星标\cite{infoq-autoresearch}。这一"人类定策略、AI做执行"的闭环范式，与量化因子挖掘"提出假设—回测—筛选"的流程高度同构，直接启发了金融场景的智能体化改造。
+
+在金融垂直领域，最具代表性的是\textbf{微软亚洲研究院开源的 RD-Agent}。其方法论由"研究（R）"与"开发（D）"两类智能体构成，把每轮因子研究抽象为"假设生成\ensuremath{\rightarrow}任务分解\ensuremath{\rightarrow}代码实现\ensuremath{\rightarrow}执行回测\ensuremath{\rightarrow}反馈生成"五步循环；代码实现引擎 CoSTEER 支持最多10轮"写代码—测试—修正"自动调试，并以微软 Qlib 作为量化基础设施底座负责数据与回测\cite{microsoft-rd-agent}。其量化分支 RD-Agent-Quant 被 NeurIPS 2025 收录，公开实测以约10美元/轮的运行成本实现相对基线约2倍的年化收益提升\cite{microsoft-rd-agent}。国联民生证券2026年5月的实测报告进一步验证：RD-Agent 预估有效因子产出约900个/月，效率可达人工的数十倍，但运行稳定性、LLM代码质量、IC优化目标与实盘收益脱钩等问题仍使其只能定位为"辅助因子研究工具"，候选因子最终入库仍需研究员把关\cite{glms-rd-agent}。
+
+\textbf{结论：因子挖掘的流程性工作（假设、回测、筛选、记录）具备智能体自动化的可行性，但"自动化发现"与"自动化可信"之间仍有鸿沟——质量闸门与经济学含义审查成为落地的关键。} 中金方案的切入点正是这一鸿沟\cite{cicc-loop-2026}。
+
+\subsection{（三）行业背景之二：因子挖掘智能体在各金融机构中的使用}
+智能体化因子挖掘已成为2025—2026年金融机构的普遍实践，呈现三类路径：
+
+\textbf{1. 开源框架与平台生态。} 微软 RD-Agent 之外，开源社区已演化出 AlphaAgent（2025年2月，Idea/Factor/Eval三Agent架构，关注因子差异性与样本外稳定性）、QuantaAlpha（2026年2月，借鉴遗传规划并在RD-Agent流程上加入演化控制器）等框架，开源证券在专题报告中对三者进行了系统对比\cite{ky-factor-mining}。国际上，WorldQuant 的 BRAIN 平台以"众包+平台化回测"模式让全球开发者提交Alpha表达式，开创了因子生产的平台化先河\cite{worldquant-brain}。
+
+\textbf{2. 券商金工：从遗传规划到LLM智能体。} 华泰证券早在2021年即构建"遗传规划自动挖掘因子+机器学习合成"的全流程AI选股体系，合成因子RankIC均值8.87\%，叠加传统模型后中证500增强组合年化超额平均提升1.38\%\cite{ht-ai-stock-selection}。2026年以来，国联民生、开源证券等密集发布RD-Agent实测与AI赋能投研系列报告\cite{glms-rd-agent}\cite{ky-factor-mining}；截至2026年6月，国泰海通、华泰、中信建投、中金、广发、银河、国信等多家券商已上线覆盖"因子分析"等场景的金融Skills，券商AI竞争从"谁有大模型"转向"谁有可调用的专业能力"\cite{cls-financial-skills}。中金自身除本案例外，还于2026年7月发布了基于多智能体辩论（Multi-Agent Debate）的基本面因子挖掘框架，模拟"提出假设—同行质疑—修正方案"的研究流程\cite{cicc-multi-agent}。
+
+\textbf{3. 量化私募的算力与数据路线。} 幻方、九坤等头部私募长期投入AI算力平台（幻方"萤火二号"投入约10亿元、万张A100），从另类数据中提取信号，其因子生产更依赖"算力+深度学习"，与券商"LLM智能体+可解释表达式"的路线形成互补。
+
+\section{二、原有业务痛点}
+在应用该引擎之前，因子挖掘业务存在四个典型痛点：
+
+\textbf{1. 效率瓶颈与人力成本高。} 量化研究包含大量流程性工作：提出假设、执行回测、筛选审查。研究员日常"洗数据、对特征、调代码"等杂活占用约八成时间，真正用于策略思考不足两成\cite{infoq-autoresearch}；单人月产因子规模有限，且优秀因子的发现与个人知识结构强相关，难以系统化复用\cite{cicc-loop-2026}。
+
+\textbf{2. 传统自动化方法质量缺陷明显。} 遗传规划、暴力搜索等算法虽能批量生成因子，但只优化单一IC等指标，极易产出无经济学含义的"统计巧合"因子，过拟合风险高（Goodhart定律）；且每轮搜索相互独立，无状态传递、无失败学习，历史试错经验被白白浪费\cite{cicc-loop-2026}\cite{ky-factor-mining}。
+
+\textbf{3. 搜索同质化。} 缺乏多样性约束的搜索会迅速收敛到少数"富矿"结构上，因子库高度冗余，IC相关性居高不下，难以构建分散化的可用因子库\cite{cicc-loop-2026}。
+
+\textbf{4. 质量评判维度单一。} 传统筛选只看IC等单维指标，无法同时兼顾统计显著性、年度稳定性、风险调整收益、近期持续性与因子独立性，导致入选因子样本外衰减快\cite{cicc-loop-2026}。
+
+\section{三、金融科技解决方案及改变}
+中金将整套流程封装为基于大模型 Loop 机制的自动化价量因子发现系统。其核心理念来自 Anthropic Claude Code 团队提出的 Loop Engineering 范式：不再追求把单句提示词写得更好，而是把一次性交互改造为"触发—执行—校验—记录"的自动化闭环，由定时调度驱动模型持续迭代、硬性校验把控产出质量、状态文件在轮次之间传递进度\cite{cicc-loop-2026}。
+
+\textbf{（1）"生成—审查—验证"三步闭环。} 生成环节由五种演化策略供给候选：变异25\%、交叉25\%、参数扰动15\%、随机探索15\%、LLM机制引导20\%；审查环节先经四道规则过滤，再抽样交由LLM子代理精判边界条件；验证环节在硬编码回测引擎上以5日换仓（单边千一成本）计算Spearman秩IC，通过11项联合过滤（|IC|>0.03、2025及2026年超额>0、夏普>0.5、Calmar>1.0、IC相关性<0.70等）后入库并更新检查点。每5分钟由定时任务触发一轮，检查点文件保证任意中断后可断点续跑\cite{cicc-loop-2026}。
+
+\textbf{（2）五项机制改造如何解决痛点。} 其一，LLM机制引导生成（占预算20\%）让大模型按13个机制族提出自然语言假设，评判因子的经济学含义，避免无意义统计因子，解决痛点2；其二，11项联合过滤与多维评分替代单一IC指标，并允许自定义优化方向，解决痛点4；其三，FSA（频繁子树规避）定期抽象因子结构，使用超过15\%阈值的骨架被禁止复用，配合失败模式库，强制搜索向新方向扩展，抑制同质化，解决痛点3；其四，Skill模块化将算子、字段、回测参数固化为可复用模块，扩展至另类数据、高频数据只需修改Skill文件；其五，生成与审查由独立子代理（Sub-agents）执行，与硬编码验证端隔离，降低单一模型"自我说服"风险\cite{cicc-loop-2026}。整套系统无人值守运行，直接缓解痛点1。
+
+\section{四、应用效果与创新价值}
+\textbf{1. 效率的规模化验证。} 系统从零因子冷启动，3天无人值守运行581轮迭代，累计测试16,939个候选因子，保留21大类69个独立因子，成功率0.41\%\cite{cicc-loop-2026}。同等体量的人工挖掘通常需要数月，效率提升达数量级。
+
+\textbf{2. 搜索过程呈现三次自动自适应转向。} 冷启动期系统自动识别"富矿"（跳空溢价类骨架）并加大开采；450轮后FSA触发冻结，搜索自动向影线、振幅、价格结构等新信号源扩散——三次转向均无需人工设定规则\cite{cicc-loop-2026}。
+
+\textbf{3. 因子质量与收益表现。} 最终因子平均超额夏普1.60，2025年以来平均年化超额11.7\%，平均IC绝对值5.0\%，因子间IC相关性均低于0.70，可解释性强（如"振幅扩张与跳空溢价"因子刻画隔夜溢价的"有质高开"）。Top 5因子等权复合后IC达0.081，\textbf{年化超额收益18.3\%（费后），夏普比率3.14，优于任一单因子}，且在风格切换年份通过分散个体噪声进一步降低波动\cite{cicc-loop-2026}。
+
+\textbf{4. 行业创新价值。} 该案例证明了三点：Loop机制（检查点持久化+失败学习+动态预算）使搜索效率随迭代累积提升，区别于简单的for循环调用LLM；硬编码验证闸门+LLM精判的"人机分工"架构为金融机构提供了可复制的合规友好范式；工程化闭环让单个研究员拥有"自动化因子工厂"，行业竞争要素从人力规模转向闭环系统的设计水平\cite{cicc-loop-2026}\cite{ky-factor-mining}。
+
+\section{五、风险分析}
+\textbf{1. 模型与过拟合风险（最突出）。} 回测数据仅覆盖2024年初至2026年7月约600个交易日，且联合过滤条件直接以2025、2026年分段收益为门槛，存在对测试区间隐式过拟合的风险；样本外收益无法保证。搜索时间仅3天，FSA冻结后新方向因子夏普均值（0.92）显著低于核心家族（1.68），系统尚未在替代信号源上建立同等质量。中金在报告风险提示中也明确承认上述局限\cite{cicc-loop-2026}。
+
+\textbf{2. 信号源集中与数据维度天花板。} 69个因子中overnight字段出现率85\%，趋势动量、反转等8个机制方向仍在探索初期；数据限于日频价量，未引入基本面与另类数据，搜索空间受限于输入维度\cite{cicc-loop-2026}。
+
+\textbf{3. 算法与运行风险。} 大模型产出具有随机性；LLM可能生成边界条件有误的表达式，虽有抽样精判但仍非完备验证；无人值守循环存在死循环、状态膨胀等工程风险，需检查点与硬闸门兜底\cite{cicc-loop-2026}\cite{glms-rd-agent}。
+
+\textbf{4. 数据安全与合规。} 行情数据与因子库属于机构核心资产，智能体接入外部LLM API可能带来数据泄露风险，需要私有化部署与审计日志；若相关因子用于资管产品，还需关注因子来源的可解释性披露与模型风险管理。目前业界的应对方式是"自动化发现+人工入库把关"，即在制度层面保留人类最终决策权\cite{glms-rd-agent}，该方案的风险缓释总体充分但依赖流程执行，建议补充强制样本外验证期与跨期相关性控制。
+
+\begingroup\small\begin{thebibliography}{10}\setlength{\itemsep}{5pt}\setlength{\parsep}{0pt}
+\bibitem{cicc-loop-2026} 中金公司研究部. 大模型系列（7）：基于Loop Engineering的自动化因子发现引擎[R]. 郑文才, 周萧潇, 刘均伟, 2026-08-03.
+\bibitem{karpathy-autoresearch} Karpathy A. autoresearch: AI agents running research on single-GPU nanochat training automatically[EB/OL]. GitHub, 2026-03. \url{https://github.com/karpathy/autoresearch}.
+\bibitem{infoq-autoresearch} InfoQ. 两天推翻Karpathy 20年工作习惯！百行代码开源项目"封神"[EB/OL]. 2026-03-17.
+\bibitem{microsoft-rd-agent} Microsoft Research Asia. R\&D-Agent: An LLM-Agent Framework Towards Autonomous Data Science[R]. 2025；另见 Collaborative Evolving Strategy for Automatic Data-Centric Development, arXiv:2407.18690, 2024.
+\bibitem{glms-rd-agent} 国联民生证券. RD-Agent实测：AI驱动的因子挖掘框架[R]. 2026-05-20.
+\bibitem{ky-factor-mining} 开源证券. 开源量化评论（129）：AI赋能投研体系——因子挖掘篇[R]. 2026-09-13.
+\bibitem{worldquant-brain} WorldQuant. WorldQuant Launches BRAIN Platform and Inaugural Global Alphathon Competition [EB/OL]. 2022-08-02. https://www.worldquant.com/ideas/worldquant-launches-brain-platform-and-inaugural-global-alphathon-competition/.
+\bibitem{ht-ai-stock-selection} 华泰证券. 人工智能系列之二十八：基于量价的人工智能选股体系概览[R]. 2020.
+\bibitem{cls-financial-skills} 财联社. 券商密集上线Skills，重构服务颗粒度[EB/OL]. 2026-06-21.
+\bibitem{cicc-multi-agent} 中金公司研究部. Multi-Agent如何辩论出基本面Alpha？[R]. 2026-07-29.\end{thebibliography}\endgroup
+\clearpage
+\begingroup
+\linespread{1.15}\selectfont
+\setlength{\parskip}{3pt}
+\section{附录：小组设计与 AI 辅助复现实践}
+\subsection{（一）我们设计并实现的因子挖掘助手}
+在完成案例分析的基础上，我们进一步设计了 \textbf{Loop Research（因子发现实验室）}，并使用 AI 编程助手辅助开发，将研报中的 Loop Engineering 思路实现为可访问、可操作的课程研究网站。我们希望通过亲自搭建“生成—审查—验证—反馈”的流程，观察一个候选公式如何形成、为什么被拒绝，以及研究结果如何进入下一轮迭代。网站已经部署在 Railway，提供研究概览、原理与方法、实验记录、实时挖掘和网页研究演示等入口。\footnote{项目代码及功能说明：\href{https://github.com/404NWF3/cicc-loop-reproduction}{404NWF3/cicc-loop-reproduction}。本附录网站截图采集于2026年10月26日。}
+
+\textbf{小组负责研究设计与需求判断，AI 辅助完成工程实现。} 我们确定复现目标、页面结构、现场操作方式、实验规模和结果展示口径，再借助 AI 编程助手编写前后端代码、调试接口、补充测试和处理部署问题。开发过程中，我们还将网页候选规模扩展到最多1,200个，并调整了研究演示的组织方式。这里需要区分：AI 编程助手参与的是\textbf{系统开发}；网站中的 DeepSeek 模型参与的是\textbf{运行时的候选生成与逻辑审查}。
+
+\begin{center}
+\includegraphics[width=\linewidth]{.assets/loop-home-20261026.png}
+\captionof{figure}{小组网站首页：将提出假设、审查表达、验证信号与反馈迭代组织为研究闭环。}
+\label{fig:loop-home}
+\end{center}
+
+实现上，我们采用 Python/FastAPI、SQLite 与 React/TypeScript 构建轻量系统。模型通过独立的生成和审查上下文提出、检查候选，固定程序负责计算与筛选，任务状态和检查点负责保存过程。\textbf{本项目定位为依据公开描述开展的独立方法与工程复现}，数据、股票池及部分指标口径与中金原实验不同；正文中的机构回测数字仍属于研报披露结果。
+
+\noindent\textbf{演示站点：}\par
+{\small\url{https://cicc-loop-reproduction-production.up.railway.app/}}
+
+\clearpage
+\subsection{（二）复现的研究闭环与网页操作}
+我们把研报中的机制拆成可检查的程序步骤，既呈现公式的生成过程，也保留失败与筛选依据。网站的“实时挖掘”是\textbf{在固定历史快照上当场计算}，使用50只股票的历史数据；“实时”指任务进度的更新，不代表接入实时行情。
+
+\begin{enumerate}[label=\arabic*.,leftmargin=2em,itemsep=3pt,topsep=3pt]
+\item \textbf{生成候选。} 围绕五类搜索策略构造受限公式；本地模式先复算6个归档种子，再探索新候选。DeepSeek模式逐批提出候选，并接收开发期失败原因等反馈。
+\item \textbf{审查表达式。} 检查允许的字段、算子、量纲、复杂度与回看长度，拒绝不合法或重复结构；模型审查使用与生成分开的上下文，FSA机制限制高频骨架的重复探索。
+\item \textbf{固定规则验证。} 以收盘后信号、下一交易日开盘成交、5日调仓及单边0.1\%成本等口径计算结果，并展示11项本地联合过滤条件及未通过的原因。
+\item \textbf{保存并反馈。} 候选记录与检查点一并保存，支持暂停、刷新后继续、停止及研究结果导出；历史失败保留在记录中，供后续分析和迭代使用。
+\end{enumerate}
+
+\begin{center}
+\includegraphics[width=\linewidth]{.assets/loop-mine-20261026.png}
+\captionof{figure}{实时挖掘配置页：本地搜索与模型引导两种入口，最多1,200个候选，并设置时间上限。}
+\label{fig:loop-mine}
+\end{center}
+
+课堂展示时，可以先浏览14页网页研究演示，再进入实时挖掘页，查看候选的公式、开发期净值和筛选记录。\textbf{归档种子复算与新候选入库分别计数}，以免把重复得到的已知结果当作新发现。模型调用另受演示口令、单次预算与累计预算约束；浏览归档结果和本地搜索不会触发模型付费调用。\footnote{网页功能及演示流程：\href{https://github.com/404NWF3/cicc-loop-reproduction/blob/main/docs/web-research-demo.md}{网页研究演示与现场挖掘说明}。}
+
+\clearpage
+\subsection{（三）我们得到的实验结果与复现边界}
+项目在2026年10月15日归档了一轮扩大实验，采用 StockNet 的\textbf{50只美股}，将2012年9月至2013年设为发现期，2014—2015年设为开发筛选期，2016年1月至2017年9月1日设为留出期。实验共记录\textbf{6,637次尝试、966次完整回测}，统一去相关后有\textbf{23个因子通过开发筛选}。\footnote{协议、结果及复核记录：\href{https://github.com/404NWF3/cicc-loop-reproduction/blob/main/docs/experiment-expanded-2026-10-15.md}{StockNet扩大实验报告（2026-10-15）}。这里引用项目既有归档结果。}
+
+公式、方向和排序冻结后，23个因子中只有\textbf{1个}在留出期取得正的年化超额收益。按开发筛选期夏普预先选定的前5个因子构成等权排名组合，其留出期\textbf{费后年化超额收益为$-3.18\%$，超额夏普为$-0.51$}。图\ref{fig:loop-holdout}保留了全部23个因子的开发期与留出期对照。这组结果说明，扩大搜索能够产生通过开发门槛的候选，但本次实验尚未获得稳定样本外盈利的证据。
+
+\begin{center}
+\includegraphics[width=\linewidth]{.assets/loop-holdout-20261026.png}
+\captionof{figure}{网站研究演示中的留出检验：同一因子的开发期与留出期表现配对展示，保留负向结果。}
+\label{fig:loop-holdout}
+\end{center}
+
+\subsection{（四）实践带来的理解}
+通过这次设计与复现，我们更具体地理解了 Loop Engineering 的价值：把研究判断变成明确的接口、筛选条件、反馈和可追溯记录，才能让连续搜索得到可解释的结果。AI辅助开发降低了我们搭建研究工具的门槛，但研究人员仍需决定数据如何切分、如何计算成本，以及什么证据足以支持结论。
+
+本次采用小规模美股历史样本，并存在事后选样、历史复权非当时可得快照及反复使用开发集等限制；也不能凭各搜索分支最终入库的数量判断某种方法具有因果优势。\textbf{我们的实践成果是一个能够展示、运行并记录因子研究过程的助手。} 若要进一步检验投资价值，需要冻结当前方案，在新的未见数据上继续验证；已展示的留出期不能再次充当独立测试集。
+\endgroup
+\end{document}
+
