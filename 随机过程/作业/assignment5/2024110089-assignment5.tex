@@ -1,0 +1,403 @@
+\documentclass[12pt,a4paper]{article}
+
+% ==================== 基础宏包 ====================
+\usepackage[UTF8]{ctex}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{hyperref}
+\usepackage[most]{tcolorbox}
+\usepackage{titlesec}
+\usepackage{tabularx}
+
+\hypersetup{
+  hidelinks
+}
+
+% ==================== 颜色定义 ====================
+\definecolor{mainblue}{RGB}{34,72,112}
+\definecolor{lightblue}{RGB}{241,246,252}
+\definecolor{linegray}{RGB}{210,218,228}
+\definecolor{textgray}{RGB}{90,98,108}
+
+% ==================== 页面设置 ====================
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0.35em}
+\setlength{\headheight}{25pt}
+\linespread{1.2}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\textcolor{textgray}{\small 课程作业}}
+\rhead{\textcolor{textgray}{\small \thepage/\pageref*{LastPage}}}
+\cfoot{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{linegray}\leaders\hrule height \headrulewidth\hfill}}
+
+% ==================== 标题样式 ====================
+\titleformat{\section}
+  {\Large\bfseries\color{mainblue}}
+  {\thesection}
+  {0.6em}
+  {}
+
+\titleformat{\subsection}
+  {\large\bfseries\color{mainblue}}
+  {\thesubsection}
+  {0.6em}
+  {}
+
+\titlespacing*{\section}{0pt}{1.2em}{0.6em}
+\titlespacing*{\subsection}{0pt}{0.8em}{0.4em}
+
+% ==================== 自定义环境 ====================
+\newtcolorbox{infobox}{
+  colback=lightblue,
+  colframe=mainblue,
+  boxrule=0.6pt,
+  arc=2mm,
+  left=1.2em,
+  right=1.2em,
+  top=0.8em,
+  bottom=0.8em
+}
+
+\newtcolorbox{answerbox}{
+  colback=white,
+  colframe=linegray,
+  boxrule=0.5pt,
+  arc=2mm,
+  left=1em,
+  right=1em,
+  top=0.8em,
+  bottom=0.8em,
+  breakable
+}
+
+\newcommand{\course}{随机过程}
+\newcommand{\homeworktitle}{第5次作业}
+\newcommand{\studentname}{倪伟丰}
+\newcommand{\studentid}{2024110089}
+\newcommand{\classname}{24 大数据 2 班}
+\newcommand{\teacher}{郭珊珊}
+\newcommand{\duedate}{10月8日} % 在此填写提交日期
+
+% ==================== 正文开始 ====================
+\begin{document}
+
+\begin{center}
+  {\Huge\bfseries\color{mainblue}\homeworktitle}\\[0.6em]
+  {\Large\course}\\[1.2em]
+  {\color{linegray}\rule{0.9\textwidth}{0.8pt}}
+\end{center}
+
+\begin{infobox}
+\begin{tabularx}{\linewidth}{>{\bfseries}p{2.2cm} X >{\bfseries}p{2.2cm} X}
+姓名 & \studentname & 学号 & \studentid \\
+班级 & \classname & 教师 & \teacher \\
+提交日期 & \duedate &  &  \\
+\end{tabularx}
+\end{infobox}
+
+% ==================================================
+\section{Problem 67}
+
+At all times, an urn contains $N$ balls---some white balls and some black balls. At each stage, a coin having probability $p$, $0 < p < 1$, of landing heads is flipped. If heads appears, then a ball is chosen at random from the urn and is replaced by a white ball; if tails appears, then a ball is chosen from the urn and is replaced by a black ball. Let $X_n$ denote the number of white balls in the urn after the $n$th stage.
+
+\subsection{}
+
+Is $\{X_n, n \ge 0\}$ a Markov chain? If so, explain why.
+
+\begin{answerbox}
+\textbf{解：}
+是的，$\{X_n, n \ge 0\}$ 是一个马尔可夫链。因为下一时刻的状态只依赖于当前时刻的状态，而与之前的状态无关。
+
+我们分别计算 $X_n=i, \forall i \in \{0, 1, \ldots, N\}$ 时，下一时刻 $X_{n+1}$ 的状态转移概率：
+
+$$
+P\left\{X_{n+1}=i+1 \mid X_n=i\right\}=p\cdot \frac{N-i}{N}
+$$
+
+$$
+P\left\{X_{n+1}=i-1 \mid X_n=i\right\}=(1-p)\cdot \frac{i}{N}
+$$
+
+$$
+P\left\{X_{n+1}=i \mid X_n=i\right\}=p\cdot \frac{i}{N} + (1-p)\cdot \frac{N-i}{N}
+$$
+\end{answerbox}
+
+\subsection{}
+
+What are its classes? What are their periods? Are they transient or recurrent?
+
+\begin{answerbox}
+\textbf{解：}
+
+该马尔可夫链的状态空间为 $\{0, 1, \ldots, N\}$。所有状态都是互通的，所以链是不可约的，所有状态都属于同一个类。
+每个状态的周期都是1，因为存在自循环。
+由于链是不可约的且具有有限状态空间，所以所有状态都是常返的。
+\end{answerbox}
+
+
+\subsection{}
+
+Compute the transition probabilities $P_{ij}$.
+
+\begin{answerbox}
+\textbf{解：}
+
+由第一问，对于 $i,j\in\{0,1,\ldots,N\}$，转移概率为：
+
+$$
+P_{ij}=\begin{cases}
+  1-p+(2p-1)\dfrac{i}{N}, & j=i, \\
+  p\dfrac{N-i}{N}, & j=i+1,\ i<N, \\
+  (1-p)\dfrac{i}{N}, & j=i-1,\ i>0, \\
+  0, & \text{其他}.
+\end{cases}
+$$
+
+\end{answerbox}
+
+\subsection{}
+
+Let $N = 2$. Find the proportion of time in each state.
+
+\begin{answerbox}
+\textbf{解：}
+
+当 $N = 2$ 时，状态空间为 $\{0, 1, 2\}$。转移概率矩阵为：
+
+$$
+P=\begin{pmatrix}
+  1-p & p & 0 \\
+  (1-p)\frac{1}{2} & \frac{1}{2} & p\frac{1}{2} \\
+  0 & (1-p) & p
+\end{pmatrix}
+$$
+
+寻找长程比例：
+
+$$
+\pi P = \pi, \quad \sum_{i=0}^{2} \pi_i = 1
+$$
+
+解得：
+$$
+\pi_0 = (1-p)^2, \quad
+\pi_1 = 2p(1-p), \quad
+\pi_2 = p^2
+$$
+\end{answerbox}
+
+\subsection{}
+
+Based on your answer in part (d) and your intuition, guess the answer for the limiting probability in the general case.
+
+\begin{answerbox}
+\textbf{解：}
+
+我猜测，在一般情况下，极限概率为：
+
+$$
+\pi_i = \binom{N}{i} p^i (1-p)^{N-i}, \quad i = 0, 1, \ldots, N
+$$
+
+\end{answerbox}
+
+\subsection{}
+
+Prove your guess in part (e) either by showing that Theorem (4.1) is satisfied or by using the results of Example 4.37.
+
+\begin{answerbox}
+\textbf{解：}
+
+对于 $N\geq 1$ 马尔可夫链都是不可约的。
+
+令候选分布为 $\pi_k=\binom{N}{k}p^k(1-p)^{N-k}$，$k=0,1,\ldots,N$。各分量非负，且由二项式定理，
+$$
+\sum_{k=0}^{N}\pi_k=(p+(1-p))^N=1.
+$$
+下面验证 $\pi P=\pi$。
+
+当 $k=0$ 时：
+$$
+\pi_0 P_{00} + \pi_1 P_{10}= \binom{N}{0} p^0 (1-p)^{N} (1-p)+ \binom{N}{1} p^1 (1-p)^{N-1} (1-p) \frac{1}{N} = (1-p)^N = \pi_0
+$$
+
+当 $k=N$ 时：
+$$
+\pi_{N-1} P_{N-1,N} + \pi_N P_{N,N}= \binom{N}{N-1} p^{N-1} (1-p)^{1} p \frac{1}{N} + \binom{N}{N} p^N (p) = p^N = \pi_N
+$$
+
+当 $1\leq k \leq N-1$ 时，由于：
+$$
+\begin{aligned}
+&\pi_{k-1}P_{k-1, k}\\
+=&\binom{N}{k-1}p^k(1-p)^{N-k+1}\cdot \frac{N-k+1}{N}\\
+=&\frac{N!}{(k-1)!(N-k+1)!}p^k(1-p)^{N-k+1}\cdot \frac{N-k+1}{N} \\
+=&\frac{(N-1)!}{(k-1)!(N-k)!}p^k(1-p)^{N-k+1} \\
+=&\binom{N}{k}p^k(1-p)^{N-k} \cdot (1-p)\frac{k}{N}\\
+=&\pi_k P_{k,k-1}
+\end{aligned}
+$$
+
+$$
+\begin{aligned}
+&\pi_{k+1}P_{k+1, k}\\
+=&\binom{N}{k+1}p^{k+1}(1-p)^{N-k}\cdot \frac{k+1}{N}\\
+=&\frac{N!}{(k+1)!(N-k-1)!}p^{k+1}(1-p)^{N-k}\cdot \frac{k+1}{N} \\
+=&\frac{(N-1)!}{(k)!(N-k-1)!}p^{k+1}(1-p)^{N-k} \\
+=&\binom{N}{k}p^k(1-p)^{N-k} \cdot p\frac{N-k}{N}\\
+=&\pi_k P_{k,k+1}
+\end{aligned}
+$$
+
+所以：
+
+$$
+\pi_{k-1}P_{k-1, k} + \pi_k P_{k,k} + \pi_{k+1}P_{k+1, k} = \pi_k(P_{k,k-1}+P_{k,k}+P_{k,k+1}) = \pi_k
+$$
+
+综上，$\pi P = \pi$ 的每个分量等式均成立，所以 $\pi$ 是平稳分布。
+
+接下来证明马尔可夫链是非周期的。对于任意状态 $i$，有：
+$$
+P_{ii} = p\frac{i}{N} + (1-p)\frac{N-i}{N} > 0
+$$
+所以，马尔可夫链是非周期的。马尔可夫链是有限、不可约、非周期的，所以 $\pi$ 是极限分布。
+
+\end{answerbox}
+
+\subsection{}
+
+If $p = 1$, what is the expected time until there are only white balls in the urn if initially there are $i$ white and $N - i$ black?
+
+\begin{answerbox}
+\textbf{解：}
+
+当 $p=1$ 时，马尔可夫链的转移概率为：
+
+$$
+P_{i, i+1} = \frac{N-i}{N}, \quad P_{i, i} = \frac{i}{N} \quad ,\forall i \in \{0, 1, \ldots N-1\}
+$$
+$$
+P_{N, N} = 1
+$$
+
+令 $T_i$ 为从状态 $i$ 到状态 $N$ 的期望步数。则有：
+
+$$
+T_N = 0
+$$
+$$
+T_i=1+\frac{i}{N}T_i + \frac{N-i}{N}T_{i+1}, \quad \forall i \in \{0, 1, \ldots N-1\}
+$$
+
+于是：
+
+$$
+T_i = \frac{N}{N-i} + T_{i+1}, \quad \forall i \in \{0, 1, \ldots N-1\}
+$$
+
+计算得到：
+
+$$
+T_i = \sum_{j=i}^{N-1} \frac{N}{N-j} = N\sum_{j=1}^{N-i} \frac{1}{j}, \quad \forall i \in \{0, 1, \ldots N-1\}
+$$
+
+\end{answerbox}
+
+% ==================================================
+\section*{Problem 68}
+
+\begin{enumerate}[label=(\alph*), leftmargin=2.5em]
+  \item Show that the limiting probabilities of the reversed Markov chain are the same as for the forward chain by showing that they satisfy the equations
+  $$
+    \pi_j = \sum_i \pi_i Q_{ij}
+  $$
+\end{enumerate}
+
+\begin{answerbox}
+\textbf{解：}
+
+在平稳分布的支撑集（即 $\pi_i>0$ 的状态）上，对于反向马尔可夫链，转移概率为 $Q_{ij} = \frac{\pi_j P_{ji}}{\pi_i}$。我们需要证明 $\pi_j = \sum_i \pi_i Q_{ij}$。
+
+\begin{align*}
+\sum_i \pi_i Q_{ij} &= \sum_i \pi_i \frac{\pi_j P_{ji}}{\pi_i} \\
+&= \sum_i \pi_j P_{ji} \\
+&= \pi_j \sum_i P_{ji} \\
+&= \pi_j
+\end{align*}
+
+这表明 $\pi_j = \sum_i \pi_i Q_{ij}$，即反向马尔可夫链具有与正向链相同的平稳分布。在题设所涉及的不可约、正常返、非周期条件下，反向链也满足这些条件，故其极限概率与正向链相同。
+
+\end{answerbox}
+
+% ==================================================
+\section*{Problem 70}
+
+A total of $m$ white and $m$ black balls are distributed among two urns, with each urn containing $m$ balls. At each stage, one ball is drawn uniformly at random from each urn and the two drawn balls are interchanged. Let $X_n$ denote the number of black balls in urn 1 after the $n$-th interchange.
+
+\subsection{}
+
+Give the transition probabilities of the Markov chain $\{X_n, n \ge 0\}$.
+
+\begin{answerbox}
+\textbf{解：}
+
+设 $X_n=k$，则坛 1 中有 $k$ 个黑球、$m-k$ 个白球；坛 2 中有 $m-k$ 个黑球、$k$ 个白球。每步从两坛中各均匀抽一球交换：
+$$
+P_{k,k-1}=\frac{k}{m}\cdot\frac{k}{m}=\left(\frac{k}{m}\right)^2, \quad
+P_{k,k+1}=\frac{m-k}{m}\cdot\frac{m-k}{m}=\left(\frac{m-k}{m}\right)^2,
+$$
+$$
+P_{k,k}=\frac{k}{m}\cdot\frac{m-k}{m}+\frac{m-k}{m}\cdot\frac{k}{m}=\frac{2k(m-k)}{m^2}, \quad 0<k<m,
+$$
+边界 $P_{0,1}=1$，$P_{m,m-1}=1$，其余为 $0$。
+\end{answerbox}
+
+\subsection{}
+
+Without computations, what are the limiting probabilities?
+
+\begin{answerbox}
+\textbf{解：}
+
+稳态时 $2m$ 个球的每种对称安排等可能，坛 1 相当于从 $m$ 黑 $m$ 白中无放回抽取 $m$ 个，故黑球数服从超几何分布，猜测当 $m\geq2$ 时极限概率为
+$$
+\pi_k=\frac{\binom{m}{k}\binom{m}{m-k}}{\binom{2m}{m}}=\frac{\binom{m}{k}^2}{\binom{2m}{m}}, \quad k=0,1,\ldots,m.
+$$
+当 $m=1$ 时，上式仍给出平稳分布 $(1/2,1/2)$，但链在两个状态间交替，从固定初态出发不存在极限分布。
+
+\end{answerbox}
+
+\subsection{}
+
+Find the limiting probabilities and show that the chain is time reversible.
+
+\begin{answerbox}
+\textbf{解：}
+验证细致平衡方程 $\pi_k P_{k,k+1}=\pi_{k+1}P_{k+1,k}$。由于 $\binom{m}{k+1}=\binom{m}{k}\frac{m-k}{k+1}$，有
+$$
+\binom{m}{k}^2(m-k)^2=\binom{m}{k+1}^2(k+1)^2,
+$$
+两边同除以 $m^2\binom{2m}{m}$ 即得 $\pi_kP_{k,k+1}=\pi_{k+1}P_{k+1,k}$，$k\to k-1$ 同理，$k\to k$ 平凡成立。故链时间可逆，$\pi=\pi P$。
+
+相邻状态间的转移概率均为正，故链不可约。当 $m\geq2$ 时，存在内部状态 $0<k<m$，且 $P_{k,k}>0$（自环），故其周期为 $1$，由类性质全链非周期。有限不可约非周期链遍历，故上述 $\pi$ 即为极限概率。
+
+当 $m=1$ 时，
+$$
+P=\begin{pmatrix}0&1\\1&0\end{pmatrix}.
+$$
+链的周期为 $2$，从固定初态出发不存在极限分布；但 $\pi=(1/2,1/2)$ 仍满足细致平衡方程，因此链在平稳分布下仍然时间可逆。
+\end{answerbox}
+
+\end{document}

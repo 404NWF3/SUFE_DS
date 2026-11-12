@@ -1,0 +1,450 @@
+\documentclass[12pt,a4paper]{article}
+
+% ==================== 基础宏包 ====================
+\usepackage[UTF8]{ctex}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{hyperref}
+\usepackage[most]{tcolorbox}
+\usepackage{titlesec}
+ \usepackage{tabularx}
+
+\hypersetup{
+  hidelinks
+}
+
+% ==================== 颜色定义 ====================
+\definecolor{mainblue}{RGB}{34,72,112}
+\definecolor{lightblue}{RGB}{241,246,252}
+\definecolor{linegray}{RGB}{210,218,228}
+\definecolor{textgray}{RGB}{90,98,108}
+
+% ==================== 页面设置 ====================
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0.35em}
+\setlength{\headheight}{25pt}
+\linespread{1.2}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\textcolor{textgray}{\small 课程作业}}
+\rhead{\textcolor{textgray}{\small \thepage/\pageref*{LastPage}}}
+\cfoot{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{linegray}\leaders\hrule height \headrulewidth\hfill}}
+
+% ==================== 标题样式 ====================
+\titleformat{\section}
+  {\Large\bfseries\color{mainblue}}
+  {\thesection}
+  {0.6em}
+  {}
+
+\titleformat{\subsection}
+  {\large\bfseries\color{mainblue}}
+  {\thesubsection}
+  {0.6em}
+  {}
+
+\titlespacing*{\section}{0pt}{1.2em}{0.6em}
+\titlespacing*{\subsection}{0pt}{0.8em}{0.4em}
+
+% ==================== 自定义环境 ====================
+\newtcolorbox{infobox}{
+  colback=lightblue,
+  colframe=mainblue,
+  boxrule=0.6pt,
+  arc=2mm,
+  left=1.2em,
+  right=1.2em,
+  top=0.8em,
+  bottom=0.8em
+}
+
+\newtcolorbox{answerbox}{
+  colback=white,
+  colframe=linegray,
+  boxrule=0.5pt,
+  arc=2mm,
+  left=1em,
+  right=1em,
+  top=0.8em,
+  bottom=0.8em,
+  breakable
+}
+
+\newcommand{\course}{随机过程}
+\newcommand{\homeworktitle}{第4次作业}
+\newcommand{\studentname}{倪伟丰}
+\newcommand{\studentid}{2024110089}
+\newcommand{\classname}{24 大数据 2 班}
+\newcommand{\teacher}{郭珊珊}
+\newcommand{\duedate}{\today}
+
+% ==================== 正文开始 ====================
+\begin{document}
+
+\begin{center}
+  {\Huge\bfseries\color{mainblue}\homeworktitle}\\[0.6em]
+  {\Large\course}\\[1.2em]
+  {\color{linegray}\rule{0.9\textwidth}{0.8pt}}
+\end{center}
+
+\begin{infobox}
+\begin{tabularx}{\textwidth}{>{\bfseries}p{2.2cm} X >{\bfseries}p{2.2cm} X}
+姓名 & \studentname & 学号 & \studentid \\
+班级 & \classname & 教师 & \teacher \\
+提交日期 & \duedate &  &  \\
+\end{tabularx}
+\end{infobox}
+
+
+% Original questions transcribed from Stochastic Process Homework4.pdf.
+% Answers intentionally left blank.
+
+\section{Problem 1}
+Show that the stationary probabilities for the Markov chain having transition probabilities $P_{i,j}$ are also the stationary probabilities for the Markov chain whose transition probabilities $Q_{i,j}$ are given by
+\[
+Q_{i,j}=P_{i,j}^{k}
+\]
+for any specified positive integer $k$.
+
+\begin{answerbox}
+\textbf{解：}
+
+设 $P$ 为原链的转移矩阵，$\pi$ 为其平稳分布，则 $$\pi P=\pi$$
+
+题中 $Q_{ij}$ 是另一马尔可夫链的状态转移矩阵，又 $Q_{i,j}=P_{i,j}^{k}$，因此 $Q=P^k$。
+
+对于任意正整数 $k$，有
+\[
+\pi Q=\pi P^k=(\pi P)P^{k-1}=\pi P^{k-1}=\cdots=\pi.
+\]
+故 $\pi$ 也是转移矩阵 $Q$ 的平稳分布。
+\end{answerbox}
+
+\section{Problem 2}
+Capa plays either one or two chess games every day, with the number of games that she plays on successive days being a Markov chain with transition probabilities
+\[
+P_{1,1}=0.2,\quad P_{1,2}=0.8,\quad P_{2,1}=0.4,\quad P_{2,2}=0.6.
+\]
+Capa wins each game with probability $p$. Suppose she plays two games on Monday.
+% \begin{enumerate}[label=(\alph*)]
+% \item What is the probability that she wins all the games she plays on Tuesday?
+% \item What is the expected number of games that she plays on Wednesday?
+% \item In the long run, on what proportion of days does Capa win all her games.
+% \end{enumerate}
+
+\subsection{}
+ What is the probability that she wins all the games she plays on Tuesday?
+
+\begin{answerbox}
+\textbf{解：}
+
+令 $X_t\in\{1,2\}$ 表示第 $t$ 天所玩的局数，星期一为第 $1$ 天，故 $X_1=2$。按照状态 $1,2$ 的顺序，转移矩阵为
+\[
+P=\begin{pmatrix}0.2&0.8\\0.4&0.6\end{pmatrix}.
+\]
+假设各局比赛的胜负相互独立，则周二玩一局并获胜的概率为 $P_{2,1}p=0.4p$，玩两局并全部获胜的概率为 $P_{2,2}p^2=0.6p^2$。故所求概率为
+\[
+\Pr(\text{周二所有比赛均获胜}\mid X_1=2)=0.4p+0.6p^2.
+\]
+\end{answerbox}
+
+\subsection{}
+ What is the expected number of games that she plays on Wednesday?
+
+\begin{answerbox}
+\textbf{解：}
+
+题目要求周三所玩局数的期望。由两步转移概率，
+\[
+\Pr(X_3=1\mid X_1=2)=(P^2)_{2,1}=0.4(0.2)+0.6(0.4)=0.32,
+\]
+\[
+\Pr(X_3=2\mid X_1=2)=(P^2)_{2,2}=0.4(0.8)+0.6(0.6)=0.68.
+\]
+因此
+\[
+E[X_3\mid X_1=2]=1(0.32)+2(0.68)=1.68.
+\]
+\end{answerbox}
+
+\subsection{}
+
+ In the long run, on what proportion of days does Capa win all her games.
+
+\begin{answerbox}
+\textbf{解：}
+
+令 $\pi=(\pi_1,\pi_2)$ 为局数链的平稳分布。由 $\pi P=\pi$ 及 $\pi_1+\pi_2=1$，有
+\[
+\pi_1=0.2\pi_1+0.4\pi_2,
+\qquad \pi_1+\pi_2=1,
+\]
+解得 $\pi_1=\frac13$、$\pi_2=\frac23$。该链不可约且非周期，故长期玩一局、两局的天数占比分别为 $\pi_1,\pi_2$。假设各局比赛的胜负相互独立，则玩一局全胜的概率为 $p$，玩两局全胜的概率为 $p^2$。因此长期全胜的天数占比为
+\[
+\pi_1p+\pi_2p^2=\frac13p+\frac23p^2.
+\]
+\end{answerbox}
+
+\section{Problem 3}
+Each day, one of $n$ possible elements is requested, the $i$th one with probability $P_i$, $i\ge 1$, $\sum_{i=1}^{n}P_i=1$. These elements are at all times arranged in an ordered list that is revised as follows: The element selected is moved to the front of the list with the relative positions of all the other elements remaining unchanged. Define the state at any time to be the list ordering at that time and note that there are $n!$ possible states.
+
+
+\subsection{}
+Argue that the preceding is a Markov chain.
+
+\begin{answerbox}
+\textbf{解：}
+
+令 $X_t$ 表示第 $t$ 天结束后的列表顺序，$R_{t+1}$ 表示下一天请求的元素，$T_r(x)$ 表示将顺序 $x$ 中的元素 $r$ 移到表头、其余元素相对顺序不变的操作。于是
+\[
+X_{t+1}=T_{R_{t+1}}(X_t).
+\]
+每天请求元素 $r$ 的概率为 $P_r$，不依赖此前的请求。故给定当前状态 $X_t$ 后，下一状态的条件分布只由 $X_t$ 决定，与更早的状态无关。因此列表顺序构成马尔可夫链。
+\end{answerbox}
+
+\subsection{}
+For any state $i_1,\ldots,i_n$ which is a permutation of $1,2,\ldots,n$, let $\pi(i_1,\ldots,i_n)$ denote the limiting probability. In order for the state to be $i_1,\ldots,i_n$, it is necessary for the last request to be for $i_1$, the last non-$i_1$ request for $i_2$, the last non-$i_1$ or $i_2$ request for $i_3$, and so on. Hence, it appears intuitive that
+\[
+\pi(i_1,\ldots,i_n)=P_{i_1}\frac{P_{i_2}}{1-P_{i_1}}\frac{P_{i_3}}{1-P_{i_1}-P_{i_2}}\cdots\frac{P_{i_{n-1}}}{1-P_{i_1}-\cdots-P_{i_{n-2}}}.
+\]
+Verify when $n=3$ that the preceding are indeed the limiting probabilities.
+
+\begin{answerbox}
+\textbf{解：}
+
+设 $(a,b,c)$ 是 $(1,2,3)$ 的任意排列，并假设 $P_1,P_2,P_3>0$。
+于是根据题中给出的公式：
+\[
+\pi(a,b,c)=P_a\frac{P_b}{1-P_a}\frac{P_c}{1-P_a-P_b}
+\]
+
+由于，$1-P_a-P_b=P_c$：
+\[
+\pi(a,b,c)=P_a\frac{P_b}{1-P_a}\frac{P_c}{1-P_a-P_b}=P_a\frac{P_b}{1-P_a}=\frac{P_aP_b}{P_b+P_c}.
+\]
+
+首先，对固定的 $a$，有
+\[
+\pi(a,b,c)+\pi(a,c,b)
+=P_a\frac{P_b+P_c}{1-P_a}=P_a.
+\]
+
+于是对 $a=1,2,3$ 求和，可知六个概率之和为 $1$：
+$$
+\pi(1, 2, 3) + \pi(1, 3, 2) + \pi(2, 1, 3) + \pi(2, 3, 1) + \pi(3, 1, 2) +\pi(3, 2,1)=P_1+P_2+P_3=1
+$$
+% 对 $a=1,2,3$ 求和可知六个候选概率之和为 $1$，且它们均非负。
+
+其次，下一步到达 $(a,b,c)$ 必须请求 $a$；请求前的状态只能为 $(a,b,c)$、$(b,a,c)$ 或 $(b,c,a)$。由上式，$\pi(b,a,c)+\pi(b,c,a)=P_b$，故流入该状态的概率为
+\[
+\begin{aligned}
+P_a\bigl[\pi(a,b,c)+\pi(b,a,c)+\pi(b,c,a)\bigr]
+&=P_a\left(\frac{P_aP_b}{1-P_a}+P_b\right)\\
+&=\frac{P_aP_b}{1-P_a}=\pi(a,b,c).
+\end{aligned}
+\]
+由于 $(a,b,c)$ 任意，所给概率满足所有状态的平稳方程。
+
+最后，三个请求概率都为正时，从任意排列都能通过依次请求 $c,b,a$ 到达 $(a,b,c)$，故链不可约；请求当前表头可保持状态不变，故链非周期。因此有限状态链收敛到上述平稳分布，所给概率确实是极限概率。
+% 若允许某些 $P_i=0$，题给公式可能出现零分母，且极限分布可能依赖初始顺序，需要另行讨论。
+\end{answerbox}
+
+
+\section{Problem 4}
+Suppose in the gambler's ruin problem that the probability of winning a bet depends on the gambler's present fortune. Specifically, suppose that $\alpha_i$ is the probability that the gambler wins a bet when his or her fortune is $i$. Given that the gambler's initial fortune is $i$, let $P(i)$ denote the probability that the gambler's fortune reaches $N$ before $0$.
+
+
+\subsection{}
+
+ Derive a formula that relates $P(i)$ to $P(i-1)$ and $P(i+1)$.
+
+\begin{answerbox}
+\textbf{解：}
+
+从财富 $i$ 出发，下一次下注以概率 $\alpha_i$ 到达 $i+1$，以概率 $1-\alpha_i$ 到达 $i-1$。按第一次下注的结果分类，由全概率公式得
+\[
+P(i)=\alpha_i P(i+1)+(1-\alpha_i)P(i-1),
+\qquad 1\le i\le N-1.
+\]
+其中：
+\[
+P(0)=0,\qquad P(N)=1.
+\]
+\end{answerbox}
+
+\subsection{}
+
+Using the same approach as in the gambler's ruin problem, solve the equation of part (a) for $P(i)$.
+
+\begin{answerbox}
+\textbf{解：}
+
+假设 $0<\alpha_i<1$（$1\le i\le N-1$）。将第一小问的递推式整理为
+\[
+P(i+1)-P(i)
+=\frac{1-\alpha_i}{\alpha_i}\bigl[P(i)-P(i-1)\bigr].
+\]
+由等比数列的递推公式可得：
+\[
+P(k+1)-P(k)
+=\bigl[P(1)-P(0)\bigr]
+ \prod_{j=1}^{k}\frac{1-\alpha_j}{\alpha_j},
+\qquad 0\le k\le N-1.
+\]
+由 $P(0)=0$ 得到：
+\[
+P(i)=P(1)\sum_{k=0}^{i-1}
+\prod_{j=1}^{k}\frac{1-\alpha_j}{\alpha_j}.
+\]
+
+又由于 $P(N)=1$ 
+
+\[
+P(N)=P(1)\sum_{k=0}^{N-1}
+\prod_{j=1}^{k}\frac{1-\alpha_j}{\alpha_j}=1
+\]
+
+得到：
+
+$$
+P(1) = \frac{1}
+     {\sum_{k=0}^{N-1}
+      \prod_{j=1}^{k}\frac{1-\alpha_j}{\alpha_j}}.
+$$
+
+最终得到：
+
+\[
+\displaystyle
+P(i)=
+\frac{\displaystyle\sum_{k=0}^{i-1}
+      \prod_{j=1}^{k}\frac{1-\alpha_j}{\alpha_j}}
+     {\displaystyle\sum_{k=0}^{N-1}
+      \prod_{j=1}^{k}\frac{1-\alpha_j}{\alpha_j}}.
+\]
+\end{answerbox}
+
+\subsection{}
+
+ Suppose that $i$ balls are initially in urn 1 and $N-i$ are in urn 2, and suppose that at each stage one of the $N$ balls is randomly chosen, taken from whichever urn it is in, and placed in the other urn. Find the probability that the first urn becomes empty before the second.
+
+\begin{answerbox}
+\textbf{解：}
+
+以一号罐中的球数为状态。从状态 $i$ 出发，以概率 $(N-i)/N$ 增加到 $i+1$，以概率 $i/N$ 减少到 $i-1$。因而在第二小问中取
+\[
+\alpha_i=\frac{N-i}{N},\qquad
+\frac{1-\alpha_i}{\alpha_i}=\frac{i}{N-i}.
+\]
+利用
+\[
+\prod_{j=1}^{k}\frac{j}{N-j}
+=\frac{k!(N-1-k)!}{(N-1)!}
+=\binom{N-1}{k}^{-1},
+\]
+可得 $P(i)$ 是一号罐先装满（球数先到达 $N$）的概率。题目要求的是一号罐先变空（先到达 $0$），所以所求为
+\[
+\displaystyle
+1-P(i)=
+\frac{\displaystyle\sum_{k=i}^{N-1}\binom{N-1}{k}^{-1}}
+     {\displaystyle\sum_{k=0}^{N-1}\binom{N-1}{k}^{-1}}.
+\]
+\end{answerbox}
+
+\section{Problem 5}
+For the Markov chain with states $1,2,3,4$ whose transition probability matrix $P$ is as specified below find $f_{i3}$ and $s_{i3}$ for $i=1,2,3$.
+\[
+P=\begin{pmatrix}
+0.4&0.2&0.1&0.3\\
+0.1&0.5&0.2&0.2\\
+0.3&0.4&0.2&0.1\\
+0&0&0&1
+\end{pmatrix}.
+\]
+
+\begin{answerbox}
+\textbf{解：}
+
+状态 $4$ 是吸收态，$T=\{1,2,3\}$ 是暂态集；暂态之间的转移矩阵为
+\[
+P_T=\begin{pmatrix}
+0.4&0.2&0.1\\
+0.1&0.5&0.2\\
+0.3&0.4&0.2
+\end{pmatrix}.
+\]
+令 $s_{ij}$ 表示从暂态 $i$ 出发、直至吸收前访问暂态 $j$ 的期望次数，
+\[
+s_{ij}=\delta_{ij}+\sum_{k\in T}(P_T)_{ik}s_{kj},
+\qquad
+\delta_{ij}=\begin{cases}1,&i=j,\\0,&i\ne j.\end{cases}
+\]
+因此 $S=(s_{ij})_{i,j\in T}$ 满足 $S=I+P_T S$，从而
+\[
+S=(I-P_T)^{-1}
+=\begin{pmatrix}
+  \frac{64}{29} & \frac{40}{29} & \frac{18}{29}\\
+  \frac{28}{29} & \frac{90}{29} & \frac{26}{29}\\
+  \frac{38}{29} & \frac{60}{29} & \frac{56}{29}
+\end{pmatrix}.
+\]
+求得 $s_{i3}$：
+\[
+s_{13}=\frac{18}{29},\qquad
+s_{23}=\frac{26}{29},\qquad s_{33}=\frac{56}{29}.
+\]
+令 $f_{i3}$ 表示从 $i$ 出发将来访问状态 $3$ 的概率：
+% 当 $i=3$ 时，指初始时刻之后\emph{再次返回}状态 $3$ 的概率。由首次到达（或首次返回）分解，
+\[
+s_{i3}=\delta_{i3}+f_{i3}s_{33},
+\qquad
+f_{i3}=\frac{s_{i3}-\delta_{i3}}{s_{33}}.
+\]
+代入上述第三列，得
+\[
+f_{13}=\frac{9}{28},\qquad
+f_{23}=\frac{13}{28},\qquad f_{33}=\frac{27}{56}.
+\]
+
+\end{answerbox}
+
+\section*{Problem 6}
+For a branching process, calculate $\pi_0$ when
+
+\subsection{}
+
+$P_0=\frac14,\quad P_2=\frac34$.
+
+\begin{answerbox}
+\vspace{6cm}
+\end{answerbox}
+
+\subsection{}
+
+$P_0=\frac14,\quad P_1=\frac12,\quad P_2=\frac14$.
+
+\begin{answerbox}
+\textbf{解：}
+
+
+\end{answerbox}
+
+\subsection{}
+
+$P_0=\frac16,\quad P_1=\frac12,\quad P_3=\frac13$.
+
+\begin{answerbox}
+\vspace{6cm}
+\end{answerbox}
+
+\end{document}

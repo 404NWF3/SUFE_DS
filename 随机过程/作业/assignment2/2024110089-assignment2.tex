@@ -1,0 +1,302 @@
+\documentclass[12pt,a4paper]{article}
+
+% ==================== 基础宏包 ====================
+\usepackage[UTF8]{ctex}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{hyperref}
+\usepackage[most]{tcolorbox}
+\usepackage{titlesec}
+ \usepackage{tabularx}
+
+\hypersetup{
+  hidelinks
+}
+
+% ==================== 颜色定义 ====================
+\definecolor{mainblue}{RGB}{34,72,112}
+\definecolor{lightblue}{RGB}{241,246,252}
+\definecolor{linegray}{RGB}{210,218,228}
+\definecolor{textgray}{RGB}{90,98,108}
+
+% ==================== 页面设置 ====================
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0.35em}
+\setlength{\headheight}{25pt}
+\linespread{1.2}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\textcolor{textgray}{\small 课程作业}}
+\rhead{\textcolor{textgray}{\small \thepage/\pageref*{LastPage}}}
+\cfoot{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{linegray}\leaders\hrule height \headrulewidth\hfill}}
+
+% ==================== 标题样式 ====================
+\titleformat{\section}
+  {\Large\bfseries\color{mainblue}}
+  {\thesection}
+  {0.6em}
+  {}
+
+\titleformat{\subsection}
+  {\large\bfseries\color{mainblue}}
+  {\thesubsection}
+  {0.6em}
+  {}
+
+\titlespacing*{\section}{0pt}{1.2em}{0.6em}
+\titlespacing*{\subsection}{0pt}{0.8em}{0.4em}
+
+% ==================== 自定义环境 ====================
+\newtcolorbox{infobox}{
+  colback=lightblue,
+  colframe=mainblue,
+  boxrule=0.6pt,
+  arc=2mm,
+  left=1.2em,
+  right=1.2em,
+  top=0.8em,
+  bottom=0.8em
+}
+
+\newtcolorbox{answerbox}{
+  colback=white,
+  colframe=linegray,
+  boxrule=0.5pt,
+  arc=2mm,
+  left=1em,
+  right=1em,
+  top=0.8em,
+  bottom=0.8em,
+  breakable
+}
+
+\newcommand{\course}{随机过程}
+\newcommand{\homeworktitle}{第2次作业}
+\newcommand{\studentname}{倪伟丰}
+\newcommand{\studentid}{2024110089}
+\newcommand{\classname}{24 大数据 2 班}
+\newcommand{\teacher}{郭珊珊}
+\newcommand{\duedate}{2026年9月11日}
+
+% ==================== 正文开始 ====================
+\begin{document}
+
+\begin{center}
+  {\Huge\bfseries\color{mainblue}\homeworktitle}\\[0.6em]
+  {\Large\course}\\[1.2em]
+  {\color{linegray}\rule{0.9\textwidth}{0.8pt}}
+\end{center}
+
+\begin{infobox}
+\begin{tabularx}{\textwidth}{>{\bfseries}p{2.2cm} X >{\bfseries}p{2.2cm} X}
+姓名 & \studentname & 学号 & \studentid \\
+班级 & \classname & 教师 & \teacher \\
+提交日期 & \duedate &  &  \\
+\end{tabularx}
+\end{infobox}
+
+% ==================================================
+
+\section{Problem 1}
+
+每位申请者都有一个分数。若共有 $n$ 名申请者，则分数高于 $s_n$ 的申请者将被录取，其中
+\[
+s_1 = 0.2, \qquad s_2 = 0.4, \qquad s_n = 0.5 \quad (n \ge 3).
+\]
+设各申请者的分数相互独立且服从 $(0,1)$ 上的均匀分布；申请者总数 $N$ 服从均值为 $2$ 的 Poisson 分布，且与诸分数独立。记 $X$ 为被录取的人数。试求：
+(1) $P\{X=0\}$；\quad (2) $E[X]$。
+
+\begin{answerbox}
+\textbf{解.}\ 在 $N=n$ 的条件下，$n$ 个分数独立同分布于 $U(0,1)$，故每名申请者“分数高于 $s_n$”（即被录取）的概率为 $1-s_n$，且各人是否被录取相互独立。于是
+\[
+X \mid N=n \;\sim\; \mathrm{Bin}\big(n,\; 1-s_n\big),
+\]
+
+又因为
+\[
+N\sim \mathrm{Poisson}(2),
+\]
+所以
+\[
+P\{N=n\}=e^{-2}\frac{2^n}{n!},
+\qquad n=0,1,2,\ldots
+\]
+
+下面分别利用全概率公式和条件期望公式求解。
+
+\textbf{(1) 求 $P\{X=0\}$。} 由全概率公式，
+\begin{align*}
+P\{X=0\}
+&= \sum_{n=0}^{\infty} P\{X=0 \mid N=n\}\, P\{N=n\} \\
+&= e^{-2}\left[\,1 \;+\; 2\times 0.2 \;+\; \frac{2^2}{2!}\times(0.4)^2 \;+\; \sum_{n=3}^{\infty} \frac{2^n}{n!}\left(\frac{1}{2}\right)^{\!n} \right] \\
+&= e^{-2}\left[\,1+0.4+0.32+\sum_{n=3}^{\infty}\frac{1}{n!}\,\right]
+= e^{-2}\left[\,1.72+\Big(e-1-1-\frac12\Big)\right] \\
+&= e^{-2}\left(e-\frac{39}{50}\right)
+= e^{-1}-\frac{39}{50}\,e^{-2}
+\;\approx\; 0.2623 .
+\end{align*}
+
+\textbf{(2) 求 $E[X]$。} 由 $E[X\mid N=n]=n(1-s_n)$，
+\[
+E[X]
+= \sum_{n=1}^{\infty} E[X\mid N=n]\,P\{N=n\}
+= e^{-2}\left[\,1\times 0.8\times 2 \;+\; 2\times 0.6\times 2 \;+\; \frac12\sum_{n=3}^{\infty} n\,\frac{2^n}{n!}\right].
+\]
+其中利用 $n\,\dfrac{2^n}{n!}=2\cdot\dfrac{2^{n-1}}{(n-1)!}$，得
+\[
+\sum_{n=3}^{\infty} n\,\frac{2^n}{n!}
+= 2\sum_{m=2}^{\infty}\frac{2^m}{m!}
+= 2\big(e^2-1-2\big)
+= 2\big(e^2-3\big).
+\]
+于是
+\[
+E[X]
+= e^{-2}\big[\,1.6+2.4+(e^2-3)\,\big]
+= e^{-2}\big(e^2+1\big)
+= 1+e^{-2}
+\;\approx\; 1.1353 .
+\]
+\end{answerbox}
+
+% ==================================================
+
+\section{Problem2}
+
+将三个白球与三个黑球分装到两个坛子中，使每个坛子恰含 3 个球。若第一个坛子中恰有 $i$ 个白球（$i=0,1,2,3$），则称系统处于状态 $i$。每一步从两个坛子中各随机抽出一球并互换：坛一中抽出的球放入坛二，坛二中抽出的球放入坛一。记 $X_n$ 为第 $n$ 步之后系统所处的状态。说明 $\{X_n : n=0,1,2,\ldots\}$ 是 Markov 链，并求其转移概率矩阵。
+
+\begin{answerbox}
+\textbf{解.}\ \textbf{(i) 为何是 Markov 链。}\ 若当前状态为 $i$，则两个坛子的组成被完全确定：坛一有 $i$ 白 $3-i$ 黑，坛二有 $3-i$ 白 $i$ 黑。因此下一步转移到哪个状态，仅由当前状态 $i$（两坛的组成）及本步的随机抽取决定，与系统此前如何到达状态 $i$ 无关；又每一步的规则相同（时齐性）。故 $\{X_n\}$ 是（时齐）Markov 链。
+
+\textbf{(ii) 转移概率。}\ 记
+\[
+W_1=\begin{cases}1, & \text{本步自坛一抽得白球},\\ 0, & \text{否则},\end{cases}
+\qquad
+W_2=\begin{cases}1, & \text{本步自坛二抽得白球},\\ 0, & \text{否则},\end{cases}
+\]
+则 $P(W_1=1)=\dfrac{i}{3}$，$P(W_2=1)=\dfrac{3-i}{3}$，且两次抽取相互独立。交换后新状态为
+\[
+j = i-W_1+W_2 .
+\]
+于是
+\begin{align*}
+P_{i,i-1} &= P\{W_1=1,\,W_2=0\} = \frac{i}{3}\cdot\frac{i}{3} = \frac{i^2}{9},\\[2pt]
+P_{i,i}   &= P\{W_1=1,\,W_2=1\}+P\{W_1=0,\,W_2=0\}
+           = \frac{i}{3}\cdot\frac{3-i}{3}+\frac{3-i}{3}\cdot\frac{i}{3} = \frac{2i(3-i)}{9},\\[2pt]
+P_{i,i+1} &= P\{W_1=0,\,W_2=1\} = \frac{3-i}{3}\cdot\frac{3-i}{3} = \frac{(3-i)^2}{9}.
+\end{align*}
+代入 $i=0,1,2,3$（越出状态空间的转移概率取 $0$），得转移概率矩阵
+\[
+P=(P_{ij})_{4\times 4}
+=\begin{pmatrix}
+0 & 1 & 0 & 0\\[3pt]
+\frac19 & \frac49 & \frac49 & 0\\[3pt]
+0 & \frac49 & \frac49 & \frac19\\[3pt]
+0 & 0 & 1 & 0
+\end{pmatrix}.
+\]
+\end{answerbox}
+
+\section{Problem 3}
+
+种群中每个个体独立地产生服从均值为 $\lambda$ 的 Poisson 分布的随机个后代。初始存在的个体构成第 0 代，第 0 代个体的后代构成第 1 代，其后代构成第 2 代，依此类推。记 $X_n$ 为第 $n$ 代的个体数，判断 $\{X_n : n\ge 0\}$ 是否为 Markov 链；若是，给出其转移概率 $P_{ij}$；若不是，说明理由。
+
+\begin{answerbox}
+\textbf{解.}\ $\{X_n\}$ \textbf{是} Markov 链（这正是经典的 Galton--Watson 分支过程）。
+
+给定 $X_n=i$，第 $n+1$ 代恰由这 $i$ 个个体的后代组成。由题设，每个个体的后代数独立同分布于 $\mathrm{Poisson}(\lambda)$，且与更早各代 $X_0,\ldots,X_{n-1}$ 独立，故
+\[
+P\{X_{n+1}=j \mid X_n=i,\; X_{n-1},\ldots,X_0\}
+= P\{X_{n+1}=j \mid X_n=i\},
+\]
+即下一代的条件分布只依赖于当前代的人数 $i$，Markov 性成立。
+
+再由 Poisson 分布的可加性，$i$ 个独立 $\mathrm{Poisson}(\lambda)$ 随机变量之和服从 $\mathrm{Poisson}(i\lambda)$，因此转移概率为
+\[
+P_{0j}=
+\begin{cases}
+1, & j=0,\\
+0, & j\ge 1,
+\end{cases}
+\qquad\qquad
+P_{ij}=e^{-i\lambda}\,\frac{(i\lambda)^j}{j!},
+\qquad i\ge 1,\; j=0,1,2,\ldots
+\]
+其中 $P_{00}=1$ 表明 $0$ 是吸收态：某一代灭绝后，其后各代不再有个体。
+\end{answerbox}
+
+\section{Problem4}
+
+有 $k$ 名玩家，玩家 $i$ 的实力值为 $v_i>0$（$i=1,\ldots,k$）。每个时期有两名玩家对局，其余 $k-2$ 名玩家按顺序排队。对局的负者排到队尾，胜者接着与队首玩家进行新一局对局。当玩家 $i$ 与 $j$ 对局时，$i$ 获胜的概率为 $\dfrac{v_i}{v_i+v_j}$。
+(1) 定义一个有助于分析该模型的 Markov 链；(2) 该链有多少个状态？(3) 给出该链的转移概率。
+
+
+\begin{answerbox}
+\textbf{解.}\ \textbf{(1) Markov 链的定义。}\ 任一时刻，过程的“全部信息”由 $k$ 名玩家的一个排列描述。用
+\[
+Y_n=(i_1,\; i_2,\; i_3,\;\ldots,\; i_k)
+\]
+表示第 $n$ 个时期结束后的状态，其中 $i_1$ 为刚获胜的玩家（下一局继续坐庄），$i_2$ 为队首玩家（下一局与 $i_1$ 对局），$i_3,\ldots,i_k$ 为队列中其余玩家（按先后顺序）。第一局结束后该描述即适用。由于下一局的对局双方与队列顺序完全由 $Y_n$ 决定，随机性仅来自本局胜负，故 $\{Y_n\}$ 是（时齐）Markov 链。
+
+\textbf{(2) 状态数。}\ 状态为 $k$ 名玩家的一个全排列，故链共有 $k!$ 个状态。
+
+\textbf{(3) 转移概率。}\ 从状态 $(i_1,i_2,\ldots,i_k)$ 出发，由 $i_1$ 与 $i_2$ 对局：
+\begin{itemize}[leftmargin=2em, itemsep=2pt]
+  \item 以概率 $\dfrac{v_{i_1}}{v_{i_1}+v_{i_2}}$，$i_1$ 获胜：负者 $i_2$ 排到队尾，链转移到
+        $\bigl(i_1,\; i_3,\; i_4,\;\ldots,\; i_k,\; i_2\bigr)$；
+  \item 以概率 $\dfrac{v_{i_2}}{v_{i_1}+v_{i_2}}$，$i_2$ 获胜：负者 $i_1$ 排到队尾，链转移到
+        $\bigl(i_2,\; i_3,\; i_4,\;\ldots,\; i_k,\; i_1\bigr)$.
+\end{itemize}
+除上述两个状态外，转移到其余任何状态的概率均为 $0$。
+\end{answerbox}
+
+% ==================================================
+\section{Additional Problem}
+
+提供两个可以被建模为离散马尔科夫链的例子，并且写出状态空间与转移概率矩阵。
+
+\begin{answerbox}
+    
+\textbf{例一：天气预测模型}
+
+设某地天气只有“晴”与“雨”两种状态，且明天的天气仅取决于今天的天气，与更早的天气无关。以 $0$ 表示晴天、$1$ 表示雨天，令 $X_n$ 表示第 $n$ 天的天气，则状态空间为
+\[
+S=\{0,\,1\}.
+\]
+由长期观测统计得：今日晴则次日仍晴的概率为 $0.8$、转雨的概率为 $0.2$；今日雨则次日转晴的概率为 $0.6$、仍雨的概率为 $0.4$。于是 $\{X_n\}$ 是离散时间 Markov 链，其转移概率为
+\[
+P_{ij}=P\{X_{n+1}=j \mid X_n=i\},
+\qquad
+P=\begin{pmatrix}
+0.8 & 0.2\\[2pt]
+0.6 & 0.4
+\end{pmatrix}.
+\]
+
+\textbf{例二：赌徒破产模型（带吸收壁的随机游走）}
+
+一名赌徒现有资金 $i$ 元（$0\le i\le N$），逐局赌博：每局以概率 $p$ 赢 1 元、以概率 $q=1-p$ 输 1 元；一旦资金到达 $0$（破产）或 $N$（达到目标金额）即停止。令 $X_n$ 表示第 $n$ 局结束后的资金，则状态空间为
+\[
+S=\{0,1,2,\ldots,N\}.
+\]
+由于每局资金至多变动 1 元，且变动方向仅由当前资金与本局的随机输赢决定，与历史无关，故 $\{X_n\}$ 是离散时间 Markov 链，其转移概率为
+\[
+P_{00}=1,\qquad P_{NN}=1,
+\]
+对 $1\le i\le N-1$：
+\[
+P_{i,i+1}=p,\qquad P_{i,i-1}=q,
+\]
+其余 $P_{ij}=0$。其中状态 $0$ 与 $N$ 均为吸收态。
+\end{answerbox}
+\end{document}

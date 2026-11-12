@@ -1,0 +1,403 @@
+% !TeX program = xelatex
+\documentclass[12pt,a4paper]{article}
+
+% ==================== 基础宏包 ====================
+\usepackage[UTF8]{ctex}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{hyperref}
+\usepackage[most]{tcolorbox}
+\usepackage{titlesec}
+\usepackage{tabularx}
+
+\hypersetup{
+  hidelinks
+}
+
+% ==================== 颜色定义 ====================
+\definecolor{mainblue}{RGB}{34,72,112}
+\definecolor{lightblue}{RGB}{241,246,252}
+\definecolor{linegray}{RGB}{210,218,228}
+\definecolor{textgray}{RGB}{90,98,108}
+
+% ==================== 页面设置 ====================
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0.35em}
+\setlength{\headheight}{25pt}
+\linespread{1.2}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\textcolor{textgray}{\small 课程作业}}
+\rhead{\textcolor{textgray}{\small \thepage/\pageref*{LastPage}}}
+\cfoot{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{linegray}\leaders\hrule height \headrulewidth\hfill}}
+
+% ==================== 标题样式 ====================
+\titleformat{\section}
+  {\Large\bfseries\color{mainblue}}
+  {\thesection}
+  {0.6em}
+  {}
+
+\titleformat{\subsection}
+  {\large\bfseries\color{mainblue}}
+  {\thesubsection}
+  {0.6em}
+  {}
+
+\titlespacing*{\section}{0pt}{1.2em}{0.6em}
+\titlespacing*{\subsection}{0pt}{0.8em}{0.4em}
+
+% ==================== 自定义环境 ====================
+\newtcolorbox{infobox}{
+  colback=lightblue,
+  colframe=mainblue,
+  boxrule=0.6pt,
+  arc=2mm,
+  left=1.2em,
+  right=1.2em,
+  top=0.8em,
+  bottom=0.8em
+}
+
+\newtcolorbox{answerbox}{
+  colback=white,
+  colframe=linegray,
+  boxrule=0.5pt,
+  arc=2mm,
+  left=1em,
+  right=1em,
+  top=0.8em,
+  bottom=0.8em,
+  breakable
+}
+
+\newcommand{\course}{随机过程}
+\newcommand{\homeworktitle}{第6次作业}
+\newcommand{\studentname}{倪伟丰}
+\newcommand{\studentid}{2024110089}
+\newcommand{\classname}{24 大数据 2 班}
+\newcommand{\teacher}{郭珊珊}
+\newcommand{\duedate}{10月20日} % 在此填写提交日期
+
+% ==================== 正文开始 ====================
+\begin{document}
+
+\begin{center}
+  {\Huge\bfseries\color{mainblue}\homeworktitle}\\[0.6em]
+  {\Large\course}\\[1.2em]
+  {\color{linegray}\rule{0.9\textwidth}{0.8pt}}
+\end{center}
+
+\begin{infobox}
+\begin{tabularx}{\linewidth}{>{\bfseries}p{2.2cm} X >{\bfseries}p{2.2cm} X}
+姓名 & \studentname & 学号 & \studentid \\
+班级 & \classname & 教师 & \teacher \\
+提交日期 & \duedate &  &  \\
+\end{tabularx}
+\end{infobox}
+
+% 题目及 Proposition 5.5 原文来源：同目录 assignment6.docx。
+% 截图内容已转录为可编辑文字与公式；各 answerbox 供填写作业解答。
+\section{Counting Process}
+
+Give an example of a counting process, explain if the process you provide has independent increments or stationary increments.
+
+\begin{answerbox}
+\textbf{解：}
+
+以商店的顾客到达过程为例。假设顾客按照速率为 $\lambda=3$ 人/小时的齐次泊松过程到达，令 $N(t)$ 表示从开始观察到第 $t$ 小时内到达的顾客总数。由于 $N(0)=0$，且 $N(t)$ 取非负整数值、随时间单调不减，因此 $\{N(t),t\geq 0\}$ 是一个计数过程。
+
+该过程具有\textbf{独立增量}。对任意 $0\leq t_0<t_1<\cdots<t_n$，不相交时段内的到达人数
+$$
+N(t_1)-N(t_0),\ N(t_2)-N(t_1),\ \ldots,\ N(t_n)-N(t_{n-1})
+$$
+相互独立。例如，第一个小时内到达的顾客人数与第二个小时内到达的顾客人数相互独立。
+
+该过程也具有\textbf{平稳增量}。对任意 $s,t\geq 0$，有
+$$
+N(s+t)-N(s)\sim\operatorname{Poisson}(3t),
+$$
+即
+$$
+P\{N(s+t)-N(s)=k\}=e^{-3t}\frac{(3t)^k}{k!},
+\qquad k=0,1,2,\ldots.
+$$
+增量的分布仅取决于时段长度 $t$，与起始时刻 $s$ 无关。例如，任意一个小时内到达的顾客人数都服从参数为 $3$ 的泊松分布。
+\end{answerbox}
+
+\section{Proposition 5.5}
+
+Review Proposition 5.5 and its proof. (see the file attached)
+
+% 以下为 Word 附图中的命题背景、命题及证明全文。
+Consider a Poisson process $\{N(t), t \ge 0\}$ having rate $\lambda$, and suppose that each time an event occurs it is classified as either a type I or a type II event. Suppose further that each event is classified as a type I event with probability $p$ or a type II event with probability $1-p$, independently of all other events. For example, suppose that customers arrive at a store in accordance with a Poisson process having rate $\lambda$; and suppose that each arrival is male with probability $\frac{1}{2}$ and female with probability $\frac{1}{2}$. Then a type I event would correspond to a male arrival and a type II event to a female arrival.
+
+Let $N_1(t)$ and $N_2(t)$ denote respectively the number of type I and type II events occurring in $[0,t]$. Note that $N(t)=N_1(t)+N_2(t)$.
+
+\noindent\textbf{Proposition 5.5.} \textit{$\{N_1(t), t \ge 0\}$ and $\{N_2(t), t \ge 0\}$ are both Poisson processes having respective rates $\lambda p$ and $\lambda(1-p)$. Furthermore, the two processes are independent.}
+
+\noindent\textit{Proof.} It is easy to verify that $\{N_1(t), t \ge 0\}$ is a Poisson process with rate $\lambda p$ by verifying that it satisfies Definition 5.2.
+
+\begin{itemize}[leftmargin=2em]
+  \item $N_1(0)=0$ follows from the fact that $N(0)=0$.
+  \item It is easy to see that $\{N_1(t), t \ge 0\}$ inherits the stationary and independent increment properties of the process $\{N(t), t \ge 0\}$. This is true because the distribution of the number of type I events in an interval can be obtained by conditioning on the number of events in that interval, and the distribution of this latter quantity depends only on the length of the interval and is independent of what has occurred in any nonoverlapping interval.
+  \item
+  $\begin{aligned}[t]
+    P\{N_1(h)=1\}
+      &=P\{N_1(h)=1\mid N(h)=1\}P\{N(h)=1\}\\
+      &\quad+P\{N_1(h)=1\mid N(h)\ge 2\}P\{N(h)\ge 2\}\\
+      &=p(\lambda h+o(h))+o(h)\\
+      &=\lambda ph+o(h)
+  \end{aligned}$
+  \item $P\{N_1(h)\ge 2\}\le P\{N(h)\ge 2\}=o(h)$
+\end{itemize}
+
+Thus we see that $\{N_1(t), t \ge 0\}$ is a Poisson process with rate $\lambda p$ and, by a similar argument, that $\{N_2(t), t \ge 0\}$ is a Poisson process with rate $\lambda(1-p)$. Because the probability of a type I event in the interval from $t$ to $t+h$ is independent of all that occurs in intervals that do not overlap $(t,t+h)$, it is independent of knowledge of when type II events occur, showing that the two Poisson processes are independent. (For another way of proving independence, see Example 3.24.) \hfill$\blacksquare$
+
+\begin{answerbox}
+\textbf{补充：两个分裂过程的独立性证明。}
+
+按命题中的独立分类设定，各事件的类别相互独立，且与原泊松过程独立。先考察任意区间 $(s,s+t]$，其中 $s\geq0$、$t>0$，记
+$$
+U=N_1(s+t)-N_1(s),\qquad
+V=N_2(s+t)-N_2(s).
+$$
+区间内的事件总数 $U+V$ 服从 $\operatorname{Poisson}(\lambda t)$；给定 $U+V=m$ 后，$U$ 服从 $\operatorname{Binomial}(m,p)$，且 $V=m-U$。因此，对任意非负整数 $k,l$，
+$$
+\begin{aligned}
+P(U=k,V=l)
+&=P(U+V=k+l)P(U=k\mid U+V=k+l)\\
+&=e^{-\lambda t}\frac{(\lambda t)^{k+l}}{(k+l)!}
+  \binom{k+l}{k}p^k(1-p)^l\\
+&=\left[e^{-\lambda pt}\frac{(\lambda pt)^k}{k!}\right]
+  \left[e^{-\lambda(1-p)t}\frac{(\lambda(1-p)t)^l}{l!}\right]\\
+&=P(U=k)P(V=l).
+\end{aligned}
+$$
+故同一区间内的两类事件数 $U,V$ 相互独立。
+
+进一步，取任意时间划分 $0=t_0<t_1<\cdots<t_m$，记
+$$
+U_r=N_1(t_r)-N_1(t_{r-1}),\qquad
+V_r=N_2(t_r)-N_2(t_{r-1}),\quad r=1,\ldots,m.
+$$
+原过程在这些不相交区间内的增量相互独立，各事件的分类也独立，因此随机向量 $(U_r,V_r)$ 在不同区间之间相互独立。结合每个区间内 $U_r,V_r$ 的独立性，对任意非负整数 $u_r,v_r$，有
+$$
+\begin{aligned}
+P\left(\bigcap_{r=1}^{m}\{U_r=u_r,V_r=v_r\}\right)
+&=\prod_{r=1}^{m}P(U_r=u_r,V_r=v_r)\\
+&=\left[\prod_{r=1}^{m}P(U_r=u_r)\right]
+  \left[\prod_{r=1}^{m}P(V_r=v_r)\right].
+\end{aligned}
+$$
+这表明增量向量 $(U_1,\ldots,U_m)$ 与 $(V_1,\ldots,V_m)$ 相互独立。又因
+$$
+N_1(t_j)=\sum_{r=1}^{j}U_r,\qquad
+N_2(t_j)=\sum_{r=1}^{j}V_r,
+$$
+两过程在这些时刻的计数向量也相互独立。对两组任意有限观测时刻取共同划分，即得两过程任意有限维随机向量的独立性，因此 $\{N_1(t),t\geq0\}$ 与 $\{N_2(t),t\geq0\}$ 相互独立。
+\end{answerbox}
+
+\section{Chapter 5 Exercises}
+
+Chapter 5, exercises 2, 30, 40, 42. (see the file attached)
+
+\subsection{Problem 2}
+
+Suppose that you arrive at a single-teller bank to find five other customers in the bank, one being served and the other four waiting in line. You join the end of the line. If the service times are all exponential with rate $\mu$, what is the expected amount of time you will spend in the bank?
+
+\begin{answerbox}
+\textbf{解：}
+
+到达时银行中已有 $5$ 位顾客，其中 $1$ 位正在接受服务、$4$ 位排队等待。因此，自己是第 $6$ 位，需要等待前面顾客的服务完成，并接受自己的服务。
+
+设正在接受服务的顾客的完整服务时间为 $S\sim\operatorname{Exp}(\mu)$，已接受服务的时间为 $a$。由指数分布的无记忆性，对任意 $x\geq0$，
+$$
+P(S-a>x\mid S>a)
+=\frac{P(S>a+x)}{P(S>a)}
+=e^{-\mu x}.
+$$
+故该顾客的剩余服务时间 $R$ 仍服从 $\operatorname{Exp}(\mu)$，且 $E[R]=1/\mu$。
+
+再设排队的 $4$ 位顾客及自己的服务时间依次为 $X_1,\ldots,X_5$，它们均服从 $\operatorname{Exp}(\mu)$，所以 $E[X_i]=1/\mu$。自己在银行停留的总时间为
+$$
+T=R+\sum_{i=1}^{5}X_i.
+$$
+由期望的线性性，
+$$
+E[T]=E[R]+\sum_{i=1}^{5}E[X_i]
+=\frac{1}{\mu}+\frac{5}{\mu}=\frac{6}{\mu}.
+$$
+\end{answerbox}
+
+\subsection{Problem 30}
+
+The lifetimes of A's dog and cat are independent exponential random variables with respective rates $\lambda_d$ and $\lambda_c$. One of them has just died. Find the expected additional lifetime of the other pet.
+
+\begin{answerbox}
+\textbf{解：}
+令 $X_d$ 和 $X_c$ 分别表示狗和猫的寿命，$R$ 表示第一只宠物死亡后另一只宠物的剩余寿命，则 $R=|X_d-X_c|$。
+由全期望公式：
+$$
+\begin{aligned}
+E[R]
+&=E[X_d-X_c\mid X_c<X_d]P(X_c<X_d)\\
+&\quad+E[X_c-X_d\mid X_d<X_c]P(X_d<X_c).
+\end{aligned}
+$$
+
+其中：
+
+$$
+P(X_c<X_d)=\frac{\lambda_c}{\lambda_c+\lambda_d},
+\qquad
+P(X_d<X_c)=\frac{\lambda_d}{\lambda_c+\lambda_d}.
+$$
+
+又由寿命的独立性及指数分布的无记忆性，猫先死亡时，狗的期望剩余寿命为 $1/\lambda_d$；狗先死亡时，猫的期望剩余寿命为 $1/\lambda_c$。即
+$$
+E[X_d-X_c\mid X_c<X_d]=\frac{1}{\lambda_d},
+\qquad
+E[X_c-X_d\mid X_d<X_c]=\frac{1}{\lambda_c}.
+$$
+
+所以：
+
+$$
+E[R]
+=\frac{\lambda_c}{\lambda_c+\lambda_d}\frac{1}{\lambda_d}
++\frac{\lambda_d}{\lambda_c+\lambda_d}\frac{1}{\lambda_c}
+=\frac{\lambda_c^2+\lambda_d^2}
+{\lambda_c\lambda_d(\lambda_c+\lambda_d)}.
+$$
+\end{answerbox}
+
+\subsection{Problem 40}
+
+Show that if $\{N_i(t), t \ge 0\}$ are independent Poisson processes with rate $\lambda_i$, $i=1,2$, then $\{N(t), t \ge 0\}$ is a Poisson process with rate $\lambda_1+\lambda_2$ where $N(t)=N_1(t)+N_2(t)$.
+
+\begin{answerbox}
+\textbf{解：}
+
+以下按泊松过程的定义验证。
+
+\textbf{(1) 计数过程及初始值。}
+由于 $N_1(t)$ 和 $N_2(t)$ 均取非负整数值，且随时间非递减，故 $N(t)=N_1(t)+N_2(t)$ 也是计数过程。又有
+$$
+N(0)=N_1(0)+N_2(0)=0.
+$$
+
+\textbf{(2) 平稳增量与独立增量。}
+对任意 $0\leq t_0<t_1<\cdots<t_m$，记
+$$
+Y_{i,k}=N_i(t_k)-N_i(t_{k-1}),
+\qquad i=1,2,\quad k=1,\ldots,m.
+$$
+对于每个 $i$，由于 $N_i$ 具有独立增量，$Y_{i,1},\ldots,Y_{i,m}$ 相互独立；又由于两个过程相互独立，两组增量也相互独立。因此，全部 $2m$ 个增量相互独立，从而
+$$
+N(t_k)-N(t_{k-1})=Y_{1,k}+Y_{2,k},
+\qquad k=1,\ldots,m
+$$
+相互独立，即 $N$ 具有独立增量。
+
+另一方面，对任意 $s,t\geq0$，两个原过程在 $(s,s+t]$ 内的增量相互独立，分别服从 $\operatorname{Poisson}(\lambda_1t)$ 和 $\operatorname{Poisson}(\lambda_2t)$。它们的分布均不依赖于 $s$，故其和 $N(s+t)-N(s)$ 的分布也不依赖于 $s$，即 $N$ 具有平稳增量。
+
+\textbf{(3) 短时间内恰好发生一次事件的概率。}
+固定 $t\geq0$，令 $\Delta_i=N_i(t+h)-N_i(t)$，其中 $h\downarrow0$。由原过程的泊松性质，
+$$
+\begin{aligned}
+P(\Delta_i=0)&=1-\lambda_i h+o(h),\\
+P(\Delta_i=1)&=\lambda_i h+o(h),\\
+P(\Delta_i\geq2)&=o(h),\qquad i=1,2.
+\end{aligned}
+$$
+由于 $\Delta_1$ 和 $\Delta_2$ 独立，总增量恰好为 $1$，只可能是两者分别取 $1,0$ 或 $0,1$。因此
+$$
+\begin{aligned}
+P\{N(t+h)-N(t)=1\}
+&=P(\Delta_1=1)P(\Delta_2=0)\\
+&\quad+P(\Delta_1=0)P(\Delta_2=1)\\
+&=(\lambda_1h+o(h))(1-\lambda_2h+o(h))\\
+&\quad+(1-\lambda_1h+o(h))(\lambda_2h+o(h))\\
+&=(\lambda_1+\lambda_2)h+o(h).
+\end{aligned}
+$$
+
+\textbf{(4) 短时间内发生至少两次事件的概率。}
+若 $\Delta_1+\Delta_2\geq2$，则至少有一个增量不小于 $2$，或者两个增量均不小于 $1$。由概率的次可加性及独立性，
+$$
+\begin{aligned}
+P\{N(t+h)-N(t)\geq2\}
+&\leq P(\Delta_1\geq2)+P(\Delta_2\geq2)\\
+&\quad+P(\Delta_1\geq1)P(\Delta_2\geq1)\\
+&=o(h)+o(h)+(\lambda_1h+o(h))(\lambda_2h+o(h))\\
+&=o(h),
+\end{aligned}
+$$
+其中用到了 $P(\Delta_i\geq1)=\lambda_i h+o(h)$ 及 $h^2=o(h)$。
+
+综上，$\{N(t),t\geq0\}$ 满足泊松过程的定义，其速率为 $\lambda_1+\lambda_2$。
+\end{answerbox}
+
+\subsection{Problem 42}
+
+Customers arrive to a single server system according to a Poisson process with rate $\lambda$. An arrival that finds the server idle immediately begins service; an arrival that finds the server busy waits. When the server completes a service it then simultaneously serves all those customers who are waiting. The time it takes to serve a group of size $i$ is a random variable with density function $g_i$, $i \ge 1$. If $X_n$ is the number of customers in the $n$-th service batch, is $\{X_n, n \ge 0\}$ a Markov chain. If it is, give its transition probabilities; if it is not, tell why not.
+
+\begin{answerbox}
+\textbf{解：}
+
+$\{X_n,n\geq0\}$ 是马尔可夫链，其状态空间为 $\{1,2,\ldots\}$。记 $T_n$ 为第 $n$ 批的服务时间，$K_n$ 为该批服务期间新到达的顾客人数。按题目通常的服务模型，给定 $X_n=i$ 后，$T_n$ 的密度为 $g_i$，且独立于此前历史及后续到达过程。
+
+给定 $X_n=i$ 及 $T_n=t$，由泊松到达过程的性质，
+$$
+K_n\mid\{X_n=i,T_n=t\}
+\sim\operatorname{Poisson}(\lambda t).
+$$
+本批服务开始时，所有等待者均已进入本批，因此下一批的人数由本批服务期间的到达人数决定：若 $K_n\geq1$，这 $K_n$ 人在本批服务结束后一起开始服务；若 $K_n=0$，服务台先空闲，直到下一位顾客到达，并由该顾客单独组成下一批。所以
+$$
+X_{n+1}=\max\{K_n,1\}.
+$$
+
+因此，下一批恰有 $1$ 人包含服务期间到达 $0$ 人和到达 $1$ 人两种情况，故
+$$
+\begin{aligned}
+p_{i1}
+&=P(X_{n+1}=1\mid X_n=i)\\
+&=\int_0^\infty
+\bigl[P(K_n=0\mid X_n=i,T_n=t)
++P(K_n=1\mid X_n=i,T_n=t)\bigr]g_i(t)\,dt\\
+&=\int_0^\infty e^{-\lambda t}(1+\lambda t)g_i(t)\,dt.
+\end{aligned}
+$$
+对 $j\geq2$，下一批恰有 $j$ 人，当且仅当本批服务期间恰好到达 $j$ 人。因此
+$$
+\begin{aligned}
+p_{ij}
+&=P(X_{n+1}=j\mid X_n=i)\\
+&=\int_0^\infty
+P(K_n=j\mid X_n=i,T_n=t)g_i(t)\,dt\\
+&=\int_0^\infty e^{-\lambda t}
+\frac{(\lambda t)^j}{j!}g_i(t)\,dt,
+\qquad j\geq2.
+\end{aligned}
+$$
+
+上述计算即使再给定 $X_0,\ldots,X_{n-1}$ 也不改变，因为本批服务时间的分布仅由 $i$ 决定，且之后的泊松到达不依赖于过去。因此
+$$
+P(X_{n+1}=j\mid X_0,\ldots,X_n=i)
+=P(X_{n+1}=j\mid X_n=i)=p_{ij},
+$$
+即满足马尔可夫性。转移概率不依赖于批次编号 $n$，故这是时间齐次马尔可夫链，其转移概率为上述 $p_{ij}$，其中 $i\geq1$。
+\end{answerbox}
+
+\end{document}

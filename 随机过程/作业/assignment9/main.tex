@@ -1,0 +1,413 @@
+% !TeX program = xelatex
+\documentclass[12pt,a4paper]{article}
+
+% ==================== 基础宏包 ====================
+\usepackage[UTF8,fontset=fandol]{ctex} % 使用 TeX Live 自带字体，便于跨环境编译。
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{hyperref}
+\usepackage[most]{tcolorbox}
+\usepackage{titlesec}
+\usepackage{tabularx}
+
+\hypersetup{
+  hidelinks
+}
+
+% ==================== 颜色定义 ====================
+\definecolor{mainblue}{RGB}{34,72,112}
+\definecolor{lightblue}{RGB}{241,246,252}
+\definecolor{linegray}{RGB}{210,218,228}
+\definecolor{textgray}{RGB}{90,98,108}
+
+% ==================== 页面设置 ====================
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0.35em}
+\setlength{\headheight}{25pt}
+\linespread{1.2}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\textcolor{textgray}{\small 课程作业}}
+\rhead{\textcolor{textgray}{\small \thepage/\pageref*{LastPage}}}
+\cfoot{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{linegray}\leaders\hrule height \headrulewidth\hfill}}
+
+% ==================== 标题样式 ====================
+\titleformat{\section}
+  {\Large\bfseries\color{mainblue}}
+  {\thesection}
+  {0.6em}
+  {}
+
+\titleformat{\subsection}
+  {\large\bfseries\color{mainblue}}
+  {\thesubsection}
+  {0.6em}
+  {}
+\renewcommand{\thesubsection}{(\alph{subsection})}
+
+\titlespacing*{\section}{0pt}{1.2em}{0.6em}
+\titlespacing*{\subsection}{0pt}{0.8em}{0.4em}
+
+\setlist[enumerate,1]{label=(\alph*),leftmargin=2em,
+  topsep=0.25em,itemsep=0.1em,parsep=0pt,partopsep=0pt}
+
+% ==================== 自定义环境 ====================
+\newtcolorbox{infobox}{
+  colback=lightblue,
+  colframe=mainblue,
+  boxrule=0.6pt,
+  arc=2mm,
+  left=1.2em,
+  right=1.2em,
+  top=0.8em,
+  bottom=0.8em
+}
+
+\newtcolorbox{answerbox}{
+  colback=white,
+  colframe=linegray,
+  boxrule=0.5pt,
+  arc=2mm,
+  left=1em,
+  right=1em,
+  top=0.55em,
+  bottom=0.55em,
+  before skip=0.35em,
+  after skip=0.35em,
+  breakable
+}
+
+\newcommand{\course}{随机过程}
+\newcommand{\homeworktitle}{第9次作业}
+\newcommand{\studentname}{倪伟丰}
+\newcommand{\studentid}{2024110089}
+\newcommand{\classname}{24 大数据 2 班}
+\newcommand{\teacher}{郭珊珊}
+\newcommand{\duedate}{} % 在此填写提交日期
+
+% ==================== 正文开始 ====================
+\begin{document}
+
+\begin{center}
+  {\Huge\bfseries\color{mainblue}\homeworktitle}\\[0.6em]
+  {\Large\course}\\[1.2em]
+  {\color{linegray}\rule{0.9\textwidth}{0.8pt}}
+\end{center}
+
+\begin{infobox}
+\begin{tabularx}{\linewidth}{>{\bfseries}p{2.2cm} X >{\bfseries}p{2.2cm} X}
+姓名 & \studentname & 学号 & \studentid \\
+班级 & \classname & 教师 & \teacher \\
+提交日期 & 11月10日 &  &  \\
+\end{tabularx}
+\end{infobox}
+
+% 题目来源：同目录 assignment9-1234&1247-1.docx。
+% 版式参考：../assignment7/main.tex。每个 answerbox 内可直接填写解答。
+
+
+\section{Problem 78}
+
+A store opens at 8~A.M. From 8 until 10~A.M. customers arrive at a Poisson
+rate of four an hour. Between 10~A.M. and 12~P.M. they arrive at a Poisson
+rate of eight an hour. From 12~P.M. to 2~P.M. the arrival rate increases
+steadily from eight per hour at 12~P.M. to ten per hour at 2~P.M.;
+and from 2 to 5~P.M. the arrival rate drops steadily from ten per hour
+at 2~P.M. to four per hour at 5~P.M. Determine the probability distribution
+of the number of customers that enter the store on a given day.
+
+\begin{answerbox}
+\textbf{解：}
+
+$t$ 表示当天的钟点，以小时为单位，并令 $N(t)$ 表示从早上
+8 点到时刻 $t$ 累计进入商店的顾客人数，$N(8)=0$。
+顾客到达构成非齐次泊松过程，其强度（到达速率）函数为
+
+$$
+\lambda(t)=
+\begin{cases}
+4, & 8\le t<10,\\
+8, & 10\le t<12,\\
+8+(t-12)=t-4, & 12\le t<14,\\
+10-2(t-14)=38-2t, & 14\le t\le17.
+\end{cases}
+$$
+
+均值函数为
+$$
+m(t)=\int_8^t\lambda(u)\,du
+=\begin{cases}
+4(t-8), & 8\le t<10,\\[2pt]
+8+8(t-10), & 10\le t<12,\\[2pt]
+24+8(t-12)+\dfrac{(t-12)^2}{2}, & 12\le t<14,\\[6pt]
+42+10(t-14)-(t-14)^2, & 14\le t\le17.
+\end{cases}
+$$
+
+将 $t=17$ 代入上式，得到 $m(17)=63$。
+由非齐次泊松过程的计数分布，全天进入商店的顾客总数满足
+$$
+N(17)\sim\operatorname{Poisson}(63),
+\qquad
+P\{N(17)=n\}=e^{-63}\frac{63^n}{n!},\quad n=0,1,2,\ldots.
+$$
+
+\end{answerbox}
+
+\clearpage
+\section{Problem 84}
+
+Let $X_1, X_2, \ldots$ be independent and identically distributed nonnegative
+continuous random variables having density function $f(x)$. We say that a
+record occurs at time $n$ if $X_n$ is larger than each of the previous values
+$X_1, \ldots, X_{n-1}$. (A record automatically occurs at time~1.)
+If a record occurs at time $n$, then $X_n$ is called the record value.
+In other words, a record occurs whenever a new high is reached, and that
+new high is called the record value. Let $N(t)$ denote the number of record
+values that are less than or equal to $t$. Characterize the process
+$\{N(t), t \ge 0\}$ when
+
+\subsection{}
+$f$ is an arbitrary continuous density function.
+
+\begin{answerbox}
+\textbf{解：}
+
+记 $F$ 为 $X_i$ 的分布函数。这里 $t$ 是纪录值的上界。
+先考虑 $F(t)<1$ 的情形。
+
+第一条超过 $t$ 的纪录来自第一个满足 $X_i>t$ 的样本，其分布为
+$X_1$ 在 $X_1>t$ 条件下的分布。由独立同分布性，该样本及后续
+样本与此前不超过 $t$ 的纪录独立，所以阈值 $t$ 以上的纪录与
+$t$ 以内的纪录独立，即 $\{N(t)\}$ 具有独立增量。
+
+区间 $(t,t+h]$ 内至少出现一条纪录，当且仅当第一条超过 $t$ 的
+纪录不超过 $t+h$，故当 $h\downarrow0$ 时，
+$$
+P\{N(t+h)-N(t)\ge1\}
+=\frac{F(t+h)-F(t)}{1-F(t)}
+=r(t)h+o(h),
+\qquad r(t)=\frac{f(t)}{1-F(t)}.
+$$
+出现第一条纪录后，阈值升高，再出现一条的条件概率不超过上述
+比值。因此，区间内出现两条及以上纪录的概率为 $O(h^2)=o(h)$，
+恰好出现一条的概率为 $r(t)h+o(h)$。
+
+又 $N(0)=0$，所以这是强度函数为 $r(t)$ 的非齐次泊松过程，且
+$$
+m(t)=\int_0^t r(u)\,du=-\ln(1-F(t)),
+\qquad N(t)\sim\operatorname{Poisson}(m(t)).
+$$
+若存在有限的 $t$ 使 $F(t)=1$，则所有纪录值都不超过 $t$，
+此时 $N(t)=\infty$（几乎必然）；上述有限参数的泊松分布只适用于 $F(t)<1$。
+
+\end{answerbox}
+
+\subsection{}
+
+$f(x) = \lambda e^{-\lambda x}$.
+
+\begin{answerbox}
+\textbf{解：}
+
+原始样本 $X_i$ 服从指数分布，故 $r(t)=f(t)/(1-F(t))=\lambda$。
+因此，$\{N(t)\}$ 是速率为 $\lambda$ 的齐次泊松过程，且
+$$
+N(t) \sim \operatorname{Poisson}(\lambda t).
+$$
+
+\end{answerbox}
+
+
+\clearpage
+\section{Problem 85}
+
+Let $X(t) = \sum_{i=1}^{N(t)} X_i$ where $X_i$, $i \ge 1$ are independent
+and identically distributed with mean $E[X]$, and are independent of
+$\{N(t), t \ge 0\}$, which is a Poisson process with rate $\lambda$.
+For $s < t$, find
+
+\subsection{}
+
+$E[X(t) \mid X(s)]$;
+
+\begin{answerbox}
+\textbf{解：}
+
+将时刻 $s$ 之后的增量记为
+$$
+X_s(t)=\sum_{i=N(s)+1}^{N(t)}X_i,
+\qquad X(t)=X(s)+X_s(t).
+$$
+由泊松过程的独立增量性，以及 $X_i$ 彼此独立且与计数过程独立，
+$X_s(t)$ 与 $X(s)$ 独立。
+又 $N(t)-N(s)\sim\operatorname{Poisson}(\lambda(t-s))$；
+给定新增项数为 $k$ 时，$X_s(t)$ 的均值为 $kE[X]$，所以
+$$
+E[X_s(t)]=E[N(t)-N(s)]E[X]=\lambda(t-s)E[X].
+$$
+于是
+$$
+E[X(t)\mid X(s)]
+=X(s)+E[X_s(t)]
+=X(s)+\lambda(t-s)E[X].
+$$
+
+\end{answerbox}
+
+\subsection{}
+
+$E[X(t) \mid N(s)]$;
+
+\begin{answerbox}
+\textbf{解：}
+
+当 $N(s)=n$ 时，由独立增量性，
+$$
+E[N(t)\mid N(s)=n]
+=n+E[N(t)-N(s)]
+=n+\lambda(t-s).
+$$
+由于 $\{X_i\}$ 与计数过程独立，给定 $N(t)$ 和 $N(s)$ 后，
+$X(t)$ 的条件均值为 $N(t)E[X]$。由条件期望的迭代法则，
+$$
+\begin{aligned}
+E[X(t)\mid N(s)]
+&=E\bigl[E[X(t)\mid N(t),N(s)]\mid N(s)\bigr]\\
+&=E[N(t)\mid N(s)]E[X]\\
+&=\bigl(N(s)+\lambda(t-s)\bigr)E[X].
+\end{aligned}
+$$
+
+
+\end{answerbox}
+
+\clearpage
+\section{Problem 3}
+
+Consider two machines that are maintained by a single repairman. Machine $i$
+functions for an exponential time with rate $\mu_i$ before breaking down,
+$i = 1, 2$. The repair times (for either machine) are exponential with rate
+$\mu$. Can we analyze this as a birth and death process? If so, what are the
+parameters? If not, how can we analyze it?
+
+\begin{answerbox}
+\textbf{解：}
+
+假设各机器的工作时间与维修时间相互独立；维修工在有故障机器时
+立即维修，且每次修完一台再修另一台。
+
+令 $B(t)$ 表示时刻 $t$ 的故障机器数。当 $B(t)=1$ 时，若机器 1
+正在维修、机器 2 正常，则下一次故障的速率为 $\mu_2$；若机器 2
+正在维修、机器 1 正常，则下一次故障的速率为 $\mu_1$。
+因此，当 $\mu_1\ne\mu_2$ 时，仅知道故障机器数无法确定下一次
+故障的速率，还需知道正常机器的身份。因此，$\{B(t)\}$ 一般不具有
+马尔可夫性，不能仅按故障机器数建立生灭过程。
+
+可以扩大状态空间，建立连续时间马尔可夫链。定义状态如下：
+\begin{center}
+\begin{tabular}{cl}
+\toprule
+状态 & 机器情况 \\
+\midrule
+0 & 两台机器均正常 \\
+1 & 机器 1 正在维修，机器 2 正常 \\
+2 & 机器 2 正在维修，机器 1 正常 \\
+3 & 两台机器均故障，正在维修机器 1 \\
+4 & 两台机器均故障，正在维修机器 2 \\
+\bottomrule
+\end{tabular}
+\end{center}
+两台机器均故障时，必须区分正在维修哪一台，因为这决定了维修
+完成后进入的状态。由指数分布的无记忆性，按状态 $0,1,2,3,4$
+的顺序，生成矩阵为
+$$
+Q=
+\begin{pmatrix}
+-(\mu_1+\mu_2)&\mu_1&\mu_2&0&0\\
+\mu&-(\mu+\mu_2)&0&\mu_2&0\\
+\mu&0&-(\mu+\mu_1)&0&\mu_1\\
+0&0&\mu&-\mu&0\\
+0&\mu&0&0&-\mu
+\end{pmatrix}.
+$$
+
+特殊地，若 $\mu_1=\mu_2=\nu$，则故障机器数 $\{B(t)\}$
+构成状态空间为 $\{0,1,2\}$ 的生灭过程。以故障为出生、维修
+完成为死亡，其出生率与死亡率分别为
+$$
+\begin{gathered}
+b_0=2\nu,\qquad b_1=\nu,\qquad b_2=0,\\
+d_0=0,\qquad d_1=d_2=\mu.
+\end{gathered}
+$$
+只有一名维修工，因此两台均故障时的总维修率仍为 $\mu$。
+
+\end{answerbox}
+
+\clearpage
+\section{Problem 5}
+
+There are $N$ individuals in a population, some of whom have a certain
+infection that spreads as follows. Contacts between two members of this
+population occur in accordance with a Poisson process having rate $\lambda$.
+When a contact occurs, it is equally likely to involve any of the
+$\binom{N}{2}$ pairs of individuals in the population. If a contact involves
+an infected and a noninfected individual, then with probability $p$ the
+noninfected individual becomes infected. Once infected, an individual
+remains infected throughout. Let $X(t)$ denote the number of infected
+members of the population at time $t$.
+
+\subsection{}
+
+Is $\{X(t), t \ge 0\}$ a continuous-time Markov chain?
+
+\begin{answerbox}
+\textbf{解：}
+
+是。状态空间为 $\{0,1,\ldots,N\}$。当 $X(t)=i$ 时，有 $i$ 名
+感染者和 $N-i$ 名未感染者，因此一名感染者与一名未感染者构成的
+配对共有 $i(N-i)$ 对。一次接触导致新增一名感染者的概率为
+$$
+r_i=p\frac{i(N-i)}{\binom{N}{2}}.
+$$
+题中的 $\lambda$ 是全体人群的总接触率。在状态 $i$ 保持不变期间，
+对速率为 $\lambda$ 的接触泊松过程
+按概率 $r_i$ 进行筛选，得到有效传播事件的速率
+$$
+b_i=\lambda r_i=\lambda p\frac{i(N-i)}{\binom{N}{2}}.
+$$
+若 $b_i>0$，等待下一次有效传播的时间服从
+$\operatorname{Exp}(b_i)$，传播发生后进入状态 $i+1$。
+若 $b_i=0$，则一直停留在状态 $i$。
+上述等待时间和下一状态的条件分布仅依赖于当前感染人数 $i$，
+与此前的接触及感染历史无关。故 $\{X(t),t\ge0\}$ 是连续时间
+马尔可夫链。
+\end{answerbox}
+
+\subsection{}
+
+Specify its type.
+
+\begin{answerbox}
+\textbf{解：}
+
+每次有效传播使感染人数增加 1，且感染者不会恢复，因此这是一个
+有限状态的纯生过程。出生率为 (a) 中的 $b_i$，死亡率为
+$d_i=0$（$i=0,1,\ldots,N$）。
+生成矩阵满足 $q_{i,i+1}=b_i$（$i<N$）、$q_{ii}=-b_i$，其余元素为 0。
+由于 $b_0=b_N=0$，状态 0 和 $N$ 均为吸收态：没有感染者时
+无法传播，所有人均感染后人数也无法再增加。
+\end{answerbox}
+
+\end{document}

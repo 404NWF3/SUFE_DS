@@ -1,0 +1,517 @@
+% !TeX program = xelatex
+\documentclass[12pt,a4paper]{article}
+
+% ==================== 基础宏包 ====================
+\usepackage[UTF8,fontset=fandol]{ctex} % 使用 TeX Live 自带字体，便于跨环境编译。
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{hyperref}
+\usepackage[most]{tcolorbox}
+\usepackage{titlesec}
+\usepackage{tabularx}
+
+\hypersetup{
+  hidelinks
+}
+
+% ==================== 颜色定义 ====================
+\definecolor{mainblue}{RGB}{34,72,112}
+\definecolor{lightblue}{RGB}{241,246,252}
+\definecolor{linegray}{RGB}{210,218,228}
+\definecolor{textgray}{RGB}{90,98,108}
+
+% ==================== 页面设置 ====================
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0.35em}
+\setlength{\headheight}{25pt}
+\linespread{1.2}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\textcolor{textgray}{\small 课程作业}}
+\rhead{\textcolor{textgray}{\small \thepage/\pageref*{LastPage}}}
+\cfoot{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{linegray}\leaders\hrule height \headrulewidth\hfill}}
+
+% ==================== 标题样式 ====================
+\titleformat{\section}
+  {\Large\bfseries\color{mainblue}}
+  {\thesection}
+  {0.6em}
+  {}
+
+\titleformat{\subsection}
+  {\large\bfseries\color{mainblue}}
+  {\thesubsection}
+  {0.6em}
+  {}
+
+\titlespacing*{\section}{0pt}{1.2em}{0.6em}
+\titlespacing*{\subsection}{0pt}{0.8em}{0.4em}
+
+% ==================== 自定义环境 ====================
+\newtcolorbox{infobox}{
+  colback=lightblue,
+  colframe=mainblue,
+  boxrule=0.6pt,
+  arc=2mm,
+  left=1.2em,
+  right=1.2em,
+  top=0.8em,
+  bottom=0.8em
+}
+
+\newtcolorbox{answerbox}{
+  colback=white,
+  colframe=linegray,
+  boxrule=0.5pt,
+  arc=2mm,
+  left=1em,
+  right=1em,
+  top=0.8em,
+  bottom=0.8em,
+  breakable
+}
+
+\newcommand{\course}{随机过程}
+\newcommand{\homeworktitle}{第7次作业}
+\newcommand{\studentname}{倪伟丰}
+\newcommand{\studentid}{2024110089}
+\newcommand{\classname}{24 大数据 2 班}
+\newcommand{\teacher}{郭珊珊}
+\newcommand{\duedate}{10月27日} % 在此填写提交日期
+
+% ==================== 正文开始 ====================
+\begin{document}
+
+\begin{center}
+  {\Huge\bfseries\color{mainblue}\homeworktitle}\\[0.6em]
+  {\Large\course}\\[1.2em]
+  {\color{linegray}\rule{0.9\textwidth}{0.8pt}}
+\end{center}
+
+\begin{infobox}
+\begin{tabularx}{\linewidth}{>{\bfseries}p{2.2cm} X >{\bfseries}p{2.2cm} X}
+姓名 & \studentname & 学号 & \studentid \\
+班级 & \classname & 教师 & \teacher \\
+提交日期 & \duedate &  &  \\
+\end{tabularx}
+\end{infobox}
+
+% 题目来源：上一级目录 assignment7-1234and1247.pdf（共 2 页）。
+% 版式参考：assignment6/2024110089-assignment6.tex。
+% 保留原题顺序 37、55、59、68、63 及英文原文；各 answerbox 供自行填写。
+
+\section{Problem 37}
+
+Let $\{N(t), t \ge 0\}$ be a Poisson process with rate $\lambda$. For $i \le n$ and $s < t$,
+
+\subsection{}
+find $P(N(t)=n \mid N(s)=i)$;
+
+\begin{answerbox}
+\textbf{解：}
+$N(s)=i$ 表示截至 $s$ 时刻累计到达了 $i$ 人。在此条件下，$N(t)=n$ 等价于区间 $(s,t]$ 内恰好到达 $n-i$ 人。由泊松过程的独立增量性质，$N(t)-N(s)$ 与 $N(s)$ 独立，因此
+
+$$
+\begin{aligned}
+P(N(t)=n\mid N(s)=i)
+&=P(N(t)-N(s)=n-i\mid N(s)=i)\\
+&=P(N(t)-N(s)=n-i).
+\end{aligned}
+$$
+
+由于：
+
+$$
+N(t)- N(s) \sim \operatorname{Poisson}(\lambda (t-s))
+$$
+
+所以：
+
+$$
+P(N(t)=n \mid N(s)=i) = P(N(t)- N(s)=n-i)=\frac{(\lambda (t-s))^{n-i}}{(n-i)!}e^{-(\lambda (t-s))}
+$$
+
+\end{answerbox}
+
+\subsection{}
+
+find $P(N(s)=i \mid N(t)=n)$.
+
+\begin{answerbox}
+\textbf{解：}
+
+$$
+P(N(s)=i \mid N(t)=n)  = \frac{P(N(t)=n \mid N(s)=i) P(N(s)=i) }{P(N(t)=n)}
+$$
+
+其中：
+
+$$
+P(N(t)=n \mid N(s)=i) = P(N(t)- N(s)=n-i)=\frac{(\lambda (t-s))^{n-i}}{(n-i)!}e^{-(\lambda (t-s))}
+$$
+
+$$
+P(N(s)=i) = \frac{(s\lambda)^i}{i!}e^{-s\lambda}
+$$
+
+$$
+P(N(t)=n)=\frac{(t\lambda)^n}{n!}e^{-t\lambda}
+$$
+
+代入并化简，得到：
+$$
+\begin{aligned}
+P(N(s)=i\mid N(t)=n)
+&=\frac{
+\displaystyle\frac{[\lambda(t-s)]^{n-i}}{(n-i)!}e^{-\lambda(t-s)}
+\displaystyle\frac{(\lambda s)^i}{i!}e^{-\lambda s}
+}{\displaystyle\frac{(\lambda t)^n}{n!}e^{-\lambda t}}\\[6pt]
+&=\frac{n!}{i!(n-i)!}\frac{s^i(t-s)^{n-i}}{t^n}\\[4pt]
+&=\binom ni\left(\frac{s}{t}\right)^i
+\left(1-\frac{s}{t}\right)^{n-i},\qquad i=0,1,\ldots,n.
+\end{aligned}
+$$
+其中，指数项因 $-\lambda(t-s)-\lambda s=-\lambda t$ 而抵消，
+$\lambda$ 的幂次因 $(n-i)+i=n$ 而抵消。因此，
+$$
+N(s)\mid N(t)=n\sim\operatorname{Binomial}\left(n,\frac{s}{t}\right).
+$$
+即已知 $[0,t]$ 内累计到达了 $n$ 人时，截至 $s$ 时刻的累计到达人数服从参数为 $n$ 和 $s/t$ 的二项分布。
+
+\end{answerbox}
+
+\section{Problem 55}
+
+Consider a single server queuing system where customers arrive according to a Poisson process with rate $\lambda$, service times are exponential with rate $\mu$, and customers are served in the order of their arrival. Suppose that a customer arrives and finds $n-1$ others in the system. Let $X$ denote the number in the system at the moment that customer departs. Find the probability mass function of $X$.
+
+\begin{answerbox}
+\textbf{解：}
+
+令 $T$ 表示该顾客在系统中的总滞留时间，包括等待时间和自己的服务时间。
+当 $n\ge 2$ 时，令 $T_1$ 表示正在接受服务的顾客的剩余服务时间，
+$T_2,\ldots,T_{n-1}$ 表示其余排在前面的顾客的服务时间，$T_n$ 表示该顾客自己的服务时间。
+由指数分布的无记忆性，$T_1$ 仍服从速率为 $\mu$ 的指数分布。
+在服务时间相互独立且独立于到达过程的通常假设下，
+这些时间相互独立，故
+$$
+T=\sum_{i=1}^{n}T_i\sim\operatorname{Gamma}(n,\mu),
+\qquad
+f_T(t)=\frac{\mu^n}{(n-1)!}t^{n-1}e^{-\mu t},\quad t>0,
+$$
+其中 $\mu$ 为速率参数。当 $n=1$ 时，该顾客直接接受服务，$T=T_1$，上述结论仍成立。
+
+该顾客离开时，原先排在他前面的顾客均已离开；在他之后到达的顾客由于先到先服务，均尚未离开。
+因此，$X$ 正好是在时间 $T$ 内新到达的顾客人数。
+后来的到达不会影响该顾客的总滞留时间，故
+$$
+X\mid T=t\sim\operatorname{Poisson}(\lambda t).
+$$
+对连续随机变量 $T$ 使用全概率公式，得到
+$$
+\begin{aligned}
+P(X=k)
+&=\int_0^{\infty}P(X=k\mid T=t)f_T(t)\,dt\\
+&=\int_0^{\infty}\frac{(\lambda t)^k}{k!}e^{-\lambda t}
+\frac{\mu^n t^{n-1}}{(n-1)!}e^{-\mu t}\,dt\\
+&=\frac{\lambda^k\mu^n}{k!(n-1)!}
+\int_0^{\infty}t^{k+n-1}e^{-(\lambda+\mu)t}\,dt.
+\end{aligned}
+$$
+令 $u=(\lambda+\mu)t$，则 $dt=du/(\lambda+\mu)$，从而
+$$
+\begin{aligned}
+\int_0^{\infty}t^{k+n-1}e^{-(\lambda+\mu)t}\,dt
+&=\frac{1}{(\lambda+\mu)^{k+n}}
+\int_0^{\infty}u^{k+n-1}e^{-u}\,du\\
+&=\frac{\Gamma(k+n)}{(\lambda+\mu)^{k+n}}
+=\frac{(k+n-1)!}{(\lambda+\mu)^{k+n}}.
+\end{aligned}
+$$
+所以 $X$ 的概率质量函数为
+$$
+P(X=k)=\binom{k+n-1}{k}
+\left(\frac{\lambda}{\lambda+\mu}\right)^k
+\left(\frac{\mu}{\lambda+\mu}\right)^n,
+\qquad k=0,1,2,\ldots.
+$$
+这对应于成功概率为 $\mu/(\lambda+\mu)$、取得第 $n$ 次成功之前的失败次数的负二项分布。
+\end{answerbox}
+
+\section{Problem 59}
+
+Cars pass an intersection according to a Poisson process with rate $\lambda$. There are 4 types of cars, and each passing car is, independently, type $i$ with probability $p_i$, $\sum_{i=1}^{4} p_i=1$.
+
+\subsection{}
+
+Find the probability that at least one of each of car types 1, 2, 3 but none of type 4 have passed by time $t$.
+\begin{answerbox}
+\textbf{解：}
+
+令 $N_j(t)$ 表示截至时刻 $t$ 经过路口的第 $j$ 类车的数量。
+由泊松过程的独立分类性质，
+$$
+N_j(t)\sim\operatorname{Poisson}(\lambda p_jt),\qquad j=1,2,3,4,
+$$
+且这四个计数相互独立。题目要求前三类车每一类都至少出现一辆，同时第4类车没有出现。因此，所求概率为
+$$
+\begin{aligned}
+&P(N_1(t)\ge1,N_2(t)\ge1,N_3(t)\ge1,N_4(t)=0)\\
+&\quad=\prod_{j=1}^3[1-P(N_j(t)=0)]\,P(N_4(t)=0)\\
+&\quad=e^{-\lambda p_4t}\prod_{j=1}^3(1-e^{-\lambda p_jt}).
+\end{aligned}
+$$
+\end{answerbox}
+
+\subsection{}
+
+Given that exactly 6 cars of type 1 or 2 passed by time $t$, find the probability that 4 of them were type 1.
+
+\begin{answerbox}
+\textbf{解：}
+
+在已知有6辆第1类或第2类车通过路口的条件下，每辆车属于第1类的概率为 $p_1/(p_1+p_2)$。
+因此，第1类车的数量服从二项分布
+$$
+N_1(t)\mid N_1(t)+N_2(t)=6
+\sim\operatorname{Binomial}\left(6,\frac{p_1}{p_1+p_2}\right).
+$$
+所以，所求概率为
+$$
+\begin{aligned}
+P(N_1(t)=4\mid N_1(t)+N_2(t)=6)
+&=\binom64\left(\frac{p_1}{p_1+p_2}\right)^4
+\left(\frac{p_2}{p_1+p_2}\right)^2\\
+&=\binom64\frac{p_1^4p_2^2}{(p_1+p_2)^6}.
+\end{aligned}
+$$
+这里假设条件事件具有正概率，特别地 $p_1+p_2>0$。
+\end{answerbox}
+
+\section{Problem 68}
+
+Suppose that electrical shocks having random amplitudes occur at times distributed according to a Poisson process $\{N(t), t \ge 0\}$ with rate $\lambda$. Suppose that the amplitudes of the successive shocks are independent both of other amplitudes and of the arrival times of shocks, and also that the amplitudes have distribution $F$ with mean $\mu$. Suppose also that the amplitude of a shock decreases with time at an exponential rate $\alpha$, meaning that an initial amplitude $A$ will have value $Ae^{-\alpha x}$ after an additional time $x$ has elapsed. Let $A(t)$ denote the sum of all amplitudes at time $t$. That is,
+$$
+A(t)=\sum_{i=1}^{N(t)} A_i e^{-\alpha(t-S_i)}
+$$
+where $A_i$ and $S_i$ are the initial amplitude and the arrival time of shock $i$.
+
+
+\subsection{}
+
+Find $E[A(t)]$ by conditioning on $N(t)$.
+
+\begin{answerbox}
+\textbf{解：}
+
+由全期望公式，
+$$
+E[A(t)]=E\big[E[A(t)\mid N(t)]\big].
+$$
+给定 $N(t)=n$，由于初始幅度 $A_i$ 独立于到达过程，且 $E[A_i]=\mu$，有
+$$
+\begin{aligned}
+E[A(t)\mid N(t)=n]
+&=E\left[\sum_{i=1}^n A_i e^{-\alpha(t-S_i)}\,\middle|\,N(t)=n\right]\\
+&=\mu\sum_{i=1}^n E[e^{-\alpha(t-S_i)}\mid N(t)=n].
+\end{aligned}
+$$
+令 $U_1,\ldots,U_n$ 为独立的 $\operatorname{Uniform}(0,t)$ 随机变量，
+$U_{(1)},\ldots,U_{(n)}$ 为其排序后的次序统计量。由泊松过程的条件到达时刻性质，
+$$
+(S_1,\ldots,S_n)\mid N(t)=n\overset{d}{=}(U_{(1)},\ldots,U_{(n)}).
+$$
+排序不会改变所有项的和，因此当 $t>0$、$\alpha>0$ 时，
+$$
+\begin{aligned}
+E[A(t)\mid N(t)=n]
+&=\mu\sum_{i=1}^n E[e^{-\alpha(t-U_{(i)})}]\\
+&=\mu\sum_{i=1}^n E[e^{-\alpha(t-U_i)}]\\
+&=\mu\sum_{i=1}^n\int_0^t e^{-\alpha(t-u)}\frac1t\,du\\
+&=\frac{n\mu}{\alpha t}(1-e^{-\alpha t}).
+\end{aligned}
+$$
+当 $n=0$ 时，空和为0，上述条件期望公式仍成立。
+再利用 $E[N(t)]=\lambda t$，得到
+$$
+\begin{aligned}
+E[A(t)]
+&=\frac{\mu}{\alpha t}(1-e^{-\alpha t})E[N(t)]\\
+&=\frac{\lambda\mu}{\alpha}(1-e^{-\alpha t}).
+\end{aligned}
+$$
+当 $\alpha=0$ 时，幅度不衰减，$E[A(t)]=\lambda\mu t$；当 $t=0$ 时，$E[A(0)]=0$。
+\end{answerbox}
+
+\subsection{}
+
+Without any computations, explain why $A(t)$ has the same distribution as does $D(t)$ of Example 5.21.
+
+\begin{answerbox}
+\textbf{解：}
+
+本题中，初始幅度 $A_i$ 从到达时刻 $S_i$ 起按指数规律衰减，到时刻 $t$ 剩余的幅度为 $A_i e^{-\alpha(t-S_i)}$。
+例5.21中的折现赔付总额为
+$$
+D(t)=\sum_{i=1}^{N(t)}C_i e^{-\alpha S_i},
+$$
+其中赔付金额 $C_i$ 与初始幅度 $A_i$ 同分布于 $F$，且各自独立同分布并独立于到达过程。
+
+固定 $t$，给定 $N(t)=n$，无序到达点集与 $n$ 个独立的 $\operatorname{Uniform}(0,t)$ 随机变量构成的点集同分布。
+将区间左右翻转，即将每个点 $S_i$ 变成 $t-S_i$，不会改变这个无序点集的联合分布。
+由于各点附带的初始幅度独立同分布且独立于到达时刻，随点一起翻转并重新排列后，带有幅度的点集的分布也不变。
+因此，以 $t-S_i$ 为衰减时间的总幅度和以 $S_i$ 为折现时间的总赔付，在给定 $N(t)=n$ 时同分布。
+
+这一结论对所有 $n\ge0$ 均成立，去掉条件后，对于每个固定的 $t$，
+$$
+A(t)\overset{d}{=}D(t).
+$$
+这是分布相同，并不表示二者在每次随机试验中的取值相等。
+\end{answerbox}
+
+\section{Problem 63}
+
+Consider an infinite server queuing system in which customers arrive in accordance with a Poisson process with rate $\lambda$ and where the service distribution is exponential with rate $\mu$. Let $X(t)$ denote the number of customers in the system at time $t$. Find
+\begin{enumerate}[label=(\alph*),leftmargin=2em]
+  \item $E[X(t+s) \mid X(s)=n]$;
+  \item $\operatorname{Var}(X(t+s) \mid X(s)=n)$.
+\end{enumerate}
+
+
+\subsection{}
+
+$E[X(t+s) \mid X(s)=n]$;
+
+\begin{answerbox}
+\textbf{解：}
+
+无限服务台意味着每位顾客到达后立即开始服务。令 $O$ 为时刻 $s$ 已在系统中且在 $s+t$ 仍未离开的老顾客人数，
+$Y$ 为在 $(s,s+t]$ 内到达且在 $s+t$ 仍未完成服务的新顾客人数，则 $X(s+t)=O+Y$。
+
+给定 $X(s)=n$，由指数分布的无记忆性，各位老顾客的剩余服务时间仍相互独立且服从 $\operatorname{Exp}(\mu)$。
+每人再过 $t$ 时间仍未离开的概率为 $e^{-\mu t}$，故
+$$
+O\mid X(s)=n\sim\operatorname{Binomial}(n,e^{-\mu t}),
+\qquad E[O\mid X(s)=n]=ne^{-\mu t}.
+$$
+
+下面对新到达人数条件化。令 $N$ 为 $(s,s+t]$ 内的总到达人数，则 $N\sim\operatorname{Poisson}(\lambda t)$，且独立于 $X(s)$。
+给定 $N=k$，无序到达时刻相对于 $s$ 的偏移可表示为独立的 $U_1,\ldots,U_k\sim\operatorname{Uniform}(0,t)$；
+每个点附带的服务时间 $V_i\sim\operatorname{Exp}(\mu)$ 相互独立，并独立于这些到达时刻。
+排序不影响留下来的总人数，因此
+$$
+Y\mid N=k = \sum_{i=1}^k\mathbf{1}_{\{V_i>t-S_i\}} \overset{d}{=}\sum_{i=1}^k\mathbf{1}_{\{V_i>t-U_i\}}.
+$$
+注意，留下来要求服务时间大于已经接受服务的时间，而不是小于它。
+当 $t>0$ 时，每位新顾客留到观察时刻的概率为
+$$
+\begin{aligned}
+q(t)&=\frac1t\int_0^t P(V_i>t-u)\,du\\
+&=\frac1t\int_0^t e^{-\mu(t-u)}\,du
+=\frac{1-e^{-\mu t}}{\mu t}.
+\end{aligned}
+$$
+上述指标变量相互独立，故 $Y\mid N=k\sim\operatorname{Binomial}(k,q(t))$。
+由全期望公式，
+$$
+E[Y]=E[Nq(t)]=\lambda t q(t)=\frac{\lambda}{\mu}(1-e^{-\mu t}).
+$$
+未来的到达及服务时间独立于时刻 $s$ 的系统状态，因此 $E[Y\mid X(s)=n]=E[Y]$。所以
+$$
+E[X(s+t)\mid X(s)=n]
+=ne^{-\mu t}+\frac{\lambda}{\mu}(1-e^{-\mu t}).
+$$
+当 $t=0$ 时，$Y=0$，结果为 $n$，与上述公式一致。
+
+\end{answerbox}
+
+
+\subsection{}
+
+$\operatorname{Var}(X(t+s) \mid X(s)=n)$.
+
+\noindent\textbf{Hint:} Divide the customers in the system at time $t+s$ into two groups, one consisting of “old” customers and the other of “new” customers.
+
+\begin{answerbox}
+\textbf{解：}
+
+给定 $X(s)=n$，老顾客的剩余服务时间与未来到达及新顾客的服务时间独立，故 $O$ 与 $Y$ 条件独立。
+由第一问的二项分布，
+$$
+\operatorname{Var}(O\mid X(s)=n)=ne^{-\mu t}(1-e^{-\mu t}).
+$$
+对新顾客人数，记 $q=q(t)$。由全方差公式及 $E[N]=\operatorname{Var}(N)=\lambda t$，
+$$
+\begin{aligned}
+\operatorname{Var}(Y)
+&=E[\operatorname{Var}(Y\mid N)]+\operatorname{Var}(E[Y\mid N])\\
+&=E[Nq(1-q)]+\operatorname{Var}(Nq)\\
+&=\lambda t q(1-q)+\lambda t q^2\\
+&=\lambda t q=\frac{\lambda}{\mu}(1-e^{-\mu t}).
+\end{aligned}
+$$
+事实上，由泊松分布的独立筛选性质，
+$$
+Y\sim\operatorname{Poisson}\left(\frac{\lambda}{\mu}(1-e^{-\mu t})\right).
+$$
+因此，两部分方差相加得到
+$$
+\boxed{\operatorname{Var}(X(s+t)\mid X(s)=n)
+=ne^{-\mu t}(1-e^{-\mu t})+\frac{\lambda}{\mu}(1-e^{-\mu t})}.
+$$
+当 $t=0$ 时，条件下人数确定为 $n$，方差为0，也与公式一致。
+
+\end{answerbox}
+
+
+\subsection{}
+
+If there is currently a single customer in the system, find the probability that the system becomes empty when that customer departs.
+
+\begin{answerbox}
+\textbf{解：}
+
+以当前时刻为时间起点，令 $T$ 为当前唯一顾客的剩余服务时间。由无记忆性，
+$$
+T\sim\operatorname{Exp}(\mu),\qquad f_T(u)=\mu e^{-\mu u},\quad u>0.
+$$
+所求的是该顾客在随机时刻 $T$ 离开后系统为空的概率。
+在此期间可以有新顾客到达，只要他们都已在该顾客离开前完成服务即可。
+
+令 $Y(u)$ 为当前时刻之后到达且在时刻 $u$ 仍未完成服务的人数。
+$T$ 独立于未来到达和新顾客的服务时间，故由前两问，给定 $T=u$，
+$$
+Y(u)\mid T=u\sim\operatorname{Poisson}\left(\frac{\lambda}{\mu}(1-e^{-\mu u})\right).
+$$
+当前顾客离开后系统为空，当且仅当 $Y(T)=0$。因此，
+$$
+P(Y(T)=0\mid T=u)
+=\exp\left[-\frac{\lambda}{\mu}(1-e^{-\mu u})\right].
+$$
+利用连续型全概率公式，
+$$
+P(Y(T)=0)=\int_0^\infty
+\exp\left[-\frac{\lambda}{\mu}(1-e^{-\mu u})\right]\mu e^{-\mu u}\,du.
+$$
+令 $v=1-e^{-\mu u}$，则 $dv=\mu e^{-\mu u}\,du$；当 $u$ 从0增至无穷时，$v$ 从0增至1。因此，
+$$
+\begin{aligned}
+P(Y(T)=0)&=\int_0^1 e^{-(\lambda/\mu)v}\,dv\\
+&=\frac{\mu}{\lambda}(1-e^{-\lambda/\mu}) .
+\end{aligned}
+$$
+上述表达式适用于 $\lambda>0$；若 $\lambda=0$，没有新顾客到达，所求概率为1，也等于该表达式在 $\lambda\to0$ 时的极限。
+
+\end{answerbox}
+
+
+\end{document}

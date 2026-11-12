@@ -1,0 +1,357 @@
+\documentclass[12pt,a4paper]{article}
+
+% ==================== 基础宏包 ====================
+\usepackage[UTF8]{ctex}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{hyperref}
+\usepackage[most]{tcolorbox}
+\usepackage{titlesec}
+ \usepackage{tabularx}
+
+\hypersetup{
+  hidelinks
+}
+
+% ==================== 颜色定义 ====================
+\definecolor{mainblue}{RGB}{34,72,112}
+\definecolor{lightblue}{RGB}{241,246,252}
+\definecolor{linegray}{RGB}{210,218,228}
+\definecolor{textgray}{RGB}{90,98,108}
+
+% ==================== 页面设置 ====================
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0.35em}
+\setlength{\headheight}{25pt}
+\linespread{1.2}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\textcolor{textgray}{\small 课程作业}}
+\rhead{\textcolor{textgray}{\small \thepage/\pageref*{LastPage}}}
+\cfoot{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{linegray}\leaders\hrule height \headrulewidth\hfill}}
+
+% ==================== 标题样式 ====================
+\titleformat{\section}
+  {\Large\bfseries\color{mainblue}}
+  {\thesection}
+  {0.6em}
+  {}
+
+\titleformat{\subsection}
+  {\large\bfseries\color{mainblue}}
+  {\thesubsection}
+  {0.6em}
+  {}
+
+\titlespacing*{\section}{0pt}{1.2em}{0.6em}
+\titlespacing*{\subsection}{0pt}{0.8em}{0.4em}
+
+% ==================== 自定义环境 ====================
+\newtcolorbox{infobox}{
+  colback=lightblue,
+  colframe=mainblue,
+  boxrule=0.6pt,
+  arc=2mm,
+  left=1.2em,
+  right=1.2em,
+  top=0.8em,
+  bottom=0.8em
+}
+
+\newtcolorbox{answerbox}{
+  colback=white,
+  colframe=linegray,
+  boxrule=0.5pt,
+  arc=2mm,
+  left=1em,
+  right=1em,
+  top=0.8em,
+  bottom=0.8em,
+  breakable
+}
+
+\newcommand{\course}{随机过程}
+\newcommand{\homeworktitle}{第3次作业}
+\newcommand{\studentname}{倪伟丰}
+\newcommand{\studentid}{2024110089}
+\newcommand{\classname}{24 大数据 2 班}
+\newcommand{\teacher}{郭珊珊}
+\newcommand{\duedate}{待填写}
+
+% ==================== 正文开始 ====================
+\begin{document}
+
+\begin{center}
+  {\Huge\bfseries\color{mainblue}\homeworktitle}\\[0.6em]
+  {\Large\course}\\[1.2em]
+  {\color{linegray}\rule{0.9\textwidth}{0.8pt}}
+\end{center}
+
+\begin{infobox}
+\begin{tabularx}{\linewidth}{>{\bfseries}p{2.2cm} X >{\bfseries}p{2.2cm} X}
+姓名 & \studentname & 学号 & \studentid \\
+班级 & \classname & 教师 & \teacher \\
+提交日期 & \duedate &  &  \\
+\end{tabularx}
+\end{infobox}
+
+
+% 题目依据用户提供的截图录入。
+% 作业序号暂按上一份作业顺延；提交日期请自行填写。
+\noindent\textcolor{textgray}{\textbf{Textbook, Chapter 4:} Exercises 6, 10, 14, 16, 18, 23.}
+
+\section{Problem 6}
+
+设两状态 Markov 链的转移概率矩阵（见例 4.2）为
+\[
+\mathbf{P}=\begin{pmatrix}
+p & 1-p\\
+1-p & p
+\end{pmatrix}.
+\]
+用数学归纳法证明
+\[
+\mathbf{P}^{(n)}=\begin{pmatrix}
+\frac12+\frac12(2p-1)^n & \frac12-\frac12(2p-1)^n\\[6pt]
+\frac12-\frac12(2p-1)^n & \frac12+\frac12(2p-1)^n
+\end{pmatrix}.
+\]
+
+\begin{answerbox}
+\textbf{证明.}
+记 $a_n = P^{(n)}_{00}$，则 $P^{(n)}_{01}=1-a_n$。要证的结论即
+\[
+a_n=\tfrac12+\tfrac12(2p-1)^n .
+\]
+
+\textbf{奠基（$n=1$）.}\ 当 $n=1$ 时，$a_1=p=\frac12+\frac12(2p-1)$，故结论对 $n=1$ 成立。
+
+\textbf{归纳.}\ 设结论对 $n$ 成立，记 $r=2p-1$，则
+\[
+\mathbf{P}^{(n)}=\begin{pmatrix}\frac12+\frac12r^n & \frac12-\frac12r^n\\[4pt]
+\frac12-\frac12r^n & \frac12+\frac12r^n\end{pmatrix}.
+\]
+由 Chapman--Kolmogorov 方程 $\mathbf{P}^{(n+1)}=\mathbf{P}^{(n)}\mathbf{P}$，
+\begin{align*}
+P^{(n+1)}_{00}&=P^{(n)}_{00}P_{00}+P^{(n)}_{01}P_{10}
+=\Big(\tfrac12+\tfrac12r^n\Big)p+\Big(\tfrac12-\tfrac12r^n\Big)(1-p)\\
+&=(1-p)+\Big(\tfrac12+\tfrac12r^n\Big)(2p-1)
+=\tfrac12+\tfrac12r^{n+1} ,
+\end{align*}
+其中用到 $2(1-p)=1-r$ 与 $2p=1+r$。又 $P^{(n+1)}_{01}=1-P^{(n+1)}_{00}=\frac12-\frac12r^{n+1}$，另一行由对称性相同。
+由数学归纳法，结论对一切 $n\ge1$ 成立。$\blacksquare$
+\end{answerbox}
+
+\section{Problem 10}
+
+在例 4.3 中，Gary 目前心情愉快。求他在接下来的三天中，每一天都不处于低落心情的概率。
+
+\textbf{例 4.3（题目背景）.}\ Gary 每天的心情为愉快（$C$）、一般（$S$）或低落（$G$）。若今天愉快，则明天的心情分别为 $C,S,G$ 的概率为 $0.5,0.4,0.1$；若今天心情一般，则相应概率为 $0.3,0.4,0.3$；若今天心情低落，则相应概率为 $0.2,0.3,0.5$。
+令 $X_n$ 表示第 $n$ 天的心情，则 $\{X_n:n\ge0\}$ 为三状态 Markov 链，其中状态 $0=C$、$1=S$、$2=G$，转移概率矩阵为
+\[
+\mathbf{P}=\begin{pmatrix}
+0.5&0.4&0.1\\
+0.3&0.4&0.3\\
+0.2&0.3&0.5
+\end{pmatrix}.
+\]
+
+\begin{answerbox}
+\textbf{解.}\ 记“前三天（第 $1,2,3$ 天）每天都不低落”为事件 $A$，已知第 $0$ 天状态为 $C$。逐天递推：
+
+第一天不低落的概率：
+\[
+P(X_1\ne G)=0.5+0.4=0.9 .
+\]
+前两天均不低落：对 $X_1\in\{C,S\}$ 求和，
+\[
+P(X_1\ne G,\,X_2\ne G)=0.5\times0.9+0.4\times0.7=0.73 .
+\]
+此时第二天的状态分布为
+\[
+P(X_2=C)=0.5\times0.5+0.4\times0.3=0.37,\qquad
+P(X_2=S)=0.5\times0.4+0.4\times0.4=0.36 .
+\]
+第三天也不低落：
+\[
+P(A)=0.37\times0.9+0.36\times0.7=\boxed{0.585} .
+\]
+即 Gary 接下来三天每天都不处于低落心情的概率为 $0.585$。
+\end{answerbox}
+
+\section{Problem 14}
+
+指出下列 Markov 链的各个互通类，并判断它们是暂态的还是常返的：
+\[
+\mathbf{P}_1=\begin{pmatrix}
+0&\frac12&\frac12\\[4pt]
+\frac12&0&\frac12\\[4pt]
+\frac12&\frac12&0
+\end{pmatrix},
+\qquad
+\mathbf{P}_2=\begin{pmatrix}
+0&0&0&1\\
+0&0&0&1\\
+\frac12&\frac12&0&0\\[4pt]
+0&0&1&0
+\end{pmatrix},
+\]
+\[
+\mathbf{P}_3=\begin{pmatrix}
+\frac12&0&\frac12&0&0\\[4pt]
+\frac14&\frac12&\frac14&0&0\\[4pt]
+\frac12&0&\frac12&0&0\\[4pt]
+0&0&0&\frac12&\frac12\\[4pt]
+0&0&0&\frac12&\frac12
+\end{pmatrix},
+\qquad
+\mathbf{P}_4=\begin{pmatrix}
+\frac14&\frac34&0&0&0\\[4pt]
+\frac12&\frac12&0&0&0\\[4pt]
+0&0&1&0&0\\[4pt]
+0&0&\frac13&\frac23&0\\[4pt]
+1&0&0&0&0
+\end{pmatrix}.
+\]
+
+\begin{answerbox}
+\textbf{解.}
+
+\textbf{(1)}
+$P_1$ 中三个状态两两可达（互通），因此只有一个互通类 $\{0,1,2\}$，链不可约；
+所有状态属于同一个有限不可约闭类，故所有状态都是常返的。
+
+\textbf{(2)}
+$P_2$ 中 $1\to4\to3\to\{1,2\}$，且 $2\to4$，四个状态 $\{0,1,2,3\}$ 两两可达，即只有一个互通类，链不可约；
+故所有状态都是常返的。
+
+\textbf{(3)}
+在 $P_3$ 中，状态 $\{0, 2\}$ 相互可达，且从它们出发不能到达其他状态（$P_{01}=P_{03}=P_{04}=0$，$P_{21}=P_{23}=P_{24}=0$），所以 $\{0, 2\}$ 是闭的互通类，这两个状态是常返的。
+状态 1 可到达闭类 $\{0, 2\}$，而一旦进入 $\{0, 2\}$ 就无法返回状态 1，故 $f_{11}<1$，状态 1 是暂态。
+在 $P_3$ 中，状态 $\{3, 4\}$ 相互可达且从它们出发不能离开该集合，所以 $\{3, 4\}$ 也是闭的互通类，状态 $\{3, 4\}$ 是常返的。
+
+\textbf{(4)}
+在 $P_4$ 中，状态 $\{0, 1\}$ 相互可达且不能离开，所以 $\{0, 1\}$ 是闭的互通类，状态 $\{0, 1\}$ 是常返的。
+状态 2 满足 $P_{22}=1$，是吸收态，因此 $\{2\}$ 是闭集，状态 2 是常返的。
+状态 4 以概率 1 转移到状态 0（$P_{40}=1$），会进入闭类 $\{0, 1\}$ 而无法返回状态 4，故 $\{4\}$ 不是闭集，状态 4 是暂态。
+状态 3 以概率 $1/3$ 转移到状态 2、以概率 $2/3$ 留在自身；一旦离开状态 3 进入闭类 $\{2\}$ 就无法返回，故 $\{3\}$ 不是闭集，状态 3 是暂态。
+\end{answerbox}
+
+\section{Problem 16*}
+
+证明：若状态 $i$ 是常返的，且状态 $i$ 与状态 $j$ 不互通，则 $P_{ij}=0$。
+这意味着，一旦过程进入一个常返类，就永远不会离开该类。因此，常返类也常被称为\textbf{闭类}（closed class）。
+
+\begin{answerbox}
+\textbf{证明.}
+用反证法。设 $i$ 常返，且 $i$ 与 $j$ 不互通，假设 $P_{ij}>0$。$P_{ij}>0$ 说明 $i$ 可达 $j$；由不互通可知 $j$ 不能到达 $i$（否则 $i\to j$ 与 $j\to i$ 同时成立，即二者互通）。
+
+记 $\tau_j=\min\{n\ge0:X_n=j\}$。由 $P_{ij}>0$ 得
+\[
+P(\tau_j<\infty\mid X_0=i)\ge P_{ij}>0 .
+\]
+在事件 $\{\tau_j<\infty\}$ 上，链在时刻 $\tau_j$ 到达状态 $j$；此后由于 $j$ 不可达 $i$，链永远不能再回到 $i$，因此在该事件上链访问 $i$ 的次数有限。
+
+而 $i$ 常返意味着从 $i$ 出发以概率 $1$ 返回 $i$，进而是无穷多次返回 $i$。于是
+\[
+1=P(\text{无穷多次访问 }i)\le 1-P(\tau_j<\infty)<1,
+\]
+矛盾。故假设不成立，即 $P_{ij}=0$。$\blacksquare$
+
+这说明：常返态的可达域就是它所在的常（返）闭类，从常返类出发永远不能离开该类，因此常返类也称为\textbf{闭类}（closed class）。
+\end{answerbox}
+
+硬币 1 出现正面的概率为 $0.6$，硬币 2 出现正面的概率为 $0.5$。连续抛掷同一枚硬币，直到出现反面；此时将该硬币放到一旁，改为抛掷另一枚硬币，依此重复。
+\begin{enumerate}[label=(\alph*),leftmargin=2em,itemsep=4pt]
+\item 长期来看，使用硬币 1 的抛掷次数占总抛掷次数的比例是多少？
+\item 若从硬币 1 开始抛掷，第五次抛掷使用硬币 2 的概率是多少？
+\item 长期来看，出现正面的抛掷次数占总抛掷次数的比例是多少？
+\end{enumerate}
+
+\begin{answerbox}
+\textbf{解.}
+以“当前使用的硬币”为状态建立两状态 Markov 链（状态 $0=$ 硬币 1，$1=$ 硬币 2）：抛出正面则继续用同一硬币，抛出反面则换硬币，故
+\[
+\mathbf{P}=\begin{pmatrix}0.6&0.4\\[2pt]0.5&0.5\end{pmatrix}.
+\]
+
+\textbf{(a)}\ 平稳分布：$\pi\mathbf{P}=\pi$ 给出 $0.4\pi_0=0.5\pi_1$，结合 $\pi_0+\pi_1=1$ 得
+\[
+\pi_0=\frac59,\qquad \pi_1=\frac49 .
+\]
+链有限不可约，故长期来看使用硬币 1 的抛掷比例收敛于 $\pi_0=\dfrac59\approx0.556$。
+
+\textbf{(b)}\ 设 $p_2^{(n)}$ 为从状态 0 出发、经过 $n$ 次抛掷后处于状态 1 的概率；由转移矩阵特征值为 $1$ 与 $0.1$，
+\[
+p_2^{(n)}=\frac49-\frac49\,(0.1)^n .
+\]
+（验证 $n=1$：$\frac49(0.9)=0.4$，与直接计算一致。）第五次抛掷对应 $n=4$：
+\[
+p_2^{(4)}=\frac49\big(1-10^{-4}\big)=\frac49-\frac{1}{22500}\approx 0.4444 .
+\]
+
+\textbf{(c)}\ 用更新周期：一个周期由一段硬币 1 的连续抛掷（每掷反面概率 $0.4$，期望长度 $1/0.4=2.5$）接一段硬币 2 的连续抛掷（反面概率 $0.5$，期望长度 $2$）构成。每周期期望正面数
+\[
+2.5\times0.6+2\times0.5=2.5,
+\]
+每周期期望总抛掷数为 $4.5$，故正面比例长期为 $\dfrac{2.5}{4.5}=\dfrac59\approx0.556$。（检验：硬币 1 掷数比例 $2.5/4.5=5/9$，与 (a) 一致。）
+\end{answerbox}
+
+\section{Problem 23}
+
+在天气良好的年份，风暴次数服从均值为 $1$ 的 Poisson 分布；在天气恶劣的年份，风暴次数服从均值为 $3$ 的 Poisson 分布。假设任意一年的天气状况对过去年份的依赖仅通过前一年的天气状况体现。天气良好的年份之后，下一年天气良好或恶劣的概率相等；天气恶劣的年份之后，下一年天气恶劣的概率是天气良好的概率的两倍。已知去年（记为第 $0$ 年）天气良好。
+\begin{enumerate}[label=(\alph*),leftmargin=2em,itemsep=4pt]
+\item 求未来两年（即第 $1$ 年和第 $2$ 年）风暴总次数的期望。
+\item 求第 $3$ 年没有风暴的概率。
+\item 求长期来看每年风暴次数的平均值。
+\item 求长期来看没有风暴的年份所占的比例。
+\end{enumerate}
+
+\begin{answerbox}
+\textbf{解.}\ 令 $X_n\in\{G,B\}$ 表示第 $n$ 年天气（好/坏），则
+\[
+\mathbf{P}=\begin{pmatrix}0.5&0.5\\[2pt]1/3&2/3\end{pmatrix}
+\qquad(\text{状态 }0=G,\ 1=B),
+\]
+且给定当年天气时，风暴次数 $N_n$ 独立地服从 $\mathrm{Poisson}(1)$（$G$ 年）或 $\mathrm{Poisson}(3)$（$B$ 年）。已知 $X_0=G$。
+
+\textbf{(a)}\ $P(X_1=G)=P(X_1=B)=0.5$，故
+\[
+E[N_1]=0.5\times1+0.5\times3=2 .
+\]
+又 $P(X_2=G)=0.5\times0.5+0.5\times\frac13=\frac{5}{12}$，$P(X_2=B)=\frac{7}{12}$，故
+\[
+E[N_2]=\frac{5}{12}\times1+\frac{7}{12}\times3=\frac{13}{6} .
+\]
+于是未来两年风暴总次数的期望为
+\[
+E[N_1+N_2]=2+\frac{13}{6}=\dfrac{25}{6}\approx 4.167 .
+\]
+
+\textbf{(b)}\ $P(X_3=G)=\frac{5}{12}\times0.5+\frac{7}{12}\times\frac13=\frac{29}{72}$，$P(X_3=B)=\frac{43}{72}$。由全概率公式（天气与风暴数独立）：
+\[
+P(N_3=0)=\frac{29}{72}e^{-1}+\frac{43}{72}e^{-3}\approx 0.1779 .
+\]
+
+\textbf{(c)}\ 链有限不可约，平稳分布满足 $\pi_G=0.5\pi_G+\frac13\pi_B$，得 $\pi_B=\frac32\pi_G$，故 $\pi_G=\frac25$，$\pi_B=\frac35$。长期平均每年风暴次数为
+\[
+\pi_G\cdot1+\pi_B\cdot3=\frac25+\frac95=2.2 .
+\]
+
+\textbf{(d)}\ 长期来看无风暴年份的比例为
+\[
+\pi_G e^{-1}+\pi_B e^{-3}=\frac25 e^{-1}+\frac35 e^{-3}\approx 0.1770 .
+\]
+\end{answerbox}
+
+\end{document}

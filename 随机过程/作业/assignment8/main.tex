@@ -1,0 +1,245 @@
+% !TeX program = xelatex
+\documentclass[12pt,a4paper]{article}
+
+% ==================== 基础宏包 ====================
+\usepackage[UTF8,fontset=fandol]{ctex} % 使用 TeX Live 自带字体，便于跨环境编译。
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{hyperref}
+\usepackage[most]{tcolorbox}
+\usepackage{titlesec}
+\usepackage{tabularx}
+
+\hypersetup{
+  hidelinks
+}
+
+% ==================== 颜色定义 ====================
+\definecolor{mainblue}{RGB}{34,72,112}
+\definecolor{lightblue}{RGB}{241,246,252}
+\definecolor{linegray}{RGB}{210,218,228}
+\definecolor{textgray}{RGB}{90,98,108}
+
+% ==================== 页面设置 ====================
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0.35em}
+\setlength{\headheight}{25pt}
+\linespread{1.2}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\textcolor{textgray}{\small 课程作业}}
+\rhead{\textcolor{textgray}{\small \thepage/\pageref*{LastPage}}}
+\cfoot{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{linegray}\leaders\hrule height \headrulewidth\hfill}}
+
+% ==================== 标题样式 ====================
+\titleformat{\section}
+  {\Large\bfseries\color{mainblue}}
+  {\thesection}
+  {0.6em}
+  {}
+
+\titleformat{\subsection}
+  {\large\bfseries\color{mainblue}}
+  {\thesubsection}
+  {0.6em}
+  {}
+
+\titlespacing*{\section}{0pt}{1.2em}{0.6em}
+\titlespacing*{\subsection}{0pt}{0.8em}{0.4em}
+
+% ==================== 自定义环境 ====================
+\newtcolorbox{infobox}{
+  colback=lightblue,
+  colframe=mainblue,
+  boxrule=0.6pt,
+  arc=2mm,
+  left=1.2em,
+  right=1.2em,
+  top=0.8em,
+  bottom=0.8em
+}
+
+\newtcolorbox{answerbox}{
+  colback=white,
+  colframe=linegray,
+  boxrule=0.5pt,
+  arc=2mm,
+  left=1em,
+  right=1em,
+  top=0.8em,
+  bottom=0.8em,
+  breakable
+}
+
+\newcommand{\course}{随机过程}
+\newcommand{\homeworktitle}{第8次作业}
+\newcommand{\studentname}{倪伟丰}
+\newcommand{\studentid}{2024110089}
+\newcommand{\classname}{24 大数据 2 班}
+\newcommand{\teacher}{郭珊珊}
+\newcommand{\duedate}{11月3日} % 在此填写提交日期
+
+% ==================== 正文开始 ====================
+\begin{document}
+
+\begin{center}
+  {\Huge\bfseries\color{mainblue}\homeworktitle}\\[0.6em]
+  {\Large\course}\\[1.2em]
+  {\color{linegray}\rule{0.9\textwidth}{0.8pt}}
+\end{center}
+
+\begin{infobox}
+\begin{tabularx}{\linewidth}{>{\bfseries}p{2.2cm} X >{\bfseries}p{2.2cm} X}
+姓名 & \studentname & 学号 & \studentid \\
+班级 & \classname & 教师 & \teacher \\
+提交日期 & \duedate &  &  \\
+\end{tabularx}
+\end{infobox}
+
+\section{Problem 63}
+
+Consider an infinite server queuing system in which customers arrive in accordance with a Poisson process with rate $\lambda$, and where the service distribution is exponential with rate $\mu$. Let $X(t)$ denote the number of customers in the system at time $t$. Find
+
+\subsection*{(a)}
+
+$E[X(t+s)\mid X(s)=n]$;
+
+\begin{answerbox}
+\textbf{解：}
+
+采用通常排队模型假设：各顾客的服务时间相互独立，且独立于到达过程。将 $s+t$ 时刻仍在系统中的顾客分为两类：第 I 类是在 $s$ 时刻已在系统中的顾客，第 II 类是在 $(s,s+t)$ 内到达的顾客。分别记两类人数为 $X_I(s+t)$ 和 $X_{II}(s+t)$。
+
+对于第 I 类，给定 $X(s)=n$，由指数分布的无记忆性，每位顾客的剩余服务时间都服从 $\operatorname{Exp}(\mu)$，且相互独立。因此每位顾客在 $s+t$ 时刻仍未完成服务的概率为 $e^{-\mu t}$，从而
+$$
+X_I(s+t)\mid X(s)=n\sim\operatorname{Bin}(n,e^{-\mu t}).
+$$
+
+对于第 II 类，在绝对时刻 $u\in(s,s+t)$ 到达的顾客，至 $s+t$ 时刻仍未完成服务的概率为 $e^{-\mu(s+t-u)}$。由泊松过程的时变独立分类，第 II 类人数服从泊松分布。令 $v=u-s$，其均值为
+$$
+m(t)=\lambda\int_s^{s+t}e^{-\mu(s+t-u)}\,du
+=\lambda\int_0^t e^{-\mu(t-v)}\,dv
+=\frac{\lambda}{\mu}(1-e^{-\mu t}).
+$$
+因此 $X_{II}(s+t)\sim\operatorname{Po}(m(t))$。
+未来的到达及其服务时间与 $X(s)$ 独立，故给定 $X(s)=n$ 后，$X_{II}(s+t)$ 的分布不变。于是
+$$
+\begin{aligned}
+E[X(s+t)\mid X(s)=n]
+&=E[X_I(s+t)\mid X(s)=n]+E[X_{II}(s+t)\mid X(s)=n]\\
+&=ne^{-\mu t}+\frac{\lambda}{\mu}(1-e^{-\mu t}).
+\end{aligned}
+$$
+
+\end{answerbox}
+
+\subsection*{(b)}
+
+$\operatorname{Var}(X(t+s)\mid X(s)=n)$.
+
+\noindent\textbf{Hint:} Divide the customers in the system at time $t+s$ into two groups, one consisting of ``old'' customers and the other of ``new'' customers.
+
+\begin{answerbox}
+\textbf{解：}
+
+给定 $X(s)=n$ 后，第 I 类人数由原有顾客的剩余服务时间决定；第 II 类人数由 $s$ 之后的到达及其服务时间决定。由泊松过程的独立增量和各顾客服务时间的独立性，两类人数条件独立。因此
+$$
+\begin{aligned}
+\operatorname{Var}(X(s+t)\mid X(s)=n)
+&=\operatorname{Var}(X_I(s+t)\mid X(s)=n)
+ +\operatorname{Var}(X_{II}(s+t)\mid X(s)=n)\\
+&=ne^{-\mu t}(1-e^{-\mu t})
+ +\frac{\lambda}{\mu}(1-e^{-\mu t}).
+\end{aligned}
+$$
+
+\end{answerbox}
+
+\subsection*{(c)}
+
+If there is currently a single customer in the system, find the probability that the system becomes empty when that customer departs.
+
+\begin{answerbox}
+\textbf{解：}
+
+以当前时刻为 $0$，记系统中唯一顾客的剩余服务时间为 $T$。由指数分布的无记忆性，$T\sim\operatorname{Exp}(\mu)$，且 $T$ 与此后的到达过程及新顾客的服务时间独立。
+
+给定 $T=t$，该顾客离开时系统为空，当且仅当 $(0,t)$ 内到达的顾客在 $t$ 时刻都已完成服务。由 (a) 中第 II 类人数的分布，这一条件概率为
+$$
+P\{X_{II}(t)=0\mid T=t\}
+=\exp\left\{-\frac{\lambda}{\mu}(1-e^{-\mu t})\right\}
+$$
+对 $T$ 使用全概率公式，并令 $x=1-e^{-\mu t}$，则 $dx=\mu e^{-\mu t}\,dt$，积分端点由 $t=0,\infty$ 分别变为 $x=0,1$。当 $\lambda>0$ 时，所求概率为
+$$
+\begin{aligned}
+P\{X_{II}(T)=0\}
+&=\int_0^\infty \exp\left[-\frac{\lambda}{\mu}(1-e^{-\mu t})\right]\mu e^{-\mu t}\,dt\\
+&=\int_0^1 e^{-\frac{\lambda}{\mu}x}\,dx
+=\frac{\mu}{\lambda}\left(1-e^{-\frac{\lambda}{\mu}}\right).
+\end{aligned}
+$$
+当 $\lambda=0$ 时，没有新顾客到达，所求概率为 $1$，也等于上式在 $\lambda\to0$ 时的极限。
+
+\end{answerbox}
+
+\section{Problem 66}
+
+Policyholders of a certain insurance company have accidents at times distributed according to a Poisson process with rate $\lambda$. The amount of time from when the accident occurs until a claim is made has distribution $G$.
+
+\subsection*{(a)}
+
+\noindent Find the probability there are exactly $n$ incurred but as yet unreported claims at time $t$.
+
+\begin{answerbox}
+\textbf{解：}
+
+设各事故的报告延迟相互独立、服从分布 $G$，并且与事故到达过程独立，这是此处采用的通常模型假设。把 $(0,t)$ 内发生的事故按照 $t$ 时刻是否已报告分类。对于在 $u\in(0,t)$ 时刻发生的事故，若其报告延迟为 $C$，则它在 $t$ 时刻仍未报告的概率为
+$$
+P\{u+C>t\}=P\{C>t-u\}=1-G(t-u).
+$$
+由泊松过程的时变分类，记截至 $t$ 已发生但尚未报告的事故数为 $X(t)$，则
+$$
+X(t)\sim\operatorname{Po}\left(\lambda\int_0^t[1-G(t-u)]\,du\right).
+$$
+因此，所求概率为
+$$
+P\{X(t)=n\}
+=\frac{\left(\lambda\int_0^t[1-G(t-u)]\,du\right)^n}{n!}
+\exp\left\{-\lambda\int_0^t[1-G(t-u)]\,du\right\}
+$$
+其中 $n=0,1,\ldots$。
+
+\end{answerbox}
+
+\section{Problem 67}
+
+Satellites are launched into space at times distributed according to a Poisson process with rate $\lambda$. Each satellite independently spends a random time (having distribution $G$) in space before falling to the ground. Find the probability that none of the satellites in the air at time $t$ was launched before time $s$, where $s<t$.
+
+\begin{answerbox}
+\textbf{解：}
+
+设 $0\le s<t$，并采用卫星的停留时间与发射过程独立的通常模型假设。把 $s$ 时刻之前发射的卫星按照 $t$ 时刻是否仍在空中分类。记卫星在空中的停留时间为 $C$，其分布函数为 $G$。对于在 $u\in(0,s)$ 时刻发射的卫星，它在 $t$ 时刻仍在空中的概率为
+$$
+P\{u+C>t\}=1-G(t-u).
+$$
+各卫星的停留时间相互独立。由泊松过程的时变分类，记 $s$ 时刻之前发射且在 $t$ 时刻仍在空中的卫星数为 $X(t)$，则
+$$
+X(t)\sim\operatorname{Po}\left(\lambda\int_0^s[1-G(t-u)]\,du\right).
+$$
+题目要求的事件是 $X(t)=0$，因此所求概率为
+$$
+P\{X(t)=0\}=\exp\left\{-\lambda\int_0^s[1-G(t-u)]\,du\right\}
+$$
+
+\end{answerbox}
+
+\end{document}
