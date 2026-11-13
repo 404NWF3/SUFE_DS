@@ -23,7 +23,7 @@
 
 ## 内容规则
 
-- 构建时扫描 Git 跟踪文件，课程与学科映射由 `site/src/config.mjs` 配置。
+- 构建时扫描 Git 跟踪的课程资料，新课程目录自动收录到「其他课程」。已有课程的学科与链接沿用 `site/src/config.mjs` 中的配置。
 - Markdown 生成静态 HTML，支持 GFM、公式、目录、脚注、callout、内部链接与 Obsidian 图片嵌入。
 - 非空课程 README 显示为课程说明，不重复计入笔记数量。空白 Markdown、辅助图片、编译产物和编辑器缓存不作为独立笔记。
 - PDF、Word、PPT、表格、音频、代码、压缩包、notebook 等只提供原文件入口；`.url` 解析为外部链接。

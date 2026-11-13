@@ -7,7 +7,9 @@ export const groups = [
   { id: "economy", title: "经济与管理", symbol: "↗", color: "sand" },
   { id: "general", title: "通识与人文", symbol: "文", color: "rose" },
   { id: "exam", title: "考试与拓展", symbol: "✳", color: "lilac" },
+  { id: "other", title: "其他课程", symbol: "＋", color: "sage" },
 ];
+export const nonCourseFolders = new Set(["assets", "assistant", "docs", "site"]);
 // Course folders are the content source. No materials are copied into this directory.
 export const courseDefinitions = [
   [

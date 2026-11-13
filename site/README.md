@@ -23,8 +23,9 @@ npm --prefix site run check
 
 ## 内容维护
 
-- **添加资料**：放进已有课程目录并提交 Git，网站会在下一次构建时收录。构建扫描 `git ls-files`，未跟踪文件不发布。
-- **添加课程**：在 `src/config.mjs` 的 `courseDefinitions` 中增加文件夹、稳定 URL 标识、学科和简介。
+- **添加资料**：把文件放进课程目录，提交并推送到 `main`。GitHub Actions 会自动构建和发布，收录范围为 Git 已跟踪的资料。
+- **添加课程**：在仓库根目录新建课程文件夹，放入支持的资料后推送。网站会自动生成课程页，归入「其他课程」。学科和简介可在 `src/config.mjs` 的 `courseDefinitions` 中补充，保留现有课程 URL 标识即可延续链接。
+- **网站与项目目录**：`src/config.mjs` 中的 `nonCourseFolders` 指定不参与资料收录的顶层目录。
 - **设置首页精选**：修改 `featuredPaths` 和 `featuredCourses`；首页书页展示对应首篇精选笔记。
 - **修改页面样式**：`src/style.css`；交互在 `src/app.js`；页面模板在 `scripts/build.mjs`。
 - **课程说明**：课程根目录非空的 `README.md` 显示在课程页的说明中，不重复计为笔记。只有说明和项目链接的课程默认展开说明；子目录里的 README 作为普通 Markdown 收录。

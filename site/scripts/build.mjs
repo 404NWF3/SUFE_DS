@@ -16,6 +16,7 @@ import {
   base,
   siteUrl,
   groups,
+  nonCourseFolders,
   courseDefinitions,
   featuredPaths,
   featuredCourses,
@@ -93,23 +94,41 @@ const extras = {
   resources: [],
 };
 const byFolder = new Map(courses.map((c) => [c.folder, c]));
+const courseReadmes = new Map();
 const resources = [];
 for (const file of files) {
+  const segments = file.split("/");
+  const folder = segments.length > 1 ? segments[0] : "";
   if (
-    file.split("/").some((segment) => segment.startsWith(".")) ||
+    nonCourseFolders.has(folder) ||
+    segments.some((segment) => segment.startsWith(".")) ||
     /(?:^|\/)~\$/.test(file)
   )
     continue;
   const format = path.posix.extname(file).slice(1).toLowerCase();
-  if (
-    !allowed.has(format) ||
-    (file.split("/").length === 2 &&
-      /^readme\.md$/i.test(path.posix.basename(file)))
-  )
+  if (!allowed.has(format) || (!folder && format === "md")) continue;
+  let markdown;
+  if (format === "md") {
+    markdown = await readFile(path.join(root, file), "utf8");
+    if (!markdown.trim()) continue;
+  }
+  let course = folder ? byFolder.get(folder) : extras;
+  if (!course) {
+    course = {
+      folder,
+      id: `course-${resourceId(folder)}`,
+      group: "other",
+      description: "",
+      title: folder,
+      resources: [],
+    };
+    byFolder.set(folder, course);
+    courses.push(course);
+  }
+  if (segments.length === 2 && /^readme\.md$/i.test(segments[1])) {
+    courseReadmes.set(course, { file, markdown });
     continue;
-  let course = byFolder.get(file.split("/")[0]);
-  if (!course && !file.includes("/") && format !== "md") course = extras;
-  if (!course) continue;
+  }
   let size = null;
   try {
     size = (await stat(path.join(root, file))).size;
@@ -126,10 +145,9 @@ for (const file of files) {
     summary: "",
   };
   if (format === "md") {
-    resource.markdown = await readFile(path.join(root, file), "utf8");
-    if (!resource.markdown.trim()) continue;
-    resource.title = markdownTitle(resource.markdown, file);
-    resource.summary = textSummary(resource.markdown)
+    resource.markdown = markdown;
+    resource.title = markdownTitle(markdown, file);
+    resource.summary = textSummary(markdown)
       .replace(resource.title, "")
       .trim()
       .slice(0, 115);
@@ -205,7 +223,7 @@ function courseCard(c, number) {
   const contents = c.resources.length
     ? `${c.resources.length} 份资料${c.notes.length ? ` <b>·</b> ${c.notes.length} 篇笔记` : ""}`
     : "课程说明与项目链接";
-  return `<a class="course-card" href="${courseHref(c)}" data-group="${c.group}" data-search="${e(normalizeSearch(c.title + " " + group.title + " " + c.description))}"><div class="course-top"><span class="subject-symbol ${group.color}">${group.symbol}</span><span class="course-number">${String(number + 1).padStart(2, "0")}</span></div><h3>${e(c.title)}</h3><p>${e(c.description)}</p><div class="course-bottom"><span>${contents}</span>${icon("arrow")}</div></a>`;
+  return `<a class="course-card" href="${courseHref(c)}" data-group="${c.group}" data-search="${e(normalizeSearch(c.title + " " + group.title + " " + c.description))}"><div class="course-top"><span class="subject-symbol ${group.color}">${group.symbol}</span><span class="course-number">${String(number + 1).padStart(2, "0")}</span></div><h3>${e(c.title)}</h3>${c.description ? `<p>${e(c.description)}</p>` : ""}<div class="course-bottom"><span>${contents}</span>${icon("arrow")}</div></a>`;
 }
 function noteCard(resource, index) {
   const styles = ["sage", "sand", "blue"];
@@ -217,7 +235,7 @@ function noteCard(resource, index) {
   return `<article class="note-card"><a href="${href(resource)}" class="note-cover ${styles[index]}"><span class="cover-course">${e(resource.course.title)}<span>NO. 0${index + 1}</span></span><span class="cover-word">${coverText[index]}</span><span class="cover-line"><span>学习笔记 / READING NOTES</span>${icon("diagonal")}</span></a><div class="note-card-body">${badge("在线阅读", "green")}<h3><a href="${href(resource)}">${e(resource.title)}</a></h3><p>${e(resource.summary)}</p><div class="note-card-bottom"><span>Markdown <b>·</b> ${Math.max(1, Math.round(resource.markdown.length / 600))} 分钟阅读</span><a href="${href(resource)}" aria-label="阅读${e(resource.title)}">${icon("arrow")}</a></div></div></article>`;
 }
 function searchForm(placeholder = "搜索课程、笔记或文件名", value = "") {
-  return `<form class="search-form" action="${base}resources/" role="search"><label class="sr-only" for="search-input">搜索资料</label>${icon("search")}<input id="search-input" name="q" type="search" placeholder="${placeholder}" value="${e(value)}" autocomplete="off"><kbd aria-hidden="true">/</kbd><button type="submit" aria-label="搜索">${icon("arrow")}</button></form>`;
+  return `<form class="search-form" action="${base}resources/" role="search"><label class="sr-only" for="search-input">搜索资料</label>${icon("search")}<input id="search-input" name="q" type="search" placeholder="${e(placeholder)}" value="${e(value)}" autocomplete="off"><kbd aria-hidden="true">/</kbd><button type="submit" aria-label="搜索">${icon("arrow")}</button></form>`;
 }
 function fileRow(r, index) {
   const readable = r.format === "md";
@@ -257,7 +275,7 @@ await writePage(
     title: "课程目录",
     active: "courses",
     pathname: "courses/",
-    body: `<div class="container directory-page"><div class="page-intro"><p class="eyebrow">THE COURSE INDEX</p><h1>找到你的下一页。</h1><p>按学科浏览 ${courses.length} 个课程与专题，找到需要的笔记与资料。</p></div><div class="course-controls"><div class="filter-tabs category-tabs" aria-label="学科分类" role="group"><button class="active" data-group-filter="all" aria-pressed="true">全部</button>${groups.map((g) => `<button data-group-filter="${g.id}" aria-pressed="false">${g.title}</button>`).join("")}</div><label class="course-search">${icon("search")}<span class="sr-only">查找课程</span><input type="search" placeholder="查找课程" data-course-search></label></div><div class="course-grid directory-grid">${courses.map(courseCard).join("")}</div><p class="course-empty empty-state" hidden>没有找到这门课程，试试其他关键词。</p></div>`,
+    body: `<div class="container directory-page"><div class="page-intro"><p class="eyebrow">THE COURSE INDEX</p><h1>找到你的下一页。</h1><p>按学科浏览 ${courses.length} 个课程与专题，找到需要的笔记与资料。</p></div><div class="course-controls"><div class="filter-tabs category-tabs" aria-label="学科分类" role="group"><button class="active" data-group-filter="all" aria-pressed="true">全部</button>${groups.filter((g) => courses.some((c) => c.group === g.id)).map((g) => `<button data-group-filter="${g.id}" aria-pressed="false">${g.title}</button>`).join("")}</div><label class="course-search">${icon("search")}<span class="sr-only">查找课程</span><input type="search" placeholder="查找课程" data-course-search></label></div><div class="course-grid directory-grid">${courses.map(courseCard).join("")}</div><p class="course-empty empty-state" hidden>没有找到这门课程，试试其他关键词。</p></div>`,
   }),
 );
 
@@ -281,19 +299,10 @@ const report = {
 };
 for (const course of courses) {
   let intro = "";
-  if (course.folder && files.includes(`${course.folder}/README.md`)) {
-    const markdown = await readFile(
-      path.join(root, course.folder, "README.md"),
-      "utf8",
-    );
-    if (markdown.trim()) {
-      const rendered = await renderMarkdown(
-        markdown,
-        `${course.folder}/README.md`,
-        resolver,
-      );
-      intro = `<details class="course-intro"${course.resources.length ? "" : " open"}><summary>课程说明与补充链接 ${icon("arrow")}</summary><div class="prose">${rendered.html}</div></details>`;
-    }
+  const readme = courseReadmes.get(course);
+  if (readme) {
+    const rendered = await renderMarkdown(readme.markdown, readme.file, resolver);
+    intro = `<details class="course-intro"${course.resources.length ? "" : " open"}><summary>课程说明与补充链接 ${icon("arrow")}</summary><div class="prose">${rendered.html}</div></details>`;
   }
   await writePage(
     `courses/${course.id}`,
@@ -301,7 +310,7 @@ for (const course of courses) {
       title: course.title,
       active: "courses",
       pathname: `courses/${course.id}/`,
-      body: `<div class="container resources-page"><a class="back-link" href="${base}courses/">← 课程目录</a><div class="course-page-intro"><div><p class="eyebrow">${groupFor(course).title} / COURSE MATERIALS</p><h1>${e(course.title)}</h1><p>${e(course.description)}</p></div><span class="subject-symbol large ${groupFor(course).color}">${groupFor(course).symbol}</span></div>${intro}${course.resources.length ? searchForm(`在${course.title}中查找资料`) + library(course.resources, course.title, course) : ""}</div>`,
+      body: `<div class="container resources-page"><a class="back-link" href="${base}courses/">← 课程目录</a><div class="course-page-intro"><div><p class="eyebrow">${groupFor(course).title} / COURSE MATERIALS</p><h1>${e(course.title)}</h1>${course.description ? `<p>${e(course.description)}</p>` : ""}</div><span class="subject-symbol large ${groupFor(course).color}">${groupFor(course).symbol}</span></div>${intro}${course.resources.length ? searchForm(`在${course.title}中查找资料`) + library(course.resources, course.title, course) : ""}</div>`,
     }),
   );
 }
