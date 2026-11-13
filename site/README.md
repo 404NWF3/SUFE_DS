@@ -27,9 +27,9 @@ npm --prefix site run check
 - **添加课程**：在 `src/config.mjs` 的 `courseDefinitions` 中增加文件夹、稳定 URL 标识、学科和简介。
 - **设置首页精选**：修改 `featuredPaths` 和 `featuredCourses`；首页书页展示对应首篇精选笔记。
 - **修改页面样式**：`src/style.css`；交互在 `src/app.js`；页面模板在 `scripts/build.mjs`。
-- **课程说明**：课程根目录非空的 `README.md` 显示在课程页的折叠说明中，不重复计为笔记。
+- **课程说明**：课程根目录非空的 `README.md` 显示在课程页的说明中，不重复计为笔记。只有说明和项目链接的课程默认展开说明；子目录里的 README 作为普通 Markdown 收录。
 - **笔记附件**：支持常规 Markdown 图片与 Obsidian 双链图片；缺失附件保留文字提示，不修改原笔记。
-- **文件类型**：Markdown 在线阅读。PDF、Office、音频、代码、notebook 等只下载；`.url` 作为原站链接。
+- **文件类型**：Markdown 在线阅读。PDF、Office、音频、代码（含 R 脚本）、notebook 等只下载；`.url` 作为原站链接。
 
 页面 ID 由原始文件路径生成，改标题不会改变链接，重命名文件会改变链接。下载链接固定到本次构建提交，原始内容和站点版本保持一致。浏览器可能直接打开某些原始文件，可通过原文件页面保存。
 

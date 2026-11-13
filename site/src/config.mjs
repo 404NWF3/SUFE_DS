@@ -17,6 +17,8 @@ export const courseDefinitions = [
     "从参数估计到假设检验，串起统计推断的思路。",
   ],
   ["概率论", "probability", "math", "随机变量、分布与极限定理，从这里开始。"],
+  ["随机过程", "stochastic-processes", "math", "马尔可夫链、泊松过程与随机系统的演化。"],
+  ["高维数据分析", "high-dimensional-data", "math", "回归、降维与高维统计方法，连接理论与数据实践。"],
   ["高等数学上", "calculus-1", "math", "极限、导数与积分，打好数学分析基础。"],
   ["高等数学下", "calculus-2", "math", "多元微积分、级数与空间中的数学。"],
   ["线性代数", "linear-algebra", "math", "用向量、矩阵与线性空间理解问题。"],
@@ -67,6 +69,9 @@ export const courseDefinitions = [
     "economy",
     "进一步理解经济行为与市场分析。",
   ],
+  ["宏观经济学", "macroeconomics", "economy", "从国民收入到货币政策，理解经济的整体运行。"],
+  ["金融科技导论", "fintech", "economy", "金融科技案例、课程汇报与实践资料。"],
+  ["决策仿真", "decision-simulation", "economy", "离散事件仿真项目与 Simio 建模工具。"],
   [
     "经济管理中的计算机应用",
     "business-computing",
@@ -105,10 +110,10 @@ export const featuredPaths = [
   "优化理论与算法/note/单纯形表的矩阵计算与卡西欧991计算器操作.md",
 ];
 export const featuredCourses = [
+  "stochastic-processes",
+  "high-dimensional-data",
+  "macroeconomics",
   "statistics",
   "algorithms",
-  "calculus-2",
-  "microeconomics",
-  "probability",
-  "advanced-programming",
+  "fintech",
 ];

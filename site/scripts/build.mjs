@@ -64,6 +64,7 @@ const allowed = new Set([
   "cpp",
   "c",
   "py",
+  "r",
   "h",
   "txt",
   "tex",
@@ -102,7 +103,8 @@ for (const file of files) {
   const format = path.posix.extname(file).slice(1).toLowerCase();
   if (
     !allowed.has(format) ||
-    /^readme(?:\.[a-z]+)?\.md$/i.test(path.posix.basename(file))
+    (file.split("/").length === 2 &&
+      /^readme\.md$/i.test(path.posix.basename(file)))
   )
     continue;
   let course = byFolder.get(file.split("/")[0]);
@@ -200,7 +202,10 @@ function sectionTitle(kicker, title, aside = "") {
 }
 function courseCard(c, number) {
   const group = groupFor(c);
-  return `<a class="course-card" href="${courseHref(c)}" data-group="${c.group}" data-search="${e(normalizeSearch(c.title + " " + group.title + " " + c.description))}"><div class="course-top"><span class="subject-symbol ${group.color}">${group.symbol}</span><span class="course-number">${String(number + 1).padStart(2, "0")}</span></div><h3>${e(c.title)}</h3><p>${e(c.description)}</p><div class="course-bottom"><span>${c.resources.length} 份资料${c.notes.length ? ` <b>·</b> ${c.notes.length} 篇笔记` : ""}</span>${icon("arrow")}</div></a>`;
+  const contents = c.resources.length
+    ? `${c.resources.length} 份资料${c.notes.length ? ` <b>·</b> ${c.notes.length} 篇笔记` : ""}`
+    : "课程说明与项目链接";
+  return `<a class="course-card" href="${courseHref(c)}" data-group="${c.group}" data-search="${e(normalizeSearch(c.title + " " + group.title + " " + c.description))}"><div class="course-top"><span class="subject-symbol ${group.color}">${group.symbol}</span><span class="course-number">${String(number + 1).padStart(2, "0")}</span></div><h3>${e(c.title)}</h3><p>${e(c.description)}</p><div class="course-bottom"><span>${contents}</span>${icon("arrow")}</div></a>`;
 }
 function noteCard(resource, index) {
   const styles = ["sage", "sand", "blue"];
@@ -287,7 +292,7 @@ for (const course of courses) {
         `${course.folder}/README.md`,
         resolver,
       );
-      intro = `<details class="course-intro"><summary>课程说明与补充链接 ${icon("arrow")}</summary><div class="prose">${rendered.html}</div></details>`;
+      intro = `<details class="course-intro"${course.resources.length ? "" : " open"}><summary>课程说明与补充链接 ${icon("arrow")}</summary><div class="prose">${rendered.html}</div></details>`;
     }
   }
   await writePage(
@@ -296,7 +301,7 @@ for (const course of courses) {
       title: course.title,
       active: "courses",
       pathname: `courses/${course.id}/`,
-      body: `<div class="container resources-page"><a class="back-link" href="${base}courses/">← 课程目录</a><div class="course-page-intro"><div><p class="eyebrow">${groupFor(course).title} / COURSE MATERIALS</p><h1>${e(course.title)}</h1><p>${e(course.description)}</p></div><span class="subject-symbol large ${groupFor(course).color}">${groupFor(course).symbol}</span></div>${intro}${searchForm(`在${course.title}中查找资料`)}${library(course.resources, course.title, course)}</div>`,
+      body: `<div class="container resources-page"><a class="back-link" href="${base}courses/">← 课程目录</a><div class="course-page-intro"><div><p class="eyebrow">${groupFor(course).title} / COURSE MATERIALS</p><h1>${e(course.title)}</h1><p>${e(course.description)}</p></div><span class="subject-symbol large ${groupFor(course).color}">${groupFor(course).symbol}</span></div>${intro}${course.resources.length ? searchForm(`在${course.title}中查找资料`) + library(course.resources, course.title, course) : ""}</div>`,
     }),
   );
 }
